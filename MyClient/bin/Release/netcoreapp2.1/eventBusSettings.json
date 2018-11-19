@@ -1,0 +1,9 @@
+{
+  "EventBusConnection": "${EventBusConnection}|192.168.1.7",
+  "EventBusUserName": "guest",
+  "EventBusPassword": "guest",
+  //"VirtualHost": "/",
+  //"BrokerName": "surging_demo",
+  "Port": "5672"
+}
+

@@ -1,0 +1,14 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorAssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.RazorTargetAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\bin\Debug\netcoreapp2.1\OcelotGateway.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\OcelotGateway\obj\Debug\netcoreapp2.1\OcelotGateway.pdb

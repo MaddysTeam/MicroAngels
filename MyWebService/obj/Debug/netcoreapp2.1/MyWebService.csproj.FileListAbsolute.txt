@@ -1,0 +1,14 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\bin\Debug\netcoreapp2.1\MyWebService.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\bin\Debug\netcoreapp2.1\MyWebService.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\bin\Debug\netcoreapp2.1\MyWebService.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\bin\Debug\netcoreapp2.1\MyWebService.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\bin\Debug\netcoreapp2.1\MyWebService.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.RazorAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.RazorAssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.RazorTargetAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService\obj\Debug\netcoreapp2.1\MyWebService.pdb

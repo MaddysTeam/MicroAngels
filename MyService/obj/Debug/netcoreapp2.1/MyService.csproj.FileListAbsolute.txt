@@ -1,0 +1,14 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\MyService.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\MyService.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\MyService.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\MyService.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\MyService.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netcoreapp2.1\MyService.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\eventBusSettings.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\surgingSettings.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\cacheSettings.json

@@ -1,0 +1,8 @@
+2018-11-15 23:47:06.1875 Error Parsing configuration from C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService2\NLog.config failed. Exception: NLog.NLogConfigurationException: Exception when parsing C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyWebService2\NLog.config.  ---> System.ArgumentException: Unknown log level: Warning
+   at NLog.LogLevel.FromString(String levelName)
+   at NLog.Config.XmlLoggingConfiguration.ParseLevels(NLogXmlElement loggerElement, LoggingRule rule)
+   at NLog.Config.XmlLoggingConfiguration.ParseLoggerElement(NLogXmlElement loggerElement, IList`1 rulesCollection)
+   at NLog.Config.XmlLoggingConfiguration.ParseRulesElement(NLogXmlElement rulesElement, IList`1 rulesCollection)
+   at NLog.Config.XmlLoggingConfiguration.ParseNLogElement(NLogXmlElement nlogElement, String filePath, Boolean autoReloadDefault)
+   at NLog.Config.XmlLoggingConfiguration.Initialize(XmlReader reader, String fileName, Boolean ignoreErrors)
+   --- End of inner exception stack trace ---
