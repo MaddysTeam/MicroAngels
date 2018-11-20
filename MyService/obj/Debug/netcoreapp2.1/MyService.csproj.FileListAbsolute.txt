@@ -12,3 +12,17 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\obj\Debug\netc
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\eventBusSettings.json
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\surgingSettings.json
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MyService\bin\Debug\netcoreapp2.1\cacheSettings.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\cacheSettings.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\eventBusSettings.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\surgingSettings.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\MyService.deps.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\MyService.runtimeconfig.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\MyService.runtimeconfig.dev.json
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\MyService.dll
+E:\项目文件(GitLab)\微服务框架\MyService\bin\Debug\netcoreapp2.1\MyService.pdb
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.csprojAssemblyReference.cache
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.csproj.CoreCompileInputs.cache
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.AssemblyInfoInputs.cache
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.AssemblyInfo.cs
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.dll
+E:\项目文件(GitLab)\微服务框架\MyService\obj\Debug\netcoreapp2.1\MyService.pdb

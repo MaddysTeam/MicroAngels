@@ -2756,10 +2756,11 @@
       ]
     },
     "Consul/0.7.2.6": {
-      "sha512": "0inTc+PLbk/TELmdO12q5N/4lZ2kn5w2EmOqG0g686JXgr1OKEGPCuGZxWYE+NuROy7dwX/FBxKUTph7vuyjPA==",
+      "sha512": "P1fWEDOVsfksYvjzjObwd9KEqAOoEFdqTfEemY+XKojEgL+H0OALw9SBBYTIjqi1GKv0Kql8fb2/ZUe/E8Dk5w==",
       "type": "package",
       "path": "consul/0.7.2.6",
       "files": [
+        ".signature.p7s",
         "consul.0.7.2.6.nupkg.sha512",
         "consul.nuspec",
         "lib/net45/Consul.dll",
@@ -4410,7 +4411,7 @@
       ]
     },
     "System.Diagnostics.Contracts/4.3.0": {
-      "sha512": "Qaxc5zvZjD8mmsnBCpjz1faUX7wW7OJI8VkexAizz8kxa5GXj9wj7Cq5QcLBG8sivMJtJzqvo4m7Q8fLeJp1hw==",
+      "sha512": "eelRRbnm+OloiQvp9CXS0ixjNQldjjkHO4iIkR5XH2VIP8sUB/SIpa1TdUW6/+HDcQ+MlhP3pNa1u5SbzYuWGA==",
       "type": "package",
       "path": "system.diagnostics.contracts/4.3.0",
       "files": [
@@ -4626,7 +4627,7 @@
       ]
     },
     "System.Diagnostics.StackTrace/4.3.0": {
-      "sha512": "ebIecQ2eLt/HVlkE4MBVAG7e5kyej5wfgMzbKHwnWOsBDl3kNG/soWcesT+DcOpGmZVKD4l0Xacjg70ypwOtgA==",
+      "sha512": "BiHg0vgtd35/DM9jvtaC1eKRpWZxr0gcQd643ABG7GnvSlf5pOkY2uyd42mMOJoOmKvnpNj0F4tuoS1pacTwYw==",
       "type": "package",
       "path": "system.diagnostics.stacktrace/4.3.0",
       "files": [
@@ -7251,7 +7252,7 @@
       ]
     },
     "System.Text.Encoding.CodePages/4.5.0": {
-      "sha512": "dwmbt9Xo+JWgAy0s8Iss6K3s7WA2Pfy5XyORZajdnn8BKtHIKMuclAMjazhVNbB9jQWauf+OLC55dmF2Q7qlPQ==",
+      "sha512": "16EVkWmNnoH3/Yj9c5s5VuLK5Uv/Dnkc3P2kMmnD7wJcUuvcHVvM2IhVJanf2hHRZUitH+cIkPCPHrBoCXc7Rw==",
       "type": "package",
       "path": "system.text.encoding.codepages/4.5.0",
       "files": [
@@ -7650,7 +7651,7 @@
       ]
     },
     "System.Threading.Tasks.Parallel/4.3.0": {
-      "sha512": "bjpLiNAiXgnK+4Y1ePza1zZ87OOOpSSMe93TBruKC8Xd2oYjmXs8IrFaVpiDf9Aek3QdMOaFJhL5nfZ+FAFa3A==",
+      "sha512": "cbjBNZHf/vQCfcdhzx7knsiygoCKgxL8mZOeocXZn5gWhCdzHIq6bYNKWX0LAJCWYP7bds4yBK8p06YkP0oa0g==",
       "type": "package",
       "path": "system.threading.tasks.parallel/4.3.0",
       "files": [
@@ -8118,11 +8119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyService\\MyService.csproj",
+      "projectUniqueName": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\MyService.csproj",
       "projectName": "MyService",
-      "projectPath": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyService\\MyService.csproj",
+      "projectPath": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\MyService.csproj",
       "packagesPath": "C:\\Users\\JimmyPoor\\.nuget\\packages\\",
-      "outputPath": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyService\\obj\\",
+      "outputPath": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8136,8 +8137,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://www.nuget.org/api/v2": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "netcoreapp2.1": {

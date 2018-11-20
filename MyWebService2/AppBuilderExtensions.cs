@@ -1,4 +1,5 @@
-﻿using Consul;
+﻿using Business;
+using Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ namespace MyWebService2
 {
     public static class AppBuilderExtensions
     {
+
         public static IApplicationBuilder RegisterConsul(this IApplicationBuilder app, IApplicationLifetime lifetime, ServiceEntityModel serviceEntity)
         {
             var consulClient = new ConsulClient(x => x.Address = new Uri($"http://{serviceEntity.ConsulIP}:{serviceEntity.ConsulPort}"));//请求注册的 Consul 地址
@@ -49,7 +51,6 @@ namespace MyWebService2
             return app;
         }
 
-
         public static IApplicationBuilder RegisterZipkin(this IApplicationBuilder app,ILoggerFactory factory , IApplicationLifetime lifetime, IConfiguration configuration )
         {
             lifetime.ApplicationStarted.Register(() => {
@@ -69,5 +70,17 @@ namespace MyWebService2
 
             return app;
         }
+
+        public static IApplicationBuilder RegisterMysqlBySugar(this IApplicationBuilder app,IApplicationLifetime lifetime, IConfiguration configuration)
+        {
+            MySqlDbContext.Current.Initial(configuration);
+
+            lifetime.ApplicationStopped.Register(() => {
+                MySqlDbContext.Current.Stop();
+            });
+
+            return app;
+        }
+
     }
 }

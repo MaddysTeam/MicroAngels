@@ -67,14 +67,16 @@ namespace MyWebService2
 
             app.RegisterConsul(lifeTime, new Models.ServiceEntityModel
             {
-                IP = "192.168.1.5",
+                IP = Configuration["Service:Ip"],
                 Port = Convert.ToInt32(Configuration["Service:Port"]),
                 ServiceName = Configuration["Service:Name"],
                 ConsulIP = Configuration["Consul:IP"],
                 ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
             });
 
-            app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+            app.RegisterMysqlBySugar(lifeTime, Configuration);
+
+            // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
         }
     }
 }

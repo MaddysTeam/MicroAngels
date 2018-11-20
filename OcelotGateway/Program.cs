@@ -54,10 +54,10 @@ namespace OcelotGateway
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .UseUrls($"http://*:5000")
-                            .ConfigureAppConfiguration((hostingContext, builder) =>
-                            {
-                                builder.AddJsonFile("ocelot.json", false, true);
-                            })
-                .UseStartup<Startup>();
+            .ConfigureAppConfiguration((hostingContext, builder) =>
+             {
+                 builder.AddJsonFile("ocelot.json", false, true);
+             })
+             .UseStartup<Startup>();
     }
 }

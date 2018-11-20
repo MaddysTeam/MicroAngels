@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using zipkin4net.Transport.Http;
+using Business;
 
 namespace MyWebService2.Controllers
 {
@@ -27,10 +28,10 @@ namespace MyWebService2.Controllers
         {
             _logger.LogWarning("haha,warning!!!");
 
-            using(HttpClient client=new HttpClient(new TracingHandler("demo")))
-            {
-                // for zipkin
-            }
+            //using(HttpClient client=new HttpClient(new TracingHandler("demo")))
+            //{
+            //    // for zipkin
+            //}
 
             return new string[] { "value3", "value4" };
         }
@@ -39,7 +40,9 @@ namespace MyWebService2.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            var robot = MySqlDbContext.Current.RobotDb.GetById(id);
+
+            return $"robot name : {robot.RobotName}";
         }
 
         // POST api/values
