@@ -24,14 +24,15 @@ namespace MyWebService2.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             _logger.LogWarning("haha,warning!!!");
 
-            //using(HttpClient client=new HttpClient(new TracingHandler("demo")))
-            //{
-            //    // for zipkin
-            //}
+            using(HttpClient client=new HttpClient(new TracingHandler("demo99")))
+            {
+                // for zipkin
+                var word= await client.GetStringAsync("http://localhost:5002/api/values/1");
+            }
 
             return new string[] { "value3", "value4" };
         }
@@ -40,9 +41,9 @@ namespace MyWebService2.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            var robot = MySqlDbContext.Current.RobotDb.GetById(id);
+            //var robot = MySqlDbContext.Current.RobotDb.GetById(id);
 
-            return $"robot name : {robot.RobotName}";
+            return $"robot name : robot";
         }
 
         // POST api/values

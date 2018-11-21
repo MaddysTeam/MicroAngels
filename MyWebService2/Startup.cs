@@ -54,6 +54,8 @@ namespace MyWebService2
 
             env.ConfigureNLog("NLog.config");
 
+            app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+
             app.UseMvc()
                .UseSwagger(options =>
                {
@@ -74,9 +76,7 @@ namespace MyWebService2
                 ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
             });
 
-            app.RegisterMysqlBySugar(lifeTime, Configuration);
-
-            // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+           // app.RegisterMysqlBySugar(lifeTime, Configuration);
         }
     }
 }

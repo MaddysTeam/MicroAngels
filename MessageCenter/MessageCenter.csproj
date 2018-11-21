@@ -8,13 +8,15 @@
     <Folder Include="Business\Services\" />
     <Folder Include="Infrastructure\Middlewares\" />
     <Folder Include="Infrastructure\Sessions\" />
-    <Folder Include="Infrastructure\ServiceBus\" />
     <Folder Include="Infrastructure\Orms\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="DotNetCore.CAP" Version="2.3.1" />
+    <PackageReference Include="DotNetCore.CAP.Kafka" Version="2.3.1" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />

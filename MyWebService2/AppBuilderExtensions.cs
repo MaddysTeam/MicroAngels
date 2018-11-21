@@ -26,7 +26,7 @@ namespace MyWebService2
             var httpCheck = new AgentServiceCheck()
             {
                 DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(2),//服务启动多久后注册
-                Interval = TimeSpan.FromSeconds(1),//健康检查时间间隔，或者称为心跳间隔
+                Interval = TimeSpan.FromSeconds(20),//健康检查时间间隔，或者称为心跳间隔
                 HTTP = $"http://{serviceEntity.IP}:{serviceEntity.Port}/api/health",//健康检查地址
                 Timeout = TimeSpan.FromSeconds(5)
             };
@@ -51,7 +51,7 @@ namespace MyWebService2
             return app;
         }
 
-        public static IApplicationBuilder RegisterZipkin(this IApplicationBuilder app,ILoggerFactory factory , IApplicationLifetime lifetime, IConfiguration configuration )
+        public static IApplicationBuilder RegisterZipkin(this IApplicationBuilder app,ILoggerFactory factory , IApplicationLifetime lifetime, IConfiguration configuration)
         {
             lifetime.ApplicationStarted.Register(() => {
                 TraceManager.SamplingRate = 1.0f;
@@ -66,7 +66,7 @@ namespace MyWebService2
             });
 
             lifetime.ApplicationStopped.Register(()=>TraceManager.Stop());
-            app.UseTracing("demo");
+            app.UseTracing(configuration["Zipkin:ServiceName"]);
 
             return app;
         }

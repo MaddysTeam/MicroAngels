@@ -24,7 +24,7 @@ namespace Infrastructure
                 Messages = new[] { context.Exception.Message }
             };
 
-            context.Result = new InternalServerErrorResult(errorMessage);
+            //context.Result = new InternalServerErrorResult(errorMessage);
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             context.ExceptionHandled = true;

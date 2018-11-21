@@ -4422,11 +4422,10 @@
   },
   "libraries": {
     "Consul/0.7.2.6": {
-      "sha512": "P1fWEDOVsfksYvjzjObwd9KEqAOoEFdqTfEemY+XKojEgL+H0OALw9SBBYTIjqi1GKv0Kql8fb2/ZUe/E8Dk5w==",
+      "sha512": "0inTc+PLbk/TELmdO12q5N/4lZ2kn5w2EmOqG0g686JXgr1OKEGPCuGZxWYE+NuROy7dwX/FBxKUTph7vuyjPA==",
       "type": "package",
       "path": "consul/0.7.2.6",
       "files": [
-        ".signature.p7s",
         "consul.0.7.2.6.nupkg.sha512",
         "consul.nuspec",
         "lib/net45/Consul.dll",
@@ -7078,10 +7077,11 @@
       ]
     },
     "Remotion.Linq/2.2.0": {
-      "sha512": "fK/76UmpC0FXBlGDFVPLJHQlDLYnGC+XY3eoDgCgbtrhi0vzbXDQ3n/IYHhqSKqXQfGw/u04A1drWs7rFVkRjw==",
+      "sha512": "twDAH8dAXXCAf3sRv1Tf94u66eEHvgU75hfn1nn2v4fSWXD50XoDOAk8WpSrbViNuMkB4kN1ElnOGm1c519IHg==",
       "type": "package",
       "path": "remotion.linq/2.2.0",
       "files": [
+        ".signature.p7s",
         "lib/net35/Remotion.Linq.XML",
         "lib/net35/Remotion.Linq.dll",
         "lib/net40/Remotion.Linq.XML",
@@ -7616,7 +7616,7 @@
       ]
     },
     "System.Collections.Specialized/4.3.0": {
-      "sha512": "Epx8PoVZR0iuOnJJDzp7pWvdfMMOAvpUo95pC4ScH2mJuXkKA2Y4aR3cG9qt2klHgSons1WFh4kcGW7cSXvrxg==",
+      "sha512": "4CdaBD613qhNJCYZfV9m/ZIMYMwwtgnIbuaX3Ml0iCT71IZUVJekr1OKT9BQtsnnOzVTufJ2oOGRBe+RVwIRUg==",
       "type": "package",
       "path": "system.collections.specialized/4.3.0",
       "files": [
@@ -7850,7 +7850,7 @@
       ]
     },
     "System.Diagnostics.Contracts/4.3.0": {
-      "sha512": "eelRRbnm+OloiQvp9CXS0ixjNQldjjkHO4iIkR5XH2VIP8sUB/SIpa1TdUW6/+HDcQ+MlhP3pNa1u5SbzYuWGA==",
+      "sha512": "Qaxc5zvZjD8mmsnBCpjz1faUX7wW7OJI8VkexAizz8kxa5GXj9wj7Cq5QcLBG8sivMJtJzqvo4m7Q8fLeJp1hw==",
       "type": "package",
       "path": "system.diagnostics.contracts/4.3.0",
       "files": [
@@ -7998,10 +7998,11 @@
       ]
     },
     "System.Diagnostics.FileVersionInfo/4.3.0": {
-      "sha512": "omCF64wzQ3Q2CeIqkD6lmmxeMZtGHUmzgFMPjfVaOsyqpR66p/JaZzManMw1s33osoAb5gqpncsjie67+yUPHQ==",
+      "sha512": "OEshwk5wkdxtGkFZYSErv6dnUuz0z8C01htylGwOwFnCVFRcrvleBtplMDCk9nMyWP41cbMZGEIBfy7HV1Loug==",
       "type": "package",
       "path": "system.diagnostics.fileversioninfo/4.3.0",
       "files": [
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -8038,7 +8039,7 @@
       ]
     },
     "System.Diagnostics.StackTrace/4.3.0": {
-      "sha512": "BiHg0vgtd35/DM9jvtaC1eKRpWZxr0gcQd643ABG7GnvSlf5pOkY2uyd42mMOJoOmKvnpNj0F4tuoS1pacTwYw==",
+      "sha512": "ebIecQ2eLt/HVlkE4MBVAG7e5kyej5wfgMzbKHwnWOsBDl3kNG/soWcesT+DcOpGmZVKD4l0Xacjg70ypwOtgA==",
       "type": "package",
       "path": "system.diagnostics.stacktrace/4.3.0",
       "files": [
@@ -10109,7 +10110,7 @@
       ]
     },
     "System.Runtime.Serialization.Primitives/4.3.0": {
-      "sha512": "Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
+      "sha512": "FWToSbVUcDz9CDf56ukfImZiK8Yow224L/NktKvQom9LpmI/chiIbrDrwKTb+YGEQYiwpXsLCZUXz3PbMpFrjA==",
       "type": "package",
       "path": "system.runtime.serialization.primitives/4.3.0",
       "files": [
@@ -10830,7 +10831,7 @@
       ]
     },
     "System.Text.Encoding.CodePages/4.5.0": {
-      "sha512": "16EVkWmNnoH3/Yj9c5s5VuLK5Uv/Dnkc3P2kMmnD7wJcUuvcHVvM2IhVJanf2hHRZUitH+cIkPCPHrBoCXc7Rw==",
+      "sha512": "dwmbt9Xo+JWgAy0s8Iss6K3s7WA2Pfy5XyORZajdnn8BKtHIKMuclAMjazhVNbB9jQWauf+OLC55dmF2Q7qlPQ==",
       "type": "package",
       "path": "system.text.encoding.codepages/4.5.0",
       "files": [
@@ -11236,7 +11237,7 @@
       ]
     },
     "System.Threading.Tasks.Parallel/4.3.0": {
-      "sha512": "cbjBNZHf/vQCfcdhzx7knsiygoCKgxL8mZOeocXZn5gWhCdzHIq6bYNKWX0LAJCWYP7bds4yBK8p06YkP0oa0g==",
+      "sha512": "bjpLiNAiXgnK+4Y1ePza1zZ87OOOpSSMe93TBruKC8Xd2oYjmXs8IrFaVpiDf9Aek3QdMOaFJhL5nfZ+FAFa3A==",
       "type": "package",
       "path": "system.threading.tasks.parallel/4.3.0",
       "files": [
@@ -11588,10 +11589,11 @@
       ]
     },
     "System.Xml.XPath/4.3.0": {
-      "sha512": "v1JQ5SETnQusqmS3RwStF7vwQ3L02imIzl++sewmt23VGygix04pEH+FCj1yWb+z4GDzKiljr1W7Wfvrx0YwgA==",
+      "sha512": "8Eo7vuasWRqXfiBRCIKz20Rq1h6n+NMp6nW2RmyUwF4VDekg8xbRZu8S3N21P5XGAhv+kaqUwI3xydEkcw+D5w==",
       "type": "package",
       "path": "system.xml.xpath/4.3.0",
       "files": [
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -11625,10 +11627,11 @@
       ]
     },
     "System.Xml.XPath.XDocument/4.3.0": {
-      "sha512": "jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
+      "sha512": "I50WmmXa9mUUujJOWKjyjqMnZcJklN5oc6XfHk5bfp9gt6eCJQ74qmi7IYEMa2YHPoFuA93uwssBlfU51i53QA==",
       "type": "package",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "files": [
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -11678,11 +11681,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService\\MyWebService.csproj",
+      "projectUniqueName": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyWebService\\MyWebService.csproj",
       "projectName": "MyWebService",
-      "projectPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService\\MyWebService.csproj",
+      "projectPath": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyWebService\\MyWebService.csproj",
       "packagesPath": "C:\\Users\\JimmyPoor\\.nuget\\packages\\",
-      "outputPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService\\obj\\",
+      "outputPath": "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\MyWebService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11696,8 +11699,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://www.nuget.org/api/v2/": {}
+        "http://www.nuget.org/api/v2": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {
