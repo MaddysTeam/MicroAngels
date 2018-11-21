@@ -1,0 +1,14 @@
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.deps.json
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.runtimeconfig.json
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.runtimeconfig.dev.json
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.dll
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.pdb
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.csprojAssemblyReference.cache
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.csproj.CoreCompileInputs.cache
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.RazorAssemblyInfo.cache
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.RazorAssemblyInfo.cs
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.AssemblyInfoInputs.cache
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.AssemblyInfo.cs
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.RazorTargetAssemblyInfo.cache
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.dll
+E:\项目文件(GitLab)\MicroAngels\MessageCenter\obj\Debug\netcoreapp2.1\MessageCenter.pdb

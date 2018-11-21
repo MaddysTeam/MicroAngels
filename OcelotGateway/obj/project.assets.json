@@ -12040,11 +12040,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\项目文件(GitLab)\\微服务框架\\OcelotGateway\\OcelotGateway.csproj",
+      "projectUniqueName": "E:\\项目文件(GitLab)\\MicroAngels\\OcelotGateway\\OcelotGateway.csproj",
       "projectName": "OcelotGateway",
-      "projectPath": "E:\\项目文件(GitLab)\\微服务框架\\OcelotGateway\\OcelotGateway.csproj",
+      "projectPath": "E:\\项目文件(GitLab)\\MicroAngels\\OcelotGateway\\OcelotGateway.csproj",
       "packagesPath": "C:\\Users\\JimmyPoor\\.nuget\\packages\\",
-      "outputPath": "E:\\项目文件(GitLab)\\微服务框架\\OcelotGateway\\obj\\",
+      "outputPath": "E:\\项目文件(GitLab)\\MicroAngels\\OcelotGateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

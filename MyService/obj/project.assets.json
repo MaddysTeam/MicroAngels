@@ -8119,11 +8119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\MyService.csproj",
+      "projectUniqueName": "E:\\项目文件(GitLab)\\MicroAngels\\MyService\\MyService.csproj",
       "projectName": "MyService",
-      "projectPath": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\MyService.csproj",
+      "projectPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyService\\MyService.csproj",
       "packagesPath": "C:\\Users\\JimmyPoor\\.nuget\\packages\\",
-      "outputPath": "E:\\项目文件(GitLab)\\微服务框架\\MyService\\obj\\",
+      "outputPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

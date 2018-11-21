@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroAngels.Clients", "Micr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroAngels.Tests", "MicroAngels.Tests", "{6CF1E038-F0AF-490F-B5AD-E85A60CDBFD4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageCenter", "MessageCenter\MessageCenter.csproj", "{E97F05D1-8340-415C-9D7D-C36C15ECCE4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroAngels.Component", "MicroAngels.Component", "{D921BBB2-0DEF-41DB-BB61-7A3C692325D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{DB33ACCD-3CD5-42DC-A6A1-D0430BBAAFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB33ACCD-3CD5-42DC-A6A1-D0430BBAAFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB33ACCD-3CD5-42DC-A6A1-D0430BBAAFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97F05D1-8340-415C-9D7D-C36C15ECCE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97F05D1-8340-415C-9D7D-C36C15ECCE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97F05D1-8340-415C-9D7D-C36C15ECCE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97F05D1-8340-415C-9D7D-C36C15ECCE4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{E03CBEF1-F518-4EBB-A3F9-2A2BCB83AFEA} = {23BEA7E2-D62C-4BDD-B3EE-C563819A9B9E}
 		{F1A676EA-6BB0-4B36-BF0B-CF81C98B051A} = {C2B7450A-48A9-4E9F-912B-5AB68AB33CE7}
 		{DB33ACCD-3CD5-42DC-A6A1-D0430BBAAFFA} = {C2B7450A-48A9-4E9F-912B-5AB68AB33CE7}
+		{E97F05D1-8340-415C-9D7D-C36C15ECCE4C} = {D921BBB2-0DEF-41DB-BB61-7A3C692325D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}

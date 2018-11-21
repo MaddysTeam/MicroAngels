@@ -13645,11 +13645,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\项目文件(GitLab)\\微服务框架\\MyWebService2\\MyWebService2.csproj",
+      "projectUniqueName": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService2\\MyWebService2.csproj",
       "projectName": "MyWebService2",
-      "projectPath": "E:\\项目文件(GitLab)\\微服务框架\\MyWebService2\\MyWebService2.csproj",
+      "projectPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService2\\MyWebService2.csproj",
       "packagesPath": "C:\\Users\\JimmyPoor\\.nuget\\packages\\",
-      "outputPath": "E:\\项目文件(GitLab)\\微服务框架\\MyWebService2\\obj\\",
+      "outputPath": "E:\\项目文件(GitLab)\\MicroAngels\\MyWebService2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
