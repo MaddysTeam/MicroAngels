@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyWebService.Controllers
 {
-    [Authorize("permission")]
+    [Authorize("permission2")]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase

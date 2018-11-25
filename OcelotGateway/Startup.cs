@@ -55,7 +55,7 @@ namespace OcelotGateway
                .UseMvc()
                .UseSwagger()
                .UseSwaggerUI(options=> {
-                   new List<string> { "MyWebService2"}.ForEach(x=> {
+                   new List<string> { "MyWebService2","MessageCenter"}.ForEach(x=> {
                        options.SwaggerEndpoint($"/{x}/swagger.json", x);
                    });
                });

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using zipkin4net.Transport.Http;
 using Business;
+using Infrastructure.Orms.Sugar;
+using System.Net;
 
 namespace Controllers
 {
@@ -24,25 +26,26 @@ namespace Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             _logger.LogWarning("haha,warning!!!");
 
-            //using(HttpClient client=new HttpClient(new TracingHandler("demo")))
-            //{
-            //    // for zipkin
-            //}
+            using (HttpClient client = new HttpClient())
+            {
+                var str = await client.GetStringAsync("http://localhost:5003/api/values/2");
+                return new string[] { str };
+            }
+           // return new string[] { "aaa" };
 
-            return new string[] { "value3", "value4" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            var robot = MySqlDbContext.Current.RobotDb.GetById(id);
+          //  var robot = MySqlDbContext.Current.RobotDb.GetById(id);
 
-            return $"robot name : {robot.RobotName}";
+            return $"robot name : me";
         }
 
         // POST api/values

@@ -47,7 +47,30 @@
       "UseServiceDiscovery": true,
       "UpstreamPathTemplate": "/MyWebService2/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/message/send",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/api/messagecenter/message/send",
+      "UpstreamHttpMethod": [ "GET" ],
+      "ServiceName": "MessageCenter",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true,
+      "ReRouteIsCaseSensitive": false
+      //,"FileCacheOptions": { "TtlSeconds": 15 },
+    },
+    {
+      "DownstreamPathTemplate": "/MessageCenter/swagger.json",
+      "DownstreamScheme": "http",
+      "ServiceName": "MessageCenter",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
+      "UpstreamPathTemplate": "/MessageCenter/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     }
+
     //{
     //  "DownstreamPathTemplate": "/api/v1/todo/",
     //  "DownstreamScheme": "http",

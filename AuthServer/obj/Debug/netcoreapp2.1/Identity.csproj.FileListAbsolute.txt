@@ -1,0 +1,17 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Identity.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Identity.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Identity.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Identity.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Identity.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Common.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\bin\Debug\netcoreapp2.1\Common.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.csproj.CopyComplete
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.RazorAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.RazorAssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\AuthServer\obj\Debug\netcoreapp2.1\Identity.RazorTargetAssemblyInfo.cache

@@ -1,0 +1,11 @@
+C:\project\micro_service\MicroTask\Common\bin\Release\netcoreapp2.0\Common.deps.json
+C:\project\micro_service\MicroTask\Common\bin\Release\netcoreapp2.0\Common.dll
+C:\project\micro_service\MicroTask\Common\bin\Release\netcoreapp2.0\Common.pdb
+C:\project\micro_service\MicroTask\Common\bin\Release\netcoreapp2.0\Camoran.Redis.dll
+C:\project\micro_service\MicroTask\Common\bin\Release\netcoreapp2.0\Camoran.Redis.pdb
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.csprojResolveAssemblyReference.cache
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.csproj.CoreCompileInputs.cache
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.AssemblyInfoInputs.cache
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.AssemblyInfo.cs
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.dll
+C:\project\micro_service\MicroTask\Common\obj\Release\netcoreapp2.0\Common.pdb

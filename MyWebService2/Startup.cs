@@ -54,7 +54,7 @@ namespace MyWebService2
 
             env.ConfigureNLog("NLog.config");
 
-            app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+            //app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
 
             app.UseMvc()
                .UseSwagger(options =>

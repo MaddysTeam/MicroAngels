@@ -9,18 +9,16 @@ namespace Infrastructure
     public static class CAPConfiguration
     {
 
-        public static IServiceCollection AddCapWithMySQLAndRabbit(this IServiceCollection services, IConfiguration conifg)
+        public static IServiceCollection AddCapWithMySQLAndRabbit(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<CAPSqlServerDbContenxt>();
+            services.AddDbContext<CAPMysqlDbContext>();
 
             // add cap
             services.AddCap(x =>
             {
-                x.UseEntityFramework<CAPSqlServerDbContenxt>();
-                // x.UseEntityFramework<CAPDbContext>();
-                // x.UseRabbitMQ("localhost");
+                x.UseEntityFramework<CAPMysqlDbContext>();
 
-                x.UseKafka("192.168.1.8");
+                x.UseKafka(config["Queues:Kafka:Host"]);
 
                 x.UseDashboard();
                
@@ -32,38 +30,38 @@ namespace Infrastructure
     }
 
 
-    public class CAPDbContext : DbContext
+    public class CAPMysqlDbContext : DbContext
     {
 
         private IConfiguration _config;
 
-        public CAPDbContext(IConfiguration config)
+        public CAPMysqlDbContext(IConfiguration config)
         {
             _config = config;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           // optionsBuilder.UseMySql(_config.GetSection("ConnectStrings:MySql").Value);
+            optionsBuilder.UseMySql(_config.GetSection("Database:MySql:Conn").Value);
         }
     }
 
 
-    public class CAPSqlServerDbContenxt : DbContext
-    {
-        private IConfiguration _config;
+    //public class CAPSqlServerDbContenxt : DbContext
+    //{
+    //    private IConfiguration _config;
 
-        public CAPSqlServerDbContenxt(IConfiguration config)
-        {
-            _config = config;
-        }
+    //    public CAPSqlServerDbContenxt(IConfiguration config)
+    //    {
+    //        _config = config;
+    //    }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_config.GetSection("ConnectStrings:SqlServer").Value);
-        }
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    {
+    //        optionsBuilder.UseSqlServer(_config.GetSection("ConnectStrings:SqlServer").Value);
+    //    }
 
-    }
+    //}
 
 
 }

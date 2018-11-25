@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Infrastructure;
+using Infrastructure.Orms.Sugar;
+using Infrastructure.ServiceRegistration.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Ocelot.JwtAuthorize;
+using SkyWalking.AspNetCore;
+using SkyWalking.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace MessageCenter
 {
@@ -30,15 +29,36 @@ namespace MessageCenter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSkyWalking(option =>
+            {
+                option.ApplicationCode = Configuration["Service:Name"];
+                option.DirectServers = Configuration["WatchDogs:SkyWalking:Host"];
+            });
+
+            services.AddCapWithMySQLAndRabbit(Configuration);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddTokenJwtAuthorize();
 
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc(Configuration["Swagger:Name"], new Info { Title = Configuration["Swagger:Title"], Version = Configuration["Swagger:Version"] });
+
+                #region swagger xml settings
                 //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 //var xmlPath = Path.Combine(basePath, "Qka.UsersApi.xml");
                 //opt.IncludeXmlComments(xmlPath);
+                #endregion
+            });
+
+            // add cross domain policy
+            services.AddCors(options => {
+                options.AddPolicy("CORS",
+                  builder => builder.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials());
             });
         }
 
@@ -50,10 +70,15 @@ namespace MessageCenter
                 app.UseDeveloperExceptionPage();
             }
 
+            // add nlog
             loggerFactory.AddNLog();
 
             env.ConfigureNLog("NLog.config");
 
+            // use cross domain policy
+            app.UseCors("CORS");
+
+            // use mvc with swagger
             app.UseMvc()
                .UseSwagger(options =>
                {
@@ -65,7 +90,8 @@ namespace MessageCenter
                    options.SwaggerEndpoint($"/{Configuration["Swagger:Name"]}/swagger.json", Configuration["Swagger:Name"]);
                });
 
-            app.RegisterConsul(lifeTime, new Models.ServiceEntityModel
+            // regsiter consul
+            app.RegisterConsul(lifeTime, new ServiceEntityModel
             {
                 IP = Configuration["Service:Ip"],
                 Port = Convert.ToInt32(Configuration["Service:Port"]),
@@ -73,10 +99,12 @@ namespace MessageCenter
                 ConsulIP = Configuration["Consul:IP"],
                 ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
             });
-
+            
+            // register orm sugar
             app.RegisterMysqlBySugar(lifeTime, Configuration);
 
-            // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+           //TODO: will use skywalking instead
+           // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
         }
     }
 }
