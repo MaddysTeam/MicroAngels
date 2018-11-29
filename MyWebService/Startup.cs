@@ -30,6 +30,7 @@ namespace MyWebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiJwtAuthorize(ctx => {
+                
                 //这里根据context中的Request和User来自定义权限验证，返回true为放行，返回fase时为拦截，其中User.Claims中有登录时自己定义的Claim
                 return true;
             });

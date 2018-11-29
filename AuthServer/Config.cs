@@ -61,7 +61,7 @@ namespace Identity
                     {
                         new Secret("secret".Sha256())
                     },
-
+                        
                     AllowOfflineAccess = true,
                     AccessTokenLifetime = accessTokenLifetime,
                     //RedirectUris={""},

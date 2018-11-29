@@ -56,8 +56,10 @@ namespace Business.Models
     public class Suscribe
     {
         public string Id { get;  }
+        public string SubscriberId { get; set; }
         public string TopicId { get; set; }
         public string TargetId { get; set; }
+        public string ServiceId { get; set; }
         public string TipsId { get; set; }
     }
 
@@ -80,16 +82,12 @@ namespace Business.Models
     }
 
 
-
-    ///// <summary>
-    ///// 接受结果
-    ///// </summary>
-    //public class ReceiveResult
-    //{
-    //    public bool IsSuccess { get; set; }
-    //    public Message Current { get; }
-    //}
-
-
+    public enum MessageType
+    {
+        Announce=1,  // 公告
+        Secret=2,    // 私信
+        Notice=3 ,   // 提醒
+        Subscribe=4, // 订阅
+    }
 
 }

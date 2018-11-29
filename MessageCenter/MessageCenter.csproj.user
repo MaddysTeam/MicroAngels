@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>MyWebService2</ActiveDebugProfile>
+    <ActiveDebugProfile>MessageCenter</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

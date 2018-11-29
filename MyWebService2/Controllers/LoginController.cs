@@ -27,7 +27,7 @@ namespace MyWebService2.Controllers
             var claims = new Claim[]
             {
                 new Claim(ClaimTypes.Name,"gsw"),
-                new Claim(ClaimTypes.Role,"admin")
+                new Claim(ClaimTypes.Role,"admin"),
             };
 
             var token = _tokenBuilder.BuildJwtToken(claims, DateTime.UtcNow, DateTime.Now.AddSeconds(500000));

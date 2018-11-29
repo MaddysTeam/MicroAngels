@@ -9,6 +9,7 @@ using DotNetCore.CAP;
 using zipkin4net.Transport.Http;
 using Business;
 using Infrastructure;
+using Business.Services;
 
 namespace Controllers
 {
@@ -51,6 +52,6 @@ namespace Controllers
         private readonly ILogger<MessageController> _logger;
         private readonly CAPMysqlDbContext _dbContext;
         private readonly ICapPublisher _serviceBus;
-
+        private readonly IMessageService _messageService;
     }
 }
