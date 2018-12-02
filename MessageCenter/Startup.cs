@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using Business.Services;
+using Infrastructure;
 using Infrastructure.Orms.Sugar;
 using Infrastructure.ServiceRegistration.Consul;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
-using Ocelot.JwtAuthorize;
 using SkyWalking.AspNetCore;
 using SkyWalking.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
@@ -29,6 +29,15 @@ namespace MessageCenter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ITopicService, TopicService>();
+            services.AddTransient<IMessageService, MessageService>();
+
+            services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
+                   .AddIdentityServerAuthentication(options => {
+                        options.Authority = Configuration["IdentityService:Uri"];
+                        options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+            });
+
             services.AddSkyWalking(option =>
             {
                 option.ApplicationCode = Configuration["Service:Name"];
@@ -39,7 +48,7 @@ namespace MessageCenter
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTokenJwtAuthorize();
+            //services.AddTokenJwtAuthorize();
 
             services.AddSwaggerGen(opt =>
             {
@@ -60,6 +69,7 @@ namespace MessageCenter
                   .AllowAnyHeader()
                   .AllowCredentials());
             });
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,8 +113,8 @@ namespace MessageCenter
             // register orm sugar
             app.RegisterMysqlBySugar(lifeTime, Configuration);
 
-           //TODO: will use skywalking instead
-           // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+            //TODO: will use skywalking instead
+            // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
         }
     }
 }

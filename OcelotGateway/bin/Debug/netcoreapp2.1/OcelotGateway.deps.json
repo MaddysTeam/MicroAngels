@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "18783b0269d509e92fce77686619c09613daebe7"
+    "signature": "af3eb7e82983cc564fba9d6e17c648c7b7929727"
   },
   "compilationOptions": {
     "defines": [
@@ -24,11 +24,11 @@
     ".NETCoreApp,Version=v2.1": {
       "OcelotGateway/1.0.0": {
         "dependencies": {
+          "IdentityServer4.AccessTokenValidation": "2.7.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
           "Ocelot": "12.0.1",
-          "Ocelot.JwtAuthorize": "0.0.400",
           "Ocelot.Provider.Consul": "0.1.2",
           "Ocelot.Provider.Polly": "0.1.0",
           "Swashbuckle.AspNetCore.Swagger": "4.0.1",
@@ -81,6 +81,54 @@
         },
         "compile": {
           "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
+      "IdentityModel/3.10.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "System.Text.Encodings.Web": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.dll": {
+            "assemblyVersion": "3.10.0.0",
+            "fileVersion": "3.10.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityModel.dll": {}
+        }
+      },
+      "IdentityModel.AspNetCore.OAuth2Introspection/3.5.0": {
+        "dependencies": {
+          "IdentityModel": "3.10.0",
+          "Microsoft.AspNetCore.Authentication": "2.1.1",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.1.1",
+          "Microsoft.Extensions.Caching.Memory": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.dll": {
+            "assemblyVersion": "3.5.0.0",
+            "fileVersion": "3.5.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.dll": {}
+        }
+      },
+      "IdentityServer4.AccessTokenValidation/2.7.0": {
+        "dependencies": {
+          "IdentityModel.AspNetCore.OAuth2Introspection": "3.5.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.1.1",
+          "Microsoft.AspNetCore.Authorization": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.dll": {}
         }
       },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
@@ -278,22 +326,6 @@
         },
         "compile": {
           "lib/netstandard2.0/Ocelot.dll": {}
-        }
-      },
-      "Ocelot.JwtAuthorize/0.0.400": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Authentication": "2.1.1",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.1.1",
-          "Microsoft.AspNetCore.Authorization": "2.1.1"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Ocelot.JwtAuthorize.dll": {
-            "assemblyVersion": "0.0.400.0",
-            "fileVersion": "0.0.400.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Ocelot.JwtAuthorize.dll": {}
         }
       },
       "Ocelot.Provider.Consul/0.1.2": {
@@ -3393,6 +3425,27 @@
       "path": "fluentvalidation/7.6.104",
       "hashPath": "fluentvalidation.7.6.104.nupkg.sha512"
     },
+    "IdentityModel/3.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QmHcnV1saSJ7pp5Xpd5swe6dn4vB3YEYI9e1p1mj2YEkpz7BbJvIFaF6CdbdxX8sJ5gTFPy6BOQaY9qsQeNBsw==",
+      "path": "identitymodel/3.10.0",
+      "hashPath": "identitymodel.3.10.0.nupkg.sha512"
+    },
+    "IdentityModel.AspNetCore.OAuth2Introspection/3.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HwTj2GKucM8pWprjFMe+dsupWTwAWLuyLQO1yY+9WsSTWswc/Ukhd5ZIavILsnCMvw9VSlWHFOl9dFu8Bsi+cw==",
+      "path": "identitymodel.aspnetcore.oauth2introspection/3.5.0",
+      "hashPath": "identitymodel.aspnetcore.oauth2introspection.3.5.0.nupkg.sha512"
+    },
+    "IdentityServer4.AccessTokenValidation/2.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s3kT0mCOQAlfq5yMXfaxJrTtZKqdLRAzUPJS+hSEbW/pWbMO4LSx4lQt6SzDI6S3mc3ekFGbs7cV95Jd0EpQkA==",
+      "path": "identityserver4.accesstokenvalidation/2.7.0",
+      "hashPath": "identityserver4.accesstokenvalidation.2.7.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",
       "serviceable": true,
@@ -3462,13 +3515,6 @@
       "sha512": "sha512-+e1YibrS6g1Kp5Qs48HHuxWWhAypuJvm/LD9840bpih1qmq/LoHuqCZSy15fUSTkMoM5O3ES6NYzmPHvgHeTWg==",
       "path": "ocelot/12.0.1",
       "hashPath": "ocelot.12.0.1.nupkg.sha512"
-    },
-    "Ocelot.JwtAuthorize/0.0.400": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-DRbTRu9OoSmBF16bz+XhhpP47kFlIy5JsM81Tf70BtBAE93ml5lybMSHnZkgMPMNCg1jNCYyMq52PvNzV//1ag==",
-      "path": "ocelot.jwtauthorize/0.0.400",
-      "hashPath": "ocelot.jwtauthorize.0.0.400.nupkg.sha512"
     },
     "Ocelot.Provider.Consul/0.1.2": {
       "type": "package",

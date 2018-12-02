@@ -11,7 +11,7 @@ namespace Infrastructure.Orms.Sugar
         {
             get
             {
-                if(null== _current)
+                if (null == _current)
                 {
                     _current = new MySqlDbContext();
                 }
@@ -24,26 +24,28 @@ namespace Infrastructure.Orms.Sugar
 
         public void Initial(IConfiguration configuration)
         {
-            DB = new SqlSugarClient(new ConnectionConfig
-            {
-                ConnectionString = configuration["Database:Mysql:Conn"],
-                DbType = DbType.MySql,
-                IsAutoCloseConnection = true
-            });
+            _configuration = configuration;
         }
 
-        public void Stop()
+        public SqlSugarClient DB
         {
-            if (null != DB)
+            get
             {
-                DB.Close();
+                return new SqlSugarClient(new ConnectionConfig
+                {
+                    ConnectionString = _configuration["Database:Mysql:Conn"],
+                    DbType = DbType.MySql,
+                    IsAutoCloseConnection = true
+                });
             }
         }
 
-        public SqlSugarClient DB;
-        public SimpleClient<Robot> RobotDb { get { return new SimpleClient<Robot>(DB); } }
+
         public SimpleClient<Topic> TopicsDb { get { return new SimpleClient<Topic>(DB); } }
         public SimpleClient<Message> MessageDb { get { return new SimpleClient<Message>(DB); } }
+        public SimpleClient<UserMessage> UserMessageDb { get { return new SimpleClient<UserMessage>(DB); } }
+        public SimpleClient<Subscribe> SubscribeDb { get { return new SimpleClient<Subscribe>(DB); } }
+        private IConfiguration _configuration;
     }
 
     public class Robot

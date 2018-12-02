@@ -1,82 +1,68 @@
-﻿using Business;
-using Business.Handlers;
-using Business.Models;
+﻿using Business.Models;
 using Common;
-using DotNetCore.CAP;
-using Infrastructure;
 using Infrastructure.Orms.Sugar;
 using Microsoft.Extensions.Logging;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Services
 {
 
-    public class TopicService : ITopicService
+    public class TopicService : MySqlDbContext, ITopicService
     {
-        static SqlSugar.SimpleClient<Topic> TopicDb => MySqlDbContext.Current.TopicsDb;
-        static SqlSugar.SimpleClient<Suscribe> SuscribeDb;
+        //SimpleClient<Topic> TopicDb => MySqlDbContext.Current.TopicsDb;
+        //SimpleClient<Subscribe> SubscribeDb => MySqlDbContext.Current.SubscribeDb;
 
-        public TopicService(
-           ILogger<TopicService> logger,
-           CAPMysqlDbContext context,
-           ICapPublisher serviceBus
-           )
+        public TopicService(ILogger<TopicService> logger)
         {
             _logger = logger;
-            _dbContext = context;
-            _serviceBus = serviceBus;
-            //_topicHandlers = topicHandlers;
         }
 
         public async Task<bool> EditTopicAsync(Topic topic)
         {
+            var result = true;
             topic.EnsureNotNull(() => new ArgumentException());
-            var isExists = !TopicDb.GetById(topic.TopicId).IsNull();
+            var isExists = !TopicsDb.GetById(topic.Id).IsNull();
             if (isExists)
             {
                 // upadate
-                MySqlDbContext.Current.TopicsDb.Update(t => topic, t => t.TopicId == topic.TopicId);
+                result = TopicsDb.Update(t => topic, t => t.Id == topic.Id);
             }
             else
             {
-                if (TopicDb.Count(t => t.Name == topic.Name) > 0)
-                    return false;
+                if (TopicsDb.Count(t => t.Name == topic.Name) > 0)
+                    result = false;
 
                 // add
-                MySqlDbContext.Current.TopicsDb.Insert(topic);
+                result = MySqlDbContext.Current.TopicsDb.Insert(topic);
             }
 
-            return true;
+            return result;
         }
 
-        public async Task<List<Topic>> GetTopicsAsync(string serviceId)
+
+        public Task<List<Topic>> GetTopicsAsync(string topic, int pageIndex, int pageSize, out int pageCount)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SubscribeAsync(string topicId, string subcriberId, string targetId, string serviceId)
+        public Task<Topic> GetTopicAsync(string topic, string serviceId)
         {
-            var topic = TopicDb.GetById(topicId);
-            if (topic.IsNull()) return Task.FromResult(false);
+            var topicObj = TopicsDb.GetSingle(t => string.Compare(topic, t.Name) == 0 && t.ServiceId == serviceId);
 
-            SuscribeDb.Insert(new Suscribe { ServiceId=serviceId, SubscriberId=subcriberId, TargetId =targetId, TopicId=topicId });
-
-            throw new NotImplementedException();
+            return Task.FromResult(topicObj);
         }
 
-        public Task<bool> UnSubsribeAsync(string topicId, string subcriberId, string targetId, string serviceId)
+        public Task<Topic> GetTopicAsync(string topicId)
         {
-            var topic = TopicDb.GetById(topicId);
+            var topic = TopicsDb.GetById(topicId);
 
-            throw new NotImplementedException();
+            return Task.FromResult(topic);
         }
 
         private readonly ILogger<TopicService> _logger;
-        private readonly CAPMysqlDbContext _dbContext;
-        private readonly ICapPublisher _serviceBus;
 
     }
 

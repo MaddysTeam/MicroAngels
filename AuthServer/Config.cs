@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
@@ -26,23 +27,11 @@ namespace Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource("ProjectApi", "PROJECT API")
-                {
-                    ApiSecrets = {new Secret("secret".Sha256())},
-                    UserClaims = new List<string>{"role"},
-                },
-
-                new ApiResource("TaskApi", "Task API")
-                {
-                    ApiSecrets = {new Secret("secret".Sha256())},
-                    UserClaims = new List<string>{"role"},
-                },
-
-                new ApiResource("AccountApi", "Account API")
-                {
-                    ApiSecrets = {new Secret("secret".Sha256())},
-                    UserClaims = new List<string>{"role"},
-                },
+                new ApiResource("MessageCenter", "MESSAGE API")
+                //{
+                //    ApiSecrets = {new Secret("secret".Sha256())},
+                //    UserClaims = new List<string>{"role"},
+                //}
             };
         }
 
@@ -55,19 +44,21 @@ namespace Identity
             {
                 new Client
                 {
-                    ClientId = "client",
+                    ClientId = "messageClient",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                        
+
                     AllowOfflineAccess = true,
                     AccessTokenLifetime = accessTokenLifetime,
-                    //RedirectUris={""},
-                    //PostLogoutRedirectUris={ ""},
-                    AllowedScopes = { "AccountApi","ProjectApi","TaskApi"},
-                    AccessTokenType = AccessTokenType.Jwt
+                    AllowedScopes = {
+                        //IdentityServerConstants.StandardScopes.OpenId,
+                        //IdentityServerConstants.StandardScopes.Profile,
+                        "MessageCenter" },
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AllowAccessTokensViaBrowser=true
                 },
             };
         }

@@ -49,16 +49,20 @@
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/api/message/send",
+      "DownstreamPathTemplate": "/api/message/{everything}",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/api/messagecenter/message/send",
+      "UpstreamPathTemplate": "/api/messagecenter/message/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "ServiceName": "MessageCenter",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },
       "UseServiceDiscovery": true,
-      "ReRouteIsCaseSensitive": false
+      "ReRouteIsCaseSensitive": false,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "MessageServiceKey",
+        "AllowedScopes": []
+      }
       //,"FileCacheOptions": { "TtlSeconds": 15 },
     },
     {
@@ -69,6 +73,36 @@
       "UseServiceDiscovery": true,
       "UpstreamPathTemplate": "/MessageCenter/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    // --> Identity Service Part
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.1.3",
+          "Port": "2012"
+        }
+      ],
+      "ServiceName": "IdentityServer",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/identityservice/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "admin" ], // 白名单
+        "EnableRateLimiting": true, // 是否启用限流
+        "Period": "1m", // 统计时间段：1s, 5m, 1h, 1d
+        "PeriodTimespan": 15, // 多少秒之后客户端可以重试
+        "Limit": 10 // 在统计时间段内允许的最大请求数量
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 2, // 允许多少个异常请求
+        "DurationOfBreak": 5000, // 熔断的时间，单位为秒
+        "TimeoutValue": 3000 // 如果下游请求的处理时间超过多少则视如该请求超时
+      },
+      "ReRoutesCaseSensitive": false // non case sensitive
     }
 
     //{

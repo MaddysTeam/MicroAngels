@@ -9,15 +9,13 @@ namespace Business.Services
 
     public interface IMessageService
     {
-        Task<Message> SubscribeAsync(string topic, string body,string serviceId,string senderId, string[] targetIds);
-        Task<Message> NotifyAsync(string topic,string body, string serviceId, string senderId);
-        bool IsReceived(string messageId);
-        Task<List<Message>> GetMessagesAsync(MessageSearchOptions options);
-        bool IsExpire(string messageId);
-        Task<bool> CleanByTopicAsync(string topic);
-        Task<bool> CleanAsync(params string[] messageId);
-        Task<List<UserMessage>> GetUserMessagesAsync(string userid,string serviceId,params string[] topicIds);
-        Task<UserMessage> AddUserMessage(string userId,string messageId,string serviceId);
+        Task SubscribeAsync(string message);
+        Task NotifyAsync(string message);
+        Task AnnounceAsync(string message);
+        Task<Message> GetMessage(string messageId);
+        Task<List<Message>> GetMessagesAsync(string topic,string serviceId,string typeId,int pageIndex,int pageSize,out int pageCount);
+        Task<List<Message>> GetUserMessagesAsync(string userid, string serviceId,string typeId ,int pageIndex, int pageSize, out int pageCount);
+        Task<bool> AddUserMessage(string userId,string messageId,string serviceId);
     }
 
 }

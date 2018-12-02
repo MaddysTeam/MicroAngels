@@ -29,7 +29,7 @@ namespace Business
             context.Result =
                 new GrantValidationResult(
                     context.UserName,
-                    OidcConstants.AuthenticationMethods.Password,
+                    "custom",//OidcConstants.AuthenticationMethods.Password,
                     claims);
 
            // error

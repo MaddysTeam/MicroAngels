@@ -187,10 +187,11 @@
       "Grpc.Tools/1.9.0": {
         "type": "package"
       },
-      "IdentityModel/3.0.0": {
+      "IdentityModel/3.10.2": {
         "type": "package",
         "dependencies": {
-          "Newtonsoft.Json": "10.0.3"
+          "Newtonsoft.Json": "11.0.1",
+          "System.Text.Encodings.Web": "4.5.0"
         },
         "compile": {
           "lib/netstandard2.0/IdentityModel.dll": {}
@@ -199,12 +200,12 @@
           "lib/netstandard2.0/IdentityModel.dll": {}
         }
       },
-      "IdentityModel.AspNetCore.OAuth2Introspection/3.1.0": {
+      "IdentityModel.AspNetCore.OAuth2Introspection/3.5.0": {
         "type": "package",
         "dependencies": {
-          "IdentityModel": "3.0.0",
-          "Microsoft.AspNetCore.Authentication": "2.0.1",
-          "Microsoft.AspNetCore.Http.Abstractions": "2.0.1",
+          "IdentityModel": "3.10.0",
+          "Microsoft.AspNetCore.Authentication": "2.0.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.0.0",
           "Microsoft.Extensions.Caching.Memory": "2.0.0"
         },
         "compile": {
@@ -214,12 +215,12 @@
           "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.dll": {}
         }
       },
-      "IdentityServer4.AccessTokenValidation/2.4.0": {
+      "IdentityServer4.AccessTokenValidation/2.7.0": {
         "type": "package",
         "dependencies": {
-          "IdentityModel.AspNetCore.OAuth2Introspection": "3.1.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.0.1",
-          "Microsoft.AspNetCore.Authorization": "2.0.1"
+          "IdentityModel.AspNetCore.OAuth2Introspection": "3.5.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.1.0",
+          "Microsoft.AspNetCore.Authorization": "2.1.0"
         },
         "compile": {
           "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.dll": {}
@@ -3091,20 +3092,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/NLog.Web.AspNetCore.dll": {}
-        }
-      },
-      "Ocelot.JwtAuthorize/0.0.400": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Authentication": "2.1.1",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.1.1",
-          "Microsoft.AspNetCore.Authorization": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Ocelot.JwtAuthorize.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Ocelot.JwtAuthorize.dll": {}
         }
       },
       "Pivotal.Discovery.ClientCore/2.0.0-rc1": {
@@ -6059,47 +6046,49 @@
         "tools/windows_x86/protoc.exe"
       ]
     },
-    "IdentityModel/3.0.0": {
-      "sha512": "EKMOOUUqDzBR3goiA8eWJ1aQBz1AMfKVxxR7XnzAf5qq2k9vr6GT91SyHmzC14KINpNNJOrbmowXf5S04gQ0ZA==",
+    "IdentityModel/3.10.2": {
+      "sha512": "ka9XLvw1fAnK+xKZr4RTzK286HKkVyKT7Vh0IF9vVhyHvCqRIjdCGibBN73QtFJM6ArrihUoHjWVCtTASE5dlw==",
       "type": "package",
-      "path": "identitymodel/3.0.0",
+      "path": "identitymodel/3.10.2",
       "files": [
-        "identitymodel.3.0.0.nupkg.sha512",
+        ".signature.p7s",
+        "identitymodel.3.10.2.nupkg.sha512",
         "identitymodel.nuspec",
         "lib/net452/IdentityModel.dll",
+        "lib/net452/IdentityModel.pdb",
         "lib/net452/IdentityModel.xml",
-        "lib/net461/IdentityModel.dll",
-        "lib/net461/IdentityModel.xml",
         "lib/netstandard1.4/IdentityModel.dll",
+        "lib/netstandard1.4/IdentityModel.pdb",
         "lib/netstandard1.4/IdentityModel.xml",
         "lib/netstandard2.0/IdentityModel.dll",
+        "lib/netstandard2.0/IdentityModel.pdb",
         "lib/netstandard2.0/IdentityModel.xml"
       ]
     },
-    "IdentityModel.AspNetCore.OAuth2Introspection/3.1.0": {
-      "sha512": "x8e2m1JAHpUG+u8fuYtda72ppeqCSux+YIytLLII9eDqm5mK7sofqWzPlXTUQ9bD6qGFZrK+frMyjRfARKTKPQ==",
+    "IdentityModel.AspNetCore.OAuth2Introspection/3.5.0": {
+      "sha512": "HwTj2GKucM8pWprjFMe+dsupWTwAWLuyLQO1yY+9WsSTWswc/Ukhd5ZIavILsnCMvw9VSlWHFOl9dFu8Bsi+cw==",
       "type": "package",
-      "path": "identitymodel.aspnetcore.oauth2introspection/3.1.0",
+      "path": "identitymodel.aspnetcore.oauth2introspection/3.5.0",
       "files": [
-        "identitymodel.aspnetcore.oauth2introspection.3.1.0.nupkg.sha512",
+        ".signature.p7s",
+        "identitymodel.aspnetcore.oauth2introspection.3.5.0.nupkg.sha512",
         "identitymodel.aspnetcore.oauth2introspection.nuspec",
         "lib/net461/IdentityModel.AspNetCore.OAuth2Introspection.dll",
         "lib/net461/IdentityModel.AspNetCore.OAuth2Introspection.pdb",
+        "lib/net461/IdentityModel.AspNetCore.OAuth2Introspection.xml",
         "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.dll",
         "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.pdb",
         "lib/netstandard2.0/IdentityModel.AspNetCore.OAuth2Introspection.xml"
       ]
     },
-    "IdentityServer4.AccessTokenValidation/2.4.0": {
-      "sha512": "6zGnz8b5SZsinxa/YBNeC4xb1NTJP0/JUkjynHYo7DoDHt2QDJSnAUgKvi9HROz4/QIsmyrZE3ZFKm3xB063kg==",
+    "IdentityServer4.AccessTokenValidation/2.7.0": {
+      "sha512": "s3kT0mCOQAlfq5yMXfaxJrTtZKqdLRAzUPJS+hSEbW/pWbMO4LSx4lQt6SzDI6S3mc3ekFGbs7cV95Jd0EpQkA==",
       "type": "package",
-      "path": "identityserver4.accesstokenvalidation/2.4.0",
+      "path": "identityserver4.accesstokenvalidation/2.7.0",
       "files": [
-        "identityserver4.accesstokenvalidation.2.4.0.nupkg.sha512",
+        ".signature.p7s",
+        "identityserver4.accesstokenvalidation.2.7.0.nupkg.sha512",
         "identityserver4.accesstokenvalidation.nuspec",
-        "lib/net461/IdentityServer4.AccessTokenValidation.dll",
-        "lib/net461/IdentityServer4.AccessTokenValidation.pdb",
-        "lib/net461/IdentityServer4.AccessTokenValidation.xml",
         "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.dll",
         "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.pdb",
         "lib/netstandard2.0/IdentityServer4.AccessTokenValidation.xml"
@@ -8963,16 +8952,6 @@
         "lib/netstandard2.0/NLog.Web.AspNetCore.xml",
         "nlog.web.aspnetcore.4.7.0.nupkg.sha512",
         "nlog.web.aspnetcore.nuspec"
-      ]
-    },
-    "Ocelot.JwtAuthorize/0.0.400": {
-      "sha512": "DRbTRu9OoSmBF16bz+XhhpP47kFlIy5JsM81Tf70BtBAE93ml5lybMSHnZkgMPMNCg1jNCYyMq52PvNzV//1ag==",
-      "type": "package",
-      "path": "ocelot.jwtauthorize/0.0.400",
-      "files": [
-        "lib/netstandard2.0/Ocelot.JwtAuthorize.dll",
-        "ocelot.jwtauthorize.0.0.400.nupkg.sha512",
-        "ocelot.jwtauthorize.nuspec"
       ]
     },
     "Pivotal.Discovery.ClientCore/2.0.0-rc1": {
@@ -14926,6 +14905,8 @@
       "DotNetCore.CAP >= 2.3.1",
       "DotNetCore.CAP.Kafka >= 2.3.1",
       "DotNetCore.CAP.MySql >= 2.3.1",
+      "IdentityModel >= 3.10.2",
+      "IdentityServer4.AccessTokenValidation >= 2.7.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.Extensions.Logging >= 2.1.1",
@@ -14934,7 +14915,6 @@
       "Microsoft.NETCore.App >= 2.1.0",
       "NLog >= 4.5.11",
       "NLog.Web.AspNetCore >= 4.7.0",
-      "Ocelot.JwtAuthorize >= 0.0.400",
       "Pomelo.EntityFrameworkCore.MySql >= 2.1.2",
       "SkyWalking.AspNetCore >= 0.3.0",
       "SkyWalking.Diagnostics.HttpClient >= 0.3.0",
@@ -15008,6 +14988,14 @@
             "target": "Package",
             "version": "[2.3.1, )"
           },
+          "IdentityModel": {
+            "target": "Package",
+            "version": "[3.10.2, )"
+          },
+          "IdentityServer4.AccessTokenValidation": {
+            "target": "Package",
+            "version": "[2.7.0, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -15043,10 +15031,6 @@
           "NLog.Web.AspNetCore": {
             "target": "Package",
             "version": "[4.7.0, )"
-          },
-          "Ocelot.JwtAuthorize": {
-            "target": "Package",
-            "version": "[0.0.400, )"
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",

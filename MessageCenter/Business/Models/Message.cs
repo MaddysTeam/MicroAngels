@@ -12,10 +12,10 @@ namespace Business.Models
     /// </summary>
     public class Topic
     {
-        public string TopicId { get; }
+        public string Id { get; }
         public string ServiceId { get; }
         public string Name { get; set; }
-        public string Desc { get; set; }
+        public string Description { get; set; }
         public string CreateTime { get; }
     }
 
@@ -25,42 +25,54 @@ namespace Business.Models
     /// </summary>
     public class Message
     {
-        public string Id { get; }   
-        public string TopicId { get; }
-        public string Token { get; }
-        public string Type { get; }
-        public string Body { get; }
-        public string Status { get; protected set; }
-        //public string TipsId { get; }
-        public string SenderId { get; }
-        public string SenderServiceId { get; }
-        public string LevelId { get; }
-        public DateTime SendTime { get; }
-        public DateTime ReceiveTime { get; }
-        public TimeSpan Timeout { get; }
+        public string Id { get; set; }   
+        public string Topic { get;set; }
+        public string TopicId { get;set; }
+        public string TypeId { get;set; }
+        public string Body { get;set; }
+        public string StatusId { get;set;  }
+        public string SenderId { get;set; }
+        public string ServiceId { get;set; }
+        public DateTime SendTime { get;set; }
+        public DateTime ReceiveTime { get;set; }
+        public TimeSpan Timeout { get;set; }
+        public string SubscriberId { get; set; }
+        public string TargetId { get; set; }
 
         //TODO
         public bool IsTimeout { get { return ReceiveTime + Timeout > DateTime.UtcNow; } }
 
-        public void SetStatus(string status)
-        {
-            Status = status;
-        }
-
+        public bool IsValidate=>
+               !Topic.IsNullOrEmpty() 
+            && !Body.IsNullOrEmpty() 
+            && !SenderId.IsNullOrEmpty()
+            && !ServiceId.IsNullOrEmpty()
+            && SendTime < DateTime.UtcNow;
+        
     }
 
 
     /// <summary>
     /// 订阅
     /// </summary>
-    public class Suscribe
+    public class Subscribe
     {
-        public string Id { get;  }
-        public string SubscriberId { get; set; }
-        public string TopicId { get; set; }
-        public string TargetId { get; set; }
-        public string ServiceId { get; set; }
-        public string TipsId { get; set; }
+        public Subscribe() { }
+        public Subscribe(string id,string serviceId, string topicId,string subscriberId,string targetId)
+        {
+            Id = id;
+            ServiceId = serviceId;
+            TopicId = topicId;
+            TargetId = targetId;
+            ServiceId = serviceId;
+        }
+
+        public string Id { get; private set; }
+        public string SubscriberId { get; private set; }
+        public string TopicId { get; private set; }
+        public string TargetId { get; private set; }
+        public string ServiceId { get; private set; }
+        //public string TipsId { get; set; }
     }
 
     /// <summary>
@@ -69,25 +81,19 @@ namespace Business.Models
     public class UserMessage
     {
         public string Id { get; }
-        public string ServiceId { get; set; }
+        //public string ServiceId { get; set; }
         public string MessageId { get; set; }
         public string ReceiverId { get; set; }
-        public string IsReceive { get; set; }
         public string StatusId { get; set; }
-    }
-
-    public class MessageSearchOptions
-    {
-       
     }
 
 
     public enum MessageType
     {
-        Announce=1,  // 公告
-        Secret=2,    // 私信
-        Notice=3 ,   // 提醒
-        Subscribe=4, // 订阅
+        Announce,  // 公告
+        Secret,    // 私信
+        Notice ,   // 提醒
+        Subscribe, // 订阅
     }
 
 }

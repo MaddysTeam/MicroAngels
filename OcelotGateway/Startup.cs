@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ocelot.DependencyInjection;
-using Ocelot.JwtAuthorize;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
+using OcelotGateway.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace OcelotGateway
@@ -30,9 +30,12 @@ namespace OcelotGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication()
+                .AddIdentityServerAuthentication(ServiceAuthenticationOptions.MessageApiAuthenticationKey, ServiceAuthenticationOptions.MessageApiClient);
+
             services.AddOcelot(Configuration).AddConsul().AddPolly();
 
-            services.AddTokenJwtAuthorize();
+            //services.AddTokenJwtAuthorize();
 
             services.AddSwaggerGen(options =>
             {

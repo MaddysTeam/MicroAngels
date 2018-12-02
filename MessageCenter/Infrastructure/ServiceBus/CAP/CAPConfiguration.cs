@@ -42,7 +42,7 @@ namespace Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(_config.GetSection("Database:MySql:Conn").Value);
+            optionsBuilder.UseMySql(_config.GetSection("Queues:Kafka:DbConn").Value);
         }
     }
 

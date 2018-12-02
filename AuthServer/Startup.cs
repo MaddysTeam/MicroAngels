@@ -24,8 +24,6 @@ namespace Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDiscoveryClient(Configuration);
-
             // add mvc,include filters and etc..
             services.AddMvcCore()
             .AddControllersAsServices()
@@ -41,10 +39,11 @@ namespace Identity
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryApiResources(config.GetApiResources())
-                .AddInMemoryClients(config.GetClients());
-
-            services.AddSingleton<IPersistedGrantStore, RedisPersistedGrantStore>();
-            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
+                .AddInMemoryClients(config.GetClients())
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+                
+            //services.AddSingleton<IPersistedGrantStore, RedisPersistedGrantStore>();
+            //services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
