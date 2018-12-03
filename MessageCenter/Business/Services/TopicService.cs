@@ -24,7 +24,7 @@ namespace Business.Services
         {
             var result = true;
             topic.EnsureNotNull(() => new ArgumentException());
-            var isExists = !TopicsDb.GetById(topic.Id).IsNull();
+            var isExists =!topic.Id.IsNullOrEmpty() && !TopicsDb.GetById(topic.Id).IsNull();
             if (isExists)
             {
                 // upadate
@@ -32,6 +32,9 @@ namespace Business.Services
             }
             else
             {
+                topic.Id = Guid.NewGuid().ToString();
+                topic.CreateTime = DateTime.UtcNow;
+
                 if (TopicsDb.Count(t => t.Name == topic.Name) > 0)
                     result = false;
 
@@ -43,14 +46,14 @@ namespace Business.Services
         }
 
 
-        public Task<List<Topic>> GetTopicsAsync(string topic, int pageIndex, int pageSize, out int pageCount)
+        public Task<List<Topic>> GetTopicsAsync(string topic,int pageIndex, int pageSize, out int pageCount)
         {
             throw new NotImplementedException();
         }
 
         public Task<Topic> GetTopicAsync(string topic, string serviceId)
         {
-            var topicObj = TopicsDb.GetSingle(t => string.Compare(topic, t.Name) == 0 && t.ServiceId == serviceId);
+            var topicObj = TopicsDb.GetSingle(t => topic == t.Name && t.ServiceId == serviceId);
 
             return Task.FromResult(topicObj);
         }

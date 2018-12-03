@@ -45,13 +45,7 @@ namespace Infrastructure.Orms.Sugar
         public SimpleClient<Message> MessageDb { get { return new SimpleClient<Message>(DB); } }
         public SimpleClient<UserMessage> UserMessageDb { get { return new SimpleClient<UserMessage>(DB); } }
         public SimpleClient<Subscribe> SubscribeDb { get { return new SimpleClient<Subscribe>(DB); } }
-        private IConfiguration _configuration;
+        private static IConfiguration _configuration;
     }
 
-    public class Robot
-    {
-        public int Id { get; set; }
-        public string RobotName { get; set; }
-        public string RobotType { get; set; }
-    }
 }

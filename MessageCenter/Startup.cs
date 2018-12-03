@@ -29,6 +29,7 @@ namespace MessageCenter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSingleton(Configuration);
             services.AddTransient<ITopicService, TopicService>();
             services.AddTransient<IMessageService, MessageService>();
 
@@ -46,7 +47,9 @@ namespace MessageCenter
 
             services.AddCapWithMySQLAndRabbit(Configuration);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options=> {
+                options.Filters.Add<ExcepitonFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //services.AddTokenJwtAuthorize();
 

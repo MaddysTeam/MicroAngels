@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Common;
+using SqlSugar;
 
 namespace Business.Models
 {
@@ -12,11 +14,19 @@ namespace Business.Models
     /// </summary>
     public class Topic
     {
-        public string Id { get; }
-        public string ServiceId { get; }
+        public string Id { get; set; }
+
+        [Required]
+        public string ServiceId { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
         public string Description { get; set; }
-        public string CreateTime { get; }
+        public DateTime CreateTime { get; set; }
+
+        [SugarColumn(IsIgnore=true)]
+        public bool IsValidate => !ServiceId.IsNullOrEmpty() && !Name.IsNullOrEmpty();
     }
 
 

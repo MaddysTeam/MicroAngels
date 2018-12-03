@@ -19,6 +19,7 @@ namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class MessageController : ControllerBase
     {
 
@@ -35,20 +36,20 @@ namespace Controllers
             _configuration = configuraton;
         }
 
-        [Route("send")]
-        public async void SendMessage()
-        {
+        //[Route("send")]
+        //public async void SendMessage()
+        //{
 
-            //var accessTokenResponse = await AuthService.RequestAccesstokenAsync(
-            //   new AuthTokenRequest(_configuration["IdentityService:Uri"], "messageClient", "secret", "MessageCenter", "account", "password", null),
-            //   AuthType.byResoucePassword);
+        //    var accessTokenResponse = await AuthService.RequestAccesstokenAsync(
+        //       new AuthTokenRequest(_configuration["IdentityService:Uri"], "messageClient", "secret", "MessageCenter", "account", "password", null),
+        //       AuthType.byResoucePassword);
 
 
-            
-            //var message = new { Topic = "TestTopic", Body = "Hello kafka", SenderId = "Sender1", SenderTime = "2018-12-01" };
-            //var json = JsonConvert.SerializeObject(message);
-            //PublishMessage(json);
-        }
+
+        //    var message = new { Topic = "TestTopic", Body = "Hello kafka", SenderId = "Sender1", SenderTime = "2018-12-01" };
+        //    var json = JsonConvert.SerializeObject(message);
+        //    PublishMessage(json);
+        //}
 
         //protected  void PublishMessage(string message)
         //{

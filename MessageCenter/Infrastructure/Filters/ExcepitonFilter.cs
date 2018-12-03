@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -24,7 +26,7 @@ namespace Infrastructure
                 Messages = new[] { context.Exception.Message }
             };
 
-            //context.Result = new InternalServerErrorResult(errorMessage);
+            context.Result = new InternalServerErrorResult(errorMessage);
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             context.ExceptionHandled = true;
@@ -35,6 +37,12 @@ namespace Infrastructure
             public string[] Messages { get; set; }
         }
 
+        private class InternalServerErrorResult : ObjectResult
+        {
+            public InternalServerErrorResult(object value) : base(value) { }
+        }
+
     }
 
+   
 }
