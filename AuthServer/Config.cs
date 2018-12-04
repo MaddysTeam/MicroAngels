@@ -1,7 +1,10 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Identity
 {
@@ -13,6 +16,29 @@ namespace Identity
         {
             _configuration = configuration;
         }
+
+        public  List<TestUser> GetTestUsers()
+        {
+            return new List<TestUser>
+            {
+                new TestUser
+                    {
+                        SubjectId = "1",
+                        Username = "alice",
+                        Password = "password",
+                        Claims = new List<Claim>(){new Claim(JwtClaimTypes.Role,"superadmin") }
+                    },
+                    new TestUser
+                    {
+                        SubjectId = "2",
+                        Username = "bob",
+                        Password = "password",
+                        Claims = new List<Claim>(){new Claim(JwtClaimTypes.Role,"admin") }
+                    }
+            };
+
+        }
+
 
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
@@ -27,11 +53,11 @@ namespace Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource("MessageCenter", "MESSAGE API")
-                //{
-                //    ApiSecrets = {new Secret("secret".Sha256())},
-                //    UserClaims = new List<string>{"role"},
-                //}
+                new ApiResource("MessageCenter", "MESSAGE API",new List<string>{JwtClaimTypes.Role})
+                {
+                   // ApiSecrets = {new Secret("secret".Sha256())},
+                   // UserClaims = ,
+                }
             };
         }
 
@@ -54,8 +80,8 @@ namespace Identity
                     AllowOfflineAccess = true,
                     AccessTokenLifetime = accessTokenLifetime,
                     AllowedScopes = {
-                        //IdentityServerConstants.StandardScopes.OpenId,
-                        //IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
                         "MessageCenter" },
                     AccessTokenType = AccessTokenType.Jwt,
                     AllowAccessTokensViaBrowser=true

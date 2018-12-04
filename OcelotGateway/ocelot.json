@@ -62,7 +62,19 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "MessageServiceKey",
         "AllowedScopes": []
-      }
+      },
+      "UpstreamHeaderTransform": {
+        "Uncle": "Bob"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[role] > value"
+      },
+      "AddClaimsToRequest": {
+        "Role": "Claims[role] > value"
+      },
+      //"RouteClaimsRequirement": {
+      //  "role": "superadmin"
+      //}
       //,"FileCacheOptions": { "TtlSeconds": 15 },
     },
     {

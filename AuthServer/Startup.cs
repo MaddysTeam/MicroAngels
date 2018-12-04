@@ -37,6 +37,7 @@ namespace Identity
                     //x.PublicOrigin = "http://identity";
                 })
                 .AddDeveloperSigningCredential()
+                //.AddTestUsers(config.GetTestUsers())
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryApiResources(config.GetApiResources())
                 .AddInMemoryClients(config.GetClients())
