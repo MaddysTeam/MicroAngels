@@ -1,0 +1,17 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Identity.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Identity.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Identity.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Identity.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Identity.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Core.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.RazorAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.RazorAssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.RazorTargetAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.csproj.CopyComplete
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.IdentityServer\obj\Debug\netcoreapp2.1\MicroAngels.Identity.pdb

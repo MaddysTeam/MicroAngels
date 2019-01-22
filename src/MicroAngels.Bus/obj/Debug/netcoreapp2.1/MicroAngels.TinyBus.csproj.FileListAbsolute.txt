@@ -1,0 +1,12 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\bin\Debug\netcoreapp2.1\MicroAngels.TinyBus.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\bin\Debug\netcoreapp2.1\MicroAngels.TinyBus.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\bin\Debug\netcoreapp2.1\MicroAngels.TinyBus.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\bin\Debug\netcoreapp2.1\MicroAngels.Core.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.csproj.CopyComplete
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.TinyBus\obj\Debug\netcoreapp2.1\MicroAngels.TinyBus.pdb

@@ -1,0 +1,12 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\bin\Debug\netcoreapp2.1\MicroAngels.Consul.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\bin\Debug\netcoreapp2.1\MicroAngels.Consul.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\bin\Debug\netcoreapp2.1\MicroAngels.Consul.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\bin\Debug\netcoreapp2.1\MicroAngels.Core.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.csproj.CopyComplete
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.ServiceDiscovery\obj\Debug\netcoreapp2.1\MicroAngels.Consul.pdb

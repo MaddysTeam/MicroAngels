@@ -1,0 +1,14 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\bin\Debug\netcoreapp2.1\MicroAngels.Warehouse.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\bin\Debug\netcoreapp2.1\MicroAngels.Warehouse.runtimeconfig.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\bin\Debug\netcoreapp2.1\MicroAngels.Warehouse.runtimeconfig.dev.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\bin\Debug\netcoreapp2.1\MicroAngels.Warehouse.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\bin\Debug\netcoreapp2.1\MicroAngels.Warehouse.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.RazorAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.RazorAssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.RazorTargetAssemblyInfo.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Warehouse\obj\Debug\netcoreapp2.1\MicroAngels.Warehouse.pdb

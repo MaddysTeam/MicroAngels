@@ -1,3 +1,0 @@
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\Common\obj\Debug\netcoreapp2.1\Common.csproj.CoreCompileInputs.cache
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\Common\obj\Debug\netcoreapp2.1\Common.AssemblyInfoInputs.cache
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\Common\obj\Debug\netcoreapp2.1\Common.AssemblyInfo.cs

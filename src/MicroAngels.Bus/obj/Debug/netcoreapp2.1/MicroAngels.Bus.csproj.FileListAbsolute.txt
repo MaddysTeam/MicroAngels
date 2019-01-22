@@ -1,0 +1,12 @@
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.deps.json
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Core.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csprojAssemblyReference.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csproj.CoreCompileInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.AssemblyInfoInputs.cache
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.AssemblyInfo.cs
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csproj.CopyComplete
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.pdb

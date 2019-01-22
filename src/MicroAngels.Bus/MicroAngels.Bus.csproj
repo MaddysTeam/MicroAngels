@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TinyBus\kafka\" />
+    <Folder Include="TinyBus\rabbit\" />
+    <PackageReference Include="DotNetCore.CAP" Version="2.3.1" />
+    <PackageReference Include="DotNetCore.CAP.Kafka" Version="2.3.1" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="2.3.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
+  </ItemGroup>
+
+</Project>
