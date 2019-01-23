@@ -1,7 +1,7 @@
 ﻿using Business.Helpers;
 using Business.Models;
 using Business.Services;
-using MicroAngels.Core.Common;
+using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;

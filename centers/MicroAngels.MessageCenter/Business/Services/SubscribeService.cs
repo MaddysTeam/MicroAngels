@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Models;
 using Infrastructure.Orms.Sugar;
-using MicroAngels.Core.Common;
+using MicroAngels.Core;
 using Microsoft.Extensions.Logging;
 
 namespace Business.Services

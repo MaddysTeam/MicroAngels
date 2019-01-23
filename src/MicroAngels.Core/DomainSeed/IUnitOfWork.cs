@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Common.DomainSeed
+namespace MicroAngels.Core.Domain
 {
     public interface IUnitOfWork : IDisposable
     {        

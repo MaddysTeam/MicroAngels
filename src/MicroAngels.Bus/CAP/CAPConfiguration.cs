@@ -9,20 +9,15 @@ namespace MicroAngels.Bus.CAP
     public static class CAPConfiguration
     {
 
-        public static IServiceCollection AddCapWithMySQLAndRabbit(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddCapService(this IServiceCollection services, CapService capService)
         {
-            services.AddDbContext<CAPMysqlDbContext>();
-
-            // add cap
-            services.AddCap(x =>
-            {
-                x.UseEntityFramework<CAPMysqlDbContext>();
-
-                x.UseKafka(config["Queues:Kafka:Host"]);
-
-                x.UseDashboard();
-               
-            });
+            services.AddDbContext<CAPMysqlDbContext>()  
+                    .AddCap(x =>
+                    {
+                        x.UseEntityFramework<CAPMysqlDbContext>()
+                         .UseKafka(capService.Host)
+                         .UseDashboard();
+                    });
 
             return services;
         }
@@ -31,16 +26,16 @@ namespace MicroAngels.Bus.CAP
 
     public class CAPMysqlDbContext : DbContext
     {
-        private IConfiguration _config;
+        private CapService _capService;
 
-        public CAPMysqlDbContext(IConfiguration config)
+        public CAPMysqlDbContext(CapService config)
         {
-            _config = config;
+            _capService = config;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(_config.GetSection("Queues:Kafka:DbConn").Value);
+            optionsBuilder.UseMySql(_capService.ConnectString);
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿using Business.Models;
-using MicroAngels.Core.Common;
+using MicroAngels.Core;
 using Infrastructure.Orms.Sugar;
 using Microsoft.Extensions.Logging;
 using SqlSugar;

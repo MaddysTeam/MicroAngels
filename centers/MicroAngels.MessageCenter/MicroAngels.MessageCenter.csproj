@@ -45,9 +45,9 @@
     <PackageReference Include="SkyWalking.AspNetCore" Version="0.3.0" />
     <PackageReference Include="SkyWalking.Diagnostics.HttpClient" Version="0.3.0" />
     <PackageReference Include="sqlSugarCore" Version="4.8.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
+    <!--<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />-->
     <PackageReference Include="zipkin4net" Version="1.2.3" />
     <PackageReference Include="zipkin4net.middleware.aspnetcore" Version="1.2.3" />
   </ItemGroup>
@@ -55,6 +55,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Bus\MicroAngels.Bus.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Swagger\MicroAngels.Swagger.csproj" />
   </ItemGroup>
 
 </Project>

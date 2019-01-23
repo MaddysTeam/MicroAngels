@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace MicroAngels.Core.Common
+namespace MicroAngels.Core
 {
 
     public static class HttpResponseExtensions

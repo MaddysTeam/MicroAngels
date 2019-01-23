@@ -1,4 +1,4 @@
-﻿namespace Common.DomainSeed
+﻿namespace MicroAngels.Core.Domain
 {
     using System;
     using System.Collections.Generic;

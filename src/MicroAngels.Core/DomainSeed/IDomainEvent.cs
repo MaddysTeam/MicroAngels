@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.DomainSeed
+namespace MicroAngels.Core.Domain
 {
 
     public interface IDomainEvent

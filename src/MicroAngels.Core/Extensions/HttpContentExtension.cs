@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MicroAngels.Core.Common
+namespace MicroAngels.Core
 {
     public static class HttpContentExtension
     {

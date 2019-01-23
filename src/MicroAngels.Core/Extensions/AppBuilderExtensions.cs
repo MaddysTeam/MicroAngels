@@ -1,4 +1,4 @@
-﻿namespace MessageCenter
+﻿namespace MicroAngels.Core
 {
     public static class AppBuilderExtensions
     {

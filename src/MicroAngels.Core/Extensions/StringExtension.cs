@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MicroAngels.Core.Common
+namespace MicroAngels.Core
 {
 
     public static class StringExtension

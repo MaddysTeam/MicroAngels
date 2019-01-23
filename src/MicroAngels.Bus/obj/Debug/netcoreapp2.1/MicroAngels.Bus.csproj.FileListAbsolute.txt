@@ -10,3 +10,15 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csproj.CopyComplete
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.pdb
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.deps.json
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.dll
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Bus.pdb
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Core.dll
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csprojAssemblyReference.cache
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csproj.CoreCompileInputs.cache
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.AssemblyInfoInputs.cache
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.AssemblyInfo.cs
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.csproj.CopyComplete
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.dll
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Bus\obj\Debug\netcoreapp2.1\MicroAngels.Bus.pdb
