@@ -12,7 +12,8 @@ namespace Infrastructure.Orms.Sugar
         {
             MySqlDbContext.Current.Initial(configuration);
 
-            //lifetime.ApplicationStopped.Register(() => {
+            //lifetime.ApplicationStopped.Register(() =>
+            //{
             //    MySqlDbContext.Current.Stop();
             //});
 

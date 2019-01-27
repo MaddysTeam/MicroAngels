@@ -42,8 +42,9 @@ namespace MessageCenter
                    });
 
             // add cap
-            services.AddCapService(new CapService {
-                Host = Configuration["Queues:Kafka:Host"] ,
+            services.AddCapService(new CapService
+            {
+                Host = Configuration["Queues:Kafka:Host"],
                 ConnectString = Configuration["Queues:Kafka:DbConn"]
             });
 
@@ -94,6 +95,7 @@ namespace MessageCenter
 
             //services.AddTokenJwtAuthorize();
 
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,18 +118,25 @@ namespace MessageCenter
                .UseSwaggerService(
                 new SwaggerService { Name = Configuration["Swagger:Name"] },
                 new SwaggerUIOptions { IsShowExtensions = true })
-               .UseConsul(lifeTime,new ConsulService { })  //regsiter consul
-               .RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
+               .UseConsul(lifeTime, new ConsulService //regsiter consul
+               {
+                   Id = Guid.NewGuid().ToString(),
+                   Host = Configuration["Service:Host"],
+                   Port = Convert.ToInt32(Configuration["Service:Port"]),
+                   Name = Configuration["Service:Name"],
+                   HostConfiguration = new ConsulHostConfiguration
+                   {
+                       Host = Configuration["Consul:Host"],
+                       Port = Convert.ToInt32(Configuration["Consul:Port"])
+                   },
+                   HealthCheckOptoins = new ConsuleHealthCheckOptoins
+                   {
+                       HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+                       IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+                   }
+               });
 
-            // regsiter consul
-            //app.RegisterConsul(lifeTime, new ServiceEntityModel
-            //{
-            //    IP = Configuration["Service:Ip"],
-            //    Port = Convert.ToInt32(Configuration["Service:Port"]),
-            //    ServiceName = Configuration["Service:Name"],
-            //    ConsulIP = Configuration["Consul:IP"],
-            //    ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
-            //});
+              app.RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
 
             //TODO: will use skywalking instead
             // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);

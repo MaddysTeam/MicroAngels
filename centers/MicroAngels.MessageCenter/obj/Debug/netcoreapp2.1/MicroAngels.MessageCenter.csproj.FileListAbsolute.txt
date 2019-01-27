@@ -57,3 +57,7 @@ E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.dll
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.pdb
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.pdb

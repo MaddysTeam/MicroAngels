@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -11,6 +10,7 @@ namespace MicroAngels.Bus.CAP
 
         public static IServiceCollection AddCapService(this IServiceCollection services, CapService capService)
         {
+            services.AddSingleton(capService);
             services.AddDbContext<CAPMysqlDbContext>()  
                     .AddCap(x =>
                     {
@@ -28,9 +28,9 @@ namespace MicroAngels.Bus.CAP
     {
         private CapService _capService;
 
-        public CAPMysqlDbContext(CapService config)
+        public CAPMysqlDbContext(CapService capService)
         {
-            _capService = config;
+            _capService = capService;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

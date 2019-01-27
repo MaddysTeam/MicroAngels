@@ -1,16 +1,15 @@
 ﻿using MicroAngels.Core.Service;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.ServiceDiscovery.Consul
 {
 
     public class ConsulService : IService
     {
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         public string Version { get; private set; }
 
@@ -18,7 +17,7 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string Host { get; set; }
 
-        public int Port { get; private set; }
+        public int Port { get; set; }
 
         public string Group { get; private set; }
 
@@ -26,9 +25,9 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string HealthStatus { get; private set; }
 
-        public DateTime RegistDate { get; }
+        //public DateTime RegistDate { get; }
 
-        public DateTime OfflineDate { get; }
+        //public DateTime OfflineDate { get; }
 
         public string[] Tags { get; }
 
@@ -38,14 +37,15 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
     }
 
-    public class ConsuleHealthCheckOptoins: ServiceHealthCheckOptions
+    public class ConsuleHealthCheckOptoins : ServiceHealthCheckOptions
     {
 
     }
 
 
-    public class ConsulServiceError : IServiceError
+    public class ConsulServiceResult : IServiceError
     {
+        public bool IsSuccess { get; private set; }
 
         public string ServiceId { get; private set; }
 
@@ -57,11 +57,12 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string Id { get; private set; }
 
-        public ConsulServiceError(string serviceId, string message, string level)
-            : this(serviceId, message, level, null) { }
+        //public ConsulServiceResult(bool isSuccess,string serviceId, string message, string level)
+        //    : this(isSuccess,serviceId, message, level, null) { }
 
-        public ConsulServiceError(string serviceId, string message, string level, IList<Exception> inner)
+        public ConsulServiceResult(bool isSuccess, string serviceId = null, string message = null, string level = null, IList<Exception> inner = null)
         {
+            IsSuccess = isSuccess;
             ServiceId = serviceId;
             Message = message;
             Level = level;

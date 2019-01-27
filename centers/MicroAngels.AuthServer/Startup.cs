@@ -58,14 +58,14 @@ namespace Identity
 
             app.UseIdentityServer();
 
-            app.RegisterConsul(lifeTime, new ServiceEntityModel
-            {
-                IP = Configuration["Service:Ip"],
-                Port = Convert.ToInt32(Configuration["Service:Port"]),
-                ServiceName = Configuration["Service:Name"],
-                ConsulIP = Configuration["Consul:IP"],
-                ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
-            });
+            //app.RegisterConsul(lifeTime, new ServiceEntityModel
+            //{
+            //    IP = Configuration["Service:Ip"],
+            //    Port = Convert.ToInt32(Configuration["Service:Port"]),
+            //    ServiceName = Configuration["Service:Name"],
+            //    ConsulIP = Configuration["Consul:IP"],
+            //    ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
+            //});
         }
     }
 }
