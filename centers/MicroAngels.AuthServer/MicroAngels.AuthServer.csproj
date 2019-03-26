@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Business\GrantStores\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 </Project>
