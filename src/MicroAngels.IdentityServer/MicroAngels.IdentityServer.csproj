@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="IdentityServer4" Version="2.3.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.600" />
   </ItemGroup>
 
 </Project>

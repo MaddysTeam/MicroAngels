@@ -4,12 +4,6 @@
     <AssemblyName>MicroAngels.AuthServer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Business\GrantStore\**" />
-    <Content Remove="Business\GrantStore\**" />
-    <EmbeddedResource Remove="Business\GrantStore\**" />
-    <None Remove="Business\GrantStore\**" />
-  </ItemGroup>
-  <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -20,9 +14,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Business\GrantStores\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 </Project>

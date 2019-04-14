@@ -1,6 +1,8 @@
-﻿using Business;
-using IdentityServer4.Stores;
+﻿using IdentityServer4.Stores;
 using IdentityServer4.Validation;
+using MicroAngels.IdentityServer;
+using MicroAngels.IdentityServer.Validators;
+using MicroAngels.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -34,12 +36,17 @@ namespace Identity
                     //x.IssuerUri = "http://identity";
                     //x.PublicOrigin = "http://identity";
                 })
-                .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
-                .AddInMemoryApiResources(config.GetApiResources())
-                .AddInMemoryClients(config.GetClients())
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
-                
+                .UseMysql()
+                .UseRedisGrantStore();
+                //.AddDeveloperSigningCredential()
+                //.AddResourceStore<ResourceStore>()
+                //.AddPersistedGrantStore<GrantStore>()
+                //.AddClientStore<ClientStore>()
+                //.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+                //.AddInMemoryPersistedGrants()
+                //.AddInMemoryApiResources(config.GetApiResources())
+                //.AddInMemoryClients(config.GetClients());
+
             //services.AddSingleton<IPersistedGrantStore, RedisPersistedGrantStore>();
             //services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
         }
@@ -54,7 +61,7 @@ namespace Identity
 
             app.UseMvc();
 
-            app.UseIdentityServer();
+           // app.UseIdentityServer();
 
             //app.RegisterConsul(lifeTime, new ServiceEntityModel
             //{

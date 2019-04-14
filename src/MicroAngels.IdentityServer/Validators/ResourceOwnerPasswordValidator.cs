@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Business
+namespace MicroAngels.IdentityServer.Validators
 {
 
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
