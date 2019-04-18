@@ -1,9 +1,9 @@
-﻿using IdentityServer4.Configuration;
-using IdentityServer4.Stores;
+﻿using IdentityServer4.Stores;
 using MicroAngels.IdentityServer.Providers;
 using MicroAngels.IdentityServer.Providers.MySql;
 using MicroAngels.IdentityServer.Providers.Redis;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace MicroAngels.IdentityServer.Extensions
 {
@@ -11,24 +11,34 @@ namespace MicroAngels.IdentityServer.Extensions
     public static class IdentityServerBuilderExtensions
     {
 
-        public static IIdentityServerBuilder UseMysql(this IIdentityServerBuilder builder, bool useMysqlGrantStore = false)
+        public static IIdentityServerBuilder UseMysql(this IIdentityServerBuilder builder,Action<MySqlStoreOptions> storeOptionAction)
         {
+            var storeOption = new MySqlStoreOptions();
+            storeOptionAction?.Invoke(storeOption);
+
+            builder.Services.AddSingleton<MySqlStoreOptions>(storeOption);
+
             builder.Services.AddTransient<IClientProvider, MySqlClientProvider>();
             builder.Services.AddTransient<IResourceProvider, MySqlResourceProvider>();
+            builder.Services.AddTransient<IGrantStoreProvider, MySqlGrantStoreProvider>();
             builder.Services.AddTransient<IClientStore, ClientStore>();
             builder.Services.AddTransient<IResourceStore, ResourceStore>();
-            
-            return builder;
-        }
+            builder.Services.AddTransient<IPersistedGrantStore, GrantStore>();
 
-        public static IIdentityServerBuilder UseRedisGrantStore(this IIdentityServerBuilder builder)
+            return builder;
+        }   
+
+        public static IIdentityServerBuilder UseRedisGrantStore(this IIdentityServerBuilder builder, Action<RedisStoreOptions> storeOptionAction)
         {
+            var storeOption = new RedisStoreOptions();
+            storeOptionAction?.Invoke(storeOption);
+            builder.Services.AddSingleton<RedisStoreOptions>(storeOption);
+
             builder.Services.AddTransient<IGrantStoreProvider, RedisGrantStoreProvider>();
             builder.Services.AddTransient<IPersistedGrantStore, GrantStore>();
 
             return builder;
         }
-
 
     }
 

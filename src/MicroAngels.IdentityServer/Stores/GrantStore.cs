@@ -19,17 +19,17 @@ namespace MicroAngels.IdentityServer
             _provider = provider;
         }
 
-        public Task<IEnumerable<PersistedGrant>> GetAllAsync(string subjectId) => _provider.GetAllAsync(subjectId);
+        public async Task<IEnumerable<PersistedGrant>> GetAllAsync(string subjectId) => await _provider.GetAllAsync(subjectId);
 
-        public Task<PersistedGrant> GetAsync(string key) => _provider.GetAsync(key);
+        public async Task<PersistedGrant> GetAsync(string key) => await _provider.GetAsync(key);
 
-        public Task RemoveAllAsync(string subjectId, string clientId) => _provider.RemoveAllAsync(subjectId, clientId);
+        public async Task RemoveAllAsync(string subjectId, string clientId) => await _provider.RemoveAllAsync(subjectId, clientId);
 
-        public Task RemoveAllAsync(string subjectId, string clientId, string type)=>_provider.RemoveAllAsync(subjectId, clientId,type);
+        public async Task RemoveAllAsync(string subjectId, string clientId, string type)=> await _provider.RemoveAllAsync(subjectId, clientId,type);
 
-        public Task RemoveAsync(string key) => _provider.RemoveAsync(key);
+        public async Task RemoveAsync(string key) => await _provider.RemoveAsync(key);
 
-        public Task StoreAsync(PersistedGrant grant) => _provider.StoreAsync(grant);
+        public async Task StoreAsync(PersistedGrant grant) => await _provider.StoreAsync(grant);
 
     }
 

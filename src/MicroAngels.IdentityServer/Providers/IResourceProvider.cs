@@ -12,6 +12,10 @@ namespace MicroAngels.IdentityServer.Providers
         Task<ApiResource> FindResource(string resourceName);
 
         Task<IEnumerable<ApiResource>> FindResourcesByScopes(IEnumerable<string> scopes);
+
+        Task<IEnumerable<IdentityServer4.Models.IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames);
+
+        Task<Resources> GetAllResourcesAsync();
     }
 
 }

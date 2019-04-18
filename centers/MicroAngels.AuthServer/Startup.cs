@@ -36,8 +36,11 @@ namespace Identity
                     //x.IssuerUri = "http://identity";
                     //x.PublicOrigin = "http://identity";
                 })
-                .UseMysql()
-                .UseRedisGrantStore();
+                .AddDeveloperSigningCredential()
+                .UseMysql(opt=> {
+                    opt.ConnectionStrings = "Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;port=3306"; //"Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;pooling=false;CharSet=utf8;port=3306";
+                });
+                //.UseRedisGrantStore();
                 //.AddDeveloperSigningCredential()
                 //.AddResourceStore<ResourceStore>()
                 //.AddPersistedGrantStore<GrantStore>()
@@ -61,7 +64,7 @@ namespace Identity
 
             app.UseMvc();
 
-           // app.UseIdentityServer();
+            app.UseIdentityServer();
 
             //app.RegisterConsul(lifeTime, new ServiceEntityModel
             //{

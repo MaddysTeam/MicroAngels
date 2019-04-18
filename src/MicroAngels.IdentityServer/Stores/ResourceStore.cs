@@ -13,27 +13,27 @@ namespace MicroAngels.IdentityServer
 
         public ResourceStore(IResourceProvider resourceProvider)
         {
-            this._resourceProvider = resourceProvider;
+            _resourceProvider = resourceProvider;
         }
 
-        public Task<ApiResource> FindApiResourceAsync(string name)
+        public async Task<ApiResource> FindApiResourceAsync(string name)
         {
-            throw new NotImplementedException();
+           return await _resourceProvider.FindResource(name);
         }
 
-        public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            throw new NotImplementedException();
+            return await _resourceProvider.FindResourcesByScopes(scopeNames);
         }
 
-        public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            throw new NotImplementedException();
+            return await _resourceProvider.FindIdentityResourcesByScopeAsync(scopeNames);
         }
 
-        Task<IdentityServer4.Models.Resources> IResourceStore.GetAllResourcesAsync()
+        public async Task<IdentityServer4.Models.Resources> GetAllResourcesAsync()
         {
-            throw new NotImplementedException();
+            return await _resourceProvider.GetAllResourcesAsync();
         }
 
         private readonly IResourceProvider _resourceProvider;

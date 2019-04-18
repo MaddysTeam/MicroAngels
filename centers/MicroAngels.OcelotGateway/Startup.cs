@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
-using Ocelot.Provider.Consul;
-using Ocelot.Provider.Polly;
+//using Ocelot.DependencyInjection;
+//using Ocelot.Middleware;
+//using Ocelot.Provider.Consul;
+//using Ocelot.Provider.Polly;
 using OcelotGateway.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace OcelotGateway
             services.AddAuthentication()
                 .AddIdentityServerAuthentication(ServiceAuthenticationOptions.MessageApiAuthenticationKey, ServiceAuthenticationOptions.MessageApiClient);
 
-            services.AddOcelot(Configuration).AddConsul().AddPolly();
+           // services.AddOcelot(Configuration).AddConsul().AddPolly();
 
             //services.AddTokenJwtAuthorize();
 
@@ -60,7 +60,7 @@ namespace OcelotGateway
 
            // app.UseMvc();
 
-            app.UseOcelot().Wait();
+           // app.UseOcelot().Wait();
         }
     }
 }
