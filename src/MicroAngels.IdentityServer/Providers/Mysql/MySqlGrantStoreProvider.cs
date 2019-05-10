@@ -32,10 +32,10 @@ namespace MicroAngels.IdentityServer.Providers.MySql
             {
                 string sql = "select * from PersistedGrants where SubjectId=@subjectId";
                 var data = (await connection.QueryAsync<IdentityPersistedGrant>(sql, new { subjectId }))?.AsList();
-               // var model = data.Select(x => x.ToModel());
+                var model = data.Select(x => x.Map());
 
                 _logger.LogDebug("{persistedGrantCount} persisted grants found for {subjectId}", data.Count, subjectId);
-                return null;
+                return model;
             }
         }
 
@@ -48,12 +48,12 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "select * from PersistedGrants where [Key]=@key";
+                string sql = "select * from PersistedGrants where `Key`=@key";
                 var result = await connection.QueryFirstOrDefaultAsync<IdentityPersistedGrant>(sql, new { key });
-               // var model = result.ToModel();
+                var model = result.Map();
 
-                //_logger.LogDebug("{persistedGrantKey} found in database: {persistedGrantKeyFound}", key, model != null);
-                return null;
+                _logger.LogDebug("{persistedGrantKey} found in database: {persistedGrantKeyFound}", key, model != null);
+                return model;
             }
         }
 
@@ -99,7 +99,7 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "delete from PersistedGrants where [Key]=@key";
+                string sql = "delete from PersistedGrants where `Key`=@key";
                 await connection.ExecuteAsync(sql, new { key });
                 _logger.LogDebug("remove {key} from database success", key);
             }
@@ -112,14 +112,14 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         /// <returns></returns>
         public async Task StoreAsync(PersistedGrant grant)
         {
-            using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
-            {
-                //移除防止重复
-                await RemoveAsync(grant.Key);
-                string sql = "insert into PersistedGrants([Key],ClientId,CreationTime,Data,Expiration,SubjectId,Type) values(@Key,@ClientId,@CreationTime,@Data,@Expiration,@SubjectId,@Type)";
-                await connection.ExecuteAsync(sql, grant);
-            }
-        }
+			using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
+			{
+				//移除防止重复
+				await RemoveAsync(grant.Key);
+				string sql = "insert into PersistedGrants(`Key`,ClientId,CreationTime,Data,Expiration,SubjectId,Type) values(@Key,@ClientId,@CreationTime,@Data,@Expiration,@SubjectId,@Type)";
+				await connection.ExecuteAsync(sql, grant);
+			}
+		}
 
         private readonly ILogger<MySqlGrantStoreProvider> _logger;
 

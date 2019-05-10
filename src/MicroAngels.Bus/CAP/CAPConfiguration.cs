@@ -8,7 +8,7 @@ namespace MicroAngels.Bus.CAP
     public static class CAPConfiguration
     {
 
-        public static IServiceCollection AddCapService(this IServiceCollection services, CapService capService)
+        public static IServiceCollection AddKafkaService(this IServiceCollection services, CapService capService)
         {
             services.AddSingleton(capService);
             services.AddDbContext<CAPMysqlDbContext>()  
@@ -21,6 +21,12 @@ namespace MicroAngels.Bus.CAP
 
             return services;
         }
+
+
+		public static IServiceCollection AddRabbitService(this IServiceCollection services, CapService capService)
+		{
+			throw new System.NotImplementedException("rabbit serivce will coming soon");
+		}
 
     }
 

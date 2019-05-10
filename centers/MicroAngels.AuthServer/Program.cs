@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Identity
+namespace MicroAngels.AuthServer
 {
     public class Program
     {

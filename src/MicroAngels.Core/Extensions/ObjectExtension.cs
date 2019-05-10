@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,6 +20,10 @@ namespace MicroAngels.Core
                 throw errorFunc();
         }
 
-    }
+		public static string ToJson(this object o) 
+		{
+			return JsonConvert.SerializeObject(o);
+		}
+	}
 
 }

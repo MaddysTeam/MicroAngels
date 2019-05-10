@@ -23,8 +23,7 @@ namespace Controllers
             _topicService = topicService;
         }
 
-        [Route("edit")]
-        [HttpPost]
+        [HttpPost("edit")]
         public async Task<IActionResult> EditTopic([FromBody] Topic topic)
         {
             if (topic.IsNull() || !topic.IsValidate || !ModelState.IsValid)
@@ -41,8 +40,7 @@ namespace Controllers
                 return NotFound();
         }
 
-        [Route("list")]
-        [HttpPost]
+        [HttpPost("list")]
         public async Task<IActionResult> GetTopics(string topic, int pageSize, int pageIndex)
         {
             var totalCount = 0;
@@ -54,8 +52,7 @@ namespace Controllers
             });
         }
 
-        [Route("single")]
-        [HttpPost]
+        [HttpPost("single")]
         public async Task<IActionResult> GetTopic(string topic, string serviceId)
         {
             var topicObj = await _topicService.GetTopicAsync(topic, serviceId);

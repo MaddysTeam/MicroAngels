@@ -11,23 +11,19 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string Name { get; set; }
 
-        public string Version { get; private set; }
+        public string Version { get; set; }
 
-        public Uri Address { get; private set; }
+        public Uri Address { get;  set; }
 
         public string Host { get; set; }
 
         public int Port { get; set; }
 
-        public string Group { get; private set; }
+        public string Group { get;  set; }
 
-        public string Doc { get; private set; }
+        public string Doc { get;  set; }
 
-        public string HealthStatus { get; private set; }
-
-        //public DateTime RegistDate { get; }
-
-        //public DateTime OfflineDate { get; }
+        public string HealthStatus { get; set; }
 
         public string[] Tags { get; }
 
@@ -56,9 +52,6 @@ namespace MicroAngels.ServiceDiscovery.Consul
         public IList<Exception> Inner { get; private set; }
 
         public string Id { get; private set; }
-
-        //public ConsulServiceResult(bool isSuccess,string serviceId, string message, string level)
-        //    : this(isSuccess,serviceId, message, level, null) { }
 
         public ConsulServiceResult(bool isSuccess, string serviceId = null, string message = null, string level = null, IList<Exception> inner = null)
         {

@@ -41,7 +41,7 @@
           "lib/netstandard1.0/Google.Protobuf.dll": {}
         }
       },
-      "IdentityModel/3.10.0": {
+      "IdentityModel/3.10.10": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "11.0.1",
@@ -3051,13 +3051,13 @@
         "lib/netstandard1.0/Google.Protobuf.xml"
       ]
     },
-    "IdentityModel/3.10.0": {
-      "sha512": "QmHcnV1saSJ7pp5Xpd5swe6dn4vB3YEYI9e1p1mj2YEkpz7BbJvIFaF6CdbdxX8sJ5gTFPy6BOQaY9qsQeNBsw==",
+    "IdentityModel/3.10.10": {
+      "sha512": "uTj4j7HpbYbpEB1Uw3RLhLyYQb2Ah9iNO9Jyze42dwBTPCJRFowrpn6+VwAP73JaRhtCmYN5tabyuOTdycfKJg==",
       "type": "package",
-      "path": "identitymodel/3.10.0",
+      "path": "identitymodel/3.10.10",
       "files": [
         ".signature.p7s",
-        "identitymodel.3.10.0.nupkg.sha512",
+        "identitymodel.3.10.10.nupkg.sha512",
         "identitymodel.nuspec",
         "lib/net452/IdentityModel.dll",
         "lib/net452/IdentityModel.pdb",
@@ -9061,6 +9061,7 @@
     ".NETCoreApp,Version=v2.1": [
       "AutoMapper >= 8.0.0",
       "Dapper >= 1.60.6",
+      "IdentityModel >= 3.10.10",
       "IdentityServer4 >= 2.3.0",
       "MicroAngels.Core >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -9121,6 +9122,10 @@
           "Dapper": {
             "target": "Package",
             "version": "[1.60.6, )"
+          },
+          "IdentityModel": {
+            "target": "Package",
+            "version": "[3.10.10, )"
           },
           "IdentityServer4": {
             "target": "Package",

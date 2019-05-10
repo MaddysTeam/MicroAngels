@@ -34,11 +34,13 @@ namespace MicroAngels.IdentityServer.Providers.MySql
                 var query = await connection.QueryMultipleAsync(_sql1, new { name }).ConfigureAwait(false);
                 var apiResources = query.Read<IdentityApiResource>();
                 var scopes = query.Read<IdentityApiScope>();
+				var secrets = query.Read<IdentityApiSecret>();
                 if(apiResources !=null && apiResources.AsList()?.Count > 0)
                 {
                     var resource = apiResources.AsList()[0];
                     resource.Scopes = scopes.ToList();
-                    model = resource.Map();
+					resource.Secrets = secrets.ToList();
+					model = resource.Map();
                 }
             }
 
@@ -132,7 +134,7 @@ namespace MicroAngels.IdentityServer.Providers.MySql
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
                 //string sql = "select * from IdentityResources where Enabled=1";
-                var sql = _sql1;
+                var sql = _sql5;
                 var data = (await connection.QueryAsync<Models.IdentityResource>(sql))?.AsList();
                 if (data != null && data.Count > 0)
                 {
@@ -149,8 +151,11 @@ namespace MicroAngels.IdentityServer.Providers.MySql
                     foreach (var item in apidata)
                     {
                         sql = _sql3;
-                        var scopedata = (await connection.QueryAsync<IdentityApiScope>(sql, new { id = item.Id }))?.AsList();
+						var query= await connection.QueryMultipleAsync(sql, new { id = item.Id }).ConfigureAwait(false); //(await connection.QueryAsync<IdentityApiScope>(sql, new { id = item.Id }))?.AsList();
+						var scopedata = query.Read<IdentityApiScope>().ToList();
+						var secrets = query.Read<IdentityApiSecret>().ToList();
                         item.Scopes = scopedata;
+						item.Secrets = secrets;
                         apiResourceData.Add(item.Map());
                     }
                 }
@@ -162,10 +167,13 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         private readonly MySqlStoreOptions _storeOptions;
         private readonly ILogger<ApiResource> _logger;
         private string _sql1 = @"select * from ApiResources where Name=@Name and Enabled=1;
-                       select * from ApiResources t1 inner join ApiScopes t2 on t1.Id=t2.ApiResourceId where t1.Name=@name and Enabled=1;";
+                       select * from ApiResources t1 inner join ApiScopes t2 on t1.Id=t2.ApiResourceId where t1.Name=@name and Enabled=1;
+                       select * from ApiResources t1 inner join ApiSecrets t2 on t1.Id=t2.ApiResourceId where t1.Name=@name and Enabled=1";
         private string _sql2 = @"select distinct t1.* from ApiResources t1 inner join ApiScopes t2 on t1.Id=t2.ApiResourceId where t2.Name in({0}) and Enabled=1;";
-        private string _sql3 = @"select * from ApiScopes where ApiResourceId=@id";
+        private string _sql3 = @"select * from ApiScopes where ApiResourceId=@id;
+                                 select * from ApiSecrets where ApiResourceId=@id";
         private string _sql4 = @"select * from ApiResources where Enabled=1";
+        private string _sql5 = @"select * from IdentityResources where Enabled=1";
 
     }
 

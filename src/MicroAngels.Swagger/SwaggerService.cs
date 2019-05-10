@@ -1,4 +1,6 @@
 ﻿using MicroAngels.Core.Service;
+using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,10 +23,11 @@ namespace MicroAngels.Swagger
         public string XMLPath { get; set; }
     }
 
+
     public class SwaggerUIOptions
     {
         public bool IsShowExtensions { get; set; }
-    }
-
+		public IDocumentFilter DocumentFilter { get; set; }
+	}
 
 }

@@ -13,133 +13,130 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System;
+using System.IO;
 
 namespace MessageCenter
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+	public class Startup
+	{
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // service injection
-            services.AddTransient<ITopicService, TopicService>();
-            services.AddTransient<ISubscribeService, SubscribeService>();
-            services.AddTransient<IMessageService, MessageService>();
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
+			// service injection
+			services.AddTransient<ITopicService, TopicService>();
+			services.AddTransient<ISubscribeService, SubscribeService>();
+			services.AddTransient<IMessageService, MessageService>();
 
-            // token authentication
-            services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
-                   .AddIdentityServerAuthentication(options =>
-                   {
-                       options.Authority = Configuration["IdentityService:Uri"];
-                       options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
-                   });
+			// add cap
+			services.AddKafkaService(new CapService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
 
-            // add cap
-            services.AddCapService(new CapService
-            {
-                Host = Configuration["Queues:Kafka:Host"],
-                ConnectString = Configuration["Queues:Kafka:DbConn"]
-            });
+			// add swagger
+			services.AddSwaggerService(new SwaggerService
+			{
+				Name = Configuration["Swagger:Name"],
+				Title = Configuration["Swagger:Title"],
+				Version = Configuration["Swagger:Version"],
+				XMLPath = Path.Combine(
+						Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
+						$"{ Configuration["Swagger:Name"]}.xml"
+					)
+			},opt=> {
+				// set document or operation filter
+				//opt.DocumentFilter<>
+				//opt.OperationFilter<>
+				//opt.AddSecurityDefinition()
+			});
 
-            // add mvc
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<ExcepitonFilter>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			//add mvc core
+			services.AddMvcCore(options =>
+					 {
+						 options.Filters.Add<ExcepitonFilter>();
+					 })
+					 .AddApiExplorer() // for swagger
+					 .AddAuthorization()
+					 .AddJsonFormatters()
+					 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // add swagger
-            services.AddSwaggerService(new SwaggerService
-            {
-                Name = Configuration["Swagger:Name"],
-                Title = Configuration["Swagger:Title"],
-                Version = Configuration["Swagger:Version"]
+			//token authentication
+			services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
+				   .AddJwtBearer(options =>
+				   {
+					   options.Authority = Configuration["IdentityService:Uri"];
+					   options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+					   options.Audience = Configuration["IdentityService:Audience"];
+				   });
 
-                #region swagger xml settings
-                //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                //var xmlPath = Path.Combine(basePath, "Qka.UsersApi.xml");
-                //opt.IncludeXmlComments(xmlPath);
-                #endregion
-            });
+			// add cross domain policy
+			services.AddCors(options =>
+			{
+				options.AddPolicy("CORS",
+				  builder => builder.AllowAnyOrigin()
+				  .AllowAnyMethod()
+				  .AllowAnyHeader()
+				  .AllowCredentials());
+			});
 
-            // add cross domain policy
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CORS",
-                  builder => builder.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials());
-            });
+		}
 
-            // add service version
-            //services.AddApiVersioning(v => 
-            //{
-            //    v.ReportApiVersions = true;//return versions in a response header
-            //    v.DefaultApiVersion = new ApiVersion(1, 0);//default version select 
-            //    v.AssumeDefaultVersionWhenUnspecified = true;//if not specifying an api version,show the default version
-            //});
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifeTime, ILoggerFactory loggerFactory)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
 
+			// use swagger service
+			app.UseSwaggerService(
+			 new SwaggerService { Name = Configuration["Swagger:Name"] },
+			 new SwaggerUIOptions { IsShowExtensions = true });
 
-            //services.AddSkyWalking(option =>
-            //{
-            //    option.ApplicationCode = Configuration["Service:Name"];
-            //    option.DirectServers = Configuration["WatchDogs:SkyWalking:Host"];
-            //});
+			// add nlog
+			//	loggerFactory.AddNLog();
 
-            //services.AddTokenJwtAuthorize();
+			// config nlog
+			//	env.ConfigureNLog("NLog.config"); 
 
-            //}
-        }
+			// use authentiaction
+			app.UseAuthentication();
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifeTime, ILoggerFactory loggerFactory)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+			app.UseMvc()   // use mvc with swagger
+			   .UseConsul(lifeTime, new ConsulService //regsiter consul
+			   {
+				   Id = Configuration["Service:Id"],
+				   Host = Configuration["Service:Host"],
+				   Port = Convert.ToInt32(Configuration["Service:Port"]),
+				   Name = Configuration["Service:Name"],
+				   HostConfiguration = new ConsulHostConfiguration
+				   {
+					   Host = Configuration["Consul:Host"],
+					   Port = Convert.ToInt32(Configuration["Consul:Port"])
+				   },
+				   HealthCheckOptoins = new ConsuleHealthCheckOptoins
+				   {
+					   HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+					   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+				   }
+			   });
 
-            // add nlog
-            loggerFactory.AddNLog();
+			// use cross domain policy
+			app.UseCors("CORS");
 
-            // config nlog
-            env.ConfigureNLog("NLog.config");
+			app.RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
 
-            // use cross domain policy
-            app.UseCors("CORS")
-               .UseMvc()   // use mvc with swagger
-               .UseSwaggerService(
-                new SwaggerService { Name = Configuration["Swagger:Name"] },
-                new SwaggerUIOptions { IsShowExtensions = true })
-               .UseConsul(lifeTime, new ConsulService //regsiter consul
-               {
-                   Id = Guid.NewGuid().ToString(),
-                   Host = Configuration["Service:Host"],
-                   Port = Convert.ToInt32(Configuration["Service:Port"]),
-                   Name = Configuration["Service:Name"],
-                   HostConfiguration = new ConsulHostConfiguration
-                   {
-                       Host = Configuration["Consul:Host"],
-                       Port = Convert.ToInt32(Configuration["Consul:Port"])
-                   },
-                   HealthCheckOptoins = new ConsuleHealthCheckOptoins
-                   {
-                       HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
-                       IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
-                   }
-               });
-
-              app.RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
-
-            //TODO: will use skywalking instead
-            // app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
-        }
-    }
+			//TODO: will use skywalking instead
+			// app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
+		}
+	}
 }

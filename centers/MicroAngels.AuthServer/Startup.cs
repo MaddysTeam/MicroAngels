@@ -1,18 +1,15 @@
-﻿using IdentityServer4.Stores;
-using IdentityServer4.Validation;
-using MicroAngels.IdentityServer;
-using MicroAngels.IdentityServer.Validators;
+﻿using MicroAngels.AuthServer.Services;
 using MicroAngels.IdentityServer.Extensions;
+using MicroAngels.IdentityServer.Services;
+using MicroAngels.IdentityServer.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
-namespace Identity
+namespace MicroAngels.AuthServer
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -30,28 +27,20 @@ namespace Identity
             .AddAuthorization()
             .AddJsonFormatters();
 
-            var config = new Config(Configuration);
-            services.AddIdentityServer(x =>
-                {
-                    //x.IssuerUri = "http://identity";
-                    //x.PublicOrigin = "http://identity";
-                })
-                .AddDeveloperSigningCredential()
-                .UseMysql(opt=> {
-                    opt.ConnectionStrings = "Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;port=3306"; //"Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;pooling=false;CharSet=utf8;port=3306";
-                });
-                //.UseRedisGrantStore();
-                //.AddDeveloperSigningCredential()
-                //.AddResourceStore<ResourceStore>()
-                //.AddPersistedGrantStore<GrantStore>()
-                //.AddClientStore<ClientStore>()
-                //.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
-                //.AddInMemoryPersistedGrants()
-                //.AddInMemoryApiResources(config.GetApiResources())
-                //.AddInMemoryClients(config.GetClients());
-
-            //services.AddSingleton<IPersistedGrantStore, RedisPersistedGrantStore>();
-            //services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
+			services.AddIdentityServer(x =>
+				{
+					//x.IssuerUri = "http://identity";
+					//x.PublicOrigin = "http://identity";
+				})
+				.AddDeveloperSigningCredential()
+				.UseMysql(opt =>
+				{
+					opt.ConnectionStrings = Configuration["Database:Mysql:Conn"];  // "Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;port=3306"; //"Database=idsDemo;Data Source=192.168.1.9;User Id=root;Password=abc123456;pooling=false;CharSet=utf8;port=3306";
+				})
+				.UseValidateService<UserValidateService>()
+				.UseClaimsGrantService<UserClaimGrantService>()
+				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+				.AddProfileService<UserClaimsProfileService>(); // add claims into user profile （such as context）
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,15 +54,6 @@ namespace Identity
             app.UseMvc();
 
             app.UseIdentityServer();
-
-            //app.RegisterConsul(lifeTime, new ServiceEntityModel
-            //{
-            //    IP = Configuration["Service:Ip"],
-            //    Port = Convert.ToInt32(Configuration["Service:Port"]),
-            //    ServiceName = Configuration["Service:Name"],
-            //    ConsulIP = Configuration["Consul:IP"],
-            //    ConsulPort = Convert.ToInt32(Configuration["Consul:Port"])
-            //});
         }
     }
 }

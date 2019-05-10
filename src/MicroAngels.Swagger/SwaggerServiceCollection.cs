@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace MicroAngels.Swagger
     public static class SwaggerServiceCollection
     {
 
-        public static IServiceCollection AddSwaggerService(this IServiceCollection services, SwaggerService swaggerService)
+        public static IServiceCollection AddSwaggerService(this IServiceCollection services, SwaggerService swaggerService,Action<SwaggerGenOptions> customOption=null)
         {
             services.AddSwaggerGen(opt =>
             {
@@ -22,27 +23,28 @@ namespace MicroAngels.Swagger
                     Description = swaggerService.Doc
                 });
 
-                if (!swaggerService.XMLPath.IsNullOrEmpty())
-                {
-                    opt.IncludeXmlComments(swaggerService.XMLPath);
-                }
+				if (!swaggerService.XMLPath.IsNullOrEmpty())
+				{
+					opt.IncludeXmlComments(swaggerService.XMLPath);
+				}
 
-            });
+				if (customOption != null)
+				{
+					customOption.Invoke(opt);
+				}
+			});
 
             return services;
         }
 
         public static IApplicationBuilder UseSwaggerService(this IApplicationBuilder builder, SwaggerService swaggerService, SwaggerUIOptions uiOptions)
         {
-            builder.UseSwagger(options =>
-            {
-                options.RouteTemplate = "{documentName}/swagger.json";
-            })
+            builder.UseSwagger()
              .UseSwaggerUI(options =>
              {
-                 if (uiOptions.IsShowExtensions)
-                     options.ShowExtensions();
-                 options.SwaggerEndpoint($"/{swaggerService.Name}/swagger.json", swaggerService.Name);
+				 if (uiOptions.IsShowExtensions)
+					 options.ShowExtensions();
+				 options.SwaggerEndpoint($"/swagger/{swaggerService.Name}/swagger.json", swaggerService.Name);
              });
 
             return builder;

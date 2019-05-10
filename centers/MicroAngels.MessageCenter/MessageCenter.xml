@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MicroAngels.MessageCenter</name>
+    </assembly>
+    <members>
+        <member name="T:Business.Models.Topic">
+            <summary>
+            消息topic 用于管理
+            </summary>
+        </member>
+        <member name="T:Business.Models.Message">
+            <summary>
+            消息实体
+            </summary>
+        </member>
+        <member name="T:Business.Models.Subscribe">
+            <summary>
+            订阅
+            </summary>
+        </member>
+        <member name="T:Business.Models.UserMessage">
+            <summary>
+            用户消息
+            </summary>
+        </member>
+        <member name="T:Controllers.MessageController">
+            <summary>
+            MessageController
+            </summary>
+        </member>
+        <member name="M:Controllers.MessageController.#ctor(Business.Services.IMessageService,Microsoft.Extensions.Logging.ILogger{Controllers.MessageController},MicroAngels.Bus.CAP.CAPMysqlDbContext,DotNetCore.CAP.ICapPublisher,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Structure method
+            </summary>
+            <param name="messageService"></param>
+            <param name="logger"></param>
+            <param name="context"></param>
+            <param name="serviceBus"></param>
+            <param name="configuraton"></param>
+        </member>
+    </members>
+</doc>

@@ -7,7 +7,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Consul" Version="0.7.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="IdentityServer4" Version="2.3.0" />
@@ -18,5 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
