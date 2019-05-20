@@ -23,9 +23,9 @@ namespace MicroAngels.IdentityServer.Validators
 			// you can change logic here 
 			// for example : this can get user info by name and password , role info as well 
 
-			if (await _service.ValidatePassword(context.UserName, context.Password))
+			if (await _service.ValidatePassword(context))
 			{
-				var claims =await _grantService.GetClaims();
+				var claims =await _grantService.GetClaims(context);
 				context.Result =
 					new GrantValidationResult(
 						context.UserName,

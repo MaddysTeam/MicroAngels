@@ -13,7 +13,8 @@ namespace MicroAngels.IdentityServer.Models
 		public string Scopes { get; set; }
 		public string UserName { get; set; }
 		public string Password { get; set; }
-		public string Token { get; set; }
+		public string RefreshToken { get; set; }
+		public string GrantType { get; set; }
 		public TokenRequestType RequestType { get; set; }
 	}
 

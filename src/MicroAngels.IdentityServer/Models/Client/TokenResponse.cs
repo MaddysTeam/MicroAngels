@@ -8,11 +8,12 @@ namespace MicroAngels.IdentityServer.Models
 	public class AngelTokenResponse
 	{
 
-		public AngelTokenResponse()
-		{
-		}
+		//public AngelTokenResponse(string token)
+		//{
+		//	Token = token;
+		//}
 
-		public string Token { get; }
+		public string Token { get;  set; }
 
 	}
 

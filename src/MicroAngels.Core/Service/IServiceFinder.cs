@@ -9,8 +9,9 @@ namespace MicroAngels.Core.Service
 
     public interface IServiceFinder<Service> where Service:IService
     {
-        Task<IList<Service>> FindAsync(string id, string name);
-        Task<IList<Service>> FindAsync(Predicate<IService> condition);
+        Task<Service> FindAsync(string id);
+		Task<IList<Service>> FindByNameAsync(string name);
+		Task<IList<Service>> FindAsync(Predicate<IService> condition);
     }
 
 }

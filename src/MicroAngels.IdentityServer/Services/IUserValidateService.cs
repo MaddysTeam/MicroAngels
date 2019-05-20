@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using IdentityServer4.Validation;
 using System.Threading.Tasks;
 
 namespace MicroAngels.IdentityServer.Services
@@ -8,7 +6,7 @@ namespace MicroAngels.IdentityServer.Services
 	public interface IUserValidateService
 	{
 
-		Task<bool> ValidatePassword(string username,string password);
+		Task<bool> ValidatePassword(ResourceOwnerPasswordValidationContext context);
 
 	}
 

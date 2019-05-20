@@ -1,7 +1,5 @@
-﻿using MicroAngels.IdentityServer.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using IdentityServer4.Validation;
+using MicroAngels.IdentityServer.Services;
 using System.Threading.Tasks;
 
 namespace MicroAngels.AuthServer.Services
@@ -10,8 +8,16 @@ namespace MicroAngels.AuthServer.Services
 	public class UserValidateService : IUserValidateService
 	{
 
-		public Task<bool> ValidatePassword(string username, string password)
+		/// <summary>
+		///  validate password sercice when been invoked in ResourceOwnerPasswordValidator
+		/// </summary>
+		/// <param name="ResourceOwnerPasswordValidationContext"></param>
+		/// <returns></returns>
+		public Task<bool> ValidatePassword(ResourceOwnerPasswordValidationContext context)
 		{
+
+			// you can implement you own validate password here
+
 			return Task.FromResult(true);
 		}
 

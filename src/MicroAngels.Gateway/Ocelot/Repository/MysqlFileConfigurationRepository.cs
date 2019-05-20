@@ -1,13 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Dapper;
+using MicroAngels.Core;
+using MySql.Data.MySqlClient;
 using Ocelot.Configuration.File;
 using Ocelot.Configuration.Repository;
 using Ocelot.Responses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using MicroAngels.Core;
 
 namespace MicroAngels.Gateway.Ocelot
 {

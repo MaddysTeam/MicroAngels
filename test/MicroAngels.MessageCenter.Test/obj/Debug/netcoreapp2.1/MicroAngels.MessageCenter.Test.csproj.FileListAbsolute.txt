@@ -48,3 +48,5 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.Message
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.IdentityServer.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.IdentityServer.pdb

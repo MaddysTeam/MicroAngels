@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MagicOnion\" />
     <Folder Include="TinyBus\kafka\" />
     <Folder Include="TinyBus\rabbit\" />
     <PackageReference Include="DotNetCore.CAP" Version="2.3.1" />

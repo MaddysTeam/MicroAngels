@@ -7,7 +7,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"><!--<DocumentationFile>C:\project\micro_service\Surgin\MicroAngels\MicroAngels\MessageCenter\MessageCenter.xml</DocumentationFile>-->
   
-    <DocumentationFile>C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\MessageCenter.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
+  
+    <NoWarn>sssssssssssssssss</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Bus\MicroAngels.Bus.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Swagger\MicroAngels.Swagger.csproj" />
   </ItemGroup>

@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="MagicOnion" Version="2.0.5" />
-    <PackageReference Include="MagicOnion.Redis" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MicroAngels.GRPC\MicroAngels.GRPC.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
   </ItemGroup>
 
 </Project>

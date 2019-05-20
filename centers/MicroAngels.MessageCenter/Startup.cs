@@ -2,6 +2,8 @@
 using Infrastructure;
 using Infrastructure.Orms.Sugar;
 using MicroAngels.Bus.CAP;
+using MicroAngels.IdentityServer.Extensions;
+using MicroAngels.IdentityServer.Models;
 using MicroAngels.ServiceDiscovery.Consul;
 using MicroAngels.Swagger;
 using Microsoft.AspNetCore.Builder;
@@ -42,21 +44,21 @@ namespace MessageCenter
 			});
 
 			// add swagger
-			services.AddSwaggerService(new SwaggerService
-			{
-				Name = Configuration["Swagger:Name"],
-				Title = Configuration["Swagger:Title"],
-				Version = Configuration["Swagger:Version"],
-				XMLPath = Path.Combine(
-						Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
-						$"{ Configuration["Swagger:Name"]}.xml"
-					)
-			},opt=> {
-				// set document or operation filter
-				//opt.DocumentFilter<>
-				//opt.OperationFilter<>
-				//opt.AddSecurityDefinition()
-			});
+			//services.AddSwaggerService(new SwaggerService
+			//{
+			//	Name = Configuration["Swagger:Name"],
+			//	Title = Configuration["Swagger:Title"],
+			//	Version = Configuration["Swagger:Version"],
+			//	XMLPath = Path.Combine(
+			//			Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
+			//			$"{ Configuration["Swagger:Name"]}.xml"
+			//		)
+			//},opt=> {
+			//	// set document or operation filter
+			//	//opt.DocumentFilter<>
+			//	//opt.OperationFilter<>
+			//	//opt.AddSecurityDefinition()
+			//});
 
 			//add mvc core
 			services.AddMvcCore(options =>
@@ -68,23 +70,14 @@ namespace MessageCenter
 					 .AddJsonFormatters()
 					 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			//token authentication
-			services.AddAuthentication(Configuration["IdentityService:DefaultScheme"])
-				   .AddJwtBearer(options =>
-				   {
-					   options.Authority = Configuration["IdentityService:Uri"];
-					   options.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
-					   options.Audience = Configuration["IdentityService:Audience"];
-				   });
 
-			// add cross domain policy
-			services.AddCors(options =>
+			services.AddIdsAuthentication(new IdentityAuthenticationOptions
 			{
-				options.AddPolicy("CORS",
-				  builder => builder.AllowAnyOrigin()
-				  .AllowAnyMethod()
-				  .AllowAnyHeader()
-				  .AllowCredentials());
+				Scheme = Configuration["IdentityService:DefaultScheme"],
+				Authority = Configuration["IdentityService:Uri"],
+				RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
+				ApiSecret = "secreta",
+				ApiName = "MessageCenter"
 			});
 
 		}
@@ -98,15 +91,10 @@ namespace MessageCenter
 			}
 
 			// use swagger service
-			app.UseSwaggerService(
-			 new SwaggerService { Name = Configuration["Swagger:Name"] },
-			 new SwaggerUIOptions { IsShowExtensions = true });
+			//app.UseSwaggerService(
+			// new SwaggerService { Name = Configuration["Swagger:Name"] },
+			// new SwaggerUIOptions { IsShowExtensions = true });
 
-			// add nlog
-			//	loggerFactory.AddNLog();
-
-			// config nlog
-			//	env.ConfigureNLog("NLog.config"); 
 
 			// use authentiaction
 			app.UseAuthentication();
@@ -130,13 +118,7 @@ namespace MessageCenter
 				   }
 			   });
 
-			// use cross domain policy
-			app.UseCors("CORS");
-
 			app.RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
-
-			//TODO: will use skywalking instead
-			// app.RegisterZipkin(loggerFactory, lifeTime, Configuration);
 		}
 	}
 }

@@ -1,0 +1,29 @@
+version: '3'
+
+services: 
+  auth_service:
+    image: micoangels.authserver
+    container_name: auth_server_container
+    build: 
+      context: centers/MicroAngels.AuthServer
+      dockerfile: Dockerfile
+    ports:
+      - "2012:2012"
+     
+  gateway_service:
+    image: micoangels.gateway
+    container_name: micro_angels_gatway
+    build: 
+      context: centers/MicroAngels.OcelotGateway
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+
+  account_service:
+    image: micoangels.demo.account
+    container_name: demo_account
+    build: 
+      context: demos/AccountService
+      dockerfile: Dockerfile
+    ports:
+      - "5999:5999"

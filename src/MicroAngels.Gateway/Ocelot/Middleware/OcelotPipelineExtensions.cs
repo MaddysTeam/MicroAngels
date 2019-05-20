@@ -1,4 +1,5 @@
-﻿using Ocelot.Authorisation.Middleware;
+﻿using Microsoft.Net.Http.Headers;
+using Ocelot.Authorisation.Middleware;
 using Ocelot.Cache.Middleware;
 using Ocelot.DownstreamRouteFinder.Middleware;
 using Ocelot.DownstreamUrlCreator.Middleware;
@@ -89,8 +90,12 @@ namespace MicroAngels.Gateway.Ocelot
 				builder.Use(pipelineConfiguration.AuthenticationMiddleware);
 			}
 
+
 			//添加自定义授权中间件
 			builder.UseAuthenticationMiddleware();
+
+			// refresh token middleware
+			builder.UseRefreshTokenMiddleware();
 
 			// Allow pre authorisation logic. The idea being people might want to run something custom before what is built in.
 			builder.UseIfNotNull(pipelineConfiguration.PreAuthorisationMiddleware);

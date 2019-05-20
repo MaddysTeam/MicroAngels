@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using IdentityServer4.Validation;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroAngels.IdentityServer.Services
@@ -9,7 +7,7 @@ namespace MicroAngels.IdentityServer.Services
 
 	public interface IClaimsGrantService
 	{
-		Task<Claim[]> GetClaims();
+		Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context);
 	}
 
 }

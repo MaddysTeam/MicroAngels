@@ -41,13 +41,10 @@ namespace MicroAngels.IdentityServer.Clients
 					}); break;
 
 				case TokenRequestType.refresh:
-					response = await ReferenceToken(new RefreshTokenRequest
-					{
-
-					}); break;
+					response = await ReferenceToken(request.MapRefRequest());
+					angelResposne = response?.Map();
+					break;
 			}
-
-			//angelResposne = null;
 
 			return angelResposne;
 

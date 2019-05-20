@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.ServiceDiscovery.Consul
 {
 
-    public static class ConsulServicesBuilder
+	public static class ConsulServicesBuilder
     {
 
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime, ConsulService service)

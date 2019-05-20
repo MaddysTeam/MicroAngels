@@ -27,6 +27,8 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string[] Tags { get; }
 
+		public int Weight { get; set; }
+
         public ConsuleHealthCheckOptoins HealthCheckOptoins { get; set; }
 
         public ConsulHostConfiguration HostConfiguration { get; set; }

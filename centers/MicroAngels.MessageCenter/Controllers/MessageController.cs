@@ -48,6 +48,7 @@ namespace Controllers
 
 		//[Route("send")]
 		[HttpGet("send")]
+		[Authorize]
 		public string SendMessage()
 		{
 			//_logger.Log(LogLevel.Warning, "welcome kafka!");

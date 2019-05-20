@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="IdentityModel" Version="3.10.10" />

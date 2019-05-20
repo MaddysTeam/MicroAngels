@@ -7,9 +7,9 @@ using System.Text;
 namespace MicroAngels.IdentityServer.Models
 {
 
-	public static class CredentialTokenRequestMappers
+	public static class TokenRequestMappers
 	{
-		static CredentialTokenRequestMappers()
+		static TokenRequestMappers()
 		{
 			Mapper = new MapperConfiguration(cfg => cfg.AddProfile<TokenRequestMapperProfile>()).CreateMapper();
 		}
@@ -21,6 +21,11 @@ namespace MicroAngels.IdentityServer.Models
 			return source == null ? null : Mapper.Map<ClientCredentialsTokenRequest>(source);
 		}
 
+		public static RefreshTokenRequest MapRefRequest(this AngelTokenRequest source)
+		{
+			return source == null ? null : Mapper.Map<RefreshTokenRequest>(source);
+		}
+
 	}
 
 
@@ -28,7 +33,7 @@ namespace MicroAngels.IdentityServer.Models
 	{
 		static TokenResponseMappers()
 		{
-			//CredentialTokenMapper = new MapperConfiguration(cfg => cfg.AddProfile<TokenRequestMapperProfile>()).CreateMapper();
+			Mapper = new MapperConfiguration(cfg => cfg.AddProfile<TokenResponseMapperProfile>()).CreateMapper();
 		}
 
 		static IMapper Mapper { get; }
@@ -50,11 +55,27 @@ namespace MicroAngels.IdentityServer.Models
 				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
 				.ForMember(dest => dest.Scope, opt => opt.MapFrom(src => src.Scopes));
 
+			CreateMap<AngelTokenRequest, RefreshTokenRequest>()
+				.ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
+				.ForMember(dest => dest.ClientSecret, opt => opt.MapFrom(src => src.ClientSecret))
+				.ForMember(dest => dest.RefreshToken, opt => opt.MapFrom(src => src.RefreshToken))
+				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+				.ForMember(dest => dest.GrantType, opt => opt.MapFrom(src => src.GrantType))
+				.ForMember(dest => dest.Scope, opt => opt.MapFrom(src => src.Scopes));
+
 		}
 	}
 
 	public class TokenResponseMapperProfile : Profile
 	{
+		public TokenResponseMapperProfile()
+		{
+			CreateMap<TokenResponse, AngelTokenResponse>()
+				.ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.AccessToken));
 
+
+		}
 	}
+
+
 }

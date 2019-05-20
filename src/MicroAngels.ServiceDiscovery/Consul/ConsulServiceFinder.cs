@@ -22,34 +22,56 @@ namespace MicroAngels.ServiceDiscovery.Consul
 			});
 		}
 
-		public async Task<IList<ConsulService>> FindAsync(string id, string name)
+		public Task<IList<ConsulService>> FindAsync(Predicate<IService> condition)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<ConsulService> FindAsync(string id)
+		{
+			var services = (await _client.Agent.Services()).Response;
+
+			foreach (var service in services.Values)
+			{
+				if (service.ID == id)
+				{
+					return new ConsulService
+					{
+						Id = service.ID,
+						Address = new Uri(service.Address),
+						Name = service.Service,
+						Port = service.Port,
+						Host = service.Address,
+					};
+				}
+			}
+
+			return null;
+
+		}
+
+		public async Task<IList<ConsulService>> FindByNameAsync(string name)
 		{
 			var results = new List<ConsulService>();
 			var services = (await _client.Agent.Services()).Response;
 
 			foreach (AgentService service in services.Values)
 			{
-				if (service.ID == id || string.Equals(service.Service, name, StringComparison.InvariantCultureIgnoreCase))
+				if (string.Equals(service.Service, name, StringComparison.InvariantCultureIgnoreCase))
 				{
 					results.Add(new ConsulService
 					{
 						Id = service.ID,
 						Address = new Uri(service.Address),
-						Name=service.Service,
-						Port=service.Port,
-						Host=service.Address,
+						Name = service.Service,
+						Port = service.Port,
+						Host = service.Address,
 					});
 				}
 			}
 
 			return results;
 		}
-
-		public Task<IList<ConsulService>> FindAsync(Predicate<IService> condition)
-		{
-			throw new NotImplementedException();
-		}
-
 
 		private ConsulClient _client;
 

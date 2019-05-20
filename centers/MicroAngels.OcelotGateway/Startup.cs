@@ -1,15 +1,12 @@
 ﻿using MicroAngels.Gateway.Ocelot;
+using MicroAngels.OcelotGateway.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
-using MicroAngels.OcelotGateway.Services;
-using Swashbuckle.AspNetCore.Swagger;
-using System.Collections.Generic;
 
 namespace MicroAngels.OcelotGateway
 {
@@ -28,6 +25,7 @@ namespace MicroAngels.OcelotGateway
 			// global accesstoken for all service
 			services.AddAuthentication()
 				.AddIdentityServerAuthentication(ServiceAuthenticationOptions.GlobalApiAuthenticationKey, ServiceAuthenticationOptions.GlobalApiClient);
+
 			// if you need use different token for each service , you comment following code below:
 			//.AddIdentityServerAuthentication(ServiceAuthenticationOptions.OtherKey, ServiceAuthenticationOptions.OtherClient);
 
@@ -39,13 +37,16 @@ namespace MicroAngels.OcelotGateway
 			})
 			.AddConsul()
 			.AddPolly();
-
-			//services.AddSwaggerGen(options =>
-			//{
-			//	options.SwaggerDoc("ApiGateway", new Info { Title = "gateway service", Version = "v1" });
-			//});
-
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+				
+			// add cors for ocelot
+			services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy",
+				builder => builder.WithOrigins("*")
+				.AllowAnyMethod()
+				.AllowAnyHeader()
+				.AllowCredentials());
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,16 +57,7 @@ namespace MicroAngels.OcelotGateway
 				app.UseDeveloperExceptionPage();
 			}
 
-			// use mvc and swagger
-			app.UseMvc();
-			//.UseSwagger()
-			//.UseSwaggerUI(options =>
-			//{
-			// new List<string> { "MessageCenter" }.ForEach(x =>
-			// {
-			//  options.SwaggerEndpoint($"/{x}/swagger.json", x);
-			// });
-			//});
+			app.UseCors("CorsPolicy");
 
 			app.UseAngleOcelot().Wait();
 		}

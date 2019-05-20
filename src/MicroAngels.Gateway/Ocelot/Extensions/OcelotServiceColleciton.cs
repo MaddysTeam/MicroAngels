@@ -24,8 +24,8 @@ namespace MicroAngels.Gateway.Ocelot
 			builder.Services.AddSingleton<IFileConfigurationRepository, MysqlFileConfigurationRepository>();
 
 			// di for redis cache
-			builder.Services.AddSingleton<IOcelotCache<FileConfiguration>,OcelotRedisCache<FileConfiguration>>();
-			builder.Services.AddSingleton<IOcelotCache<CachedResponse>,OcelotRedisCache<CachedResponse>>();
+			//builder.Services.AddSingleton<IOcelotCache<FileConfiguration>,OcelotRedisCache<FileConfiguration>>();
+			//builder.Services.AddSingleton<IOcelotCache<CachedResponse>,OcelotRedisCache<CachedResponse>>();
 
 			// di for authentication service
 			builder.Services.AddSingleton<ICustomAuthenticateService, CustomAuthenticateService>();
