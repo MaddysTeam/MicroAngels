@@ -8,7 +8,14 @@ namespace MicroAngels.Logger.ExceptionLess
 
 	public class ExcepitonLessOptions
 	{
-		public string AppKey { get; }
+
+		public ExcepitonLessOptions(string appkey)
+		{
+			Appkey = appkey;
+		}
+
+		public readonly string Appkey;
+
 	}
 
 }

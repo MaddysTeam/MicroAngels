@@ -1,8 +1,6 @@
 ﻿using MicroAngels.Core.Service;
 using MicroAngels.ServiceDiscovery.Consul;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroAngels.GRPC.Client

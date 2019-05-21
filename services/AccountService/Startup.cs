@@ -1,6 +1,7 @@
 ﻿using Exceptionless;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
+using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +49,9 @@ namespace AccountService
 				ApiName = "MessageCenter"
 			});
 
+			//add exceptionless logger
+			services.AddLessLog();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,25 +66,25 @@ namespace AccountService
 
 			app.UseMvc();
 
-			app.UseExceptionless("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo");
+			app.UseLessLog(new ExcepitonLessOptions("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo"));
 
-			app.UseConsul(lifeTime, new ConsulService 
-			   {
-				   Id = Configuration["Service:Id"],
-				   Host = Configuration["Service:Host"],
-				   Port = Convert.ToInt32(Configuration["Service:Port"]),
-				   Name = Configuration["Service:Name"],
-				   HostConfiguration = new ConsulHostConfiguration
-				   {
-					   Host = Configuration["Consul:Host"],
-					   Port = Convert.ToInt32(Configuration["Consul:Port"])
-				   },
-				   HealthCheckOptoins = new ConsuleHealthCheckOptoins
-				   {
-					   HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
-					   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
-				   }
-			   });
+			//app.UseConsul(lifeTime, new ConsulService 
+			//   {
+			//	   Id = Configuration["Service:Id"],
+			//	   Host = Configuration["Service:Host"],
+			//	   Port = Convert.ToInt32(Configuration["Service:Port"]),
+			//	   Name = Configuration["Service:Name"],
+			//	   HostConfiguration = new ConsulHostConfiguration
+			//	   {
+			//		   Host = Configuration["Consul:Host"],
+			//		   Port = Convert.ToInt32(Configuration["Consul:Port"])
+			//	   },
+			//	   HealthCheckOptoins = new ConsuleHealthCheckOptoins
+			//	   {
+			//		   HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+			//		   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+			//	   }
+			//   });
 
 			
 		}

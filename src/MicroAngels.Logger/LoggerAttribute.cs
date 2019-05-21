@@ -8,15 +8,9 @@ namespace MicroAngels.Logger
 	public class LoggerAttribute : ActionFilterAttribute
 	{
 
-		private readonly ILogger _logger;
-		private readonly IFilterLogExecutor _executor;
-
-		public LoggerAttribute(ILogger logger, IFilterLogExecutor executor)
+		public LoggerAttribute(IFilterLogExecutor executor)
 		{
-			logger.EnsureNotNull(() => new ArgumentNullException());
 			executor.EnsureNotNull(() => new ArgumentNullException());
-
-			_logger = logger;
 			_executor = executor;
 		}
 
@@ -34,8 +28,9 @@ namespace MicroAngels.Logger
 			base.OnActionExecuting(context);
 		}
 
-	}
+		private readonly IFilterLogExecutor _executor;
 
+	}
 
 	//[ServiceFilter(typeof(DeleteSubionCache))]
 }

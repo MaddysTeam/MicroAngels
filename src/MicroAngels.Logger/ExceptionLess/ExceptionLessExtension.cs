@@ -10,10 +10,11 @@ namespace MicroAngels.Logger.ExceptionLess
 	public static class ExceptionLessExtension
 	{
 
-		public static IServiceCollection AddLessLog(IServiceCollection services)
+		public static IServiceCollection AddLessLog(this IServiceCollection services)
 		{
 			services.AddSingleton<ILogger, ExceptionLessLogger>();
-			services.AddTransient<IFilterLogExecutor, DefaultLoggerExecutor>();
+			services.AddTransient<IFilterLogExecutor, ExcepitonLessExecutor>();
+			services.AddScoped<LoggerAttribute>();
 
 			return services;
 		}
@@ -24,7 +25,7 @@ namespace MicroAngels.Logger.ExceptionLess
 
 			ExceptionlessClient.Default.SubmittingEvent += Default_SubmittingEvent;
 
-			builder.UseExceptionless(options.AppKey);
+			builder.UseExceptionless(options.Appkey);
 
 			return builder;
 		}

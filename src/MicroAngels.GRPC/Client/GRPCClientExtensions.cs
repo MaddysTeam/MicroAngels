@@ -12,7 +12,6 @@ namespace MicroAngels.GRPC.Client
 			// TODO: you can di your own balancer or service finder here
 			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
 			services.AddTransient<IGRPCServiceFinder, GRPCConsulServiceFinder>();
-
 			services.AddTransient<IGRPCConnection, GRPCConnection>();
 
 			return services;
