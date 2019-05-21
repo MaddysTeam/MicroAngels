@@ -10,9 +10,11 @@ namespace MicroAngels.AuthServer.Services
 	public class UserClaimGrantService : IClaimsGrantService
 	{
 
-		public async Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
+		public Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
 		{
-			return new Claim[] { new Claim("username", context.UserName) };
+			var claims= new Claim[] { new Claim("username", context.UserName) };
+
+			return Task.FromResult(claims);
 
 			//Claim(JwtClaimTypes.Role,"wjk"),
 		}

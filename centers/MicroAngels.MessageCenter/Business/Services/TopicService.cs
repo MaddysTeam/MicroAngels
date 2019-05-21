@@ -20,7 +20,7 @@ namespace Business.Services
             _logger = logger;
         }
 
-        public async Task<bool> EditTopicAsync(Topic topic)
+        public Task<bool> EditTopicAsync(Topic topic)
         {
             var result = true;
             topic.EnsureNotNull(() => new ArgumentException());
@@ -42,7 +42,7 @@ namespace Business.Services
                 result = MySqlDbContext.Current.TopicsDb.Insert(topic);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
 

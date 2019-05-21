@@ -189,11 +189,11 @@ namespace Business.Services
             return MessageDb.Insert(msg);
         }
 
-        public async Task<bool> AddUserMessage(UserMessage userMessage)
+        public Task<bool> AddUserMessage(UserMessage userMessage)
         {
             if (userMessage.IsValidate)
             {
-                return false;
+                return Task.FromResult(false);
             }
 
             var result = UserMessageDb.Insert(new UserMessage
@@ -202,7 +202,7 @@ namespace Business.Services
                 ReceiverId = userMessage.ReceiverId,
             });
 
-            return result;
+            return Task.FromResult(result);
         }
 
         private readonly ITopicService _topicService;

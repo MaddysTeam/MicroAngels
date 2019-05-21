@@ -2,10 +2,8 @@
 using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AccountService.Controllers
@@ -27,7 +25,7 @@ namespace AccountService.Controllers
 		// GET api/signin
 
 		[HttpPost("signin")]
-		public async Task<string> SignIn()
+		public string SignIn()
 		{
 			// implement sign in logic here
 
@@ -66,7 +64,7 @@ namespace AccountService.Controllers
 
 		[Authorize]
 		[HttpPost("info")]
-		public async Task<Account> Info()
+		public Account Info()
 		{
 			// get account info here
 

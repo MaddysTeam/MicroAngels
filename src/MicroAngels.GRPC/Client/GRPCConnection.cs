@@ -35,12 +35,14 @@ namespace MicroAngels.GRPC.Client
 			return result;
 		}
 
-		public async Task<TService> GetGRPCService<TService>(GRPCService service) where TService : IService<TService>
+		public  Task<TService> GetGRPCService<TService>(GRPCService service) where TService : IService<TService>
 		{
-			if (service == null) return default(TService);
+			if (service == null) return Task.FromResult(default(TService));
 
 			var channel = new Channel(service.Host, service.Port, ChannelCredentials.Insecure);
-			return MagicOnionClient.Create<TService>(channel);
+			var svc= MagicOnionClient.Create<TService>(channel);
+
+			return Task.FromResult(svc);
 		}
 
 		private ILoadBalancer _balancer;

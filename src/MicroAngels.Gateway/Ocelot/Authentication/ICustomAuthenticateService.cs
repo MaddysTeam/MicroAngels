@@ -13,9 +13,9 @@ namespace MicroAngels.Gateway.Ocelot
 
 	public class CustomAuthenticateService : ICustomAuthenticateService
 	{
-		public async Task<bool> ValidateAuthenticate(string clientId, string path)
+		public  Task<bool> ValidateAuthenticate(string clientId, string path)
 		{
-			return true;
+			return Task.FromResult(true);
 		}
 	}
 

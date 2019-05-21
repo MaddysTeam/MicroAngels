@@ -39,7 +39,7 @@ namespace MicroAngels.Gateway.Ocelot
 					var path = context.DownstreamReRoute.UpstreamPathTemplate.OriginalValue;
 					if (!string.IsNullOrEmpty(clientClaim?.Value))
 					{
-						// get client id
+						// you can implement white or black list here
 						clientId = clientClaim?.Value;
 					}
 
