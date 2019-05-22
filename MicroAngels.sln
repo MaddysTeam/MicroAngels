@@ -52,7 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Cache", "src\Mi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountService", "services\AccountService\AccountService.csproj", "{F6A138A8-7662-402F-B1F4-00C7569740EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngels.Logger", "src\MicroAngels.Logger\MicroAngels.Logger.csproj", "{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Logger", "src\MicroAngels.Logger\MicroAngels.Logger.csproj", "{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceService", "services\ResourceService\ResourceService.csproj", "{44B0BE05-9A21-457D-9A95-8C0589E2D812}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +130,10 @@ Global
 		{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44B0BE05-9A21-457D-9A95-8C0589E2D812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44B0BE05-9A21-457D-9A95-8C0589E2D812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44B0BE05-9A21-457D-9A95-8C0589E2D812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44B0BE05-9A21-457D-9A95-8C0589E2D812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +156,7 @@ Global
 		{2981DA7C-7E22-4864-BEFD-8F8BC90A28B4} = {76FD3796-8DEE-4F3B-BC38-4AF61214E10C}
 		{F6A138A8-7662-402F-B1F4-00C7569740EE} = {A798801D-2D8F-4557-8499-269AC0AF7353}
 		{33B5C0CC-FE65-4F4C-A5F2-41FD7879319A} = {76FD3796-8DEE-4F3B-BC38-4AF61214E10C}
+		{44B0BE05-9A21-457D-9A95-8C0589E2D812} = {A798801D-2D8F-4557-8499-269AC0AF7353}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}

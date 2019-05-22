@@ -31,12 +31,20 @@ namespace AccountService.Controllers
 			return string.Empty;
 		}
 
+
+		// GET: api/privatekey
+
+		public string GetPrivateKey()
+		{
+			return string.Empty;
+		}
+
 		// GET api/signin
 
 		[HttpPost("signin")]
-		public async Task<string> SignIn(string username,string password)
+		public async Task<string> SignIn([FromBody]LoginModel model)
 		{
-			var response = await SignInTokenRequest(TokenRequestType.resource_password,username,password);
+			var response = await SignInTokenRequest(TokenRequestType.resource_password,model.UserName,model.Password);
 
 			return response.Token;
 		}
