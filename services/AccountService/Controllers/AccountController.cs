@@ -1,12 +1,13 @@
 ﻿using AccountService.Models;
+using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
-using MicroAngels.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AccountService.Controllers
@@ -31,12 +32,14 @@ namespace AccountService.Controllers
 			return string.Empty;
 		}
 
-
 		// GET: api/privatekey
 
-		public string GetPrivateKey()
+		[HttpPost("getPublicKey")]
+		public string GetPublicKey()
 		{
-			return string.Empty;
+			var keys = RSACryptor.CreateKeys(2048, KeyFormat.XML);
+			//where store private key? put into redis ?
+			return keys[1];
 		}
 
 		// GET api/signin
@@ -44,7 +47,7 @@ namespace AccountService.Controllers
 		[HttpPost("signin")]
 		public async Task<string> SignIn([FromBody]LoginModel model)
 		{
-			var response = await SignInTokenRequest(TokenRequestType.resource_password,model.UserName,model.Password);
+			var response = await SignInTokenRequest(TokenRequestType.resource_password, model.UserName, model.Password);
 
 			return response.Token;
 		}
@@ -60,7 +63,7 @@ namespace AccountService.Controllers
 
 		[Authorize]
 		[HttpPost("info")]
-		public Account Info()
+		public Account Info(long id)
 		{
 			// get account info here
 
@@ -75,7 +78,7 @@ namespace AccountService.Controllers
 			return string.Empty;
 		}
 
-		private async  Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType,string username,string password)
+		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)
 		{
 			var request = CreateBasiceRequest();
 			if (requestType == TokenRequestType.resource_password)
@@ -102,7 +105,7 @@ namespace AccountService.Controllers
 		{
 			return new AngelTokenRequest
 			{
-				ClientId = _configuation["IdentityService:Client:Id"], 
+				ClientId = _configuation["IdentityService:Client:Id"],
 				ClientSecret = _configuation["IdentityService:Client:Secret"],
 				Scopes = _configuation["IdentityService:Client:Scopes"],
 				Address = _configuation["IdentityService:Client:Address"],
