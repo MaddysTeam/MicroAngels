@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "5ddbeb022b07e18a540fd330b43ccde128c6db94"
+    "signature": "e09fe968f3fe7cde6f8c90dc289bb802a0c5b32b"
   },
   "compilationOptions": {
     "defines": [
@@ -1536,6 +1536,31 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
+      "XC.BouncyCastle.Crypto/1.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "XC.RSAUtil/1.1.0": {
+        "dependencies": {
+          "XC.BouncyCastle.Crypto": "1.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/XC.RSAUtil.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/XC.RSAUtil.dll": {}
+        }
+      },
       "MicroAngels.Bus/1.0.0": {
         "dependencies": {
           "DotNetCore.CAP": "2.3.1",
@@ -1555,6 +1580,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.1.1",
           "Newtonsoft.Json": "12.0.1",
+          "XC.RSAUtil": "1.1.0",
           "log4net": "2.0.8"
         },
         "runtime": {
@@ -4905,6 +4931,20 @@
       "sha512": "sha512-MYoTCP7EZ98RrANESW05J5ZwskKDoN0AuZ06ZflnowE50LTpbR5yRg3tHckTVm5j/m47stuGgCrCHWePyHS70Q==",
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    },
+    "XC.BouncyCastle.Crypto/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rx0SZ5k3RwPCHTtHZbq20r/fgwSzQ7oDj0zym8YjaoLxt/2lx72Z0UNo0JrRaoD8246CMQIzU+Jf6I6KdGn+7A==",
+      "path": "xc.bouncycastle.crypto/1.0.0",
+      "hashPath": "xc.bouncycastle.crypto.1.0.0.nupkg.sha512"
+    },
+    "XC.RSAUtil/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lkDLEmF/5q7OcSGj06Jnt/Tc5MCU7UXSYCCNJ6homLrFQFQ4+0N833Jg7IFdbU7xq/tso53IGbQ5S8ddl571cg==",
+      "path": "xc.rsautil/1.1.0",
+      "hashPath": "xc.rsautil.1.1.0.nupkg.sha512"
     },
     "MicroAngels.Bus/1.0.0": {
       "type": "project",

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "483df3cef816f2644b3b92ce1493778631361cff"
+    "signature": "94d79ff06e9d1d663e56ca8d94fb54c154d10713"
   },
   "compilationOptions": {},
   "targets": {
@@ -3801,10 +3801,30 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
+      "XC.BouncyCastle.Crypto/1.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/XC.BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "XC.RSAUtil/1.1.0": {
+        "dependencies": {
+          "XC.BouncyCastle.Crypto": "1.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/XC.RSAUtil.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
       "MicroAngels.Core/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.1.1",
           "Newtonsoft.Json": "11.0.2",
+          "XC.RSAUtil": "1.1.0",
           "log4net": "2.0.8"
         },
         "runtime": {
@@ -5876,6 +5896,20 @@
       "sha512": "sha512-I50WmmXa9mUUujJOWKjyjqMnZcJklN5oc6XfHk5bfp9gt6eCJQ74qmi7IYEMa2YHPoFuA93uwssBlfU51i53QA==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
+    },
+    "XC.BouncyCastle.Crypto/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rx0SZ5k3RwPCHTtHZbq20r/fgwSzQ7oDj0zym8YjaoLxt/2lx72Z0UNo0JrRaoD8246CMQIzU+Jf6I6KdGn+7A==",
+      "path": "xc.bouncycastle.crypto/1.0.0",
+      "hashPath": "xc.bouncycastle.crypto.1.0.0.nupkg.sha512"
+    },
+    "XC.RSAUtil/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lkDLEmF/5q7OcSGj06Jnt/Tc5MCU7UXSYCCNJ6homLrFQFQ4+0N833Jg7IFdbU7xq/tso53IGbQ5S8ddl571cg==",
+      "path": "xc.rsautil/1.1.0",
+      "hashPath": "xc.rsautil.1.1.0.nupkg.sha512"
     },
     "MicroAngels.Core/1.0.0": {
       "type": "project",

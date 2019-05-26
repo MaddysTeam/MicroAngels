@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MicroAngels.Cache.Redis
+{
+
+	public class RedisCacheOption
+	{
+
+		public RedisCacheOption(string host, int port, string password, int defaultDB,long poolSize, long timeoutSeconds)
+		{
+			Host = host;
+			Port = port;
+			Password = password;
+			DefaultDB = defaultDB;
+		}
+
+		public string Conn => string.Format("{0}:{1},password={2},defaultDatabase={3},poolsize={4}",Host,Port,Password, DefaultDB, PoolSize);
+
+
+		public string Host { get; private set; }
+		public int Port { get; private set; }
+		public int DefaultDB { get; private set; }
+		public string Password { get; private set; }
+		public int PoolSize { get; private set; }
+		public long TimeoutSeconds { get; private set; }
+
+
+	}
+
+}
