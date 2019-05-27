@@ -12,8 +12,6 @@ namespace Business.Services
 
     public class TopicService : MySqlDbContext, ITopicService
     {
-        //SimpleClient<Topic> TopicDb => MySqlDbContext.Current.TopicsDb;
-        //SimpleClient<Subscribe> SubscribeDb => MySqlDbContext.Current.SubscribeDb;
 
         public TopicService(ILogger<TopicService> logger)
         {
@@ -39,7 +37,7 @@ namespace Business.Services
                     result = false;
 
                 // add
-                result = MySqlDbContext.Current.TopicsDb.Insert(topic);
+                result = TopicsDb.Insert(topic);
             }
 
             return Task.FromResult(result);

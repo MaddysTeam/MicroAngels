@@ -8,4 +8,8 @@
     <PackageReference Include="CSRedisCore" Version="3.0.57" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Exceptionless;
+using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger.ExceptionLess;
@@ -26,7 +27,14 @@ namespace AccountService
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-
+			// add redis cache
+			services.AddRedisCache(new RedisCacheOption
+				(
+				 Configuration["Redis:Host"],
+				 Convert.ToInt32(Configuration["Redis:Port"]),
+				 0,
+				 3600
+				));
 			//services.AddIdentity<>
 
 			//add mvc core

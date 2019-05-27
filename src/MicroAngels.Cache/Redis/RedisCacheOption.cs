@@ -8,6 +8,12 @@ namespace MicroAngels.Cache.Redis
 	public class RedisCacheOption
 	{
 
+		public RedisCacheOption(string host,int port ,int defaultDB,long timeoutSeconds)
+			:this(host,port,null,defaultDB,0,timeoutSeconds)
+		{
+
+		}
+
 		public RedisCacheOption(string host, int port, string password, int defaultDB,long poolSize, long timeoutSeconds)
 		{
 			Host = host;
@@ -25,7 +31,6 @@ namespace MicroAngels.Cache.Redis
 		public string Password { get; private set; }
 		public int PoolSize { get; private set; }
 		public long TimeoutSeconds { get; private set; }
-
 
 	}
 

@@ -1,21 +1,16 @@
 ﻿using Business.Services;
-using Infrastructure;
-using Infrastructure.Orms.Sugar;
 using MicroAngels.Bus.CAP;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.ServiceDiscovery.Consul;
-using MicroAngels.Swagger;
+using MicroAngles.ORM.Suger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
-using NLog.Web;
 using System;
-using System.IO;
 
 namespace MessageCenter
 {
@@ -63,7 +58,7 @@ namespace MessageCenter
 			//add mvc core
 			services.AddMvcCore(options =>
 					 {
-						 options.Filters.Add<ExcepitonFilter>();
+						 //options.Filters.Add<ExcepitonFilter>();
 					 })
 					 .AddApiExplorer() // for swagger
 					 .AddAuthorization()

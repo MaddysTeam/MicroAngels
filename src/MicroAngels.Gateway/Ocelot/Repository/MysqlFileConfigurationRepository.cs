@@ -123,7 +123,6 @@ namespace MicroAngels.Gateway.Ocelot
 			return new OkResponse();
 		}
 
-
 		private OcelotConfiguration _configuration;
 
 		private static string _gloableSql = "select * from OcelotGlobalConfiguration where isDefault=1 and InfoStatus=1";

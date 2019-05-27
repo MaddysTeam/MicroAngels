@@ -5,13 +5,13 @@ using System.Text;
 namespace MicroAngels.Cache
 {
 
-	public interface ICache<T>
+	public interface ICache
 	{
-		void Add(string key,T value,TimeSpan expire);
-		void AddOrRemove(string key,T value,TimeSpan expire);
-		T Get(string key);
+		bool Add<T>(string key,T value,TimeSpan expire);
+		bool AddOrRemove<T>(string key,T value,TimeSpan expire);
+		T Get<T>(string key);
 		bool Remove(string key);
-		TimeSpan Refresh(string key,TimeSpan expire);
+		void Refresh(string key,TimeSpan expire);
 	}
 
 }

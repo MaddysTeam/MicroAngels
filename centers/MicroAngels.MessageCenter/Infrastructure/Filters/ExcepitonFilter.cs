@@ -1,48 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Threading.Tasks;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Filters;
+//using Microsoft.Extensions.Logging;
+//using System.Net;
+//using System.Threading.Tasks;
 
-namespace Infrastructure
-{
+//namespace Infrastructure
+//{
 
-    public class ExcepitonFilter : IExceptionFilter
-    {
+//    public class ExcepitonFilter : IExceptionFilter
+//    {
 
-        private readonly ILogger<ExcepitonFilter> logger;
+//        private readonly ILogger<ExcepitonFilter> logger;
 
-        public ExcepitonFilter(ILogger<ExcepitonFilter> logger)
-        {
-            this.logger = logger;
-        }
+//        public ExcepitonFilter(ILogger<ExcepitonFilter> logger)
+//        {
+//            this.logger = logger;
+//        }
 
-        public virtual void OnException(ExceptionContext context)
-        {
-            logger.LogError(new EventId(context.Exception.HResult), context.Exception.Message);
+//        public virtual void OnException(ExceptionContext context)
+//        {
+//            logger.LogError(new EventId(context.Exception.HResult), context.Exception.Message);
 
-            var errorMessage = new ErrorMessage
-            {
-                Messages = new[] { context.Exception.Message }
-            };
+//            var errorMessage = new ErrorMessage
+//            {
+//                Messages = new[] { context.Exception.Message }
+//            };
 
-            context.Result = new InternalServerErrorResult(errorMessage);
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+//            context.Result = new InternalServerErrorResult(errorMessage);
+//            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            context.ExceptionHandled = true;
-        }   
+//            context.ExceptionHandled = true;
+//        }   
 
-        private class ErrorMessage
-        {
-            public string[] Messages { get; set; }
-        }
+//        private class ErrorMessage
+//        {
+//            public string[] Messages { get; set; }
+//        }
 
-        private class InternalServerErrorResult : ObjectResult
-        {
-            public InternalServerErrorResult(object value) : base(value) { }
-        }
+//        private class InternalServerErrorResult : ObjectResult
+//        {
+//            public InternalServerErrorResult(object value) : base(value) { }
+//        }
 
-    }
+//    }
 
    
-}
+//}

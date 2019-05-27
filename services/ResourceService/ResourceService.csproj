@@ -5,12 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Business\Services\" />
+    <Folder Include="Business\Models\" />
     <Folder Include="wwwroot\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngles.ORM.csproj" />
   </ItemGroup>
 
 </Project>

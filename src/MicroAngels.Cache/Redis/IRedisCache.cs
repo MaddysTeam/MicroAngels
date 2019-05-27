@@ -5,7 +5,7 @@ using System.Text;
 namespace MicroAngels.Cache.Redis
 {
 
-	public interface IRedisCache<T> :ICache<T>
+	public interface IRedisCache:ICache
 	{
 		
 	}

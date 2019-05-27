@@ -17,7 +17,7 @@ namespace MicroAngels.IdentityServer.Extensions
 				{
 					opt.Authority = options.Authority;
 					opt.RequireHttpsMetadata = options.RequireHttps;
-					opt.ApiSecret = options.ApiSecret;
+					opt.ApiSecret = options.ApiSecret;	
 					opt.ApiName = options.ApiName;
 					opt.SupportedTokens = SupportedTokens.Both;
 				});

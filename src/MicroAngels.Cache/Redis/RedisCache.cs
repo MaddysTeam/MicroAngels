@@ -1,59 +1,67 @@
 ﻿using CSRedis;
 using System;
+using System.Collections.Generic;
+using MicroAngels.Core;
+using System.Linq;
 
 namespace MicroAngels.Cache.Redis
 {
 
-	class RedisCache<T> : IRedisCache<T>
+	class RedisCache : IRedisCache
 	{
 
 		public RedisCache(RedisCacheOption option)
 		{
+			option.EnsureNotNull(() => new ArgumentNullException());
+
 			_option = option;
 			_client = new CSRedisClient(option.Conn);
 
 			RedisHelper.Initialization(_client);
 		}
 
-
-		public void Add(string key, T value, TimeSpan expire)
+		public RedisCache(IEnumerable<RedisCacheOption> options)
 		{
-			//_client=new CSRedisClient()
-			var result = RedisHelper.Set(key, value, (int)expire.TotalSeconds);
-			if (!result)
-			{
+			options.EnsureNotNull(() => new ArgumentNullException());
 
-			}
+			var conn = string.Join(",", options.Select(x=>x.ToString()));
+			_client = new CSRedisClient(conn);
+
+			RedisHelper.Initialization(_client);
 		}
 
-		public void AddOrRemove(string key, T value, TimeSpan expire)
+		public bool Add<T>(string key, T value, TimeSpan expire)
 		{
-			var isExist = Get(key) == null ? true : false;
+			return RedisHelper.Set(key, value, (int)expire.TotalSeconds);
+		}
+
+		public bool AddOrRemove<T>(string key, T value, TimeSpan expire)
+		{
+			var isExist = Get<T>(key) == null ? true : false;
 			if (isExist)
 				Remove(key);
 
-			Add(key, value, expire);
+			return Add(key, value, expire);
 		}
 
-		public T Get(string key)
+		public T Get<T>(string key)
 		{
 			return RedisHelper.Get<T>(key);
 		}
 
-		public TimeSpan Refresh(string key, TimeSpan expire)
+		public void Refresh(string key, TimeSpan expire)
 		{
-			//TODO:
-			return TimeSpan.FromDays(0);
+			RedisHelper.Expire(key, (int)expire.TotalSeconds);
 		}
 
 		public bool Remove(string key)
 		{
-			return true;
-			//return RedisHelper.Expire(key);
+			var res= RedisHelper.Del(key);
+			return res >= 0;
 		}
 
-		private CSRedisClient _client;
-		private RedisCacheOption _option;
+		private readonly CSRedisClient _client;
+		private readonly RedisCacheOption _option;
 
 	}
 

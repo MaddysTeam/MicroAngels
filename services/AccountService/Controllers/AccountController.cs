@@ -1,4 +1,5 @@
 ﻿using AccountService.Models;
+using MicroAngels.Cache.Redis;
 using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AccountService.Controllers
@@ -18,10 +18,11 @@ namespace AccountService.Controllers
 	public class AccountController : ControllerBase
 	{
 
-		public AccountController(ILogger logger, IConfiguration configuraton)
+		public AccountController(ILogger logger, IConfiguration configuraton,IRedisCache cache)
 		{
 			_logger = logger;
 			_configuation = configuraton;
+			_cache = cache;
 		}
 
 		// POST api/validateNumber
@@ -39,6 +40,7 @@ namespace AccountService.Controllers
 		{
 			var keys = RSACryptor.CreateKeys(2048, KeyFormat.XML);
 			//where store private key? put into redis ?
+
 			return keys[1];
 		}
 
@@ -116,6 +118,7 @@ namespace AccountService.Controllers
 
 		private readonly ILogger _logger;
 		private readonly IConfiguration _configuation;
+		private readonly IRedisCache _cache;
 
 	}
 
