@@ -54,3 +54,5 @@ E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\obj\Debu
 E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.pdb
 E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngles.ORM.dll
 E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngles.ORM.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngles.ORM.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngles.ORM.pdb

@@ -1,7 +1,7 @@
 ﻿using MicroAngles.ORM.Suger;
 using SqlSugar;
 
-namespace Business
+namespace ResourceService.Business
 {
 
 	public partial class MySqlDbContext
@@ -9,7 +9,7 @@ namespace Business
 
 		public SqlSugarClient DB => MySqlContext.Current.DB;
 
-		//public SimpleClient<Topic> TopicsDb { get { return new SimpleClient<Topic>(DB); } }
+		public SimpleClient<CroResource> ResourceDb { get { return new SimpleClient<CroResource>(DB); } }
 
 	}
 

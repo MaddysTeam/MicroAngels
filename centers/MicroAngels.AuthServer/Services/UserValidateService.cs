@@ -15,6 +15,8 @@ namespace MicroAngels.AuthServer.Services
 		/// <returns></returns>
 		public Task<bool> ValidatePassword(ResourceOwnerPasswordValidationContext context)
 		{
+			var username = context.UserName;
+			var password = context.Password;
 
 			// you can implement you own validate password here
 

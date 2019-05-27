@@ -49,6 +49,8 @@ namespace AccountService.Controllers
 		[HttpPost("signin")]
 		public async Task<string> SignIn([FromBody]LoginModel model)
 		{
+			//decrypt  password
+
 			var response = await SignInTokenRequest(TokenRequestType.resource_password, model.UserName, model.Password);
 
 			return response.Token;

@@ -7,7 +7,7 @@ using System.Linq;
 namespace MicroAngels.Cache.Redis
 {
 
-	class RedisCache : IRedisCache
+	public class RedisCache : IRedisCache
 	{
 
 		public RedisCache(RedisCacheOption option)
@@ -29,6 +29,7 @@ namespace MicroAngels.Cache.Redis
 
 			RedisHelper.Initialization(_client);
 		}
+
 
 		public bool Add<T>(string key, T value, TimeSpan expire)
 		{
