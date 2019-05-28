@@ -19,6 +19,7 @@ namespace ResourceService
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
+				.UseUrls("http://*:6001")
 				.UseStartup<Startup>();
 	}
 }

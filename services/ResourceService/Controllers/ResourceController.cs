@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ResourceService.Business;
+using System.Collections.Generic;
 
 namespace ResourceService.Controllers
 {
@@ -10,6 +9,32 @@ namespace ResourceService.Controllers
 	[ApiController]
 	public class ResourceController : ControllerBase
 	{
+
+		public ResourceController(ICroResourceService resourceService)
+		{
+			_resourceService = resourceService;
+		}
+
+		[Authorize]
+		[HttpPost]
+		[Route("list")]
+		public List<CroResource> List()
+		{
+			return null;
+		}
+
+
+		[Authorize]
+		[HttpPost]
+		[Route("Edit")]
+		public List<CroResource> Edit(CroResource croResource)
+		{
+			return null;
+		}
+
+		private readonly ICroResourceService _resourceService;
+
+
 		// GET api/values
 		//[HttpGet]
 		//public ActionResult<IEnumerable<string>> Get()

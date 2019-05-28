@@ -14,7 +14,6 @@ namespace MicroAngels.Core.Plugins
 		}
 
 		public bool IsSuccess { get; }
-		public int ErrorCount { get; }
 		public string Message { get; }
 	}
 

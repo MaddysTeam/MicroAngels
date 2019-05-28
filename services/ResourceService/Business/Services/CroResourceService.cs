@@ -5,12 +5,22 @@ using System.Linq.Expressions;
 namespace ResourceService.Business
 {
 
-	public class CroResourceService : ICroResourceService
+	public class CroResourceService : MySqlDbContext, ICroResourceService
 	{
 
 		public bool EditResource(CroResource resource)
 		{
-			throw new NotImplementedException();
+			var results = CroResource.Validate(resource);
+			if (results.TrueForAll(x => x.IsSuccess))
+			{
+				//TODO: will get file data from file service by using fileId
+
+				ResourceDb.Insert(resource);
+
+				return true;
+			}
+
+			return false;
 		}
 
 		public CroResource GetResource(Guid id)

@@ -8,6 +8,6 @@ namespace AccountService.Controllers
 	public class HealthController : ControllerBase
 	{
 		[HttpGet]
-		public IActionResult Get() => Ok("Account service is ok");
+		public IActionResult Get() => Ok("Resource service is ok");
 	}
 }
