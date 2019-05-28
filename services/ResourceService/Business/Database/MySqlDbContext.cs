@@ -1,4 +1,4 @@
-﻿using MicroAngles.ORM.Suger;
+﻿using MicroAngels.ORM.Suger;
 using SqlSugar;
 
 namespace ResourceService.Business

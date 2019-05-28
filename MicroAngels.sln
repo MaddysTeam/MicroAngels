@@ -60,11 +60,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoticeService", "services\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Cache", "src\MicroAngels.Cache\MicroAngels.Cache.csproj", "{866DA7D6-0EE9-4869-A18E-CD078BAFED81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngles.Cache.Test", "test\MicroAngles.Cache.Test\MicroAngles.Cache.Test.csproj", "{40DEC1D0-B2BA-47E1-ACC5-D32008760756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngles.Cache.Test", "test\MicroAngles.Cache.Test\MicroAngles.Cache.Test.csproj", "{40DEC1D0-B2BA-47E1-ACC5-D32008760756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "services\FileService\FileService.csproj", "{801237BD-3122-4BEB-B235-A361F9548165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileService", "services\FileService\FileService.csproj", "{801237BD-3122-4BEB-B235-A361F9548165}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngles.ORM", "src\MicroAngles.ORM\MicroAngles.ORM.csproj", "{244EFF40-CD5A-47E0-A9E0-6C063F952E2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.ORM", "src\MicroAngles.ORM\MicroAngels.ORM.csproj", "{244EFF40-CD5A-47E0-A9E0-6C063F952E2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

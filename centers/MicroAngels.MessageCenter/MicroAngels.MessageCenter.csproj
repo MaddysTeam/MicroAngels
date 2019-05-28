@@ -45,7 +45,7 @@
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Swagger\MicroAngels.Swagger.csproj" />
-    <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngles.ORM.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>
 
 </Project>

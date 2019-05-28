@@ -3,7 +3,7 @@ using MicroAngels.Bus.CAP;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.ServiceDiscovery.Consul;
-using MicroAngles.ORM.Suger;
+using MicroAngels.ORM.Suger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

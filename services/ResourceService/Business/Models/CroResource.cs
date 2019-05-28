@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SqlSugar;
+using System;
+using MicroAngels.Core.Plugins;
 
-namespace Business
+namespace ResourceService.Business
 {
 
 	public class CroResource
 	{
 
-		public long CrosourceId { get; set; }
+		[SugarColumn(IsPrimaryKey = true)]
+		public Guid CrosourceId { get; set; }
 
-		public long FildId { get; set; }
+		public Guid FildId { get; set; }
 
 		public string Title { get; set; }
 
@@ -19,15 +19,25 @@ namespace Business
 
 		public string Keywords { get; set; }
 
-		public long MediumTypeId { get; set; }
+		public Guid MediumTypeId { get; set; }
 
-		public long DownCount { get; set; }
+		public int DownCount { get; set; }
 
-		public long FavoriteCount { get; set; }
+		public int FavoriteCount { get; set; }
 
-		public long CommentCount { get; set; }
+		public int CommentCount { get; set; }
 
-		public long StarCount { get; set; }
+		public int StarCount { get; set; }
+
+		public static void Validate(CroResource r)
+		{
+			//var results =
+			//r.Start()
+			// .Title.Same("")
+			// .And(r.DownCount).Same(10)
+			// .Execute();
+		}
+
 	}
 
 }

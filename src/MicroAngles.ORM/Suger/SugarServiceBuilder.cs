@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace MicroAngles.ORM.Suger
+namespace MicroAngels.ORM.Suger
 {
 
 	public static class SugarServiceBuilder

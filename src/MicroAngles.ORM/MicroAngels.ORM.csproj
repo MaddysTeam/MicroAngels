@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>MicroAngels.ORM</AssemblyName>
+    <RootNamespace>MicroAngels.ORM</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

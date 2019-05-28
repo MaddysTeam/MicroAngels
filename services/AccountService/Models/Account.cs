@@ -4,14 +4,14 @@ namespace AccountService.Models
 {
 	public class Account
 	{
-		public Account(long id,string name, DateTime birthday)
+		public Account(Guid id,string name, DateTime birthday)
 		{
 			Id = id;
 			UserName = name;
 			Birthday = birthday;
 		}
 
-		public long Id { get; private set; }
+		public Guid Id { get; private set; }
 		public string UserName { get; private set; }
 		public string Password { get; set; }
 		public DateTime Birthday { get; private set; }

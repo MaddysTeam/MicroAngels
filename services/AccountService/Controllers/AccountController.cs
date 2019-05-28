@@ -67,11 +67,11 @@ namespace AccountService.Controllers
 
 		[Authorize]
 		[HttpPost("info")]
-		public Account Info(long id)
+		public Account Info(Guid id)
 		{
 			// get account info here
 
-			return new Account(1, "Jimmy", DateTime.Now);
+			return new Account(Guid.NewGuid(), "Jimmy", DateTime.Now);
 		}
 
 		[HttpPost("signup")]
