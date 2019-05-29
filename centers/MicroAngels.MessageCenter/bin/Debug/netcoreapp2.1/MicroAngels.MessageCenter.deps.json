@@ -27,9 +27,9 @@
           "MicroAngels.Bus": "1.0.0",
           "MicroAngels.Core": "1.0.0",
           "MicroAngels.IdentityServer": "1.0.0",
+          "MicroAngels.ORM": "1.0.0",
           "MicroAngels.ServiceDiscovery": "1.0.0",
           "MicroAngels.Swagger": "1.0.0",
-          "MicroAngles.ORM": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.Extensions.Logging": "2.1.1",
           "Microsoft.Extensions.Logging.Configuration": "2.1.1",
@@ -1666,6 +1666,18 @@
           "MicroAngels.IdentityServer.dll": {}
         }
       },
+      "MicroAngels.ORM/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.App": "2.1.1",
+          "sqlSugarCore": "5.0.0.2"
+        },
+        "runtime": {
+          "MicroAngels.ORM.dll": {}
+        },
+        "compile": {
+          "MicroAngels.ORM.dll": {}
+        }
+      },
       "MicroAngels.ServiceDiscovery/1.0.0": {
         "dependencies": {
           "Consul": "0.7.2.6",
@@ -1691,18 +1703,6 @@
         },
         "compile": {
           "MicroAngels.Swagger.dll": {}
-        }
-      },
-      "MicroAngles.ORM/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.App": "2.1.1",
-          "sqlSugarCore": "5.0.0.2"
-        },
-        "runtime": {
-          "MicroAngles.ORM.dll": {}
-        },
-        "compile": {
-          "MicroAngles.ORM.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -5045,17 +5045,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "MicroAngels.ORM/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "MicroAngels.ServiceDiscovery/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "MicroAngels.Swagger/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "MicroAngles.ORM/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

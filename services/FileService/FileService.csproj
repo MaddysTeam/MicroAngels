@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -10,7 +10,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+	<PackageReference Include="MagicOnion" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.GRPC\MicroAngels.GRPC.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>
 
 </Project>

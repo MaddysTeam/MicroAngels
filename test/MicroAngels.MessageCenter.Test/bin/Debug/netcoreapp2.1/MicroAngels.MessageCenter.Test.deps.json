@@ -1400,9 +1400,9 @@
           "MicroAngels.Bus": "1.0.0",
           "MicroAngels.Core": "1.0.0",
           "MicroAngels.IdentityServer": "1.0.0",
+          "MicroAngels.ORM": "1.0.0",
           "MicroAngels.ServiceDiscovery": "1.0.0",
           "MicroAngels.Swagger": "1.0.0",
-          "MicroAngles.ORM": "1.0.0",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
           "Microsoft.NETCore.App": "2.1.0",
           "NLog": "4.5.11",
@@ -1413,6 +1413,14 @@
         },
         "runtime": {
           "MicroAngels.MessageCenter.dll": {}
+        }
+      },
+      "MicroAngels.ORM/1.0.0": {
+        "dependencies": {
+          "sqlSugarCore": "5.0.0.2"
+        },
+        "runtime": {
+          "MicroAngels.ORM.dll": {}
         }
       },
       "MicroAngels.ServiceDiscovery/1.0.0": {
@@ -1433,14 +1441,6 @@
         },
         "runtime": {
           "MicroAngels.Swagger.dll": {}
-        }
-      },
-      "MicroAngles.ORM/1.0.0": {
-        "dependencies": {
-          "sqlSugarCore": "5.0.0.2"
-        },
-        "runtime": {
-          "MicroAngles.ORM.dll": {}
         }
       }
     }
@@ -2241,17 +2241,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "MicroAngels.ORM/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "MicroAngels.ServiceDiscovery/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "MicroAngels.Swagger/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "MicroAngles.ORM/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

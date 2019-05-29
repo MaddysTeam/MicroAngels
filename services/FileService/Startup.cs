@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MicroAngels.GRPC.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System;
 
 namespace FileService
 {
@@ -24,7 +20,15 @@ namespace FileService
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// add mvc
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+			// add grpc server
+			services.AddGRPCServer(new GRPCServerOptions
+			{
+				Host = Configuration["Service:Host"],
+				Port = Convert.ToInt32(Configuration["Service:Port"])
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
