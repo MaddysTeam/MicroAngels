@@ -11,6 +11,8 @@ namespace ResourceService.Business
 
 		public SimpleClient<CroResource> ResourceDb { get { return new SimpleClient<CroResource>(DB); } }
 
+		public SimpleClient<CroFavorite> FavoriteDB { get { return new SimpleClient<CroFavorite>(DB); } }
+
 	}
 
 }

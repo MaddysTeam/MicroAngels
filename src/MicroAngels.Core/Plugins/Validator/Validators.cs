@@ -50,8 +50,6 @@ namespace MicroAngels.Core.Plugins
 		}
 
 
-
-
 		public static List<ValidateResult> Validate<T>(this T o)
 		{
 			var result = new List<ValidateResult>();

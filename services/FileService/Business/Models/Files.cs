@@ -1,14 +1,18 @@
-﻿using System;
+﻿using MessagePack;
+using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FileService.Business
 {
-
+	[MessagePackObject]
 	public class Files
 	{
 
+		[Key(0)]
+		[SugarColumn(IsPrimaryKey =true)]
 		public Guid FildId { get; set; }
 
 		public Guid FileType { get; set; }

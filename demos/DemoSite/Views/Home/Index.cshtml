@@ -91,23 +91,55 @@
 				<li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
 			</ul>*@
 
-		 <div class="row">
+		 @*<div class="row">
 			 <div class="col-md-3">
 				 <button id="Login" class="btn btn-primary">登录</button>
 			 </div>
-		 </div>
-
+		 </div>*@
+		<input id="Uploader" type="file" class="form-control" accept="*" multiple="" name="img" />
 	</div>
+
 
 
 </div>
 @section Scripts{ 
 	<script>
-		$('#Login').on('click', function () {
+		@*$('#Login').on('click', function () {
 			$.post('http://localhost:5000/api/accountservice/signin', function (data) {
 				localStorage.setItem('code', data);
 				location.href="@Url.Action("about")"
 			});
+		});*@
+
+		$('#Uploader').on('change', function () {
+			var file = $('#Uploader')[0].files[0];
+			console.log(file);
+			upload(file);
 		});
+
+		function upload(file) {
+			var formdata = new FormData();
+			formdata.append('file', file);
+			$.ajax({
+				//rver script to process data
+				dataType: "json",
+				url: 'http://192.168.1.8:6000/api/file/upload',
+				type: 'POST',
+				success: function (data) {
+					//success event
+					console.log(data)
+				},
+				error: function (e) {
+					//errorHandler
+				},
+				///Form data
+				data: formdata,
+				///Options to tell JQuery not to process data or worry about content-type
+				cache: false,
+				contentType: false,
+				processData: false
+			});
+
+		}
 	</script>
 }

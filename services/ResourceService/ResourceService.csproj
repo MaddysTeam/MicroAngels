@@ -16,9 +16,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.GRPC\MicroAngels.GRPC.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
     <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
+    <ProjectReference Include="..\FileService\FileService.csproj" />
   </ItemGroup>
 
 </Project>

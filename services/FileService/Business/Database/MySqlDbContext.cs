@@ -2,7 +2,7 @@
 using MicroAngels.ORM.Suger;
 using SqlSugar;
 
-namespace ResourceService.Business
+namespace FileService.Business
 {
 
 	public partial class MySqlDbContext

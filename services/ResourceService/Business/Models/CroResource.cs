@@ -35,10 +35,12 @@ namespace ResourceService.Business
 
 		public int StarCount { get; set; }
 
+		public Guid Creator { get; set; }
+
 		public static List<ValidateResult> Validate(CroResource r)
 		{
 			return
-			r.NotNull(r.CrosourceId, "")
+			r.NotNull(r.CrosourceId, Keys.Errors.NOT_ALLOWED_ID_NULL)
 			 .NotNull(r.FildId,"")
 			 .Length(r.Author, 100, "")
 			 .Length(r.Title, 100, "")

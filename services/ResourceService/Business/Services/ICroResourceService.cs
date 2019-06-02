@@ -8,9 +8,9 @@ namespace ResourceService.Business
 
 	public interface ICroResourceService
 	{
-		List<CroResource> SearchResourceList(List<System.Linq.Expressions.Expression<Func<CroResource, bool>>> whereExpressions, int pageSize, int pageIndex);
-		bool EditResource(CroResource resource);
-		CroResource GetResource(Guid id);
+		Task<List<CroResource>> Search(List<System.Linq.Expressions.Expression<Func<CroResource, bool>>> whereExpressions, int pageSize, int pageIndex);
+		Task<bool> Edit(CroResource resource);
+		CroResource Get(Guid id);
 	}
 
 }
