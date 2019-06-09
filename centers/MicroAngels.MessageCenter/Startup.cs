@@ -32,7 +32,7 @@ namespace MessageCenter
 			services.AddTransient<IMessageService, MessageService>();
 
 			// add cap
-			services.AddKafkaService(new CapService
+			services.AddKafkaService(new CAPService
 			{
 				Host = Configuration["Queues:Kafka:Host"],
 				ConnectString = Configuration["Queues:Kafka:DbConn"]
@@ -113,7 +113,7 @@ namespace MessageCenter
 				   }
 			   });
 
-			app.RegisterMysqlBySugar(lifeTime, Configuration);  // register orm sugar
+			app.UseSugarORM(lifeTime, Configuration);  // register orm sugar
 		}
 	}
 }

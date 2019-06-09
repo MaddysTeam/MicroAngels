@@ -1,5 +1,6 @@
 ﻿using MicroAngels.ORM.Suger;
 using SqlSugar;
+using System;
 
 namespace ResourceService.Business
 {
@@ -9,9 +10,13 @@ namespace ResourceService.Business
 
 		public SqlSugarClient DB => MySqlContext.Current.DB;
 
-		public SimpleClient<CroResource> ResourceDb { get { return new SimpleClient<CroResource>(DB); } }
+		public SimpleClient<Resource> ResourceDb { get { return new SimpleClient<Resource>(DB); } }
 
-		public SimpleClient<CroFavorite> FavoriteDB { get { return new SimpleClient<CroFavorite>(DB); } }
+		public SimpleClient<ResourceFavorite> FavoriteDB { get { return new SimpleClient<ResourceFavorite>(DB); } }
+
+		public SimpleClient<ResourceDownload> DownloadDB { get { return new SimpleClient<ResourceDownload>(DB); } }
+
+		public static Type[] TableTypes = new Type[] { typeof(Resource), typeof(ResourceDownload),typeof(ResourceFavorite) };
 
 	}
 

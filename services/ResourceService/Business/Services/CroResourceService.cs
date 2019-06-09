@@ -18,13 +18,18 @@ namespace ResourceService.Business
 			_grpcService = grpcService;
 		}
 
-		public async Task<bool> Edit(CroResource resource)
+		/// <summary>
+		/// Edit Resource
+		/// </summary>
+		/// <param name="resource">resource instance</param>
+		/// <returns>async bool</returns>
+		public async Task<bool> Edit(Resource resource)
 		{
-			var results = CroResource.Validate(resource);
+			var results = Resource.Validate(resource);
 			if (results.TrueForAll(x => x.IsSuccess))
 			{
 				//TODO: will get file data from file service by using fileId
-				var fileService = _connection.GetGRPCService<IFileGRPCService>(string.Empty).Result;
+				var fileService = _connection.GetGRPCService<IFileGRPCService>(_grpcService).Result;
 				var fileExist= await fileService.FileExist(resource.FildId).ResponseAsync;
 				if (fileExist)
 				{
@@ -40,12 +45,12 @@ namespace ResourceService.Business
 			return false;
 		}
 
-		public CroResource Get(Guid id)
+		public Resource Get(Guid id)
 		{
 			return ResourceDb.GetById(id);
 		}
 
-		public async Task<List<CroResource>> Search(List<Expression<Func<CroResource, bool>>> whereExpressions, int pageSize, int pageIndex)
+		public async Task<List<Resource>> Search(List<Expression<Func<Resource, bool>>> whereExpressions, int pageSize, int pageIndex)
 		{
 			var query = ResourceDb.AsQueryable();
 
@@ -59,6 +64,12 @@ namespace ResourceService.Business
 			return pageSize <= 0 ? await query.ToListAsync() : await query.ToPageListAsync(pageIndex, pageSize);
 		}
 
+		public async Task<bool> Favorite(Guid id, Guid userId)
+		{
+			//FavoriteDB.Insert(new ResourceFavorite(Guid.NewGuid(), id, userId));
+
+			return false;
+		}
 
 		private readonly IGRPCConnection _connection;
 		private readonly GRPCService _grpcService;

@@ -1,14 +1,11 @@
 ﻿using MicroAngels.Core.Service;
-using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.Swagger
 {
 
-    public class SwaggerService : IService
+	public class SwaggerService : IService
     {
         public string Name { get; set; }
         public string Title { get; set; }

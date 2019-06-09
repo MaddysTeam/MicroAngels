@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +12,11 @@ namespace FileService.Business
 
 	public class FileService : MySqlDbContext, IFileService
 	{
+
+		public FileService(ICAPPublisher bus)
+		{
+			_bus = bus;
+		} 
 
 		public List<Files> UploadFiles(IFormFileCollection formFiles, string foler)
 		{
@@ -47,6 +51,8 @@ namespace FileService.Business
 						{
 							uploadFiles.Add(existFile);
 						}
+
+						//_bus.PublishAsync(new CAPMessage())
 					}
 				}
 			}
@@ -58,6 +64,9 @@ namespace FileService.Business
 		{
 			throw new NotImplementedException();
 		}
+
+
+		private readonly ICAPPublisher _bus;
 
 	}
 

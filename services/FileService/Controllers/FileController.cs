@@ -1,9 +1,7 @@
 ﻿using FileService.Business;
-using MicroAngels.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace FileService.Controllers
@@ -18,12 +16,6 @@ namespace FileService.Controllers
 		{
 			_folder = $@"{hosting.ContentRootPath}\uploader";
 			_fileService = fileService;
-		}
-
-		[Route("get")]
-		public string Get()
-		{
-			return "HelloWorld";
 		}
 
 		[Route("upload")]
@@ -47,6 +39,7 @@ namespace FileService.Controllers
 
 		private string _folder;
 		private IFileService _fileService;
+
 	}
 
 }

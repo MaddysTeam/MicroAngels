@@ -38,9 +38,21 @@ namespace MicroAngels.ORM.Suger
 				{
 					ConnectionString = _configuration["Database:Mysql:Conn"],
 					DbType = DbType.MySql,
-					IsAutoCloseConnection = true
+					IsAutoCloseConnection = true,
+					InitKeyType=InitKeyType.Attribute
 				});
 			}
+		}
+
+
+		public void InitTable(Type type)
+		{
+			Current.DB.CodeFirst.InitTables(type);
+		}
+
+		public void InitTables(Type[] types)
+		{
+			Current.DB.CodeFirst.InitTables(types);
 		}
 
 		private IConfiguration _configuration;

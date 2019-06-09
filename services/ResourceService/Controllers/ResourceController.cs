@@ -22,9 +22,9 @@ namespace ResourceService.Controllers
 		[Authorize]
 		[HttpPost]
 		[Route("list")]
-		public async Task<List<CroResource>> List(Guid userId,int pageSize,int pageIndex)
+		public async Task<List<Resource>> List(Guid userId,int pageSize,int pageIndex)
 		{
-			var whereExpressions = new List<Expression<Func<CroResource, bool>>>();
+			var whereExpressions = new List<Expression<Func<Resource, bool>>>();
 
 			if (!userId.IsEmpty())
 			{
@@ -40,7 +40,7 @@ namespace ResourceService.Controllers
 		[Authorize]
 		[HttpPost]
 		[Route("Edit")]
-		public IActionResult Edit(CroResource croResource)
+		public IActionResult Edit(Resource croResource)
 		{
 			croResource.EnsureNotNull(() => new AngleExceptions(""));
 
@@ -55,6 +55,11 @@ namespace ResourceService.Controllers
 		[Route("Favorite")]
 		public IActionResult Favorite(Guid id,Guid userId)
 		{
+			id.EnsureNotEmpty(() => new AngleExceptions(""));
+			userId.EnsureNotEmpty(() => new AngleExceptions(""));
+
+			_resourceService.Favorite(id, userId);
+
 			return null;
 		}
 

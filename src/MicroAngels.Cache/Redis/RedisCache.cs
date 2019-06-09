@@ -61,6 +61,16 @@ namespace MicroAngels.Cache.Redis
 			return res >= 0;
 		}
 
+		public bool ExistKey(string key)
+		{
+			return RedisHelper.Exists(key);
+		}
+
+		public IEnumerable<string> GetAllKey()
+		{
+			return RedisHelper.Keys("*");
+		}
+
 		private readonly CSRedisClient _client;
 		private readonly RedisCacheOption _option;
 

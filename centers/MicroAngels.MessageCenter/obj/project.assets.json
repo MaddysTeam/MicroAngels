@@ -56,6 +56,19 @@
           "lib/netstandard1.3/Consul.dll": {}
         }
       },
+      "CSRedisCore/3.0.57": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1",
+          "SafeObjectPool": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/CSRedisCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CSRedisCore.dll": {}
+        }
+      },
       "Dapper/1.60.6": {
         "type": "package",
         "dependencies": {
@@ -3366,6 +3379,15 @@
           }
         }
       },
+      "SafeObjectPool/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/SafeObjectPool.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/SafeObjectPool.dll": {}
+        }
+      },
       "SQLitePCLRaw.bundle_green/1.1.12": {
         "type": "package",
         "dependencies": {
@@ -5432,6 +5454,20 @@
           "bin/placeholder/MicroAngels.Bus.dll": {}
         }
       },
+      "MicroAngels.Cache/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "CSRedisCore": "3.0.57",
+          "MicroAngels.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MicroAngels.Cache.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MicroAngels.Cache.dll": {}
+        }
+      },
       "MicroAngels.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -5472,6 +5508,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
+          "MicroAngels.Cache": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "sqlSugarCore": "5.0.0.2"
         },
@@ -5557,6 +5594,18 @@
         "consul.nuspec",
         "lib/net45/Consul.dll",
         "lib/netstandard1.3/Consul.dll"
+      ]
+    },
+    "CSRedisCore/3.0.57": {
+      "sha512": "h5uNt1mNmZMKx5jD4c6vt5Bt386ZM5S13FLfj4IE18qXqP5Vd5+OkyNq8bO01pOR1f0gOyA5ICoXn25YOJW7SA==",
+      "type": "package",
+      "path": "csrediscore/3.0.57",
+      "files": [
+        ".signature.p7s",
+        "csrediscore.3.0.57.nupkg.sha512",
+        "csrediscore.nuspec",
+        "lib/netstandard2.0/CSRedisCore.dll",
+        "lib/netstandard2.0/CSRedisCore.xml"
       ]
     },
     "Dapper/1.60.6": {
@@ -8951,6 +9000,17 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "SafeObjectPool/2.0.1": {
+      "sha512": "1Gt7jEVrXaF7/eoeKsWdn/YJ0eq7gfkV18/8wq68Z4ksUJb8R3UAYJVuXh7EJEB550z66ae35ZLEkWuVkIjP2w==",
+      "type": "package",
+      "path": "safeobjectpool/2.0.1",
+      "files": [
+        ".signature.p7s",
+        "lib/netstandard2.0/SafeObjectPool.dll",
+        "safeobjectpool.2.0.1.nupkg.sha512",
+        "safeobjectpool.nuspec"
       ]
     },
     "SQLitePCLRaw.bundle_green/1.1.12": {
@@ -14137,6 +14197,11 @@
       "type": "project",
       "path": "../../src/MicroAngels.Bus/MicroAngels.Bus.csproj",
       "msbuildProject": "../../src/MicroAngels.Bus/MicroAngels.Bus.csproj"
+    },
+    "MicroAngels.Cache/1.0.0": {
+      "type": "project",
+      "path": "../../src/MicroAngels.Cache/MicroAngels.Cache.csproj",
+      "msbuildProject": "../../src/MicroAngels.Cache/MicroAngels.Cache.csproj"
     },
     "MicroAngels.Core/1.0.0": {
       "type": "project",

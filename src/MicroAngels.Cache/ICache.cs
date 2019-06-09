@@ -12,6 +12,8 @@ namespace MicroAngels.Cache
 		T Get<T>(string key);
 		bool Remove(string key);
 		void Refresh(string key,TimeSpan expire);
+		bool ExistKey(string key);
+		IEnumerable<string> GetAllKey();
 	}
 
 }

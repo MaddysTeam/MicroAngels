@@ -4,7 +4,7 @@ using System;
 namespace ResourceService.Business
 {
 
-	public class CroFavorite
+	public class ResourceDownload
 	{
 
 		[SugarColumn(IsPrimaryKey = true)]

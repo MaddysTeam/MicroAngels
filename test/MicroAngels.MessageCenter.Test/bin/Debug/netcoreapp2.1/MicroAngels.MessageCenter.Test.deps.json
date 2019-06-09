@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "b10e1be2009b56e2c54fd63658d8da9ff51043f6"
+    "signature": "969f34909cb4aca2771ee6be9c8b39136a001328"
   },
   "compilationOptions": {},
   "targets": {
@@ -50,6 +50,18 @@
           "lib/netstandard1.3/Consul.dll": {
             "assemblyVersion": "0.7.2.6",
             "fileVersion": "0.7.2.6"
+          }
+        }
+      },
+      "CSRedisCore/3.0.57": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1",
+          "SafeObjectPool": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/CSRedisCore.dll": {
+            "assemblyVersion": "3.0.57.0",
+            "fileVersion": "3.0.57.0"
           }
         }
       },
@@ -803,6 +815,14 @@
           }
         }
       },
+      "SafeObjectPool/2.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/SafeObjectPool.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
       "SQLitePCLRaw.bundle_green/1.1.12": {
         "dependencies": {
           "SQLitePCLRaw.core": "1.1.12",
@@ -1370,6 +1390,15 @@
           "MicroAngels.Bus.dll": {}
         }
       },
+      "MicroAngels.Cache/1.0.0": {
+        "dependencies": {
+          "CSRedisCore": "3.0.57",
+          "MicroAngels.Core": "1.0.0"
+        },
+        "runtime": {
+          "MicroAngels.Cache.dll": {}
+        }
+      },
       "MicroAngels.Core/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.1",
@@ -1417,6 +1446,7 @@
       },
       "MicroAngels.ORM/1.0.0": {
         "dependencies": {
+          "MicroAngels.Cache": "1.0.0",
           "sqlSugarCore": "5.0.0.2"
         },
         "runtime": {
@@ -1471,6 +1501,13 @@
       "sha512": "sha512-0inTc+PLbk/TELmdO12q5N/4lZ2kn5w2EmOqG0g686JXgr1OKEGPCuGZxWYE+NuROy7dwX/FBxKUTph7vuyjPA==",
       "path": "consul/0.7.2.6",
       "hashPath": "consul.0.7.2.6.nupkg.sha512"
+    },
+    "CSRedisCore/3.0.57": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-h5uNt1mNmZMKx5jD4c6vt5Bt386ZM5S13FLfj4IE18qXqP5Vd5+OkyNq8bO01pOR1f0gOyA5ICoXn25YOJW7SA==",
+      "path": "csrediscore/3.0.57",
+      "hashPath": "csrediscore.3.0.57.nupkg.sha512"
     },
     "Dapper/1.60.6": {
       "type": "package",
@@ -1807,6 +1844,13 @@
       "sha512": "sha512-twDAH8dAXXCAf3sRv1Tf94u66eEHvgU75hfn1nn2v4fSWXD50XoDOAk8WpSrbViNuMkB4kN1ElnOGm1c519IHg==",
       "path": "remotion.linq/2.2.0",
       "hashPath": "remotion.linq.2.2.0.nupkg.sha512"
+    },
+    "SafeObjectPool/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1Gt7jEVrXaF7/eoeKsWdn/YJ0eq7gfkV18/8wq68Z4ksUJb8R3UAYJVuXh7EJEB550z66ae35ZLEkWuVkIjP2w==",
+      "path": "safeobjectpool/2.0.1",
+      "hashPath": "safeobjectpool.2.0.1.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_green/1.1.12": {
       "type": "package",
@@ -2222,6 +2266,11 @@
       "hashPath": "xunit.runner.visualstudio.2.3.1.nupkg.sha512"
     },
     "MicroAngels.Bus/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MicroAngels.Cache/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

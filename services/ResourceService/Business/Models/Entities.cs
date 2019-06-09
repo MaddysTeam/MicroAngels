@@ -18,15 +18,15 @@ namespace ResourceService.Business
 		public int StarCount { get; set; }
 		public int StarTotal { get; set; }
 		public int Star { get { if (StarCount == 0) return 0; return StarTotal / StarCount; } }
-		public string FitCoverPath
-		{
-			get
-			{
-				if (CoverPath == "")
-					return "/assets/img/cover.png";
-				return CoverPath;
-			}
-		}
+		//public string FitCoverPath
+		//{
+		//	get
+		//	{
+		//		if (CoverPath == "")
+		//			return "/assets/img/cover.png";
+		//		return CoverPath;
+		//	}
+		//}
 	}
 
 

@@ -11,4 +11,8 @@
     <PackageReference Include="sqlSugarCore" Version="5.0.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroAngels.Cache\MicroAngels.Cache.csproj" />
+  </ItemGroup>
+
 </Project>

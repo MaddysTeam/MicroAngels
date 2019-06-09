@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ResourceService.Business
 {
 
-	public class CroResource
+	public class Resource
 	{
 
 		[SugarColumn(IsPrimaryKey = true)]
@@ -37,7 +37,9 @@ namespace ResourceService.Business
 
 		public Guid Creator { get; set; }
 
-		public static List<ValidateResult> Validate(CroResource r)
+		public Guid Status { get; set; }
+
+		public static List<ValidateResult> Validate(Resource r)
 		{
 			return
 			r.NotNull(r.CrosourceId, Keys.Errors.NOT_ALLOWED_ID_NULL)

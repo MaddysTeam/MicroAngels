@@ -1,6 +1,9 @@
-﻿using MicroAngels.GRPC.Server;
+﻿using FileService.Business;
+using MicroAngels.Bus.CAP;
+using MicroAngels.GRPC.Server;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
+using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +27,13 @@ namespace FileService
 		public void ConfigureServices(IServiceCollection services)
 		{
 
+			//add cap
+			services.AddKafkaService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
+
 			//add grpc server
 			services.AddGRPCServer(new GRPCServerOptions
 			{
@@ -31,6 +41,7 @@ namespace FileService
 				Port = Convert.ToInt32(Configuration["Service:Port"])
 			});
 
+			//add mvc core
 			services.AddMvcCore(options =>
 			{
 				//options.Filters.Add<ExcepitonFilter>();
@@ -40,7 +51,7 @@ namespace FileService
 			.AddJsonFormatters()
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			//token authentication
+			//add ids authentication
 			services.AddIdsAuthentication(new IdentityAuthenticationOptions
 			{
 				Scheme = Configuration["IdentityService:DefaultScheme"],
@@ -49,8 +60,7 @@ namespace FileService
 				ApiSecret = Configuration["IdentityService:Client:Secret"],
 				ApiName = Configuration["IdentityService:Client:Scopes"]
 			});
-
-			//services.AddSingleton<IHostingEnvironment>();
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +92,10 @@ namespace FileService
 					IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
 				}
 			});
+
+			// register orm sugar and init tables
+			app.UseSugarORM(lifeTime, Configuration)
+				.InitTabels(MySqlDbContext.TableTypes); 
 
 		}
 	}

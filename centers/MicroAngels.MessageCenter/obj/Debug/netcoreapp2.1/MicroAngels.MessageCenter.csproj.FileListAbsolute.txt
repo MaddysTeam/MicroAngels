@@ -69,3 +69,5 @@ E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ORM.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ORM.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ORM.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Cache.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Cache.pdb

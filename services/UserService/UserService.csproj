@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\centers\MicroAngels.AuthServer\MicroAngels.AuthServer.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Configuration\MicroAngels.Configuration.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Logger\MicroAngels.Logger.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
+  </ItemGroup>
+
+</Project>

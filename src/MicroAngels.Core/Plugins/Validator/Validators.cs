@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MicroAngels.Core.Plugins
 {
@@ -11,7 +9,7 @@ namespace MicroAngels.Core.Plugins
 	public static class Validator
 	{
 
-		private static Dictionary<object, List<ValidateResult>> _results = new Dictionary<object, List<ValidateResult>>();
+		private static IDictionary<object, List<ValidateResult>> _results = new Dictionary<object, List<ValidateResult>>();
 
 		public static T Same<T>(this T t, int s, int r, string errorMessage)
 		{
