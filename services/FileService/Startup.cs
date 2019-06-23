@@ -1,5 +1,6 @@
 ﻿using FileService.Business;
 using MicroAngels.Bus.CAP;
+using MicroAngels.Core.Plugins.Auth;
 using MicroAngels.GRPC.Server;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
@@ -28,17 +29,17 @@ namespace FileService
 		{
 
 			//add cap
-			services.AddKafkaService(new CAPService
-			{
-				Host = Configuration["Queues:Kafka:Host"],
-				ConnectString = Configuration["Queues:Kafka:DbConn"]
-			});
+			//services.AddKafkaService(new CAPService
+			//{
+			//	Host = Configuration["Queues:Kafka:Host"],
+			//	ConnectString = Configuration["Queues:Kafka:DbConn"]
+			//});
 
 			//add grpc server
 			services.AddGRPCServer(new GRPCServerOptions
 			{
-				Host = Configuration["Service:Host"],
-				Port = Convert.ToInt32(Configuration["Service:Port"])
+				Host = Configuration["GrpcServer:Host"],
+				Port = Convert.ToInt32(Configuration["GrpcServer:Port"])
 			});
 
 			//add mvc core
@@ -60,7 +61,9 @@ namespace FileService
 				ApiSecret = Configuration["IdentityService:Client:Secret"],
 				ApiName = Configuration["IdentityService:Client:Scopes"]
 			});
-			
+
+			services.AddTransient<IFileService, FileService.Business.FileService>();
+			services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +87,7 @@ namespace FileService
 				HostConfiguration = new ConsulHostConfiguration
 				{
 					Host = Configuration["Consul:Host"],
-					Port = Convert.ToInt32(Configuration["Consul:Port"])
+					Port = Convert.ToInt32(Configuration["Consul:Port"]),
 				},
 				HealthCheckOptoins = new ConsuleHealthCheckOptoins
 				{
@@ -93,9 +96,9 @@ namespace FileService
 				}
 			});
 
-			// register orm sugar and init tables
+			//register orm sugar and init tables
 			app.UseSugarORM(lifeTime, Configuration)
-				.InitTabels(MySqlDbContext.TableTypes); 
+				.InitTabels(MySqlDbContext.TableTypes);
 
 		}
 	}

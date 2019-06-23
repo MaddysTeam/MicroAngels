@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
@@ -13,11 +14,17 @@ namespace FileService.Business
 	public class FileService : MySqlDbContext, IFileService
 	{
 
-		public FileService(ICAPPublisher bus)
-		{
-			_bus = bus;
-		} 
+		//public FileService(ICAPPublisher bus)
+		//{
+		//	_bus = bus;
+		//} 
 
+		/// <summary>
+		/// uplolad files
+		/// </summary>
+		/// <param name="formFiles"></param>
+		/// <param name="foler"></param>
+		/// <returns></returns>
 		public List<Files> UploadFiles(IFormFileCollection formFiles, string foler)
 		{
 			var uploadFiles = new List<Files>();
@@ -60,7 +67,25 @@ namespace FileService.Business
 			return uploadFiles;
 		}
 
+		/// <summary>
+		/// upload  files with async
+		/// </summary>
+		/// <param name="formFiles"></param>
+		/// <param name="savePath"></param>
+		/// <returns></returns>
 		public Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles, string savePath)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// get files
+		/// </summary>
+		/// <param name="whereExpressions"></param>
+		/// <param name="pageSize"></param>
+		/// <param name="pageIndex"></param>
+		/// <returns></returns>
+		public Task<List<Files>> GetFiles(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
 		{
 			throw new NotImplementedException();
 		}

@@ -12,6 +12,8 @@ namespace FileService.Business
 		List<Files> UploadFiles(IFormFileCollection formFiles,string savePath);
 
 		Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles, string savePath);
+
+		Task<List<Files>> GetFiles(List<System.Linq.Expressions.Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex);
 	}
 
 }

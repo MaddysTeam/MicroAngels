@@ -13,10 +13,10 @@ namespace FileService
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
-				.UseKestrel(options =>
-				{
-					options.Limits.MaxRequestBodySize = null;
-				})
+				//.UseKestrel(options =>
+				//{
+				//	options.Limits.MaxRequestBodySize = null;
+				//})
 				.UseUrls("http://*:6000")
 				.UseStartup<Startup>();
 

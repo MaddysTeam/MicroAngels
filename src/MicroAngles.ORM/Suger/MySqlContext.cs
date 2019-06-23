@@ -39,7 +39,11 @@ namespace MicroAngels.ORM.Suger
 					ConnectionString = _configuration["Database:Mysql:Conn"],
 					DbType = DbType.MySql,
 					IsAutoCloseConnection = true,
-					InitKeyType=InitKeyType.Attribute
+					InitKeyType = InitKeyType.Attribute,
+					ConfigureExternalServices = new ConfigureExternalServices()
+					{
+						//DataInfoCacheService = new SugarRedisCache();
+					}
 				});
 			}
 		}

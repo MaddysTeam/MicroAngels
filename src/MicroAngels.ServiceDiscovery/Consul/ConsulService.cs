@@ -13,8 +13,6 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string Version { get; set; }
 
-        public Uri Address { get;  set; }
-
         public string Host { get; set; }
 
         public int Port { get; set; }
@@ -25,7 +23,7 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public string HealthStatus { get; set; }
 
-        public string[] Tags { get; }
+        public string[] Tags { get; set; }
 
 		public int Weight { get; set; }
 
@@ -33,7 +31,8 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
         public ConsulHostConfiguration HostConfiguration { get; set; }
 
-    }
+		public Uri Address => new Uri($"http://{Host}:{Port}");
+	}
 
     public class ConsuleHealthCheckOptoins : ServiceHealthCheckOptions
     {

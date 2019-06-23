@@ -35,7 +35,6 @@ namespace AccountService
 				 0,
 				 3600
 				));
-			//services.AddIdentity<>
 
 			//add mvc core
 			services.AddMvcCore(options =>
@@ -76,25 +75,25 @@ namespace AccountService
 
 			app.UseLessLog(new ExcepitonLessOptions("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo"));
 
-			//app.UseConsul(lifeTime, new ConsulService 
-			//   {
-			//	   Id = Configuration["Service:Id"],
-			//	   Host = Configuration["Service:Host"],
-			//	   Port = Convert.ToInt32(Configuration["Service:Port"]),
-			//	   Name = Configuration["Service:Name"],
-			//	   HostConfiguration = new ConsulHostConfiguration
-			//	   {
-			//		   Host = Configuration["Consul:Host"],
-			//		   Port = Convert.ToInt32(Configuration["Consul:Port"])
-			//	   },
-			//	   HealthCheckOptoins = new ConsuleHealthCheckOptoins
-			//	   {
-			//		   HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
-			//		   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
-			//	   }
-			//   });
+			app.UseConsul(lifeTime, new ConsulService
+			{
+				Id = Configuration["Service:Id"],
+				Host = Configuration["Service:Host"],
+				Port = Convert.ToInt32(Configuration["Service:Port"]),
+				Name = Configuration["Service:Name"],
+				HostConfiguration = new ConsulHostConfiguration
+				{
+					Host = Configuration["Consul:Host"],
+					Port = Convert.ToInt32(Configuration["Consul:Port"])
+				},
+				HealthCheckOptoins = new ConsuleHealthCheckOptoins
+				{
+					HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+					IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+				}
+			});
 
-			
+
 		}
 
 	}

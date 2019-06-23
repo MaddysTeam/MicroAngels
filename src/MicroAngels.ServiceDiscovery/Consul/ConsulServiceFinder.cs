@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MicroAngels.ServiceDiscovery.Consul
 {
 
-	class ConsulServiceFinder : IServiceFinder<ConsulService>
+	public class ConsulServiceFinder : IServiceFinder<ConsulService>
 	{
 
 		public ConsulServiceFinder(ConsulHostConfiguration configuration)
@@ -38,7 +38,6 @@ namespace MicroAngels.ServiceDiscovery.Consul
 					return new ConsulService
 					{
 						Id = service.ID,
-						Address = new Uri(service.Address),
 						Name = service.Service,
 						Port = service.Port,
 						Host = service.Address,
@@ -54,24 +53,28 @@ namespace MicroAngels.ServiceDiscovery.Consul
 		{
 			var results = new List<ConsulService>();
 			var services = (await _client.Agent.Services()).Response;
-
+			await _client.Agent.ServiceDeregister("f0e1290f-5905-40b0-80b1-d4458cf28bd4");
 			foreach (AgentService service in services.Values)
 			{
 				if (string.Equals(service.Service, name, StringComparison.InvariantCultureIgnoreCase))
 				{
+					var health = await _client.Health.Checks(service.Service);
 					results.Add(new ConsulService
 					{
 						Id = service.ID,
-						Address = new Uri(service.Address),
 						Name = service.Service,
 						Port = service.Port,
 						Host = service.Address,
+						Tags = service.Tags,
+						HealthStatus = health.Response[0].Status.Status,
 					});
 				}
 			}
 
 			return results;
 		}
+
+
 
 		private ConsulClient _client;
 

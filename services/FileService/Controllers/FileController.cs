@@ -1,13 +1,18 @@
 ﻿using FileService.Business;
+using MicroAngels.Core.Plugins.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace FileService.Controllers
 {
 
 	[Route("api/[controller]")]
+	[Authorize]
+	[Privilege]
 	[ApiController]
 	public class FileController : ControllerBase
 	{
@@ -18,8 +23,8 @@ namespace FileService.Controllers
 			_fileService = fileService;
 		}
 
-		[Route("upload")]
-		[HttpPost()]
+		
+		[HttpPost("upload")]
 		public ActionResult Upload()
 		{
 			if (!Directory.Exists(_folder))
@@ -35,6 +40,14 @@ namespace FileService.Controllers
 		public ActionResult GetFile(Guid id)
 		{
 			return Ok();
+		}
+
+
+		[HttpPost]
+		[Route("getfiles")]
+		public List<Files> GetFiles()
+		{
+			return new List<Files>();
 		}
 
 		private string _folder;

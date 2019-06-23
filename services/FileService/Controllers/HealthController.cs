@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace AccountService.Controllers
+namespace FileService.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]

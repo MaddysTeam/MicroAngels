@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-    [Produces("application/json")]
+    //[Produces("application/json")]
     [Route("api/Health")]
     [ApiController]
     public class HealthController : ControllerBase
