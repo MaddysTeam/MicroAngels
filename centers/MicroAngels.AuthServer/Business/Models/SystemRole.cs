@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Business
 {
 
-	public class SystemRole:IAggregateRoot
+	public class SystemRole
 	{
 		[SugarColumn(IsPrimaryKey = true)]
 		public Guid RoleId { get; set; }

@@ -17,9 +17,15 @@ namespace Business
 
 		public async Task<bool> BindResource(RoleAssets roleAccess)
 		{
-			var effectCount = await RoleAssetsDb.AsInsertable(roleAccess).ExecuteCommandAsync();
+			var validteReuslt = RoleAssets.Validate(roleAccess);
+			if (validteReuslt.All(x => x.IsSuccess))
+			{
+				var effectCount = await RoleAssetsDb.AsInsertable(roleAccess).ExecuteCommandAsync();
 
-			return effectCount > 0;
+				return effectCount > 0;
+			}
+
+			return false;
 		}
 
 		public async Task<bool> Edit(SystemRole role)
@@ -48,21 +54,26 @@ namespace Business
 						JoinType.Inner,
 						 r.RoleId == ur.Id,
 						 ur.UserId==u.UserId
-					 }).Where((r,ur,u)=> u.UserName==userName);
+					 }).Where((r, ur, u) => u.UserName == userName);
 
 			var result = await query.Select((r, ur, u) => r).ToListAsync();
 
 			return result;
 		}
 
-		public Task<IEnumerable<SystemRole>> Search(List<Expression<Func<SystemRole, bool>>> whereExpressions, int? pageSize, int? pageIndex)
+		public async Task<IEnumerable<SystemRole>> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex)
 		{
-			throw new NotImplementedException();
+			var query = RoleDb.AsQueryable().Where(whereExpressions);
+			if (pageSize.HasValue && pageIndex.HasValue)
+				return await query.ToPageListAsync(pageIndex.Value, pageSize.Value);
+			else
+				return await query.ToListAsync();
 		}
 
 		public Task<bool> UnbindResource(Guid roleId, Guid assetsId)
 		{
-			throw new NotImplementedException();
+			var result = RoleAssetsDb.Delete(ra => ra.RoleId == roleId & ra.AssetId == assetsId);
+			return Task.FromResult(result);
 		}
 
 	}

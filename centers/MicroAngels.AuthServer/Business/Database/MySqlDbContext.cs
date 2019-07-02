@@ -18,13 +18,20 @@ namespace Business
 
 		public SimpleClient<UserRole> UserRoleDb { get { return new SimpleClient<UserRole>(DB); } }
 
+		public SimpleClient<Assets> AssetsDb { get { return new SimpleClient<Assets>(DB); } }
+
+		public SimpleClient<Interface> InterfaceDb { get { return new SimpleClient<Interface>(DB); } }
+
+		public SimpleClient<System> SystemDb { get { return new SimpleClient<System>(DB); } }
+
 		public static Type[] TableTypes = new Type[] {
 			typeof(UserInfo),
 			typeof(SystemRole),
+			typeof(UserRole),
 			typeof(Assets) ,
 			typeof(RoleAssets),
 			typeof(Interface),
-			typeof(Interface) };
+			typeof(System)};
 
 	}
 

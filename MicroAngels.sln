@@ -46,6 +46,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{6FD0C890-519F-42BF-B547-2EC372547B76}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		..\..\..\..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt = ..\..\..\..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountService", "services\AccountService\AccountService.csproj", "{F6A138A8-7662-402F-B1F4-00C7569740EE}"
@@ -72,7 +73,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Polly.Test", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.ServiceDiscovery.Test", "test\MicroAngels.ServiceDiscovery.Test\MicroAngels.ServiceDiscovery.Test.csproj", "{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngels.Core.Test", "test\MicroAngels.Core.Test\MicroAngels.Core.Test.csproj", "{CE1FC9B1-B31B-4B91-BE6F-751432038094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Core.Test", "test\MicroAngels.Core.Test\MicroAngels.Core.Test.csproj", "{CE1FC9B1-B31B-4B91-BE6F-751432038094}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.AuthServer.Test", "test\MicroAngels.AuthServer.Test\MicroAngels.AuthServer.Test.csproj", "{69EEC5A4-33D2-4A17-A758-287A80062B3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -188,6 +191,10 @@ Global
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +227,7 @@ Global
 		{59623AAE-4D81-4772-9F12-6D21C8150D3F} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
+		{69EEC5A4-33D2-4A17-A758-287A80062B3B} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}

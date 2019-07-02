@@ -1,0 +1,47 @@
+pipeline{
+    agent any
+    parameters{
+        string(name:'Project',defaultValue:'MicroAngels')
+    }
+    stages{
+        stage('build'){
+            steps{
+                echo "building ${params.Project}"
+                bat  '''cd "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels"
+                     dotnet build MicroAngels.sln'''
+            }
+        }
+        stage('unittest'){
+            steps{
+                echo "execute unit test"
+                 bat  '''cd "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\test\\MicroAngels.Core.Test"
+                     dotnet test -v n --no-build MicroAngels.Core.Test.csproj '''
+                 echo "Unit Test Done"
+            }
+        }
+        stage('build image'){
+            steps{
+                echo "ready to build docker image"
+                bat '''cd "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels"
+                       docker rmi -f micoangels.demo.account
+                       docker rmi -f micoangels.gateway
+                       docker rmi -f micoangels.authserver
+                       docker-compose -f docker-compose.yml build
+                    '''
+            }
+        }
+        stage('push to remote repository'){
+            echo "ready to pull images to registry"
+            bat ''' docker tag micoangels.gateway 192.168.1.7:5000/micro_angels/gateway
+                    docker tag micoangels.authserver 192.168.1.7:5000/micro_angels/authserver
+                    docker tag micoangels.service.account 192.168.1.7:5000/micro_angels/service.account
+                    
+                    docker push 192.168.1.7:5000/micro_angels/gateway
+                    docekr push 192.168.1.7:5000/micro_angels/authserver
+                    docker push 192.168.1.7:5000/micro_angels/service.account
+                    
+            '''
+        }
+
+    }
+}

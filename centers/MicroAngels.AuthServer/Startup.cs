@@ -1,8 +1,10 @@
-﻿using MicroAngels.AuthServer.Services;
+﻿using Business;
+using MicroAngels.AuthServer.Services;
 using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Services;
 using MicroAngels.IdentityServer.Validators;
+using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -85,6 +87,8 @@ namespace MicroAngels.AuthServer
 					IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
 				}
 			});
+
+			app.UseSugarORM(lifeTime,Configuration).InitTabels(MySqlDbContext.TableTypes);
 
 		}
 	}
