@@ -28,7 +28,7 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void InsertTest()
 		{
-			var assets = new Assets { AssetsName = "", AssetsStatus = EnableStatus, AssetsType = InterfaceType, SystemId = SystemServiceTest.SystemId };
+			var assets = new Assets { AssetsName = "", AssetsStatus = EnableStatus, AssetsType = InterfaceType, SystemId =SystemId };
 			var result = await _service.Edit(assets);
 
 			Assert.False(result);
