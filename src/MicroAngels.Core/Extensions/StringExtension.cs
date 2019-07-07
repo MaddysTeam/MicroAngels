@@ -35,6 +35,11 @@ namespace MicroAngels.Core
             return Json == null ? JObject.Parse("{}") : JObject.Parse(Json.Replace("&nbsp;", ""));
         }
 
+		public static bool IsSame(this string str,string target)
+		{
+			return string.Equals(str, target, StringComparison.InvariantCultureIgnoreCase);
+		}
+
 	}
 
 }

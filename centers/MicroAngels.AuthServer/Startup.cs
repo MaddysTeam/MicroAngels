@@ -56,6 +56,10 @@ namespace MicroAngels.AuthServer
 				.UseClaimsGrantService<UserClaimGrantService>()
 				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
 				.AddProfileService<UserClaimsProfileService>(); // add claims into user profile （such as context）
+
+			// for service
+			services.AddTransient<ISystemService, SystemService>();
+			services.AddTransient<IAssetsService, AssetsService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

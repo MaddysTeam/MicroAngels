@@ -18,12 +18,10 @@ namespace Business
 		public string Phone { get; set; }
 		public string Email { get; set; }
 
-		public IEnumerable<SystemRole> UserRoles { get; set; }
-
 		public static List<ValidateResult> Validate(UserInfo u)
 		{
 			return
-			u.NotNull(u.UserId, "")
+			u
 			 .NotNull(u.UserName, "")
 			 .Length(u.Phone,11,"")
 			 .Validate();

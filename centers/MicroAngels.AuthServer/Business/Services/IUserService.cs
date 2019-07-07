@@ -9,10 +9,10 @@ namespace Business
 	public interface IUserService
 	{
 		Task<UserInfo> GetById(Guid id);
-		Task<UserInfo> Edit(UserInfo userInfo);
-		Task<UserRole> BindRole(UserRole userRole);
+		Task<bool> Edit(UserInfo userInfo);
+		Task<bool> BindRole(UserRole userRole);
 		Task<bool> UnbindRole(Guid userRoleId);
-		Task<IEnumerable<UserInfo>> Search(List<Expression<Func<UserInfo, bool>>> whereExpressions, int pageSize, int pageIndex);
+		Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex);
 		Task<IEnumerable<UserRole>> SearchUserRole(Guid userId,Guid roleId);
 	}
 

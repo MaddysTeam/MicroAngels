@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MicroAngels.Core;
+using System;
+using System.Linq;
 
 namespace Business
 {
@@ -13,9 +15,9 @@ namespace Business
 		{
 		}
 
-		public async Task<bool> EditAsset(Assets assets)
+		public async Task<bool> Edit(Assets assets)
 		{
-			if (!assets.IsNull())
+			if (Assets.Validate(assets).All(validateResult => validateResult.IsSuccess))
 			{
 				if (assets.AssetsId.IsEmpty())
 				{
@@ -28,12 +30,12 @@ namespace Business
 			}
 
 			return false;
+		
 		}
 
 		public async Task<bool> EditInterface(Interface iinterface)
 		{
-
-			if (iinterface.InterfaceId.IsEmpty())
+			if (Interface.Validate(iinterface).All(validateResult => validateResult.IsSuccess))
 			{
 				return await InterfaceDb.AsInsertable(iinterface).ExecuteCommandAsync() > 0;
 			}
@@ -44,8 +46,25 @@ namespace Business
 
 		}
 
+		public async Task<bool> BindInterface(Guid assetsId, Guid interfaceId)
+		{
+			if (assetsId.IsEmpty() || interfaceId.IsEmpty())
+			{
+				return false;
+			}
+
+			return await DB.Updateable<Assets>(a => a.AssetsId == assetsId)
+								 .UpdateColumns(a => new { ItemId = interfaceId })
+								 .ExecuteCommandAsync() > 0;
+		}
+
 		public async Task<IEnumerable<Interface>> GetInterfaceByRoleNames(string[] roleNames)
 		{
+			if(roleNames.IsNull() || roleNames.Length == 0)
+			{
+				return null;
+			}
+
 			var query = DB.Queryable<Interface, RoleAssets, SystemRole, Assets>((i, ra, r, a) =>
 					 new object[]{
 						JoinType.Inner,
@@ -59,6 +78,10 @@ namespace Business
 			return result;
 		}
 
+		public async Task<Assets> GetById(Guid assetId)
+		{
+			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
+		}
 	}
 
 }

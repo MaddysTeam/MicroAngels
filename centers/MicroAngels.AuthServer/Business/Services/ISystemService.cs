@@ -10,7 +10,8 @@ namespace Business
 	public interface ISystemService 
 	{
 		Task<System> GetById(Guid id);
-		Task<System> Edit(System system);
+		Task<Boolean> Edit(System system);
+		
 	}
 
 }

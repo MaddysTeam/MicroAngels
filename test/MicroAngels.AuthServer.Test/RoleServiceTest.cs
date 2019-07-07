@@ -1,7 +1,4 @@
 using Business;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
@@ -11,22 +8,32 @@ namespace MicroAngels.AuthServer.Test
 	public class RoleServiceTest : BaseTest
 	{
 
-		public RoleServiceTest()
-		{
-			var server = new TestServer(
-				WebHost.CreateDefaultBuilder().UseContentRoot(
-						GetProjectPath("MicroAngels.sln", "", typeof(Startup).Assembly)
-					).UseStartup<Startup>()
-				);
+		string roleName = "admin";
 
-			_roleService = server.Host.Services.GetService<IRoleService>();
+		public RoleServiceTest():base()
+		{
+			_roleService = Server.Host.Services.GetService<IRoleService>();
 		}
 
 		[Fact]
 		public async void EditRoleTest()
 		{
-			var role = new SystemRole {  RoleName="father",   };
+			var role = new SystemRole();
 			var result = await _roleService.Edit(role);
+			Assert.False(result);
+
+			role.RoleName = roleName;
+			role.SystemId = SystemId;
+			result = await _roleService.Edit(role);
+			Assert.True(result);
+
+		}
+
+		[Fact]
+		public async void BindResourceTest()
+		{
+			var result= await _roleService.BindResource(null);
+			Assert.False(result);
 		}
 
 

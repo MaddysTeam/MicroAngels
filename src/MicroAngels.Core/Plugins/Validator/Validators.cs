@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MicroAngels.Core.Plugins
 {
@@ -40,11 +42,48 @@ namespace MicroAngels.Core.Plugins
 			return t.WhenInvalid(s.Length != length, errorMessage);
 		}
 
-		public static T NotNull<T>(this T t, object o,string errorMessage)
+		public static T NotNull<T>(this T t, object o, string errorMessage)
 		{
 			t.Init();
 
 			return t.WhenInvalid(o != null, errorMessage);
+		}
+
+		public static T NotNullOrEmpty<T>(this T t, string o, string errorMessage)
+		{
+			t.Init();
+
+			return t.WhenInvalid(!string.IsNullOrEmpty(o), errorMessage);
+		}
+
+		public static T NotGuidEmpty<T>(this T t, Guid o, string errorMessage)
+		{
+			t.Init();
+
+			return t.WhenInvalid(o != Guid.Empty, errorMessage);
+		}
+
+
+		public static T RegexIsMatch<T>(this T t, string s, string patterns,string errorMessage)
+		{
+			t.Init();
+
+			return t.WhenInvalid<T>(new Regex(patterns).IsMatch(s),errorMessage);
+		}
+
+		public static T IsIn<T,V>(this T t,V[] array,V v) where V: IComparable
+		{
+			t.Init();
+
+			foreach(var item in array)
+			{
+				if (item.CompareTo(v)==0)
+				{
+					return t.WhenInvalid(true,"");
+				}
+			}
+
+			return t.WhenInvalid(false,"");
 		}
 
 
@@ -71,7 +110,7 @@ namespace MicroAngels.Core.Plugins
 
 		private static T WhenInvalid<T>(this T t, bool isInvalid, string errorMessage)
 		{
-			if (isInvalid && _results.ContainsKey(t))
+			if (!isInvalid && _results.ContainsKey(t))
 			{
 				_results[t].Add(new ValidateResult(false, errorMessage));
 			}

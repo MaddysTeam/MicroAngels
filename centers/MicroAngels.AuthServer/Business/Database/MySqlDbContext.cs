@@ -31,7 +31,9 @@ namespace Business
 			typeof(Assets) ,
 			typeof(RoleAssets),
 			typeof(Interface),
-			typeof(System)};
+			typeof(System)
+
+		};
 
 	}
 

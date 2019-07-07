@@ -15,12 +15,11 @@ namespace Business
 		public string RoleName { get; set; }
 		public string Description { get; set; }
 
-		public string Id => RoleId.ToString();
 
 		public static List<ValidateResult> Validate(SystemRole r)
 		{
 			return
-			r.NotNull(r.RoleId, "")
+			r
 			 .NotNull(r.RoleName, "")
 			 .Validate();
 		}

@@ -1,5 +1,7 @@
-﻿using SqlSugar;
+﻿using MicroAngels.Core.Plugins;
+using SqlSugar;
 using System;
+using System.Collections.Generic;
 
 namespace Business
 {
@@ -9,15 +11,32 @@ namespace Business
 	/// </summary>
 	public class Assets
 	{
-		[SugarColumn(IsPrimaryKey = true)]
+		[SugarColumn(IsPrimaryKey = true,Length =50)]
 		public Guid AssetsId { get; set; }
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid SystemId { get; set; }
 		public string AssetsName { get; set; }
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid AssetsType { get; set; }
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid AssetsStatus { get; set; }
+		[SugarColumn(IsNullable = true, Length = 3000)]
 		public string Description { get; set; }
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid ParentId { get; set; }
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid ItemId { get; set; }
+
+		public static List<ValidateResult> Validate(Assets assets)
+		{
+			return assets.NotNullOrEmpty(assets.AssetsName, "").Validate();
+		}
+	}
+
+	public enum AssetsStatus
+	{
+		enable,
+		disable
 	}
 
 	/// <summary>
@@ -49,8 +68,22 @@ namespace Business
 		public Guid InterfaceId { get; set; }
 		public string Title { get; set; }
 		public string Url { get; set; }
-		public string[] Parmas { get; set; }
+		public string Parmas { get; set; }
 		public string Version { get; set; }
+		public string Method { get; set; }
+
+		public static string[] Methods = { "GET", "POST", "PUT", "DELETE" };
+
+		public static List<ValidateResult> Validate(Interface iinterface)
+		{
+			return
+			iinterface.NotNull(iinterface.Title, "")
+			 .NotNull(iinterface.Url, "")
+			 .RegexIsMatch(iinterface.Url,RegexSupporter.UrlPatterns,"")
+			 .IsIn(Methods,iinterface.Method)
+			 .Validate();
+		}
+
 	}
 
 

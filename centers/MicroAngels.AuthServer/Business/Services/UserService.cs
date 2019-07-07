@@ -16,53 +16,62 @@ namespace Business
 			_cache = cache;
 		}
 
-		public async Task<UserInfo> Edit(UserInfo userInfo)
+		public async Task<bool> Edit(UserInfo userInfo)
 		{
-			var validateResults = UserInfo.Validate(userInfo);
-			if (validateResults.All(u => u.IsSuccess))
+			if (UserInfo.Validate(userInfo).All(u => u.IsSuccess))
 			{
 				if (userInfo.UserId.IsEmpty())
-					await UserDb.AsInsertable(userInfo).ExecuteCommandAsync();
+				{
+					var current = UserDb.GetSingle(ur => ur.UserName == userInfo.UserName);
+					return current == null ? await UserDb.AsInsertable(userInfo).ExecuteCommandAsync() > 0 : false;
+				}
 				else
-					await UserDb.AsUpdateable(userInfo).ExecuteCommandAsync();
+					return await UserDb.AsUpdateable(userInfo).ExecuteCommandAsync() > 0;
 
 				//_cache.AddOrRemove(userInfo.UserId,userInfo,TimeSpan.MaxValue);
 			}
 
 
-			return userInfo;
+			return false;
 		}
 
-		public  Task<UserInfo> GetById(Guid id)
+		public Task<UserInfo> GetById(Guid id)
 		{
 			return Task.FromResult(UserDb.GetById(id));
 		}
 
-		public Task<IEnumerable<UserInfo>> Search(List<Expression<Func<UserInfo, bool>>> whereExpressions, int pageSize, int pageIndex)
+		public async Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex)
 		{
-			throw new NotImplementedException();
+			var query = UserDb.AsQueryable().Where(whereExpressions);
+			if (pageSize.HasValue && pageIndex.HasValue)
+				return await query.ToPageListAsync(pageIndex.Value, pageSize.Value);
+			else
+				return await query.ToListAsync();
 		}
 
-		public async Task<UserRole> BindRole(UserRole userRole)
+		public async Task<bool> BindRole(UserRole userRole)
 		{
-			var validateResults = UserRole.Validate(userRole);
-			var current = UserRoleDb.GetSingle(ur => ur.UserId == userRole.UserId & ur.RoleId == userRole.RoleId);
-			if (validateResults.All(u => u.IsSuccess) && current.IsNull())
+			bool result = false;
+			var validteReuslt = UserRole.Validate(userRole);
+			if (validteReuslt.All(x => x.IsSuccess))
 			{
-				userRole.Id = Guid.NewGuid();
-				await UserRoleDb.AsInsertable(userRole).ExecuteCommandAsync();
+				var current = UserRoleDb.GetSingle(ur => ur.UserId == userRole.UserId & ur.RoleId == userRole.RoleId);
+				if (current.IsNull())
+				{
+					result = await UserRoleDb.AsInsertable(userRole).ExecuteCommandAsync() > 0;
+				}
 			}
 
-			return userRole;
+			return result;
 		}
 
 		public Task<bool> UnbindRole(Guid userRoleId)
 		{
 			var result = false;
-			var userRole =  UserRoleDb.GetById(userRoleId);
+			var userRole = UserRoleDb.GetById(userRoleId);
 			if (!userRole.IsNull())
 			{
-				result=UserRoleDb.DeleteById(userRoleId);
+				result = UserRoleDb.DeleteById(userRoleId);
 			}
 
 			return Task.FromResult(result);
@@ -70,7 +79,7 @@ namespace Business
 
 		public async Task<IEnumerable<UserRole>> SearchUserRole(Guid userId, Guid roleId)
 		{
-			return await UserRoleDb.AsQueryable().Where(ur=>ur.UserId==userId & ur.RoleId==roleId).WithCache().ToListAsync();
+			return await UserRoleDb.AsQueryable().Where(ur => ur.UserId == userId & ur.RoleId == roleId).WithCache().ToListAsync();
 		}
 
 		private readonly IRedisCache _cache;

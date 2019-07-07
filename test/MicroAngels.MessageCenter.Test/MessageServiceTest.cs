@@ -20,16 +20,10 @@ namespace MessageCenter.Test
         string subscriberId = "Boss";
         string targetId = "Jimmy";
 
-        public MessageServiceTest()
+        public MessageServiceTest():base()
         {
-            var server = new TestServer
-                (WebHost.CreateDefaultBuilder()
-                 .UseContentRoot(GetProjectPath("MicroAngels.sln", "", typeof(Startup).Assembly))
-                .UseStartup<Startup>()
-                );
-
-            _messageService = server.Host.Services.GetService<IMessageService>();
-            _subscribeService = server.Host.Services.GetService<ISubscribeService>();
+            _messageService = Server.Host.Services.GetService<IMessageService>();
+            _subscribeService = Server.Host.Services.GetService<ISubscribeService>();
         }
 
 
