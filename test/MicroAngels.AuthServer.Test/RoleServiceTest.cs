@@ -8,8 +8,6 @@ namespace MicroAngels.AuthServer.Test
 	public class RoleServiceTest : BaseTest
 	{
 
-		string roleName = "admin";
-
 		public RoleServiceTest():base()
 		{
 			_roleService = Server.Host.Services.GetService<IRoleService>();
@@ -18,15 +16,17 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void EditRoleTest()
 		{
-			var role = new SystemRole();
+			var role = AuthServerTestKeys.RoleWithNameEmpty;
 			var result = await _roleService.Edit(role);
 			Assert.False(result);
 
-			role.RoleName = roleName;
-			role.SystemId = SystemId;
+			role = AuthServerTestKeys.RoleWithSystemIdEmpty;
+			result = await _roleService.Edit(role);
+			Assert.False(result);
+
+			role = AuthServerTestKeys.CorrectRole;
 			result = await _roleService.Edit(role);
 			Assert.True(result);
-
 		}
 
 		[Fact]
@@ -34,11 +34,22 @@ namespace MicroAngels.AuthServer.Test
 		{
 			var result= await _roleService.BindResource(null);
 			Assert.False(result);
+
+			result = await _roleService.BindResource(AuthServerTestKeys.RoleAssetWithEmptyRoleId);
+			Assert.False(result);
+
+			result = await _roleService.BindResource(AuthServerTestKeys.RoleAssetWithEmptyAssetId);
+			Assert.False(result);
+		}
+
+		[Fact]
+		public async void GetRoleByUserNameTset()
+		{
+			
 		}
 
 
 		private IRoleService _roleService;
-		private Guid SystemId = Guid.Empty;
 
 	}
 }

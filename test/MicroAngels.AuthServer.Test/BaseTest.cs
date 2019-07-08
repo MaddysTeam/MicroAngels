@@ -12,8 +12,6 @@ namespace MicroAngels.AuthServer.Test
     public class BaseTest
     {
 
-		protected Guid SystemId = Guid.Parse("da7f1c57-e62e-4faf-8028-9b848269e437");
-
 		public BaseTest()
 		{
 			Server = new TestServer(

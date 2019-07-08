@@ -29,7 +29,10 @@ namespace Business
 
 		public static List<ValidateResult> Validate(Assets assets)
 		{
-			return assets.NotNullOrEmpty(assets.AssetsName, "").Validate();
+			return assets
+				.NotNullOrEmpty(assets.AssetsName, "")
+				.NotNull(assets.SystemId,"")
+				.Validate();
 		}
 	}
 

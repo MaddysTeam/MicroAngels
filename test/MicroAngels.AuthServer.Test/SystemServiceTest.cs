@@ -18,20 +18,17 @@ namespace MicroAngels.AuthServer.Test
 		public async void InsertTest()
 		{
 			//insert instance failure due to name null
-			var system = new Business.System { SystemName = "" };
-			var result = await _systemService.Edit(system);
+			var result = await _systemService.Edit(AuthServerTestKeys.SystemWithEmptyName);
 			Assert.False(result);
 
-			system.SystemName = "System1";
-			system.CreateTime = DateTime.Now;
-			result = await _systemService.Edit(system);
+			result = await _systemService.Edit(AuthServerTestKeys.CorrectSystem);
 			Assert.True(result);
 		}
 
 		[Fact]
 		public async void ModifyTest()
 		{
-			var system = new Business.System { SystemId = SystemId, SystemName = "System2", CreateTime = DateTime.Now };
+			var system = new Business.System { SystemId = AuthServerTestKeys.SystemId, SystemName = "System2", CreateTime = DateTime.Now };
 			var result = await _systemService.Edit(system);
 			Assert.True(result);
 
@@ -47,7 +44,7 @@ namespace MicroAngels.AuthServer.Test
 			var system = await _systemService.GetById(Guid.Empty);
 			Assert.Null(system);
 
-			system = await _systemService.GetById(SystemId);
+			system = await _systemService.GetById(AuthServerTestKeys.SystemId);
 			Assert.NotNull(system);
 		}
 

@@ -21,6 +21,7 @@ namespace Business
 			return
 			r
 			 .NotNull(r.RoleName, "")
+			 .NotNull(r.SystemId,"")
 			 .Validate();
 		}
 	}
