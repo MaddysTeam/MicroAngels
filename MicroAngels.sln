@@ -77,6 +77,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Core.Test", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.AuthServer.Test", "test\MicroAngels.AuthServer.Test\MicroAngels.AuthServer.Test.csproj", "{69EEC5A4-33D2-4A17-A758-287A80062B3B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "site", "site", "{FEA3710D-A236-43A6-8372-B578FE355E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngels.Site", "site\MicroAngels.Site\MicroAngels.Site.csproj", "{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +199,10 @@ Global
 		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69EEC5A4-33D2-4A17-A758-287A80062B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +236,7 @@ Global
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{69EEC5A4-33D2-4A17-A758-287A80062B3B} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
+		{C5CF2686-79FB-42A6-BD5A-ED47FFEE0380} = {FEA3710D-A236-43A6-8372-B578FE355E33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}
