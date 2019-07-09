@@ -9,8 +9,6 @@ namespace MicroAngels.AuthServer.Test
 	public class AssetsServiceTest : BaseTest
 	{
 
-		//Interface currentterface = new Interface { Title = "my_interface", Url = "http://xxx.a.com",Method="GET" };
-
 		public AssetsServiceTest() : base()
 		{
 			_service = Server.Host.Services.GetService<IAssetsService>();
@@ -56,21 +54,13 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void InsertInterfaceTest()
 		{
-			// fail due to null value for title and url 
-			var iinterface =new Business.Interface() {  };
-			var service = await _service.EditInterface(iinterface);
+			var service = await _service.EditInterface(AuthServerTestKeys.InterfaceWithNameEmpty);
 			Assert.False(service);
 
-			// fail due to null value for title and url 
-			iinterface.Title = "";
-			iinterface.Url = "";
-			service = await _service.EditInterface(iinterface);
+			service = await _service.EditInterface(AuthServerTestKeys.InterfaceWithUrlEmpty);
 			Assert.False(service);
 
-			// fail due to url's pattern not matched
-			iinterface.Title = "aaabbb";
-			iinterface.Url = "aaabb";
-			service = await _service.EditInterface(iinterface);
+			service = await _service.EditInterface(AuthServerTestKeys.InterfaceWihtIllegalUrl);
 			Assert.False(service);
 
 			service = await _service.EditInterface(AuthServerTestKeys.CorrectInterface);

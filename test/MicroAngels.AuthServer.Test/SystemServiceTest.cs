@@ -13,7 +13,6 @@ namespace MicroAngels.AuthServer.Test
 			_systemService = Server.Host.Services.GetService<ISystemService>();
 		}
 
-
 		[Fact]
 		public async void InsertTest()
 		{
@@ -28,7 +27,9 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void ModifyTest()
 		{
-			var system = new Business.System { SystemId = AuthServerTestKeys.SystemId, SystemName = "System2", CreateTime = DateTime.Now };
+			var system = AuthServerTestKeys.CorrectSystem;    
+			system.SystemId = AuthServerTestKeys.SystemId;
+			system.SystemName = "modifiedSystem";
 			var result = await _systemService.Edit(system);
 			Assert.True(result);
 
@@ -47,7 +48,6 @@ namespace MicroAngels.AuthServer.Test
 			system = await _systemService.GetById(AuthServerTestKeys.SystemId);
 			Assert.NotNull(system);
 		}
-
 
 		private ISystemService _systemService;
 

@@ -1,7 +1,6 @@
 ﻿using Business;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
 
 namespace MicroAngels.AuthServer.Test
 {
@@ -23,11 +22,17 @@ namespace MicroAngels.AuthServer.Test
 		public static string RoleName = "admin";
 		public static string UserName = "jimmy";
 
+		public static Expression<Func<SystemRole, bool>> roleCondition = r => r.RoleName == RoleName;
+
 		public static Business.System SystemWithEmptyName = new Business.System { SystemName = "", SystemId = SystemId };
 		public static Business.System CorrectSystem = new Business.System { SystemName = "",  Code="v1", CreateTime=DateTime.Now };
 
 		public static Assets AssetsWithNameEmpty = new Assets { AssetsName = "", AssetsStatus = AuthServerTestKeys.AssetEnableStatus, AssetsType = AuthServerTestKeys.InterfaceType };
 		public static Assets AssetWithSystemEmpty = new Assets { AssetsName = "" ,SystemId=Guid.Empty};
+
+		public static Interface InterfaceWithNameEmpty = new Interface { Title = "", Method = "GET", Url = "http://xxx.a.com" };
+		public static Interface InterfaceWithUrlEmpty = new Interface { Title = "interface1", Method = "POST", Url = "" };
+		public static Interface InterfaceWihtIllegalUrl = new Interface { Title = "interface1", Method = "POST", Url = "aabbcc" };
 		public static Interface CorrectInterface = new Interface { Title = "my_interface", Url = "http://xxx.a.com", Method = "GET" };
 
 		public static SystemRole RoleWithNameEmpty = new SystemRole { RoleName="" };
@@ -36,6 +41,7 @@ namespace MicroAngels.AuthServer.Test
 
 		public static RoleAssets RoleAssetWithEmptyRoleId = new RoleAssets { AssetId=AssetId, RoleId=Guid.Empty };
 		public static RoleAssets RoleAssetWithEmptyAssetId = new RoleAssets { AssetId = Guid.Empty, RoleId = RoleId };
+		public static RoleAssets CorrectRoleAsset = new RoleAssets { AssetId = AssetId, RoleId = RoleId };
 
 		public static UserInfo UserWithEmpty = new UserInfo();
 		public static UserInfo UserWIhtEmptyName = new UserInfo { UserName = "", RealName = "JimmyPoor" , };
@@ -45,6 +51,7 @@ namespace MicroAngels.AuthServer.Test
 
 		public static UserRole UserRoleWithEmpty = new UserRole();
 		public static UserRole UserRoleWithRmptyUserId = new UserRole { UserId=Guid.Empty, RoleId=RoleId };
+		public static UserRole CorrectUserRole = new UserRole { RoleId=RoleId, UserId=UserId };
 
 
 	}

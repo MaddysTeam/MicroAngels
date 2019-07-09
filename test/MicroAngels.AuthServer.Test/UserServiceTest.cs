@@ -10,8 +10,6 @@ namespace MicroAngels.AuthServer.Test
 	public class UserServiceTest : BaseTest
 	{
 
-
-
 		public UserServiceTest() : base()
 		{
 			_userService = Server.Host.Services.GetService<IUserService>();
@@ -20,24 +18,19 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void InsertTest()
 		{
-			var user = AuthServerTestKeys.UserWithEmpty;
-			var result = await _userService.Edit(user);
+			var result = await _userService.Edit(AuthServerTestKeys.UserWithEmpty);
 			Assert.False(result);
 
-			user = AuthServerTestKeys.UserWIhtEmptyName;
-			result = await _userService.Edit(user);
+			result = await _userService.Edit(AuthServerTestKeys.UserWIhtEmptyName);
 			Assert.False(result);
 
-			user = AuthServerTestKeys.UserWIthNotLegalEmail;
-			result = await _userService.Edit(user);
+			result = await _userService.Edit(AuthServerTestKeys.UserWIthNotLegalEmail);
 			Assert.False(result);
 
-			user = AuthServerTestKeys.UserWIthNotLegalPhone;
-			result = await _userService.Edit(user);
+			result = await _userService.Edit(AuthServerTestKeys.UserWIthNotLegalPhone);
 			Assert.False(result);
 
-			user = AuthServerTestKeys.CorrectUser;
-			result = await _userService.Edit(user);
+			result = await _userService.Edit(AuthServerTestKeys.CorrectUser);
 			Assert.True(result);
 
 			//var currentUsers = await _userService.Search(u => u.UserName == user.UserName,null,null);
@@ -57,7 +50,15 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void BindRoleTest()
 		{
-			var uesrRole = AuthServerTestKeys.UserRoleWithEmpty;
+			var result = await _userService.BindRole(AuthServerTestKeys.UserRoleWithEmpty);
+			Assert.False(result);
+
+			result = await _userService.BindRole(AuthServerTestKeys.CorrectUserRole);
+			Assert.False(result);
+
+			// duplicate user role
+			result = await _userService.BindRole(AuthServerTestKeys.CorrectUserRole);
+			Assert.False(result);
 		}
 
 

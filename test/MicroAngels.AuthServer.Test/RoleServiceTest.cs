@@ -1,6 +1,7 @@
 using Business;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace MicroAngels.AuthServer.Test
@@ -8,7 +9,7 @@ namespace MicroAngels.AuthServer.Test
 	public class RoleServiceTest : BaseTest
 	{
 
-		public RoleServiceTest():base()
+		public RoleServiceTest() : base()
 		{
 			_roleService = Server.Host.Services.GetService<IRoleService>();
 		}
@@ -32,7 +33,7 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void BindResourceTest()
 		{
-			var result= await _roleService.BindResource(null);
+			var result = await _roleService.BindResource(null);
 			Assert.False(result);
 
 			result = await _roleService.BindResource(AuthServerTestKeys.RoleAssetWithEmptyRoleId);
@@ -40,12 +41,33 @@ namespace MicroAngels.AuthServer.Test
 
 			result = await _roleService.BindResource(AuthServerTestKeys.RoleAssetWithEmptyAssetId);
 			Assert.False(result);
+
+			result = await _roleService.BindResource(AuthServerTestKeys.CorrectRoleAsset);
+			Assert.True(result);
+
+			// duplicate 
+			result = await _roleService.BindResource(AuthServerTestKeys.CorrectRoleAsset);
+			Assert.False(result);
 		}
 
 		[Fact]
 		public async void GetRoleByUserNameTset()
 		{
-			
+			var result = await _roleService.GetByUserName(null);
+			Assert.NotNull(result);
+			Assert.True(result.Count == 0);
+
+			result = await _roleService.GetByUserName(AuthServerTestKeys.UserName);
+			Assert.NotNull(result);
+			Assert.True(result.Count > 0);
+		}
+
+		[Fact]
+		public async void SearchRoleTest()
+		{
+			var result = await _roleService.Search(AuthServerTestKeys.roleCondition,null,null);
+			Assert.NotNull(result);
+			Assert.True(result.Count() > 0);
 		}
 
 
