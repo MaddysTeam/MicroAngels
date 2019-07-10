@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using MicroAngels.Core;
 
 namespace MicroAngels.AuthServer.Services
 {
@@ -21,12 +22,20 @@ namespace MicroAngels.AuthServer.Services
 
 		public async Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
 		{
+			var claims = new List<Claim>();
+			// get user id as client Id and put into claims 
+			var users = await _userService.Search(u => u.UserName == context.UserName, null, null);
+			if (!users.IsNull() && users.Count() > 0)
+			{
+				var userid = users.First().UserId.ToString();
+				claims.Add(new Claim("userId", userid ));
+			}
+
 			// get user roles by user name
 			var roles = await _roleService.GetByUserName(context.UserName);
-			var claims = new List<Claim>();
 			foreach (var role in roles)
 			{
-				claims.Add( new Claim(role.RoleName, "role"));
+				claims.Add(new Claim(role.RoleName, "role"));
 			}
 
 			return claims.ToArray();
@@ -34,6 +43,7 @@ namespace MicroAngels.AuthServer.Services
 
 		private readonly IRedisCache _cache;
 		private readonly IRoleService _roleService;
+		private readonly IUserService _userService;
 	}
 
 }

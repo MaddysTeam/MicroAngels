@@ -197,14 +197,6 @@
 													</span>
 												</label>
 
-												@*<label class="block">
-													<input type="checkbox" class="ace" />
-													<span class="lbl">
-														I accept the
-														<a href="#">User Agreement</a>
-													</span>
-												</label>*@
-
 												<div class="space-24"></div>
 
 												<div class="clearfix">
@@ -253,56 +245,17 @@
 		</div><!-- /.main-content -->
 	</div><!-- /.main-container -->
 	<!-- basic scripts -->
-	<!--[if !IE]> -->
-	<script src="~/js/jquery-2.1.4.min.js"></script>
 
-	<!-- <![endif]-->
-	<!--[if IE]>
-	<script src="~/js/jquery-1.11.3.min.js"></script>
-	<![endif]-->
+@section  Scripts{ 
 	<script type="text/javascript">
-		if ('ontouchstart' in document.documentElement) document.write("<script src='~/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-	</script>
-
-	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
-		jQuery(function ($) {
-			$(document).on('click', '.toolbar a[data-target]', function (e) {
-				e.preventDefault();
-				var target = $(this).data('target');
-				$('.widget-box.visible').removeClass('visible');//hide others
-				$(target).addClass('visible');//show target
+		$('#Login').on('click', function () {
+			$.post('http://localhost:5000/api/accountservice/signin', function (data) {
+				localStorage.setItem('code', data);
+				location.href="@Url.Action("about")"
 			});
 		});
-
-
-
-		//you don't need this, just used for changing background
-		jQuery(function ($) {
-			$('#btn-login-dark').on('click', function (e) {
-				$('body').attr('class', 'login-layout');
-				$('#id-text2').attr('class', 'white');
-				$('#id-company-text').attr('class', 'blue');
-
-				e.preventDefault();
-			});
-			$('#btn-login-light').on('click', function (e) {
-				$('body').attr('class', 'login-layout light-login');
-				$('#id-text2').attr('class', 'grey');
-				$('#id-company-text').attr('class', 'blue');
-
-				e.preventDefault();
-			});
-			$('#btn-login-blur').on('click', function (e) {
-				$('body').attr('class', 'login-layout blur-login');
-				$('#id-text2').attr('class', 'white');
-				$('#id-company-text').attr('class', 'light-blue');
-
-				e.preventDefault();
-			});
-
-		});
 	</script>
+}
 
 </body>
 

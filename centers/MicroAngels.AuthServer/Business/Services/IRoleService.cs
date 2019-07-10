@@ -14,6 +14,7 @@ namespace Business
 		Task<bool> UnbindResource(Guid roleId,Guid assetsId);
 		Task<IEnumerable<SystemRole>> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex);
 		Task<List<SystemRole>> GetByUserName(string userName);
+		Task<List<SystemRole>> GetByUserIds(Guid[] userIds);
 	}
 
 }

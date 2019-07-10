@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MicroAngels.Core;
+using Microsoft.AspNetCore.Http;
 using Ocelot.Logging;
 using Ocelot.Middleware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroAngels.Gateway.Ocelot
@@ -32,18 +29,11 @@ namespace MicroAngels.Gateway.Ocelot
 				 context.DownstreamReRoute.IsAuthenticated
 				 )
 			{
-				if (_options.IsUseCustomAuthenticate)
+				if (_options.IsUseCustomAuthenticate && !_authenticateService.IsNull())
 				{
-					var clientId = string.Empty;
-					var clientClaim = context.HttpContext.User.Claims.FirstOrDefault();
 					var path = context.DownstreamReRoute.UpstreamPathTemplate.OriginalValue;
-					if (!string.IsNullOrEmpty(clientClaim?.Value))
-					{
-						// you can implement white or black list here
-						clientId = clientClaim?.Value;
-					}
-
-					if (await _authenticateService.ValidateAuthenticate(clientId, path))
+					var httpContext = context.HttpContext;
+					if (await _authenticateService.ValidateAuthenticate(httpContext, path))
 					{
 						await _next.Invoke(context);
 					}

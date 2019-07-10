@@ -1,4 +1,5 @@
-﻿using MicroAngels.Gateway.Ocelot;
+﻿using MicroAngels.AuthServer.Services;
+using MicroAngels.Gateway.Ocelot;
 using MicroAngels.OcelotGateway.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +48,9 @@ namespace MicroAngels.OcelotGateway
 				.AllowAnyHeader()
 				.AllowCredentials());
 			});
+
+			//inject CustomAuthenticateService for gateway
+			services.AddTransient<ICustomAuthenticateService, CustomAuthenticateService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
