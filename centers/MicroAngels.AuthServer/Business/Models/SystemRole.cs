@@ -9,10 +9,16 @@ namespace Business
 
 	public class SystemRole
 	{
-		[SugarColumn(IsPrimaryKey = true)]
+		[SugarColumn(IsPrimaryKey = true, Length = 50)]
 		public Guid RoleId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
 		public Guid SystemId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
 		public string RoleName { get; set; }
+
+		[SugarColumn(IsNullable = true, Length = 2000)]
 		public string Description { get; set; }
 
 

@@ -14,7 +14,7 @@ namespace MicroAngels.OcelotGateway.Services
 
 		public static Action<IdentityServerAuthenticationOptions> GlobalApiClient = option =>
 		 {
-			 option.Authority = "http://192.168.1.3:2012";
+			 option.Authority = "http://192.168.1.2:2012";
 			 option.ApiName = "MessageCenter";
 			 option.RequireHttpsMetadata = false;// Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
 			 option.SupportedTokens = SupportedTokens.Both;

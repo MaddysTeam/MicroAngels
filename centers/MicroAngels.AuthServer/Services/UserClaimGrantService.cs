@@ -14,10 +14,11 @@ namespace MicroAngels.AuthServer.Services
 	public class UserClaimGrantService : IClaimsGrantService
 	{
 
-		public UserClaimGrantService(IRoleService roleService, IRedisCache cache)
+		public UserClaimGrantService(IRoleService roleService, IUserService userService)
 		{
 			_roleService = roleService;
-			_cache = cache;
+			_userService = userService;
+			//_cache = cache;
 		}
 
 		public async Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
@@ -29,6 +30,10 @@ namespace MicroAngels.AuthServer.Services
 			{
 				var userid = users.First().UserId.ToString();
 				claims.Add(new Claim("userId", userid ));
+			}
+			else
+			{
+				return null;
 			}
 
 			// get user roles by user name

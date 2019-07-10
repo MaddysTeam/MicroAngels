@@ -56,7 +56,7 @@ namespace Business
 						 ur.UserId==u.UserId
 						 }).In((r, ur, u) => u.UserId, userIds);
 
-			var result = await query.Select((r,ur,u)=>r).ToListAsync();
+			var result = await query.Select((r, ur, u) => r).ToListAsync();
 			return result;
 		}
 
@@ -65,9 +65,10 @@ namespace Business
 			var query = DB
 				.Queryable<SystemRole, UserRole, UserInfo>((r, ur, u) => new object[]
 					 {
-						JoinType.Inner,
-						 r.RoleId == ur.Id,
-						 ur.UserId==u.UserId
+						 JoinType.Inner,
+						 r.RoleId == ur.RoleId,
+						 JoinType.Inner,
+						 ur.UserId == u.UserId
 					 }).Where((r, ur, u) => u.UserName == userName);
 
 			var result = await query.Select((r, ur, u) => r).ToListAsync();

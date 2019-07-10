@@ -45,22 +45,22 @@ namespace Business
 	/// <summary>
 	/// 资产-菜单
 	/// </summary>
-	public class Menu
-	{
-		[SugarColumn(IsPrimaryKey = true)]
-		public Guid MenuId { get; set; }
-		public string Title { get; set; }
-	}
+	//public class Menu
+	//{
+	//	[SugarColumn(IsPrimaryKey = true)]
+	//	public Guid MenuId { get; set; }
+	//	public string Title { get; set; }
+	//}
 
 	/// <summary>
 	/// 资产-按钮
 	/// </summary>
-	public class Button
-	{
-		[SugarColumn(IsPrimaryKey = true)]
-		public Guid ButtonId { get; set; }
-		public string Title { get; set; }
-	}
+	//public class Button
+	//{
+	//	[SugarColumn(IsPrimaryKey = true)]
+	//	public Guid ButtonId { get; set; }
+	//	public string Title { get; set; }
+	//}
 
 	/// <summary>
 	/// 资产- 接口
@@ -69,11 +69,23 @@ namespace Business
 	{
 		[SugarColumn(IsPrimaryKey = true)]
 		public Guid InterfaceId { get; set; }
+
+		[SugarColumn(Length = 100)]
 		public string Title { get; set; }
+
+		[SugarColumn(IsNullable = true, Length = 1000)]
 		public string Url { get; set; }
+
+		[SugarColumn(IsNullable = true, Length = 1000)]
 		public string Parmas { get; set; }
+
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public string Version { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
 		public string Method { get; set; }
+
+		public bool IsAllowAnonymous { get; set; }
 
 		public static string[] Methods = { "GET", "POST", "PUT", "DELETE" };
 

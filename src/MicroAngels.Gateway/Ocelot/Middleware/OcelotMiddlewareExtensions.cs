@@ -42,7 +42,7 @@ namespace MicroAngels.Gateway.Ocelot
 
 			ConfigureDiagnosticListener(builder);
 
-			return builder.CreateOcelotPipeline(pipelineConfiguration);
+			return  builder.CreateOcelotPipeline(pipelineConfiguration);
 		}
 
 		private static async Task<IInternalConfiguration> CreateConfiguration(IApplicationBuilder builder)

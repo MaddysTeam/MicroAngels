@@ -18,11 +18,11 @@ namespace AccountService.Controllers
 	public class AccountController : ControllerBase
 	{
 
-		public AccountController(ILogger logger, IConfiguration configuraton,IRedisCache cache)
+		public AccountController(ILogger logger, IConfiguration configuraton)//IRedisCache cache)
 		{
 			_logger = logger;
 			_configuation = configuraton;
-			_cache = cache;
+			//_cache = cache;
 		}
 
 		// POST api/validateNumber
@@ -70,6 +70,7 @@ namespace AccountService.Controllers
 		public Account Info(Guid id)
 		{
 			// get account info here
+			var claims = Request.HttpContext.User.Claims;
 
 			return new Account(Guid.NewGuid(), "Jimmy", DateTime.Now);
 		}

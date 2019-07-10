@@ -1,6 +1,7 @@
 ﻿using MicroAngels.AuthServer.Services;
 using MicroAngels.Gateway.Ocelot;
 using MicroAngels.OcelotGateway.Services;
+using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
+using System;
 
 namespace MicroAngels.OcelotGateway
 {
@@ -38,7 +40,7 @@ namespace MicroAngels.OcelotGateway
 			})
 			.AddConsul()
 			.AddPolly();
-				
+
 			// add cors for ocelot
 			services.AddCors(options =>
 			{
@@ -48,6 +50,13 @@ namespace MicroAngels.OcelotGateway
 				.AllowAnyHeader()
 				.AllowCredentials());
 			});
+
+			services.AddServiceFinder(
+				new ConsulHostConfiguration
+				{
+					Host = Configuration["Consul:Host"],
+					Port=  Convert.ToInt32(Configuration["Consul:Port"])
+				});
 
 			//inject CustomAuthenticateService for gateway
 			services.AddTransient<ICustomAuthenticateService, CustomAuthenticateService>();

@@ -18,10 +18,10 @@ namespace Controllers
 		}
 
 		[HttpGet("getUrls")]
-		public async Task<string[]> GetUrls(string[] roles)
+		public async Task<string[]> GetUrls(string roles)
 		{
-			var interfaces = await _service.GetInterfaceByRoleNames(roles);
-			return interfaces.IsNull() && interfaces.Count() > 0 ? null : interfaces.Select(x => x.Url).ToArray();
+			var interfaces = await _service.GetInterfaceByRoleNames(roles.Split(","));
+			return !interfaces.IsNull() && interfaces.Count() > 0 ? interfaces.Select(x => x.Url).ToArray() : null;
 		}
 
 		private readonly IAssetsService _service;

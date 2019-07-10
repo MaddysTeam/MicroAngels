@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ocelot.Middleware;
 using System.Threading.Tasks;
 
 namespace MicroAngels.Gateway.Ocelot
@@ -9,7 +6,7 @@ namespace MicroAngels.Gateway.Ocelot
 
 	public interface ICustomAuthenticateService
 	{
-		Task<bool> ValidateAuthenticate(HttpContext context, string path);
+		Task<bool> ValidateAuthenticate(DownstreamContext context);
 	}
 
 }

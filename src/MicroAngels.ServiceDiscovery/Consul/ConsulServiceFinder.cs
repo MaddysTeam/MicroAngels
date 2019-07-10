@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace MicroAngels.ServiceDiscovery.Consul
 {
 
+
 	public class ConsulServiceFinder : IServiceFinder<ConsulService>
 	{
 

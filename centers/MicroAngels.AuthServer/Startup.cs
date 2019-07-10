@@ -50,7 +50,7 @@ namespace MicroAngels.AuthServer
 				.AddDeveloperSigningCredential()
 				.UseMysql(opt =>
 				{
-					opt.ConnectionStrings = Configuration["Database:Mysql:Conn"];
+					opt.ConnectionStrings = Configuration["Database:Mysql:IdsConn"];
 				})
 				.UseValidateService<UserValidateService>()
 				.UseClaimsGrantService<UserClaimGrantService>()
@@ -60,6 +60,8 @@ namespace MicroAngels.AuthServer
 			// for service
 			services.AddTransient<ISystemService, SystemService>();
 			services.AddTransient<IAssetsService, AssetsService>();
+			services.AddTransient<IRoleService, RoleService>();
+			services.AddTransient<IUserService, UserService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

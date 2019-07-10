@@ -65,15 +65,18 @@ namespace Business
 				return null;
 			}
 
-			var query = DB.Queryable<Interface, RoleAssets, SystemRole, Assets>((i, ra, r, a) =>
+			var query = DB.Queryable< SystemRole, RoleAssets, Assets, Interface>((r, ra, a, i) =>
 					 new object[]{
 						JoinType.Inner,
 						r.RoleId==ra.RoleId,
+						JoinType.Inner,
 						ra.AssetId==a.AssetsId,
+						JoinType.Inner,
 						a.ItemId==i.InterfaceId
-					 }).In((i, ra, r, a) => r.RoleName, roleNames);
+					 }).Where((r, ra, a, i) => i.IsAllowAnonymous || roleNames.Contains(r.RoleName));
+					 
 
-			var result = await query.Select((i, ra, r, a) => i).ToListAsync();
+			var result = await query.Select((r, ra, a, i) => i).ToListAsync();
 
 			return result;
 		}

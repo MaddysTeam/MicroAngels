@@ -11,10 +11,10 @@ namespace Business
 
 	public class UserService : MySqlDbContext, IUserService
 	{
-		public UserService(IRedisCache cache)
-		{
-			_cache = cache;
-		}
+		//public UserService(IRedisCache cache)
+		//{
+		//	_cache = cache;
+		//}
 
 		public async Task<bool> Edit(UserInfo userInfo)
 		{

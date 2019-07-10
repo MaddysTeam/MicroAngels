@@ -9,9 +9,10 @@ namespace MicroAngels.AuthServer.Test
 
 		public static Guid SystemId = Guid.Parse("da7f1c57-e62e-4faf-8028-9b848269e437");
 		public static Guid AssetId = Guid.Parse("2d10128b-d3e0-4884-bf4d-9e6be36fad9c");
-		public static Guid InterfaceId = Guid.Parse("");
-		public static Guid RoleId = Guid.Parse("");
-		public static Guid UserId = Guid.Parse("");
+		public static Guid InterfaceId = Guid.Parse("915e5911-6f71-47cb-b0ff-1e0d355e2115");
+		public static Guid RoleId = Guid.Parse("c2c1c796-2c94-4c19-9bfd-51df88839c9b");
+		public static Guid UserId = Guid.Parse("8e69f758-94ff-4199-b1f9-44410766877f");
+		public static Guid UserRoleId = Guid.Parse("3c5daa71-621a-48c6-9adf-1df7b8c09917");
 
 		public static Guid AssetEnableStatus = Guid.Parse("db3c450e-defa-48c7-8b77-f0efd118f833");
 		public static Guid AssetDisableStatus = Guid.Parse("d3bc1ae8-7cf8-405b-9456-93b214d8a0d6");
@@ -52,7 +53,6 @@ namespace MicroAngels.AuthServer.Test
 		public static UserRole UserRoleWithEmpty = new UserRole();
 		public static UserRole UserRoleWithRmptyUserId = new UserRole { UserId=Guid.Empty, RoleId=RoleId };
 		public static UserRole CorrectUserRole = new UserRole { RoleId=RoleId, UserId=UserId };
-
 
 	}
 }

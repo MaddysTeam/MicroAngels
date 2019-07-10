@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MicroAngels.Core.Service;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MicroAngels.ServiceDiscovery.Consul
 {
@@ -19,6 +21,15 @@ namespace MicroAngels.ServiceDiscovery.Consul
 
             return app;
         }
+
+
+		public static IServiceCollection AddServiceFinder(this IServiceCollection  services, ConsulHostConfiguration configuration)
+		{
+			services.AddSingleton(configuration);
+			services.AddTransient<IServiceFinder<ConsulService>, ConsulServiceFinder>();
+
+			return services;
+		}
 
     }
 
