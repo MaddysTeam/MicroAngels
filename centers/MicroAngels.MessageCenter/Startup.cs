@@ -32,7 +32,7 @@ namespace MessageCenter
 			services.AddTransient<IMessageService, MessageService>();
 
 			// add cap
-			services.AddKafkaService(new CAPService
+			services.AddCAPService(new CAPService
 			{
 				Host = Configuration["Queues:Kafka:Host"],
 				ConnectString = Configuration["Queues:Kafka:DbConn"]

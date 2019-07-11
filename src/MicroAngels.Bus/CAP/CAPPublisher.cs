@@ -13,7 +13,6 @@ namespace MicroAngels.Bus.CAP
 
 	public class CAPMysqlPublisher : ICAPPublisher
 	{
-
 		public CAPMysqlPublisher(ICapPublisher inner, CAPService capService)
 		{
 			_inner = inner;

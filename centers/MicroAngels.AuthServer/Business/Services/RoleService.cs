@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using MicroAngels.Core;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,15 @@ namespace Business
 			var validateResults = SystemRole.Validate(role);
 			if (validateResults.All(r => r.IsSuccess))
 			{
-				var effectCount = await RoleDb.AsUpdateable(role).ExecuteCommandAsync();
-
-				return effectCount > 0;
+				if (role.RoleId.IsEmpty())
+				{
+					var current = RoleDb.GetSingle(r => r.RoleName == role.RoleName);
+					return current.IsNull() ? await RoleDb.AsInsertable(role).ExecuteCommandAsync() > 0 : false;
+				}
+				else
+				{
+					return await RoleDb.AsUpdateable(role).ExecuteCommandAsync() > 0;
+				}
 			}
 
 			return false;

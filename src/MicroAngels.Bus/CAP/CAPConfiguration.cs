@@ -8,11 +8,14 @@ namespace MicroAngels.Bus.CAP
 	public static class CAPConfiguration
 	{
 
-		public static IServiceCollection AddKafkaService(this IServiceCollection services, CAPService capService)
+		public static IServiceCollection AddCAPService(this IServiceCollection services, CAPService capService)
 		{
 			services.AddSingleton(capService);
-			services.AddDbContext<CAPMysqlDbContext>()
-					.AddCap(x =>
+			// add dbcontext
+			services.AddDbContext<CAPMysqlDbContext>();
+
+			// add cap and inject ICapPublisher instance
+			services.AddCap(x =>
 					{
 						x.UseEntityFramework<CAPMysqlDbContext>()
 						 .UseKafka(capService.Host)

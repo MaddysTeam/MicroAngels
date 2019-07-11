@@ -21,7 +21,8 @@ namespace Business
 			{
 				if (assets.AssetsId.IsEmpty())
 				{
-					return await AssetsDb.AsInsertable(assets).ExecuteCommandAsync() > 0;
+					var current = AssetsDb.GetSingle(ass => ass.AssetsName == assets.AssetsName);
+					return current.IsNull()? await AssetsDb.AsInsertable(assets).ExecuteCommandAsync() > 0 : false;
 				}
 				else
 				{
@@ -30,20 +31,24 @@ namespace Business
 			}
 
 			return false;
-		
 		}
 
 		public async Task<bool> EditInterface(Interface iinterface)
 		{
 			if (Interface.Validate(iinterface).All(validateResult => validateResult.IsSuccess))
 			{
-				return await InterfaceDb.AsInsertable(iinterface).ExecuteCommandAsync() > 0;
-			}
-			else
-			{
-				return await InterfaceDb.AsUpdateable(iinterface).ExecuteCommandAsync() > 0;
+				if (iinterface.InterfaceId.IsEmpty())
+				{
+					var current = InterfaceDb.GetSingle(inter => inter.Title == iinterface.Title);
+					return current.IsNull() ? await InterfaceDb.AsInsertable(iinterface).ExecuteCommandAsync() > 0 : false;
+				}
+				else
+				{
+					return await InterfaceDb.AsUpdateable(iinterface).ExecuteCommandAsync() > 0;
+				}
 			}
 
+			return false;
 		}
 
 		public async Task<bool> BindInterface(Guid assetsId, Guid interfaceId)
@@ -60,21 +65,21 @@ namespace Business
 
 		public async Task<IEnumerable<Interface>> GetInterfaceByRoleNames(string[] roleNames)
 		{
-			if(roleNames.IsNull() || roleNames.Length == 0)
+			if (roleNames.IsNull() || roleNames.Length == 0)
 			{
 				return null;
 			}
 
-			var query = DB.Queryable< SystemRole, RoleAssets, Assets, Interface>((r, ra, a, i) =>
-					 new object[]{
+			var query = DB.Queryable<SystemRole, RoleAssets, Assets, Interface>((r, ra, a, i) =>
+					new object[]{
 						JoinType.Inner,
 						r.RoleId==ra.RoleId,
 						JoinType.Inner,
 						ra.AssetId==a.AssetsId,
 						JoinType.Inner,
 						a.ItemId==i.InterfaceId
-					 }).Where((r, ra, a, i) => i.IsAllowAnonymous || roleNames.Contains(r.RoleName));
-					 
+					}).Where((r, ra, a, i) => i.IsAllowAnonymous || roleNames.Contains(r.RoleName));
+
 
 			var result = await query.Select((r, ra, a, i) => i).ToListAsync();
 

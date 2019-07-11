@@ -64,11 +64,11 @@ namespace ResourceService.Business
 			return pageSize <= 0 ? await query.ToListAsync() : await query.ToPageListAsync(pageIndex, pageSize);
 		}
 
-		public async Task<bool> Favorite(Guid id, Guid userId)
+		public  Task<bool> Favorite(Guid id, Guid userId)
 		{
 			//FavoriteDB.Insert(new ResourceFavorite(Guid.NewGuid(), id, userId));
 
-			return false;
+			return Task.FromResult(false);
 		}
 
 		private readonly IGRPCConnection _connection;

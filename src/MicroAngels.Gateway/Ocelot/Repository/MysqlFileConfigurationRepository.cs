@@ -118,9 +118,9 @@ namespace MicroAngels.Gateway.Ocelot
 
 		}
 
-		public async Task<Response> Set(FileConfiguration fileConfiguration)
+		public  Task<Response> Set(FileConfiguration fileConfiguration)
 		{
-			return new OkResponse();
+			return Task.FromResult(new OkResponse() as Response);
 		}
 
 		private OcelotConfiguration _configuration;

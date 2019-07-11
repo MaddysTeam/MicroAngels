@@ -1,14 +1,13 @@
 ﻿using Consul;
 using MicroAngels.Core;
 using MicroAngels.Core.Service;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace MicroAngels.ServiceDiscovery.Consul
 {
 
-    public interface IConsulServiceRegister : IServiceRegiter<ConsulService, ConsulServiceResult>
+	public interface IConsulServiceRegister : IServiceRegiter<ConsulService, ConsulServiceResult>
     {
 
     }

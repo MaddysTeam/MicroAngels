@@ -14,10 +14,10 @@ namespace FileService.Business
 	public class FileService : MySqlDbContext, IFileService
 	{
 
-		//public FileService(ICAPPublisher bus)
-		//{
-		//	_bus = bus;
-		//} 
+		public FileService(ICAPPublisher bus)
+		{
+			_bus = bus;
+		}
 
 		/// <summary>
 		/// uplolad files

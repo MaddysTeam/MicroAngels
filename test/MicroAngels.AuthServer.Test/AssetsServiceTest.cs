@@ -76,11 +76,11 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void GetInterfaceByRoleNameTest()
 		{
-			//var assets = await _service.GetInterfaceByRoleNames(fakeRoleNames);
-			//Assert.Null(assets);
+			var assets = await _service.GetInterfaceByRoleNames(null);
+			Assert.Null(assets);
 
-			//assets = await _service.GetInterfaceByRoleNames(emptyRoleNames);
-			//Assert.Null(assets);
+			assets = await _service.GetInterfaceByRoleNames(new string[] { });
+			Assert.Null(assets);
 		}
 
 

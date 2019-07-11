@@ -42,7 +42,7 @@ namespace MicroAngels.AuthServer.Test
 
 
 		[Fact]
-		public async void ModifyTest()
+		public  void ModifyTest()
 		{
 
 		}

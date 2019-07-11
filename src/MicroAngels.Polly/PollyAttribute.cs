@@ -45,7 +45,7 @@ namespace MicroAngels.Polly
 						 var downgradeMethod = acontext.ServiceMethod.DeclaringType.GetMethod(DowngradeMethod);
 						 var result = downgradeMethod.Invoke(context.Implementation, context.Parameters);
 						 acontext.ReturnValue = result;
-					 }, async (ex, t) => { });
+					 },  (ex, t) => { return Task.Run(null); });
 
 					policy = fallbackPolicy.WrapAsync(policy);
 					policies.TryAdd(context.ServiceMethod, policy);

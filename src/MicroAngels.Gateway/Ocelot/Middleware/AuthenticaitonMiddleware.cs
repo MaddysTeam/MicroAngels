@@ -44,8 +44,7 @@ namespace MicroAngels.Gateway.Ocelot
 					else
 					{
 						// var error = new ErrorResult();
-						var message = "error";
-						await context.HttpContext.Response.WriteAsync(message);
+						await context.HttpContext.Response.WriteAsync("error");
 					}
 				}
 				else

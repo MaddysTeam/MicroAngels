@@ -29,11 +29,11 @@ namespace FileService
 		{
 
 			//add cap
-			//services.AddKafkaService(new CAPService
-			//{
-			//	Host = Configuration["Queues:Kafka:Host"],
-			//	ConnectString = Configuration["Queues:Kafka:DbConn"]
-			//});
+			services.AddCAPService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
 
 			//add grpc server
 			services.AddGRPCServer(new GRPCServerOptions
