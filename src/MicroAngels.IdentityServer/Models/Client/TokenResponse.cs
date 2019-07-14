@@ -12,6 +12,12 @@ namespace MicroAngels.IdentityServer.Models
 
 		public string RefreshToken { get; set; }
 
+		public bool IsError { get; set; }
+
+		public string StatusCode { get; set; }
+
+		public string ErrorMessage { get; set; }
+
 	}
 
 }

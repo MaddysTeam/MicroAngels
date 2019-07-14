@@ -26,6 +26,11 @@ namespace MicroAngels.IdentityServer.Models
 			return source == null ? null : Mapper.Map<RefreshTokenRequest>(source);
 		}
 
+		public static PasswordTokenRequest MapPasswordRequest(this AngelTokenRequest source)
+		{
+			return source == null ? null : Mapper.Map<PasswordTokenRequest>(source);
+		}
+
 	}
 
 
@@ -55,6 +60,15 @@ namespace MicroAngels.IdentityServer.Models
 				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
 				.ForMember(dest => dest.Scope, opt => opt.MapFrom(src => src.Scopes));
 
+
+			CreateMap<AngelTokenRequest, PasswordTokenRequest>()
+				.ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
+				.ForMember(dest => dest.ClientSecret, opt => opt.MapFrom(src => src.ClientSecret))
+				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+				.ForMember(dest => dest.Scope, opt => opt.MapFrom(src => src.Scopes))
+				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+				.ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password));
+
 			CreateMap<AngelTokenRequest, RefreshTokenRequest>()
 				.ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
 				.ForMember(dest => dest.ClientSecret, opt => opt.MapFrom(src => src.ClientSecret))
@@ -71,8 +85,11 @@ namespace MicroAngels.IdentityServer.Models
 		public TokenResponseMapperProfile()
 		{
 			CreateMap<TokenResponse, AngelTokenResponse>()
-				.ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.AccessToken));
-
+				.ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.AccessToken))
+				.ForMember(dest => dest.RefreshToken, opt => opt.MapFrom(src => src.RefreshToken))
+				.ForMember(dest => dest.IsError, opt => opt.MapFrom(src => src.IsError))
+				.ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.HttpStatusCode.ToString()))
+				.ForMember(dest => dest.ErrorMessage, opt => opt.MapFrom(src => src.Error));
 
 		}
 	}

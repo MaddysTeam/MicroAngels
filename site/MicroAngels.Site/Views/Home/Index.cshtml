@@ -4,3 +4,34 @@
 }
 
 Hello
+
+
+@section Scripts{ 
+	<script>
+		$(function () {
+
+			var code = localStorage.getItem('code');
+			if (code == undefined || code == '') {
+				location.href="@Url.Action("Login","Account")"
+			}
+
+			$.ajax({
+				type: "POST",
+				url: 'http://localhost:5000/api/accountservice/info',
+				xhrFields: {
+					withCredentials: false // 设置运行跨域操作
+				},
+				contentType: 'application/x-www-form-urlencoded',
+				dataType: 'json',
+				headers: {
+					'Authorization': 'Bearer ' + code,
+				},
+				success: function (data) {
+					console.log(data);
+					console.log(code)
+				}
+			});
+
+		});
+	</script>
+}

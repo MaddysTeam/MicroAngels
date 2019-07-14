@@ -19,6 +19,7 @@ namespace MicroAngels.Site
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
+				//.UseUrls("http://*:4999")
 				.UseStartup<Startup>();
 	}
 }

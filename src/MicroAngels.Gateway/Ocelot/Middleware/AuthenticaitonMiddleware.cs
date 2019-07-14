@@ -1,6 +1,5 @@
 ﻿using MicroAngels.Core;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Ocelot.Logging;
 using Ocelot.Middleware;
 using System.Threading.Tasks;
@@ -25,7 +24,6 @@ namespace MicroAngels.Gateway.Ocelot
 
 		public async Task Invoke(DownstreamContext context)
 		{
-		
 			if (!context.IsError &&
 				 context.HttpContext.Request.Method.ToUpper() != "OPTIONS" &&
 				 context.DownstreamReRoute.IsAuthenticated
@@ -35,23 +33,24 @@ namespace MicroAngels.Gateway.Ocelot
 				{
 					var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
 					if (!result.IsNull() && !result.Principal.IsNull())
+					{
 						context.HttpContext.User = result.Principal;
 
-					if (await _authenticateService.ValidateAuthenticate(context))
-					{
-						await _next.Invoke(context);
+						if (await _authenticateService.ValidateAuthenticate(context))
+						{
+							await _next.Invoke(context);
+						}
+						else
+						{
+							await context.HttpContext.Response.SendForbiddenReponse("application/Json", new { message = "permission deny" }.ToJson());
+						}
 					}
 					else
 					{
-						// var error = new ErrorResult();
-						await context.HttpContext.Response.WriteAsync("error");
+						await _next.Invoke(context);
 					}
-				}
-				else
-				{
-					await _next.Invoke(context);
-				}
 
+				}
 			}
 		}
 

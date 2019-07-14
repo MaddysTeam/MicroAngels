@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Ocelot.Cache;
 using Ocelot.Logging;
 using Ocelot.Middleware;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using MicroAngels.Core;
 
 namespace MicroAngels.Gateway.Ocelot
 {
@@ -15,11 +14,13 @@ namespace MicroAngels.Gateway.Ocelot
 
 		public TokenRefreshMiddleware(OcelotRequestDelegate next,
 			IOcelotLoggerFactory loggerFactory,
+			ICustomTokenRefreshService refreshService,
 			OcelotConfiguration options)
 			: base(loggerFactory.CreateLogger<AuthenticaitonMiddleware>())
 		{
 			_next = next;
 			_options = options;
+			_tokenRefreshService = refreshService;
 		}
 
 
@@ -30,10 +31,7 @@ namespace MicroAngels.Gateway.Ocelot
 				 context.DownstreamReRoute.IsAuthenticated
 				 )
 			{
-				if (_options.TokenRefreshIterval != null)
-				{
-					
-				}
+				await _tokenRefreshService.Refresh(context);
 			}
 
 			await _next.Invoke(context);
@@ -41,7 +39,7 @@ namespace MicroAngels.Gateway.Ocelot
 
 		private readonly OcelotRequestDelegate _next;
 		private readonly OcelotConfiguration _options;
-
+		private readonly ICustomTokenRefreshService _tokenRefreshService;
 
 	}
 

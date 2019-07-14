@@ -20,6 +20,8 @@ namespace Business
 
 		public SimpleClient<Assets> AssetsDb { get { return new SimpleClient<Assets>(DB); } }
 
+		public SimpleClient<Menu> MenuDb { get { return new SimpleClient<Menu>(DB); } }
+
 		public SimpleClient<Interface> InterfaceDb { get { return new SimpleClient<Interface>(DB); } }
 
 		public SimpleClient<System> SystemDb { get { return new SimpleClient<System>(DB); } }
@@ -31,7 +33,8 @@ namespace Business
 			typeof(Assets) ,
 			typeof(RoleAssets),
 			typeof(Interface),
-			typeof(System)
+			typeof(System),
+			typeof(Menu)
 
 		};
 

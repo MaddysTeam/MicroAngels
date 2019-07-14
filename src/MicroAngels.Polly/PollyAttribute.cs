@@ -12,6 +12,7 @@ namespace MicroAngels.Polly
 	/// <summary>
 	/// 基于polly 的 AOP 拦截器
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Method)]
 	public class PollyAttribute : AbstractInterceptorAttribute
 	{
 
@@ -36,7 +37,7 @@ namespace MicroAngels.Polly
 
 					if (EnableCircuitBroken)
 					{
-						policy = PollyService.CircuitBreakAsync<AngleExceptions>(AllowedCountBeforeCirecuit, CircuitDuration);
+						//policy = PollyService.CircuitBreak<AngleExceptions>(AllowedCountBeforeCirecuit, CircuitDuration);
 					}
 
 					var fallbackPolicy = Policy.Handle<AngleExceptions>().FallbackAsync(async (ctx, c) =>

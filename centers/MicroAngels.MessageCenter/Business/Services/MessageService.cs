@@ -144,10 +144,9 @@ namespace Business.Services
                 return false;
             }
 
-            // 找出所有当前message订阅者，然后将当前message插入user message,注意订阅对象是senderid
-            var subscribeCount = 0;
-            var subscribes = await _subscribeService.GetSubscribes(msg.SenderId, msg.ServiceId, msg.TopicId, 0, 0, out subscribeCount);
-            List<UserMessage> userMessages = new List<UserMessage>();
+			// 找出所有当前message订阅者，然后将当前message插入user message,注意订阅对象是senderid
+			var userMessages = new List<UserMessage>();
+			var subscribes = await _subscribeService.GetSubscribes(s => s.ServiceId == msg.ServiceId && s.TargetId == msg.TargetId && s.TopicId == msg.TopicId, null, null);
             foreach (var item in subscribes)
             {
                 var um = new UserMessage

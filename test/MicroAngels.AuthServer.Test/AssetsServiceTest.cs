@@ -17,27 +17,23 @@ namespace MicroAngels.AuthServer.Test
 		[Fact]
 		public async void InsertTest()
 		{
-			var assets = AuthServerTestKeys.AssetsWithNameEmpty;
-			var result = await _service.Edit(assets);
-
+			var result = await _service.Edit(AuthServerTestKeys.AssetsWithNameEmpty);
 			Assert.False(result);
 
-			assets.AssetsName = AuthServerTestKeys.TempAssetName;
-			result = await _service.Edit(assets);
-
-			Assert.True(result);
+			//result = await _service.Edit(AuthServerTestKeys.co);
+			//Assert.True(result);
 		}
 
 		[Fact]
 		public async void ModifyTest()
 		{
 			var service = await _service.GetById(AuthServerTestKeys.AssetId);
-			service.AssetsName = AuthServerTestKeys.TempAssetName;
+			service.AssetsName = AuthServerTestKeys.AssetName;
 			var result = await _service.Edit(service);
 			Assert.True(result);
 
 			service = await _service.GetById(AuthServerTestKeys.AssetId);
-			Assert.True(service.AssetsName == AuthServerTestKeys.TempAssetName);
+			Assert.True(service.AssetsName == AuthServerTestKeys.AssetName);
 		}
 
 		[Fact]
@@ -60,11 +56,17 @@ namespace MicroAngels.AuthServer.Test
 			service = await _service.EditInterface(AuthServerTestKeys.InterfaceWithUrlEmpty);
 			Assert.False(service);
 
-			service = await _service.EditInterface(AuthServerTestKeys.InterfaceWihtIllegalUrl);
-			Assert.False(service);
+			//service = await _service.EditInterface(AuthServerTestKeys.InterfaceWihtIllegalUrl);
+			//Assert.False(service);
 
 			service = await _service.EditInterface(AuthServerTestKeys.CorrectInterface);
 			Assert.True(service);
+		}
+
+		[Fact]
+		public void InsertMenuTest()
+		{
+
 		}
 
 		[Fact]

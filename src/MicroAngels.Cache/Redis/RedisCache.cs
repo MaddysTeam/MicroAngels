@@ -20,15 +20,15 @@ namespace MicroAngels.Cache.Redis
 			RedisHelper.Initialization(_client);
 		}
 
-		public RedisCache(IEnumerable<RedisCacheOption> options)
-		{
-			options.EnsureNotNull(() => new ArgumentNullException());
+		//public RedisCache(IEnumerable<RedisCacheOption> options)
+		//{
+		//	options.EnsureNotNull(() => new ArgumentNullException());
 
-			var conn = string.Join(",", options.Select(x=>x.ToString()));
-			_client = new CSRedisClient(conn);
+		//	var conn = string.Join(",", options.Select(x=>x.ToString()));
+		//	_client = new CSRedisClient(conn);
 
-			RedisHelper.Initialization(_client);
-		}
+		//	RedisHelper.Initialization(_client);
+		//}
 
 
 		public bool Add<T>(string key, T value, TimeSpan expire)

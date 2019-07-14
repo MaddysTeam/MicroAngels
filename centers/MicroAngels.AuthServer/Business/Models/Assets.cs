@@ -7,25 +7,34 @@ namespace Business
 {
 
 	/// <summary>
-	/// 资产，资源
+	/// Assets for describe some resouce
 	/// </summary>
 	public class Assets
 	{
 		[SugarColumn(IsPrimaryKey = true,Length =50)]
 		public Guid AssetsId { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid SystemId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 200)]
 		public string AssetsName { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid AssetsType { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid AssetsStatus { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 3000)]
 		public string Description { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid ParentId { get; set; }
+
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid ItemId { get; set; }
+
 
 		public static List<ValidateResult> Validate(Assets assets)
 		{
@@ -43,17 +52,32 @@ namespace Business
 	}
 
 	/// <summary>
-	/// 资产-菜单
+	/// assets menu
 	/// </summary>
-	//public class Menu
-	//{
-	//	[SugarColumn(IsPrimaryKey = true)]
-	//	public Guid MenuId { get; set; }
-	//	public string Title { get; set; }
-	//}
+	public class Menu
+	{
+		[SugarColumn(IsPrimaryKey = true,Length =50)]
+		public Guid MenuId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 200)]
+		public string Title { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 2000)]
+		public string LinkUrl { get; set; }
+
+		public static List<ValidateResult> Validate(Menu menu)
+		{
+			return
+			menu
+			 .NotNullOrEmpty(menu.Title, "")
+			 .NotNullOrEmpty(menu.LinkUrl, "")
+			 .Validate();
+		}
+
+	}
 
 	/// <summary>
-	/// 资产-按钮
+	/// assets butotn
 	/// </summary>
 	//public class Button
 	//{
@@ -63,14 +87,14 @@ namespace Business
 	//}
 
 	/// <summary>
-	/// 资产- 接口
+	/// assets interface
 	/// </summary>
 	public class Interface
 	{
-		[SugarColumn(IsPrimaryKey = true)]
+		[SugarColumn(IsPrimaryKey = true,Length =50)]
 		public Guid InterfaceId { get; set; }
 
-		[SugarColumn(Length = 100)]
+		[SugarColumn(IsNullable=false,Length = 100)]
 		public string Title { get; set; }
 
 		[SugarColumn(IsNullable = true, Length = 1000)]
@@ -92,14 +116,26 @@ namespace Business
 		public static List<ValidateResult> Validate(Interface iinterface)
 		{
 			return
-			iinterface.NotNull(iinterface.Title, "")
-			 .NotNull(iinterface.Url, "")
-			 .RegexIsMatch(iinterface.Url,RegexSupporter.UrlPatterns,"")
+			iinterface
+			 .NotNullOrEmpty(iinterface.Title, "")
+			 .NotNullOrEmpty(iinterface.Url, "")
+			// .RegexIsMatch(iinterface.Url,RegexSupporter.UrlPatterns,"")
 			 .IsIn(Methods,iinterface.Method)
 			 .Validate();
 		}
 
 	}
+
+	public static class AssetsKeys
+	{
+		public static Guid InterfaceType = Guid.Parse("94348b14-58a8-4156-b3bf-a5940a706932");
+		public static Guid MenuType = Guid.Parse("b78fa535-4a34-419d-9aa4-63f56224d0ba");
+
+		public static Guid EnableStatus = Guid.Parse("");
+		public static Guid DisableStatus = Guid.Parse("");
+		public static Guid ReadonlyStatus = Guid.Parse("");
+	}
+
 
 
 }

@@ -21,6 +21,13 @@ namespace MicroAngels.Core
 			await response.WriteAsync(message);
 		}
 
+		public static async Task SendForbiddenReponse(this HttpResponse response, string contentType, string error)
+		{
+			response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+			response.ContentType = contentType;
+			await response.WriteAsync(error);
+		}
+
 	}
 
 }

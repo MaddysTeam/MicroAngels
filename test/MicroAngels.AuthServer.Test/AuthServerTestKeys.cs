@@ -13,13 +13,16 @@ namespace MicroAngels.AuthServer.Test
 		public static Guid RoleId = Guid.Parse("c2c1c796-2c94-4c19-9bfd-51df88839c9b");
 		public static Guid UserId = Guid.Parse("8e69f758-94ff-4199-b1f9-44410766877f");
 		public static Guid UserRoleId = Guid.Parse("3c5daa71-621a-48c6-9adf-1df7b8c09917");
+		public static Guid RoleAssetId = Guid.Parse("65267c9f-bce4-40a9-ba31-ec17210243a9");
 
 		public static Guid AssetEnableStatus = Guid.Parse("db3c450e-defa-48c7-8b77-f0efd118f833");
 		public static Guid AssetDisableStatus = Guid.Parse("d3bc1ae8-7cf8-405b-9456-93b214d8a0d6");
 		public static Guid InterfaceType = Guid.Parse("94348b14-58a8-4156-b3bf-a5940a706932");
-		
+
+		public static string SignupUrl = "api/accountservice/signup";
+
 		public static string[] FackRoleNames = { "unknow", "unknow2" };
-		public static string TempAssetName = "";
+		public static string AssetName = "asset";
 		public static string RoleName = "admin";
 		public static string UserName = "jimmy";
 
@@ -34,7 +37,7 @@ namespace MicroAngels.AuthServer.Test
 		public static Interface InterfaceWithNameEmpty = new Interface { Title = "", Method = "GET", Url = "http://xxx.a.com" };
 		public static Interface InterfaceWithUrlEmpty = new Interface { Title = "interface1", Method = "POST", Url = "" };
 		public static Interface InterfaceWihtIllegalUrl = new Interface { Title = "interface1", Method = "POST", Url = "aabbcc" };
-		public static Interface CorrectInterface = new Interface { Title = "my_interface", Url = "http://xxx.a.com", Method = "GET" };
+		public static Interface CorrectInterface = new Interface { Title = "signup", Url = SignupUrl, Method = "POST" ,IsAllowAnonymous=true};
 
 		public static SystemRole RoleWithNameEmpty = new SystemRole { RoleName="" };
 		public static SystemRole RoleWithSystemIdEmpty = new SystemRole { RoleName = RoleName, SystemId = Guid.Empty };

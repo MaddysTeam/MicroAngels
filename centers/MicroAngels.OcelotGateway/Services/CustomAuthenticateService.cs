@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace MicroAngels.AuthServer.Services
+namespace MicroAngels.OcelotGateway.Services
 {
 
 	public class CustomAuthenticateService : ICustomAuthenticateService
@@ -29,25 +29,21 @@ namespace MicroAngels.AuthServer.Services
 		{
 			var requestPath = context.DownstreamRequest.AbsolutePath;
 			var roleClaims = context.HttpContext.User.Claims.Where(c => c.Value == "role");
-			if (roleClaims.Count() > 0)
+			var roles = roleClaims.Count() <= 0 ? new string[] { } : roleClaims.Select(x => x.Type).ToArray();
+
+			var services = await _serviceFinder.FindByNameAsync(_configuration["RemoteService:Name"]);
+			if (!services.IsNull() && services.Count > 0)
 			{
-				var roles = roleClaims.Select(x => x.Type).ToArray();
-				var rolesString = string.Join(",", roles);
-				// call remote auth service to get urls
-				var services = await _serviceFinder.FindByNameAsync(_configuration["RemoteService:Name"]);
-				if (!services.IsNull() && services.Count > 0)
+				var serivceUrl = $@"{services[0].Address}{_configuration["RemoteService:Url"]}";
+				using (var client = new HttpClient())
 				{
-					var serivceUrl = $@"{services[0].Address}{_configuration["RemoteService:Url"]}?roles={rolesString}";
-					using (var client = new HttpClient())
-					{
-						var permissionUrls = await client.GetAsync<string[]>(serivceUrl);
+					var permissionUrls = await client.PostAsync<string[]>(serivceUrl, roles);
 
-						return !permissionUrls.IsNull() && permissionUrls.Contains(requestPath);
-					}
+					return !permissionUrls.IsNull() && permissionUrls.Contains(requestPath);
 				}
-
-				return false;
 			}
+
+			context.Errors.Add(new UnauthenticatedError("auth service not exit"));
 
 			return false;
 		}

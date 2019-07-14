@@ -11,18 +11,18 @@ namespace Controllers
 	public class UserController : ControllerBase
 	{
 
-		//[HttpPost("hasInRole")]
-		//public async Task<IActionResult> HasInRole(string roleName)
-		//{
-		//	return NotFound();
-		//}
+		public UserController(IUserService userService)
+		{
+			_userService = userService;
+		}
 
+		[HttpPost("edit")]
+		public async Task<bool> Edit([FromBody] UserInfo userInfo)
+		{
+			return await _userService.Edit(userInfo);
+		}
 
-		//[HttpPost("hasInRole")]
-		//public async Task<List<Assets>> GetAssets(string username)
-		//{
-		//	return null;
-		//}
+		private IUserService _userService;
 
 	}
 

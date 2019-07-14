@@ -83,7 +83,7 @@ namespace MicroAngels.Gateway.Ocelot
 			// user wants
 			if (pipelineConfiguration.AuthenticationMiddleware == null)
 			{
-				builder.UseAuthenticationMiddleware();
+				//builder.UseAuthenticationMiddleware();
 			}
 			else
 			{

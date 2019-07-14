@@ -22,7 +22,7 @@ namespace Business
 				if (assets.AssetsId.IsEmpty())
 				{
 					var current = AssetsDb.GetSingle(ass => ass.AssetsName == assets.AssetsName);
-					return current.IsNull()? await AssetsDb.AsInsertable(assets).ExecuteCommandAsync() > 0 : false;
+					return current.IsNull() ? await AssetsDb.AsInsertable(assets).ExecuteCommandAsync() > 0 : false;
 				}
 				else
 				{
@@ -51,21 +51,39 @@ namespace Business
 			return false;
 		}
 
-		public async Task<bool> BindInterface(Guid assetsId, Guid interfaceId)
+		public async Task<bool> EditMenu(Menu menu)
 		{
-			if (assetsId.IsEmpty() || interfaceId.IsEmpty())
+			if (Menu.Validate(menu).All(validateResult => validateResult.IsSuccess))
+			{
+				if (menu.MenuId.IsEmpty())
+				{
+					var current = MenuDb.GetSingle(m => m.Title == menu.Title);
+					return current.IsNull() ? await MenuDb.AsInsertable(menu).ExecuteCommandAsync() > 0 : false;
+				}
+				else
+				{
+					return await MenuDb.AsUpdateable(menu).ExecuteCommandAsync() > 0;
+				}
+			}
+
+			return false;
+		}
+
+		public async Task<bool> BindAssets(Guid assetsId, Guid itemId)
+		{
+			if (assetsId.IsEmpty() || itemId.IsEmpty())
 			{
 				return false;
 			}
 
 			return await DB.Updateable<Assets>(a => a.AssetsId == assetsId)
-								 .UpdateColumns(a => new { ItemId = interfaceId })
+								 .UpdateColumns(a => new { ItemId = itemId })
 								 .ExecuteCommandAsync() > 0;
 		}
 
 		public async Task<IEnumerable<Interface>> GetInterfaceByRoleNames(string[] roleNames)
 		{
-			if (roleNames.IsNull() || roleNames.Length == 0)
+			if (roleNames.IsNull())
 			{
 				return null;
 			}
@@ -86,9 +104,38 @@ namespace Business
 			return result;
 		}
 
+		public async Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames)
+		{
+			if (roleNames.IsNull())
+			{
+				return null;
+			}
+
+			var query = DB.Queryable<SystemRole, RoleAssets, Assets, Menu>((r, ra, a, m) =>
+					new object[]{
+						JoinType.Inner,
+						r.RoleId==ra.RoleId,
+						JoinType.Inner,
+						ra.AssetId==a.AssetsId,
+						JoinType.Inner,
+						a.ItemId== m.MenuId
+					}).Where((r, ra, a, i) => roleNames.Contains(r.RoleName));
+
+
+			var result = await query.Select((r, ra, a, m) => m).ToListAsync();
+
+			return result;
+		}
+
+
 		public async Task<Assets> GetById(Guid assetId)
 		{
 			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
+		}
+
+		public Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId)
+		{
+			throw new NotImplementedException();
 		}
 	}
 

@@ -27,8 +27,12 @@ namespace MicroAngels.Gateway.Ocelot
 			//builder.Services.AddSingleton<IOcelotCache<FileConfiguration>,OcelotRedisCache<FileConfiguration>>();
 			//builder.Services.AddSingleton<IOcelotCache<CachedResponse>,OcelotRedisCache<CachedResponse>>();
 
+			//builder.Services.AddSingleton<IOcelotCache<RefreshToken>, OcelotRedisCache<RefreshToken>>();
+
 			// di for authentication service
 			//builder.Services.AddSingleton<ICustomAuthenticateService, DefaultCustomAuthenticateService>();
+
+			builder.Services.AddSingleton<IOcelotCache<CachedResponse>, OcelotRedisCache<CachedResponse>>();
 
 			return builder;
 		}

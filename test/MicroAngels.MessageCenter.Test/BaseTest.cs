@@ -15,7 +15,8 @@ namespace MessageCenter.Test
 		{
 			Server = new TestServer(
 			WebHost.CreateDefaultBuilder().UseContentRoot(
-					GetProjectPath("MicroAngels.sln", "", typeof(Startup).Assembly)
+					GetProjectPath("MicroAngels.sln", "", typeof(Startup).Assembly).
+					Replace(@"\MicroAngels.MessageCenter", @"\centers\MicroAngels.MessageCenter")
 				).UseStartup<Startup>()
 			);
 		}

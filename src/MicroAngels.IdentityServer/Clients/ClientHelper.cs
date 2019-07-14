@@ -30,10 +30,9 @@ namespace MicroAngels.IdentityServer.Clients
 					angelResposne = response?.Map();
 					break;
 				case TokenRequestType.resource_password:
-					response = await GetResourcePasswordToken(new PasswordTokenRequest
-					{
-
-					}); break;
+					response = await GetResourcePasswordToken(request.MapPasswordRequest());
+					angelResposne = response?.Map();
+					break;
 				case TokenRequestType.revocation:
 					revocationResponse = await ForceTokenTimeout(new TokenRevocationRequest
 					{

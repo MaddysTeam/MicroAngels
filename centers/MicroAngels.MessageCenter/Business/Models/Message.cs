@@ -14,14 +14,16 @@ namespace Business.Models
     /// </summary>
     public class Topic
     {
+		[SugarColumn(IsPrimaryKey =true,Length =50)]
         public string Id { get; set; }
 
-        [Required]
-        public string ServiceId { get; set; }
+		[SugarColumn(IsNullable = false)]
+		public string ServiceId { get; set; }
 
-        [Required]
+        [SugarColumn(IsNullable =false)]
         public string Name { get; set; }
 
+		[SugarColumn(IsIgnore=true)]
         public string Description { get; set; }
         public DateTime CreateTime { get; set; }
 
@@ -35,23 +37,39 @@ namespace Business.Models
     /// </summary>
     public class Message
     {
-        public string Id { get; set; }
+		[SugarColumn(IsPrimaryKey = true, Length = 50)]
+		public string Id { get; set; }
 
-        public string TopicId { get; set; }
-        public string TypeId { get; set; }
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string TopicId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string TypeId { get; set; }
+
         public string Body { get; set; }
-        public string StatusId { get; set; }
-        public string SenderId { get; set; }
-        public string ServiceId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string StatusId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string SenderId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string ServiceId { get; set; }
+
         public DateTime SendTime { get; set; }
+
         public DateTime ReceiveTime { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public string Topic { get; set; }
+
         [SugarColumn(IsIgnore = true)]
         public TimeSpan Timeout { get; set; }
+
         [SugarColumn(IsIgnore = true)]
         public string SubscriberId { get; set; }
+
         [SugarColumn(IsIgnore = true)]
         public string TargetId { get; set; }
 
@@ -59,13 +77,13 @@ namespace Business.Models
         [SugarColumn(IsIgnore = true)]
         public bool IsTimeout { get { return ReceiveTime + Timeout > DateTime.UtcNow; } }
 
-        [SugarColumn(IsIgnore = true)]
-        public bool IsValidate =>
-               !Topic.IsNullOrEmpty()
-            && !Body.IsNullOrEmpty()
-            && !SenderId.IsNullOrEmpty()
-            && !ServiceId.IsNullOrEmpty()
-            && SendTime < DateTime.UtcNow;
+		[SugarColumn(IsIgnore = true)]
+		public bool IsValidate =>
+			   !Topic.IsNullOrEmpty()
+			&& !Body.IsNullOrEmpty()
+			&& !SenderId.IsNullOrEmpty()
+			&& !ServiceId.IsNullOrEmpty();
+            //&& SendTime < DateTime.UtcNow;
 
     }
 

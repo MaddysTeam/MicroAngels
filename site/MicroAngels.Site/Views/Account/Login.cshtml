@@ -37,14 +37,14 @@
 											<fieldset>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" placeholder="用户名" />
+														<input type="text" class="form-control" id="username" placeholder="用户名" />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" placeholder="密码" />
+														<input type="password" class="form-control"  id="password" placeholder="密码" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
@@ -66,7 +66,7 @@
 														<span class="lbl"> Remember Me</span>
 													</label>*@
 
-													<button type="button" class="width-65 pull-right  btn btn-sm btn-primary">
+													<button id="login" type="button" class="width-65 pull-right  btn btn-sm btn-primary">
 														<i class="ace-icon fa fa-key"></i>
 														<span class="bigger-110">登录</span>
 													</button>
@@ -178,7 +178,7 @@
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" placeholder="用户名" />
+														<input type="text" class="form-control"  placeholder="用户名" />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
@@ -205,7 +205,7 @@
 														<span class="bigger-110">重置</span>
 													</button>
 
-													<button type="button" class="width-65 pull-right btn btn-sm btn-success">
+													<button id="login" type="button" class="width-65 pull-right btn btn-sm btn-success">
 														<span class="bigger-110">注册</span>
 
 														<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -248,12 +248,71 @@
 
 @section  Scripts{ 
 	<script type="text/javascript">
-		$('#Login').on('click', function () {
-			$.post('http://localhost:5000/api/accountservice/signin', function (data) {
-				localStorage.setItem('code', data);
-				location.href="@Url.Action("about")"
+
+		$(function () {
+			
+			$('#login').on('click', function () {
+
+				$.ajax({
+					type: "POST",
+					url: 'http://192.168.1.2:5000/api/accountservice/signin',
+					xhrFields: {
+						withCredentials: false // 设置运行跨域操作
+					},
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify({ "UserName": $('#username').val(), "Password": $('#password').val() }),
+					success: function (data) {
+						if (!data.isSuccess) {
+							alert('用户名或密码错误');
+						}
+						else {
+							localStorage.setItem('code', data.token);
+							localStorage.setItem('refreshToken', data.refreshToken);
+							location.href = "@Url.Action("Index","Home")";
+						}
+					}
+				});
 			});
+
 		});
+
+
+			@*
+
+
+		$('#Uploader').on('change', function () {
+			var file = $('#Uploader')[0].files[0];
+			console.log(file);
+			upload(file);
+		});
+
+		function upload(file) {
+			var formdata = new FormData();
+			formdata.append('file', file);
+			$.ajax({
+				//rver script to process data
+				dataType: "json",
+				url: 'http://192.168.1.8:6000/api/file/upload',
+				type: 'POST',
+				success: function (data) {
+					//success event
+					console.log(data)
+				},
+				error: function (e) {
+					//errorHandler
+				},
+				///Form data
+				data: formdata,
+				///Options to tell JQuery not to process data or worry about content-type
+				cache: false,
+				contentType: false,
+				processData: false
+			});
+
+		}
+
+				*@
 	</script>
 }
 

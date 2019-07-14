@@ -2,7 +2,9 @@
 using Infrastructure.Orms.Sugar;
 using MicroAngels.Core;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Business.Services
@@ -18,25 +20,28 @@ namespace Business.Services
             _logger = logger;
         }
 
-        public Task<bool> SubscribeAsync(Subscribe sub)
+        public async Task<bool> SubscribeAsync(Subscribe sub)
         {
-            var result = true;
             if (sub.IsNull() || sub.TopicId.IsNullOrEmpty()
                              || sub.SubscriberId.IsNullOrEmpty()
                              || sub.ServiceId.IsNullOrEmpty()
                              || sub.TargetId.IsNullOrEmpty())
             {
-                result = false;
+                return false;
             }
 
             var topic = TopicsDb.GetById(sub.TopicId);
-            if (topic.IsNull()) return Task.FromResult(result);
+			if (topic.IsNull()) return false;
 
-            //TODO:再判断下是否已经订阅过
+			//再判断下是否已经订阅过
 
-            result = SubscribeDb.Insert(sub);
+			var existSubscribes = await GetSubscribes(s=>s.ServiceId==sub.ServiceId && s.TargetId==sub.TargetId && s.TopicId==sub.TopicId && s.SubscriberId==sub.SubscriberId,null,null);
+			if(!existSubscribes.IsNull() && existSubscribes.Count > 0)
+			{
+				return false;
+			}
 
-            return Task.FromResult(result);
+			return SubscribeDb.Insert(sub);
         }
 
         public Task<bool> UnSubsribeAsync(Subscribe subscribe)
@@ -53,19 +58,22 @@ namespace Business.Services
             return Task.FromResult(result);
         }
 
-        public Task<List<Subscribe>> GetSubscribes(string targetId, string serviceId, string topicId, int pageIndex, int pageSize, out int pageCount)
+        public async Task<List<Subscribe>> GetSubscribes(Expression<Func<Subscribe, bool>> whereExpressions, int? pageIndex, int? pageSize)
         {
-            var query = DB.Queryable<Subscribe>();
-            if (!targetId.IsNullOrEmpty())
-                query.Where(s => s.TargetId == targetId);
-            if (!serviceId.IsNullOrEmpty())
-                query.Where(s => s.ServiceId == serviceId);
-            if (!topicId.IsNullOrEmpty())
-                query.Where(s => s.TopicId == topicId);
+            //var query = DB.Queryable<Subscribe>();
+            //if (!targetId.IsNullOrEmpty())
+            //    query.Where(s => s.TargetId == targetId);
+            //if (!serviceId.IsNullOrEmpty())
+            //    query.Where(s => s.ServiceId == serviceId);
+            //if (!topicId.IsNullOrEmpty())
+            //    query.Where(s => s.TopicId == topicId);
 
-            pageCount = query.Count();
+			var query = DB.Queryable<Subscribe>().Where(whereExpressions);
 
-            return  pageSize<=0 ? query.ToListAsync():query.ToPageListAsync(pageIndex,pageSize);
+			if (pageSize.HasValue && pageIndex.HasValue)
+				return await query.ToPageListAsync(pageIndex.Value, pageSize.Value);
+			else
+				return await query.ToListAsync();
         }
 
         private readonly ILogger<TopicService> _logger;

@@ -18,11 +18,11 @@ namespace AccountService.Controllers
 	public class AccountController : ControllerBase
 	{
 
-		public AccountController(ILogger logger, IConfiguration configuraton)//IRedisCache cache)
+		public AccountController(ILogger logger, IConfiguration configuraton, IRedisCache cache)
 		{
 			_logger = logger;
 			_configuation = configuraton;
-			//_cache = cache;
+			_cache = cache;
 		}
 
 		// POST api/validateNumber
@@ -47,13 +47,18 @@ namespace AccountService.Controllers
 		// GET api/signin
 
 		[HttpPost("signin")]
-		public async Task<string> SignIn([FromBody]LoginModel model)
+		public async Task<IActionResult> SignIn([FromBody]LoginModel model)
 		{
 			//decrypt  password
 
 			var response = await SignInTokenRequest(TokenRequestType.resource_password, model.UserName, model.Password);
 
-			return response.Token;
+			return new JsonResult(new
+			{
+				isSuccess = !response.IsError,
+				token = response.Token,
+				refreshToken=response.RefreshToken
+			});
 		}
 
 		[Authorize]
@@ -65,23 +70,31 @@ namespace AccountService.Controllers
 			return Ok();
 		}
 
-		[Authorize]
-		[HttpPost("info")]
-		public Account Info(Guid id)
-		{
-			// get account info here
-			var claims = Request.HttpContext.User.Claims;
-
-			return new Account(Guid.NewGuid(), "Jimmy", DateTime.Now);
-		}
-
 		[HttpPost("signup")]
-		public string SignUp(string username, string password)
+		public async Task<IActionResult> SignUp([FromBody] SignupModel signupModel)
 		{
 			// implement sign up logic here
 
-			return string.Empty;
+			return new JsonResult(new {
+				isSuccess=true,
+				message="操作成功"
+			});
 		}
+
+		[Authorize]
+		[HttpPost("refresh")]
+		public async Task<IActionResult> Refresh([FromBody] RefreshTokenModel refreshTokenModel)
+		{
+			var response = await RefreshTokenRequest(refreshTokenModel.AccessToken, refreshTokenModel.RefreshToken);
+
+			return new JsonResult(new
+			{
+				isSuccess = true,
+				message = "操作成功"
+			});
+		}
+
+
 
 		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)
 		{
@@ -102,6 +115,17 @@ namespace AccountService.Controllers
 			var request = CreateBasiceRequest();
 			request.Token = token;
 			var response = await ClientHelper.GetTokenResponse(request, TokenRequestType.revocation);
+
+			return response;
+		}
+
+
+		private async Task<AngelTokenResponse> RefreshTokenRequest(string token,string refreshToken)
+		{
+			var request = CreateBasiceRequest();
+			request.Token = token;
+			request.RefreshToken = refreshToken;
+			var response = await ClientHelper.GetTokenResponse(request, TokenRequestType.refresh);
 
 			return response;
 		}

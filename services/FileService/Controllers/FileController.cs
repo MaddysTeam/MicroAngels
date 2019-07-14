@@ -12,7 +12,7 @@ namespace FileService.Controllers
 
 	[Route("api/[controller]")]
 	[Authorize]
-	[Privilege]
+	//[Privilege]
 	[ApiController]
 	public class FileController : ControllerBase
 	{

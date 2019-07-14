@@ -67,8 +67,8 @@ namespace MicroAngels.Core.Plugins
 		public static T RegexIsMatch<T>(this T t, string s, string patterns,string errorMessage)
 		{
 			t.Init();
-
-			return t.WhenInvalid<T>(new Regex(patterns).IsMatch(s),errorMessage);
+			
+			return t.WhenInvalid<T>(Regex.Match(s,patterns).Success,errorMessage);
 		}
 
 		public static T IsIn<T,V>(this T t,V[] array,V v) where V: IComparable
