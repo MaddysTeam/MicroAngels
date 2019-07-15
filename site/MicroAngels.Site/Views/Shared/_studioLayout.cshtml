@@ -16,48 +16,54 @@
 	<link rel="stylesheet" href="~/css/ace-rtl.min.css" />
 
 	<!--[if lte IE 9]>
-	  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+	  <link rel="stylesheet" href="~/css/ace-ie.min.css" />
 	<![endif]-->
 	<!-- inline styles related to this page -->
 	<!-- ace settings handler -->
-	<script src="assets/js/ace-extra.min.js"></script>
+	<script src="js/ace-extra.min.js"></script>
 
 	<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 	<!--[if lte IE 8]>
-	<script src="assets/js/html5shiv.min.js"></script>
-	<script src="assets/js/respond.min.js"></script>
+	<script src="~/js/html5shiv.min.js"></script>
+	<script src="~/js/respond.min.js"></script>
 	<![endif]-->
 </head>
 
 <body class="no-skin">
 
-	@Html.PartialAsync("_nav").Result
-
-
-	<div class="main-container ace-save-state" id="main-container">
-		<script type="text/javascript">
-			try { ace.settings.loadState('main-container') } catch (e) { }
-		</script>
-
-		@RenderBody()
-	</div><!-- /.main-container -->
-
+	<!-- nav start-->
+	@await Html.PartialAsync("_nav")
+	<!-- nav end -->
+	<!-- side bar start -->
+	@await Html.PartialAsync("_sidebar")
+	<!-- side bar end -->
+	<!-- body start -->
+	@RenderBody()
+	<!-- body end-->
 	<!-- basic scripts -->
 	<!--[if !IE]> -->
 	<script src="~/js/jquery-2.1.4.min.js"></script>
 
 	<!-- <![endif]-->
 	<!--[if IE]>
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<script src="~/js/jquery-1.11.3.min.js"></script>
 	<![endif]-->
 	<script type="text/javascript">
-		if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+		if ('ontouchstart' in document.documentElement) document.write("<script src='~/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 	</script>
 	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/jquery.dataTables.min.js"></script>
+	<script src="~/js/jquery.dataTables.bootstrap.min.js"></script>
+	<script src="~/js/dataTables.buttons.min.js"></script>
+	<script src="~/js/buttons.flash.min.js"></script>
+	<script src="~/js/buttons.html5.min.js"></script>
+	<script src="~/js/buttons.print.min.js"></script>
+	<script src="~/js/buttons.colVis.min.js"></script>
+	<script src="~/js/dataTables.select.min.js"></script>
 
 	<!-- page specific plugin scripts -->
 	<!--[if lte IE 8]>
-	  <script src="assets/js/excanvas.min.js"></script>
+	  <script src="~/js/excanvas.min.js"></script>
 	<![endif]-->
 	<script src="~/js/jquery-ui.custom.min.js"></script>
 	<script src="~/js/jquery.ui.touch-punch.min.js"></script>
@@ -66,88 +72,46 @@
 	<!-- ace scripts -->
 	<script src="~/js/ace-elements.min.js"></script>
 	<script src="~/js/ace.min.js"></script>
-
+	<script src="~/js/app.js"></script>
 	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
-		jQuery(function ($) {
-		
-			$('.sparkline').each(function () {
-				var $box = $(this).closest('.infobox');
-				var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-				$(this).sparkline('html',
+
+	<script>
+		$(function () {
+
+			var menuStr = '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>';
+			var submenuStr = '<ul class="submenu"></ul>'
+			var submenuItemStr = '<li class=""><a href="tables.html"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>'
+			var menus = [{
+				id: '1', title: '系统设置', children: [
 					{
-						tagValuesAttribute: 'data-values',
-						type: 'bar',
-						barColor: barColor,
-						chartRangeMin: $(this).data('min') || 0
-					});
-			});
+						id: '1.1', title: '用户列表'
+					},
+					{
+						id: '1.2', title: '角色列表'
+					},
+					{
+						id: '1.2', title: '接口列表'
+					},
+				]
+			}];
 
+			$(menus).each(function (i) {
+				var menu = menus[i];
+				var $menu_container = $('#SideBar');
+				var $menu_body = $(menuStr.format(menu.title));
+				var $submenu_container = $(submenuStr);
 
-			$('#recent-box [data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
-			function tooltip_placement(context, source) {
-				var $source = $(source);
-				var $parent = $source.closest('.tab-content')
-				var off1 = $parent.offset();
-				var w1 = $parent.width();
-
-				var off2 = $source.offset();
-				//var w2 = $source.width();
-
-				if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-				return 'left';
-			}
-
-
-			$('.dialogs,.comments').ace_scroll({
-				size: 300
-			});
-
-
-			//Android's default browser somehow is confused when tapping on label which will lead to dragging the task
-			//so disable dragging when clicking on label
-			var agent = navigator.userAgent.toLowerCase();
-			if (ace.vars['touch'] && ace.vars['android']) {
-				$('#tasks').on('touchstart', function (e) {
-					var li = $(e.target).closest('#tasks li');
-					if (li.length == 0) return;
-					var label = li.find('label.inline').get(0);
-					if (label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation();
-				});
-			}
-
-			$('#tasks').sortable({
-				opacity: 0.8,
-				revert: true,
-				forceHelperSize: true,
-				placeholder: 'draggable-placeholder',
-
-				forcePlaceholderSize: true,
-				tolerance: 'pointer',
-				stop: function (event, ui) {
-					//just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
-					$(ui.item).css('z-index', 'auto');
+				var j = 0;
+				while (menu.children) {
+					if (j == menu.children.length) break;
+					var submenu = menu.children[j++];
+					$submenu_container.append(submenuItemStr.format(submenu.title));
 				}
-			}
-			);
-			$('#tasks').disableSelection();
-			$('#tasks input:checkbox').removeAttr('checked').on('click', function () {
-				if (this.checked) $(this).closest('li').addClass('selected');
-				else $(this).closest('li').removeClass('selected');
+
+				$menu_body.append($submenu_container).appendTo($menu_container)
 			});
 
-
-			//show the dropdowns on top or bottom depending on window height and menu position
-			$('#task-tab .dropdown-hover').on('mouseenter', function (e) {
-				var offset = $(this).offset();
-
-				var $w = $(window)
-				if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
-					$(this).addClass('dropup');
-				else $(this).removeClass('dropup');
-			});
-
-		})
+		});
 	</script>
 
 	@RenderSection("Scripts", required: false)
