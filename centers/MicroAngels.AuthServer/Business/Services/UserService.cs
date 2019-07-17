@@ -1,5 +1,6 @@
 ﻿using MicroAngels.Cache.Redis;
 using MicroAngels.Core;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,13 +41,17 @@ namespace Business
 			return Task.FromResult(UserDb.GetById(id));
 		}
 
-		public async Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex)
+		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
 		{
-			var query = UserDb.AsQueryable().Where(whereExpressions);
+			totalCount = 0;
+			var query = whereExpressions == null ? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
+
 			if (pageSize.HasValue && pageIndex.HasValue)
-				return await query.ToPageListAsync(pageIndex.Value, pageSize.Value);
+			{
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+			}
 			else
-				return await query.ToListAsync();
+				return query.ToList();
 		}
 
 		public async Task<bool> BindRole(UserRole userRole)

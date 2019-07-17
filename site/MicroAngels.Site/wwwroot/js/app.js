@@ -23,11 +23,12 @@
 
 /* ------------------------------------------------- bussiness ------------------------------------------------------- */
 
-function checkCode(errorCode, returnUrl) {
+function checkCode(returnUrl) {
 	var code = localStorage.getItem('code');
-	if (code === undefined || code === '' || errorCode == 401) {
+	if (code === undefined || code === '') {
 		location.href = returnUrl;
 	}
+	return code;
 }
 
 
@@ -117,7 +118,8 @@ $('#task-tab .dropdown-hover').on('mouseenter', function (e) {
 var initTable = function (id, options) {
 	options = $.extend({
 		serverSide: false,
-		dataUrl: ''
+		dataUrl: '',
+		accessCode: '',
 	}, options);
 
 	var $tableSelector = $('#' + id);
@@ -136,6 +138,19 @@ var initTable = function (id, options) {
 		$tableSelector
 			//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 			.DataTable({
+				ajax: {
+					type: "POST",
+					url: options.dataUrl,
+					xhrFields: {
+						withCredentials: false // 设置运行跨域操作
+					},
+					contentType: 'application/x-www-form-urlencoded',
+					dataType: 'json',
+					headers: {
+						'Authorization': 'Bearer ' + options.accessCode,
+					},
+
+				},
 				bAutoWidth: false,
 				columnDefs: options.columnsDefs || [],
 				columns: columns,
@@ -143,8 +158,9 @@ var initTable = function (id, options) {
 				aodata: null,
 				bProcessing: true,
 				bServerSide: true,
-				sAjaxSource: options.dataUrl,
-				sServerMethod: 'post',
+				//sAjaxSource: options.dataUrl,
+				//headers: { 'Authorization': 'Bearer ' + options.accessCode },
+				//sServerMethod: 'post',
 				bPaginate: true,
 				iDisplayLength: 10,
 				language: {
@@ -233,127 +249,127 @@ var initTable = function (id, options) {
 
 
 	//style the message box
-var defaultCopyAction = myTable.button(1).action();
-myTable.button(1).action(function (e, dt, button, config) {
-	defaultCopyAction(e, dt, button, config);
-	$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-});
-
-
-var defaultColvisAction = myTable.button(0).action();
-myTable.button(0).action(function (e, dt, button, config) {
-
-	defaultColvisAction(e, dt, button, config);
-
-
-	if ($('.dt-button-collection > .dropdown-menu').length == 0) {
-		$('.dt-button-collection')
-			.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-			.find('a').attr('href', '#').wrap("<li />")
-	}
-	$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-});
-
-////
-
-setTimeout(function () {
-	$($('.tableTools-container')).find('a.dt-button').each(function () {
-		var div = $(this).find(' > div').first();
-		if (div.length == 1) div.tooltip({ container: 'body', title: div.parent().text() });
-		else $(this).tooltip({ container: 'body', title: $(this).text() });
+	var defaultCopyAction = myTable.button(1).action();
+	myTable.button(1).action(function (e, dt, button, config) {
+		defaultCopyAction(e, dt, button, config);
+		$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
 	});
-}, 500);
 
-myTable.on('select', function (e, dt, type, index) {
-	if (type === 'row') {
-		$(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
-	}
-});
-myTable.on('deselect', function (e, dt, type, index) {
-	if (type === 'row') {
-		$(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-	}
-});
 
-/////////////////////////////////
-//table checkboxes
-$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+	var defaultColvisAction = myTable.button(0).action();
+	myTable.button(0).action(function (e, dt, button, config) {
 
-//select/deselect all rows according to table header checkbox
-$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
-	var th_checked = this.checked;//checkbox inside "TH" table header
+		defaultColvisAction(e, dt, button, config);
 
-	$('#dynamic-table').find('tbody > tr').each(function () {
-		var row = this;
-		if (th_checked) myTable.row(row).select();
-		else myTable.row(row).deselect();
+
+		if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+			$('.dt-button-collection')
+				.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+				.find('a').attr('href', '#').wrap("<li />")
+		}
+		$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
 	});
-});
 
-//select/deselect a row when the checkbox is checked/unchecked
-$('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
-	var row = $(this).closest('tr').get(0);
-	if (this.checked) myTable.row(row).deselect();
-	else myTable.row(row).select();
-});
+	////
 
+	setTimeout(function () {
+		$($('.tableTools-container')).find('a.dt-button').each(function () {
+			var div = $(this).find(' > div').first();
+			if (div.length == 1) div.tooltip({ container: 'body', title: div.parent().text() });
+			else $(this).tooltip({ container: 'body', title: $(this).text() });
+		});
+	}, 500);
 
-
-$(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
-	e.stopImmediatePropagation();
-	e.stopPropagation();
-	e.preventDefault();
-});
-
-
-
-//And for the first simple table, which doesn't have TableTools or dataTables
-//select/deselect all rows according to table header checkbox
-var active_class = 'active';
-$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
-	var th_checked = this.checked;//checkbox inside "TH" table header
-
-	$(this).closest('table').find('tbody > tr').each(function () {
-		var row = this;
-		if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
-		else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+	myTable.on('select', function (e, dt, type, index) {
+		if (type === 'row') {
+			$(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+		}
 	});
-});
+	myTable.on('deselect', function (e, dt, type, index) {
+		if (type === 'row') {
+			$(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
+		}
+	});
 
-//select/deselect a row when the checkbox is checked/unchecked
-$('#simple-table').on('click', 'td input[type=checkbox]', function () {
-	var $row = $(this).closest('tr');
-	if ($row.is('.detail-row ')) return;
-	if (this.checked) $row.addClass(active_class);
-	else $row.removeClass(active_class);
-});
+	/////////////////////////////////
+	//table checkboxes
+	$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
-/********************************/
-//add tooltip for small view action buttons in dropdown menu
-$('[data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
+	//select/deselect all rows according to table header checkbox
+	$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
+		var th_checked = this.checked;//checkbox inside "TH" table header
 
-//tooltip placement on right or left
-function tooltip_placement(context, source) {
-	var $source = $(source);
-	var $parent = $source.closest('table');
-	var off1 = $parent.offset();
-	var w1 = $parent.width();
+		$('#dynamic-table').find('tbody > tr').each(function () {
+			var row = this;
+			if (th_checked) myTable.row(row).select();
+			else myTable.row(row).deselect();
+		});
+	});
 
-	var off2 = $source.offset();
-	//var w2 = $source.width();
-
-	if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-	return 'left';
-}
+	//select/deselect a row when the checkbox is checked/unchecked
+	$('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
+		var row = $(this).closest('tr').get(0);
+		if (this.checked) myTable.row(row).deselect();
+		else myTable.row(row).select();
+	});
 
 
-/***************/
-$('.show-details-btn').on('click', function (e) {
-	e.preventDefault();
-	$(this).closest('tr').next().toggleClass('open');
-	$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-});
-/***************/
+
+	$(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+		e.stopImmediatePropagation();
+		e.stopPropagation();
+		e.preventDefault();
+	});
+
+
+
+	//And for the first simple table, which doesn't have TableTools or dataTables
+	//select/deselect all rows according to table header checkbox
+	var active_class = 'active';
+	$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+		var th_checked = this.checked;//checkbox inside "TH" table header
+
+		$(this).closest('table').find('tbody > tr').each(function () {
+			var row = this;
+			if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+			else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+		});
+	});
+
+	//select/deselect a row when the checkbox is checked/unchecked
+	$('#simple-table').on('click', 'td input[type=checkbox]', function () {
+		var $row = $(this).closest('tr');
+		if ($row.is('.detail-row ')) return;
+		if (this.checked) $row.addClass(active_class);
+		else $row.removeClass(active_class);
+	});
+
+	/********************************/
+	//add tooltip for small view action buttons in dropdown menu
+	$('[data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
+
+	//tooltip placement on right or left
+	function tooltip_placement(context, source) {
+		var $source = $(source);
+		var $parent = $source.closest('table');
+		var off1 = $parent.offset();
+		var w1 = $parent.width();
+
+		var off2 = $source.offset();
+		//var w2 = $source.width();
+
+		if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+		return 'left';
+	}
+
+
+	/***************/
+	$('.show-details-btn').on('click', function (e) {
+		e.preventDefault();
+		$(this).closest('tr').next().toggleClass('open');
+		$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+	});
+	/***************/
 
 	/**
 	add horizontal scrollbars to a simple table

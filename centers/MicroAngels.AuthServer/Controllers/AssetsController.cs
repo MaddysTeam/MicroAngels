@@ -1,5 +1,6 @@
 ﻿using Business;
 using MicroAngels.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Controllers
 			_service = service;
 		}
 
-		[HttpPost("users")]
+		[HttpPost("urls")]
 		public async Task<string[]> GetUrls([FromBody]string[] roles)
 		{
 			var interfaces = await _service.GetInterfaceByRoleNames(roles);
@@ -34,6 +35,7 @@ namespace Controllers
 
 			return menus.ToList();
 		}
+
 
 		private readonly IAssetsService _service;
 

@@ -133,15 +133,15 @@ namespace Business
 			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
 		}
 
-		public async Task<IEnumerable<Interface>> GetMenusByUserId(Guid userId)
+		public async Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId)
 		{
 			if (!userId.IsEmpty())
 			{
 				return null;
 			}
 
-			var query = DB.Queryable<UserInfo,SystemRole, RoleAssets, Assets, Interface>((u,r, ra, a, i) =>
-				new object[]{
+			var query = DB.Queryable<UserInfo, SystemRole, RoleAssets, Assets, Menu>((u, r, ra, a, m) =>
+				 new object[]{
 						JoinType.Inner,
 						u.UserId==r.RoleId,
 						JoinType.Inner,
@@ -149,12 +149,13 @@ namespace Business
 						JoinType.Inner,
 						ra.AssetId==a.AssetsId,
 						JoinType.Inner,
-						a.ItemId== i.InterfaceId
-				}).Where((u, r, ra, a, i) => u.UserId==u.UserId);
+						a.ItemId== m.MenuId
+				 }).Where((u, r, ra, a, m) => u.UserId == userId);
 
-			var result = await query.Select((u, r, ra, a, i)=>i).ToListAsync();
+			var result = await query.Select((u, r, ra, a, m) => m).ToListAsync();
 			return result;
 		}
+
 	}
 
 }

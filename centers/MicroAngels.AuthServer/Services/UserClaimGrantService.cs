@@ -25,15 +25,12 @@ namespace MicroAngels.AuthServer.Services
 		{
 			var claims = new List<Claim>();
 			// get user id as client Id and put into claims 
-			var users = await _userService.Search(u => u.UserName == context.UserName, null, null);
-			if (!users.IsNull() && users.Count() > 0)
+			int userCount = 0;
+			var users =  _userService.Search(u => u.UserName == context.UserName, null, null,out userCount);
+			if (!users.IsNull() && userCount > 0)
 			{
 				var userid = users.First().UserId.ToString();
 				claims.Add(new Claim("userId", userid ));
-			}
-			else
-			{
-				return null;
 			}
 
 			// get user roles by user name
