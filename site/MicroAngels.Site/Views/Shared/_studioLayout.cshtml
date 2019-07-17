@@ -80,11 +80,11 @@
 
 			var menuStr = '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>';
 			var submenuStr = '<ul class="submenu"></ul>'
-			var submenuItemStr = '<li class=""><a href="tables.html"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>'
+			var submenuItemStr = '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>'
 			var menus = [{
 				id: '1', title: '系统设置', children: [
 					{
-						id: '1.1', title: '用户列表'
+						id: '1.1', title: '用户列表',link:'@Url.Action("Index","User")'
 					},
 					{
 						id: '1.2', title: '角色列表'
@@ -105,7 +105,7 @@
 				while (menu.children) {
 					if (j == menu.children.length) break;
 					var submenu = menu.children[j++];
-					$submenu_container.append(submenuItemStr.format(submenu.title));
+					$submenu_container.append(submenuItemStr.format(submenu.title, submenu.link));
 				}
 
 				$menu_body.append($submenu_container).appendTo($menu_container)

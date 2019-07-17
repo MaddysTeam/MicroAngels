@@ -133,9 +133,27 @@ namespace Business
 			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
 		}
 
-		public Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId)
+		public async Task<IEnumerable<Interface>> GetMenusByUserId(Guid userId)
 		{
-			throw new NotImplementedException();
+			if (!userId.IsEmpty())
+			{
+				return null;
+			}
+
+			var query = DB.Queryable<UserInfo,SystemRole, RoleAssets, Assets, Interface>((u,r, ra, a, i) =>
+				new object[]{
+						JoinType.Inner,
+						u.UserId==r.RoleId,
+						JoinType.Inner,
+						r.RoleId==ra.RoleId,
+						JoinType.Inner,
+						ra.AssetId==a.AssetsId,
+						JoinType.Inner,
+						a.ItemId== i.InterfaceId
+				}).Where((u, r, ra, a, i) => u.UserId==u.UserId);
+
+			var result = await query.Select((u, r, ra, a, i)=>i).ToListAsync();
+			return result;
 		}
 	}
 

@@ -111,88 +111,128 @@ $('#task-tab .dropdown-hover').on('mouseenter', function (e) {
 });
 
 
-
-
 /* ------------------------------------------------- tables ------------------------------------------------------- */
 
-//initiate dataTables plugin
-var myTable =
-	$('#dynamic-table')
-		//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-		.DataTable({
-			bAutoWidth: false,
-			"aoColumns": [
-				{ "bSortable": false },
-				null, null, null, null, null,
-				{ "bSortable": false }
-			],
-			"aaSorting": [],
 
+var initTable = function (id, options) {
+	options = $.extend({
+		serverSide: false,
+		dataUrl: ''
+	}, options);
 
-			//"bProcessing": true,
-			//"bServerSide": true,
-			//"sAjaxSource": "http://127.0.0.1/table.php"	,
+	var $tableSelector = $('#' + id);
+	var columns = [];
 
-			//,
-			//"sScrollY": "200px",
-			//"bPaginate": false,
-
-			//"sScrollX": "100%",
-			//"sScrollXInner": "120%",
-			//"bScrollCollapse": true,
-			//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-			//you may want to wrap the table inside a "div.dataTables_borderWrap" element
-
-			//"iDisplayLength": 50
-
-
-			select: {
-				style: 'multi'
-			}
-		});
-
-$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
-
-new $.fn.dataTable.Buttons(myTable, {
-	buttons: [
-		{
-			"extend": "colvis",
-			"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-			"className": "btn btn-white btn-primary btn-bold",
-			columns: ':not(:first):not(:last)'
-		},
-		{
-			"extend": "copy",
-			"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "csv",
-			"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "excel",
-			"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "pdf",
-			"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "print",
-			"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-			"className": "btn btn-white btn-primary btn-bold",
-			autoPrint: false,
-			message: 'This print was produced using the Print button for DataTables'
+	$tableSelector.find('tr > th').each(function (i) {
+		var $this = $(this);
+		if ($this.data('operation') != 'command') {
+			columns[i] = {
+				'data': $this.data('column')
+			};
 		}
-	]
-});
-myTable.buttons().container().appendTo($('.tableTools-container'));
+	});
 
-//style the message box
+	var myTable =
+		$tableSelector
+			//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+			.DataTable({
+				bAutoWidth: false,
+				columnDefs: options.columnsDefs || [],
+				columns: columns,
+				processing: true,
+				aodata: null,
+				bProcessing: true,
+				bServerSide: true,
+				sAjaxSource: options.dataUrl,
+				sServerMethod: 'post',
+				bPaginate: true,
+				iDisplayLength: 10,
+				language: {
+					"sProcessing": "处理中...",
+					"sLengthMenu": "显示 _MENU_ 项结果",
+					"sZeroRecords": "没有匹配结果",
+					"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+					"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+					"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+					"sInfoPostFix": "",
+					"sSearch": "搜索:",
+					"sUrl": "",
+					"sEmptyTable": "表中数据为空",
+					"sLoadingRecords": "载入中...",
+					"sInfoThousands": ",",
+					"oPaginate": {
+						"sFirst": "首页",
+						"sPrevious": "上页",
+						"sNext": "下页",
+						"sLast": "末页"
+					},
+					"oAria": {
+						"sSortAscending": ": 以升序排列此列",
+						"sSortDescending": ": 以降序排列此列"
+					}
+				}
+				//serverSide: options.serverSide,
+				//"aoColumns": [
+				//	{ "bSortable": false },
+				//	null, null, null, null,
+				//	{ "bSortable": false }
+				//],
+				//"sScrollY": "200px",
+				//"sScrollX": "100%",
+				//"sScrollXInner": "120%",
+				//"bScrollCollapse": true,
+				//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+				//you may want to wrap the table inside a "div.dataTables_borderWrap" element
+				//select: {
+				//	style: 'multi'
+				//}
+			});
+
+	//initiate dataTables plugin
+	$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+	new $.fn.dataTable.Buttons(myTable, {
+		buttons: [
+			{
+				"extend": "colvis",
+				"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+				"className": "btn btn-white btn-primary btn-bold",
+				columns: ':not(:first):not(:last)'
+			},
+			{
+				"extend": "copy",
+				"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+				"className": "btn btn-white btn-primary btn-bold"
+			},
+			{
+				"extend": "csv",
+				"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+				"className": "btn btn-white btn-primary btn-bold"
+			},
+			{
+				"extend": "excel",
+				"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+				"className": "btn btn-white btn-primary btn-bold"
+			},
+			{
+				"extend": "pdf",
+				"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+				"className": "btn btn-white btn-primary btn-bold"
+			},
+			{
+				"extend": "print",
+				"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+				"className": "btn btn-white btn-primary btn-bold",
+				autoPrint: false,
+				message: 'This print was produced using the Print button for DataTables'
+			}
+		]
+	});
+
+	myTable.buttons().container().appendTo($('.tableTools-container'));
+
+
+	//style the message box
 var defaultCopyAction = myTable.button(1).action();
 myTable.button(1).action(function (e, dt, button, config) {
 	defaultCopyAction(e, dt, button, config);
@@ -316,7 +356,7 @@ $('.show-details-btn').on('click', function (e) {
 /***************/
 
 	/**
-	//add horizontal scrollbars to a simple table
+	add horizontal scrollbars to a simple table
 	$('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
 	  {
 		horizontal: true,
@@ -326,3 +366,10 @@ $('.show-details-btn').on('click', function (e) {
 	  }
 	).css('padding-top', '12px');
 	*/
+
+	return myTable;
+};
+
+
+
+

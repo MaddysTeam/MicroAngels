@@ -44,7 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{6FD0C890-519F-42BF-B547-2EC372547B76}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		..\..\..\..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt = ..\..\..\..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt
+		..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt = ..\..\Users\JimmyPoor\Desktop\jenkins_pipline.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountService", "services\AccountService\AccountService.csproj", "{F6A138A8-7662-402F-B1F4-00C7569740EE}"
