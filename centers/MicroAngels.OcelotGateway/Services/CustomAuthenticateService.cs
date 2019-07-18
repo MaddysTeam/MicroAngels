@@ -22,6 +22,7 @@ namespace MicroAngels.OcelotGateway.Services
 
 		/// <summary>
 		/// ocelot authorization，interface permissions
+		/// if user role is null and return anonymous interface
 		/// </summary>
 		/// <param name="context">ocelot down stream context</param>
 		/// <returns>authorized result</returns>
@@ -31,6 +32,7 @@ namespace MicroAngels.OcelotGateway.Services
 			var roleClaims = context.HttpContext.User.Claims.Where(c => c.Value == "role");
 			var roles = roleClaims.Count() <= 0 ? new string[] { } : roleClaims.Select(x => x.Type).ToArray();
 
+			// find interface service
 			var services = await _serviceFinder.FindByNameAsync(_configuration["RemoteService:Name"]);
 			if (!services.IsNull() && services.Count > 0)
 			{

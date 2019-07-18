@@ -61,7 +61,6 @@ namespace AccountService.Controllers
 			});
 		}
 
-		[Authorize]
 		[HttpPost("signout")]
 		public async Task<IActionResult> SignOut()
 		{
@@ -81,7 +80,6 @@ namespace AccountService.Controllers
 			});
 		}
 
-		[Authorize]
 		[HttpPost("refresh")]
 		public async Task<IActionResult> Refresh([FromBody] RefreshTokenModel refreshTokenModel)
 		{
@@ -93,8 +91,6 @@ namespace AccountService.Controllers
 				message = "操作成功"
 			});
 		}
-
-
 
 		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)
 		{

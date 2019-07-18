@@ -84,13 +84,16 @@
 			var menus = [{
 				id: '1', title: '系统设置', children: [
 					{
-						id: '1.1', title: '用户列表',link:'@Url.Action("Index","User")'
+						id: '1.1', title: '用户管理',link:'@Url.Action("Index","User")'
 					},
 					{
-						id: '1.2', title: '角色列表'
+						id: '1.2', title: '角色管理'
 					},
 					{
-						id: '1.2', title: '接口列表'
+						id: '1.2', title: '资源管理'
+					},
+					{
+						id: '1.2', title: '接口管理',link:'@Url.Action("InterfaceIndex", "Assets")'
 					},
 				]
 			}];

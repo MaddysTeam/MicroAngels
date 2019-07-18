@@ -174,19 +174,22 @@
 	<script>
 		$(function () {
 
-			var code = checkCode('http://localhost:5000/account/login');
+			var loginUrl = 'http://localhost:5000/account/login';
+			var code = checkCode(loginUrl);
 
 
 			initTable('dynamic-table', {
 				columnsDefs: [{
 					"targets": 5,
 					"render": function (data, type, row, meta) {
-						return '<h1>' + data + '</h1>';
+						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green" href="#" title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
+							'<a class="red" href="#" title="设定角色"><i class="ace-icon fa fa-users bigger-130"></i></a></div>';
 					}
 				}],
 
 				dataUrl: 'http://192.168.1.2:5000/api/authserver/user/users',
-				accessCode: code
+				accessCode: code,
+				directUrlWhenForbidden: loginUrl
 			});
 		});
 	</script>

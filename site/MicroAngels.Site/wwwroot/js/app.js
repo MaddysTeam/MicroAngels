@@ -31,6 +31,37 @@ function checkCode(returnUrl) {
 	return code;
 }
 
+function cleanCode() {
+	localStorage.removeItem('code');
+	localStorage.removeItem('refreshCode');
+}
+
+function whenForbidden(redirectUrl) {
+	cleanCode();
+	location.href = redirectUrl;
+}
+
+
+var ajaxRequset = function(url,code,forbiddenUrl){
+	return {
+		type: "POST",
+		url: url,
+		xhrFields: {
+			withCredentials: false // 设置运行跨域操作
+		},
+		contentType: 'application/x-www-form-urlencoded',
+		dataType: 'json',
+		headers: {
+			'Authorization': 'Bearer ' + code
+		},
+		error: function (o) {
+			if (o.status == 403) {
+				whenForbidden(forbiddenUrl);
+			}
+		}
+	};
+};
+
 
 
 /* ------------------------------------------------- menus ------------------------------------------------------- */
@@ -51,7 +82,7 @@ $('.sparkline').each(function () {
 $('#recent-box [data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
 function tooltip_placement(context, source) {
 	var $source = $(source);
-	var $parent = $source.closest('.tab-content')
+	var $parent = $source.closest('.tab-content');
 	var off1 = $parent.offset();
 	var w1 = $parent.width();
 
@@ -120,6 +151,7 @@ var initTable = function (id, options) {
 		serverSide: false,
 		dataUrl: '',
 		accessCode: '',
+		directUrlWhenForbidden:''
 	}, options);
 
 	var $tableSelector = $('#' + id);
@@ -138,19 +170,7 @@ var initTable = function (id, options) {
 		$tableSelector
 			//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 			.DataTable({
-				ajax: {
-					type: "POST",
-					url: options.dataUrl,
-					xhrFields: {
-						withCredentials: false // 设置运行跨域操作
-					},
-					contentType: 'application/x-www-form-urlencoded',
-					dataType: 'json',
-					headers: {
-						'Authorization': 'Bearer ' + options.accessCode,
-					},
-
-				},
+				ajax: ajaxRequset(options.dataUrl,options.accessCode, options.forbiddenUrl),
 				bAutoWidth: false,
 				columnDefs: options.columnsDefs || [],
 				columns: columns,
@@ -158,9 +178,6 @@ var initTable = function (id, options) {
 				aodata: null,
 				bProcessing: true,
 				bServerSide: true,
-				//sAjaxSource: options.dataUrl,
-				//headers: { 'Authorization': 'Bearer ' + options.accessCode },
-				//sServerMethod: 'post',
 				bPaginate: true,
 				iDisplayLength: 10,
 				language: {

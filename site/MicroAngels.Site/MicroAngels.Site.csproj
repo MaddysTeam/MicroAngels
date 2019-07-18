@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Assets\InterfaceIndex.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_anonymous.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

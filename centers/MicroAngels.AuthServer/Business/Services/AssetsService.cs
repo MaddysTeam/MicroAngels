@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MicroAngels.Core;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Business
 {
@@ -104,6 +105,19 @@ namespace Business
 			return result;
 		}
 
+		public IEnumerable<Interface> GetInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		{
+			totalCount = 0;
+			var query = whereExpressions == null ? InterfaceDb.AsQueryable() : InterfaceDb.AsQueryable().Where(whereExpressions);
+
+			if (pageSize.HasValue && pageIndex.HasValue)
+			{
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+			}
+			else
+				return query.ToList();
+		}
+
 		public async Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames)
 		{
 			if (roleNames.IsNull())
@@ -126,7 +140,6 @@ namespace Business
 
 			return result;
 		}
-
 
 		public async Task<Assets> GetById(Guid assetId)
 		{

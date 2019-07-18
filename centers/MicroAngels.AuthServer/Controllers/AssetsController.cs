@@ -28,6 +28,37 @@ namespace Controllers
 			return !interfaces.IsNull() && interfaces.Count() > 0 ? interfaces.Select(x => x.Url).ToArray() : null;
 		}
 
+		[HttpPost("allUrls")]
+		public IActionResult GetAllUrls([FromForm]int start, [FromForm]int length)
+		{
+			var totalCount = 0;
+			var interfacesResults = _service.GetInterface(null, length, start, out totalCount);
+
+			if (!interfacesResults.IsNull() && interfacesResults.Count() > 0)
+			{
+				return new JsonResult(new
+				{
+					data = interfacesResults.Select(x => new
+					{
+						title = x.Title,
+						url = x.Url,
+						method = x.Method,
+						param = x.Parmas,
+						IsAnonymous = x.IsAllowAnonymous
+					}),
+					recordsTotal = totalCount,
+					recordsFiltered = totalCount,
+				});
+			}
+
+			return new JsonResult(new
+			{
+				data = new { },
+				recordsTotal = 0,
+				recordsFiltered = 0,
+			});
+		}
+
 		[HttpPost("menus")]
 		public async Task<List<Menu>> GetMenus([FromBody]Guid userId)
 		{
