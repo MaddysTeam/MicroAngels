@@ -1,11 +1,8 @@
 ﻿using MicroAngels.Core.Service;
 using MicroAngels.Gateway.Ocelot;
 using MicroAngels.ServiceDiscovery.Consul;
-using MicroAngels.Core;
 using Microsoft.Extensions.Configuration;
 using Ocelot.Middleware;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MicroAngels.OcelotGateway.Services

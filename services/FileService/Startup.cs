@@ -2,6 +2,7 @@
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core.Plugins.Auth;
 using MicroAngels.GRPC.Server;
+using MicroAngels.Hystrix.Polly;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.ORM.Suger;
@@ -25,7 +26,7 @@ namespace FileService
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 
 			//add cap
@@ -48,7 +49,7 @@ namespace FileService
 				//options.Filters.Add<ExcepitonFilter>();
 			})
 			.AddApiExplorer() // for swagger
-			.AddAuthorization()
+			//.AddAuthorization()
 			.AddJsonFormatters()
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -64,6 +65,9 @@ namespace FileService
 
 			services.AddTransient<IFileService, FileService.Business.FileService>();
 			services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
+
+			// regist hystrix polly aop serive
+			return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

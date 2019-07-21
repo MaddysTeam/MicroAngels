@@ -21,11 +21,24 @@
 	return result;
 };
 
+
 /* ------------------------------------------------- bussiness ------------------------------------------------------- */
+
+urls = {
+	login: 'http://localhost:5000/account/login',
+	index: 'http://localhost:5000/',
+	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
+	userEdit: 'http://localhost:5000/user/edit',
+	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
+	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
+	userPage: 'http://localhost:5000/user/index',
+	interfacePage:'http://localhost:5000/assets/interfaceIndex'
+};
+
 
 function checkCode(returnUrl) {
 	var code = localStorage.getItem('code');
-	if (code === undefined || code === '') {
+	if (code === undefined || code === '' || code==null) {
 		location.href = returnUrl;
 	}
 	return code;
@@ -38,12 +51,67 @@ function cleanCode() {
 
 function whenForbidden(redirectUrl) {
 	cleanCode();
+	alert(redirectUrl);
 	location.href = redirectUrl;
 }
 
+function showMenu() {
+	var menuStr = '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>';
+	var submenuStr = '<ul class="submenu"></ul>'
+	var submenuItemStr = '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>';
+	var menus = [{
+		id: '1', title: '系统设置', children: [
+			{
+				id: '1.1', title: '用户管理', link: urls.userPage
+			},
+			{
+				id: '1.2', title: '角色管理'
+			},
+			{
+				id: '1.2', title: '资源管理'
+			},
+			{
+				id: '1.2', title: '接口管理', link: urls.interfacePage
+			},
+		]
+	}];
 
-var ajaxRequset = function(url,code,forbiddenUrl){
-	return {
+	$(menus).each(function (i) {
+		var menu = menus[i];
+		var $menu_container = $('#SideBar');
+		var $menu_body = $(menuStr.format(menu.title));
+		var $submenu_container = $(submenuStr);
+
+		var j = 0;
+		while (menu.children) {
+			if (j == menu.children.length) break;
+			var submenu = menu.children[j++];
+			$submenu_container.append(submenuItemStr.format(submenu.title, submenu.link));
+		}
+
+		$menu_body.append($submenu_container).appendTo($menu_container)
+	});
+}
+
+function showUser() {
+	var code = checkCode(urls.login);
+	var ajax = ajaxRequset(urls.showUser, code, location.href, { userName:'admin'}, function (data) {
+		$('.user-info').append('<small>{0}</small>'.format(data.data.username));
+	});
+
+	$.ajax(ajax);
+}
+
+function signOut() {
+	var code = checkCode(urls.login);
+	localStorage.removeItem('code');
+	localStorage.removeItem('refreshToken');
+	location.href = urls.login;
+}
+
+
+var ajaxRequset = function(url,code,forbiddenUrl,data,success){
+	var ajax= {
 		type: "POST",
 		url: url,
 		xhrFields: {
@@ -55,13 +123,69 @@ var ajaxRequset = function(url,code,forbiddenUrl){
 			'Authorization': 'Bearer ' + code
 		},
 		error: function (o) {
+			//alert(o.status);
 			if (o.status == 403) {
 				whenForbidden(forbiddenUrl);
 			}
 		}
 	};
+
+	if (data) {
+		ajax.data = data;
+	}
+
+	if (success) {
+		ajax.success = success;
+	}
+
+	return ajax;
 };
 
+/* ------------------------------------------------- ajax forms ------------------------------------------------------- */
+
+function ajaxSubmitForm(selector, options) {
+	options = $.extend({
+		code: null,
+		isReplaceCommas:true,
+		afterSuccess: function () {}
+	}, options);
+
+
+	$.validator.unobtrusive.parse(selector);
+
+	selector.submit(function (e) {
+		e.preventDefault();
+		var $this = $(this);
+		var para = $this.serialize();
+		if (options.isReplaceCommas == true) {
+			para = para.replace('%2c', ',');
+		}
+		if ($this.valid()) {
+			var ajaxReq = ajaxRequset($this.attr('action'), options.code, urls.login, para, options.afterSuccess);
+			$.ajax(ajaxReq);
+		}
+	});
+}
+
+
+
+/* ------------------------------------------------- ajax modals ------------------------------------------------------- */
+
+$(document).on('click.bs.modal.data-api', '[data-toggle="ajax-modal"]', function (event) {
+
+	var $this = $(this),
+		url = $this.data('url'),
+		$target = $($this.data('target'));
+
+	$.get(url, function (response) {
+		// ajax get form content
+		$target
+			.html(response)
+			.modal({ backdrop: 'static', keyboard: false })
+			.find('.form-control').first().focus();
+	});
+
+});
 
 
 /* ------------------------------------------------- menus ------------------------------------------------------- */

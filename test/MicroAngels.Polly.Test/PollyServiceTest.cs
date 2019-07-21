@@ -1,4 +1,5 @@
 ﻿using MicroAngels.Core;
+using MicroAngels.Hystrix.Polly;
 using System;
 using Xunit;
 
@@ -8,10 +9,6 @@ namespace MicroAngels.Polly.Test
 	public class PollyServiceTest
 	{
 
-		public PollyServiceTest()
-		{
-			_target = new PollyAopTarget();
-		}
 
 		[Fact]
 		public void InvokePollyAttributeTest()
@@ -104,7 +101,6 @@ namespace MicroAngels.Polly.Test
 		}
 
 		private static int _retryCount = 2;
-		private readonly PollyAopTarget _target;
 	}
 
 }

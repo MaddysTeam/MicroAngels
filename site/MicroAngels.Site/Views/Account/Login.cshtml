@@ -277,42 +277,6 @@
 
 		});
 
-
-			@*
-
-
-		$('#Uploader').on('change', function () {
-			var file = $('#Uploader')[0].files[0];
-			console.log(file);
-			upload(file);
-		});
-
-		function upload(file) {
-			var formdata = new FormData();
-			formdata.append('file', file);
-			$.ajax({
-				//rver script to process data
-				dataType: "json",
-				url: 'http://192.168.1.8:6000/api/file/upload',
-				type: 'POST',
-				success: function (data) {
-					//success event
-					console.log(data)
-				},
-				error: function (e) {
-					//errorHandler
-				},
-				///Form data
-				data: formdata,
-				///Options to tell JQuery not to process data or worry about content-type
-				cache: false,
-				contentType: false,
-				processData: false
-			});
-
-		}
-
-				*@
 	</script>
 }
 

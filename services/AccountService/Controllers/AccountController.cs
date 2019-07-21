@@ -62,11 +62,14 @@ namespace AccountService.Controllers
 		}
 
 		[HttpPost("signout")]
-		public async Task<IActionResult> SignOut()
+		public async Task<IActionResult> SignOut([FromForm]string token)
 		{
-			var response = await ClientHelper.GetTokenResponse(null, TokenRequestType.revocation);
+			var response = await SignOutTokenRequest(token);
 
-			return Ok();
+			return new JsonResult(new {
+				isSuccess=true,
+				message="操作成功"
+			});
 		}
 
 		[HttpPost("signup")]
@@ -109,6 +112,7 @@ namespace AccountService.Controllers
 		private async Task<AngelTokenResponse> SignOutTokenRequest(string token)
 		{
 			var request = CreateBasiceRequest();
+			request.GrantType = string.Empty;
 			request.Token = token;
 			var response = await ClientHelper.GetTokenResponse(request, TokenRequestType.revocation);
 

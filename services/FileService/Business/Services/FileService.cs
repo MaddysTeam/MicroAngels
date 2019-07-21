@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
+using MicroAngels.Hystrix;
+using MicroAngels.Hystrix.Polly;
 using Microsoft.AspNetCore.Http;
 
 namespace FileService.Business
@@ -14,9 +16,9 @@ namespace FileService.Business
 	public class FileService : MySqlDbContext, IFileService
 	{
 
-		public FileService(ICAPPublisher bus)
+		public FileService()
 		{
-			_bus = bus;
+			//_bus = bus;
 		}
 
 		/// <summary>
@@ -68,7 +70,7 @@ namespace FileService.Business
 		}
 
 		/// <summary>
-		/// upload  files with async
+		/// upload files by asynchronous method
 		/// </summary>
 		/// <param name="formFiles"></param>
 		/// <param name="savePath"></param>
@@ -79,17 +81,26 @@ namespace FileService.Business
 		}
 
 		/// <summary>
-		/// get files
+		/// search files
 		/// </summary>
 		/// <param name="whereExpressions"></param>
 		/// <param name="pageSize"></param>
 		/// <param name="pageIndex"></param>
 		/// <returns></returns>
-		public Task<List<Files>> GetFiles(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
+		//[Polly(nameof(GetFilesFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
+		public List<Files> Search(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex , out int totalCount)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// call back service. TODO: comment for temp
+		/// </summary>
+		/// <returns></returns>
+		//public Task<List<Files>> GetFilesFallback(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
+		//{
+		//	return Task.FromResult(new List<Files>());
+		//}
 
 		private readonly ICAPPublisher _bus;
 

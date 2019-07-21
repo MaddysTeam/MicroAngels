@@ -34,11 +34,9 @@ namespace MicroAngels.IdentityServer.Clients
 					angelResposne = response?.Map();
 					break;
 				case TokenRequestType.revocation:
-					revocationResponse = await ForceTokenTimeout(new TokenRevocationRequest
-					{
-
-					}); break;
-
+					revocationResponse = await ForceTokenTimeout(request.MapRevocationRequest());
+					angelResposne = response?.Map();
+					break;
 				case TokenRequestType.refresh:
 					response = await ReferenceToken(request.MapRefRequest());
 					angelResposne = response?.Map();

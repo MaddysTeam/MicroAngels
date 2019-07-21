@@ -106,6 +106,13 @@
 				</h1>
 			</div><!-- /.page-header -->
 
+			<div>
+				<button class="btn btn-xs btn-danger pull-left btn-edit">
+					<i class="ace-icon"></i>
+					<span class="bigger-110">新增用户</span>
+				</button>
+			</div>
+
 			<div class="row">
 				<div class="col-xs-12">
 					<!-- PAGE CONTENT BEGINS -->
@@ -169,14 +176,16 @@
 	</div>
 </div><!-- /.main-content -->
 
+@section Modals{ 
+	<button class="btn hidden" id="modalProxy" data-toggle="ajax-modal" data-target="#firstModal"></button>
+	<div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="firstModalLabel"></div>
+}
 
 @section Scripts{
 	<script>
 		$(function () {
 
-			var loginUrl = 'http://localhost:5000/account/login';
-			var code = checkCode(loginUrl);
-
+			var code = checkCode(urls.loginUrl);
 
 			initTable('dynamic-table', {
 				columnsDefs: [{
@@ -187,10 +196,27 @@
 					}
 				}],
 
-				dataUrl: 'http://192.168.1.2:5000/api/authserver/user/users',
+				dataUrl: urls.getUsers,
 				accessCode: code,
-				directUrlWhenForbidden: loginUrl
+				directUrlWhenForbidden: urls.loginUrl
 			});
+
+
+			$('.btn-edit').on('click', function () {
+				$('#modalProxy').data('url', urls.userEdit).trigger('click');
+			});
+
+			@*function delFolder(folderId,currentFolderId) {
+			if (confirm("@Success.Folder.CONFIRM_DELETE")) {
+				$.post('@Url.Action("Delete", "ShareFolder")', { id: folderId }, function () {
+					loadData(function () {
+						bindLeftNav();
+						showFolderFiles(currentFolderId);
+						bindUpClick();
+					}, { parentId: currentFolderId, phrase: '' });
+				});
+			}
+		}*@
 		});
 	</script>
 }

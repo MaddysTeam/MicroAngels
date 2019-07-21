@@ -83,13 +83,17 @@ namespace Business
 			return result;
 		}
 
-		public async Task<IEnumerable<SystemRole>> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex)
+		public  IEnumerable<SystemRole> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
 		{
-			var query = RoleDb.AsQueryable().Where(whereExpressions);
+			totalCount = 0;
+			var query = whereExpressions == null ? RoleDb.AsQueryable() : RoleDb.AsQueryable().Where(whereExpressions);
+
 			if (pageSize.HasValue && pageIndex.HasValue)
-				return await query.ToPageListAsync(pageIndex.Value, pageSize.Value);
+			{
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+			}
 			else
-				return await query.ToListAsync();
+				return query.ToList();
 		}
 
 		public Task<bool> UnbindResource(Guid roleId, Guid assetsId)

@@ -82,9 +82,15 @@ namespace Business
 			return Task.FromResult(result);
 		}
 
-		public async Task<IEnumerable<UserRole>> SearchUserRole(Guid userId, Guid roleId)
+		//public async Task<IEnumerable<UserRole>> SearchUserRole(Guid userId, Guid roleId)
+		//{
+		//	return await UserRoleDb.AsQueryable().Where(ur => ur.UserId == userId & ur.RoleId == roleId).WithCache().ToListAsync();
+		//}
+
+		public UserInfo GetByName(string name)
 		{
-			return await UserRoleDb.AsQueryable().Where(ur => ur.UserId == userId & ur.RoleId == roleId).WithCache().ToListAsync();
+			var user = UserDb.GetSingle(u => string.Equals(u.UserName, name, StringComparison.InvariantCultureIgnoreCase));
+			return user;
 		}
 
 		private readonly IRedisCache _cache;

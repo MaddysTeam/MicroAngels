@@ -1,18 +1,18 @@
 ﻿using FileService.Business;
-using MicroAngels.Core.Plugins.Auth;
+using MicroAngels.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace FileService.Controllers
 {
 
 	[Route("api/[controller]")]
-	[Authorize]
-	//[Privilege]
 	[ApiController]
 	public class FileController : ControllerBase
 	{
@@ -23,7 +23,6 @@ namespace FileService.Controllers
 			_fileService = fileService;
 		}
 
-		
 		[HttpPost("upload")]
 		public ActionResult Upload()
 		{
@@ -35,19 +34,36 @@ namespace FileService.Controllers
 			return Ok(uploadFiles);
 		}
 
-		[HttpPost]
-		[Route("getfile")]
+		[HttpPost("file")]
 		public ActionResult GetFile(Guid id)
 		{
 			return Ok();
 		}
 
-
-		[HttpPost]
-		[Route("getfiles")]
-		public List<Files> GetFiles()
+		[HttpPost("files")]
+		public IActionResult GetFiles([FromForm]int start, [FromForm]int length)
 		{
-			return new List<Files>();
+			//var results = await _fileService.GetFiles(null, null, null);
+			var totalCount = 0;
+			var searchResults = _fileService.Search(null, length, start, out totalCount);
+			if (!searchResults.IsNull() && searchResults.Count() > 0)
+			{
+				return new JsonResult(new
+				{
+					data = searchResults.Select(x => new
+					{
+					}),
+					recordsTotal = totalCount,
+					recordsFiltered = totalCount,
+				});
+			}
+
+			return new JsonResult(new
+			{
+				data = new { },
+				recordsTotal = 0,
+				recordsFiltered = 0,
+			});
 		}
 
 		private string _folder;

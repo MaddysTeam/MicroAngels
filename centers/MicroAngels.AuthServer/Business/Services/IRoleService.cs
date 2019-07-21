@@ -11,8 +11,8 @@ namespace Business
 		Task<SystemRole> GetById(Guid id);
 		Task<bool> Edit(SystemRole role);
 		Task<bool> BindResource(RoleAssets roleAccess);
-		Task<bool> UnbindResource(Guid roleId,Guid assetsId);
-		Task<IEnumerable<SystemRole>> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex);
+		Task<bool> UnbindResource(Guid roleId, Guid assetsId);
+		IEnumerable<SystemRole> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
 		Task<List<SystemRole>> GetByUserName(string userName);
 		Task<List<SystemRole>> GetByUserIds(Guid[] userIds);
 	}

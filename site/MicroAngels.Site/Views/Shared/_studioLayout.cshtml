@@ -43,6 +43,9 @@
 	<!-- basic scripts -->
 	<!--[if !IE]> -->
 	<script src="~/js/jquery-2.1.4.min.js"></script>
+	<script src="~/plugins/jquery.validate-1.15.0/jquery.validate.min.js"></script>
+	<script src="~/plugins/jquery.validate.unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/plugins/jquery.validate.unobtrusive.bootstrap/jquery.validate.unobtrusive.bootstrap.min.js"></script>
 
 	<!-- <![endif]-->
 	<!--[if IE]>
@@ -75,49 +78,23 @@
 	<script src="~/js/app.js"></script>
 	<!-- inline scripts related to this page -->
 
+	@RenderSection("Modals", required: false)
+	@RenderSection("Scripts", required: false)
+
 	<script>
 		$(function () {
 
-			var menuStr = '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>';
-			var submenuStr = '<ul class="submenu"></ul>'
-			var submenuItemStr = '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>'
-			var menus = [{
-				id: '1', title: '系统设置', children: [
-					{
-						id: '1.1', title: '用户管理',link:'@Url.Action("Index","User")'
-					},
-					{
-						id: '1.2', title: '角色管理'
-					},
-					{
-						id: '1.2', title: '资源管理'
-					},
-					{
-						id: '1.2', title: '接口管理',link:'@Url.Action("InterfaceIndex", "Assets")'
-					},
-				]
-			}];
+			showMenu();
 
-			$(menus).each(function (i) {
-				var menu = menus[i];
-				var $menu_container = $('#SideBar');
-				var $menu_body = $(menuStr.format(menu.title));
-				var $submenu_container = $(submenuStr);
+			showUser();
 
-				var j = 0;
-				while (menu.children) {
-					if (j == menu.children.length) break;
-					var submenu = menu.children[j++];
-					$submenu_container.append(submenuItemStr.format(submenu.title, submenu.link));
-				}
-
-				$menu_body.append($submenu_container).appendTo($menu_container)
+			$('.user-menu .signOut').on('click', function () {
+				signOut();
 			});
+
 
 		});
 	</script>
-
-	@RenderSection("Scripts", required: false)
 </body>
 
 </html>
