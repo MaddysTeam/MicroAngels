@@ -107,7 +107,7 @@
 			</div><!-- /.page-header -->
 
 			<div>
-				<button class="btn btn-xs btn-danger pull-left btn-edit">
+				<button class="btn btn-xs btn-danger pull-left btn-add">
 					<i class="ace-icon"></i>
 					<span class="bigger-110">新增用户</span>
 				</button>
@@ -138,7 +138,6 @@
 											<th data-sortable="true" data-column="realname">RealName</th>
 											<th data-sortable="true" data-column="phone">Phone</th>
 											<th data-sortable="true" data-column="email">Email</th>
-											<th data-sortable="true" data-column="name5">name5</th>
 											<th data-sortable="true" data-operation="command">name6</th>
 										</tr>
 									</thead>
@@ -189,9 +188,9 @@
 
 			initTable('dynamic-table', {
 				columnsDefs: [{
-					"targets": 5,
+					"targets": 4,
 					"render": function (data, type, row, meta) {
-						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green" href="#" title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
+						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" href="#" data-id='+row.id +' title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
 							'<a class="red" href="#" title="设定角色"><i class="ace-icon fa fa-users bigger-130"></i></a></div>';
 					}
 				}],
@@ -199,24 +198,18 @@
 				dataUrl: urls.getUsers,
 				accessCode: code,
 				directUrlWhenForbidden: urls.loginUrl
-			});
-
-
-			$('.btn-edit').on('click', function () {
-				$('#modalProxy').data('url', urls.userEdit).trigger('click');
-			});
-
-			@*function delFolder(folderId,currentFolderId) {
-			if (confirm("@Success.Folder.CONFIRM_DELETE")) {
-				$.post('@Url.Action("Delete", "ShareFolder")', { id: folderId }, function () {
-					loadData(function () {
-						bindLeftNav();
-						showFolderFiles(currentFolderId);
-						bindUpClick();
-					}, { parentId: currentFolderId, phrase: '' });
+			})
+			.on('init.dt', function () {
+				$('#dynamic-table').find('.btn-edit').on('click', function () {
+					alert($(this).data('id'));
 				});
-			}
-		}*@
+			});
+
+
+			$('.btn-add').on('click', function () {
+				$('#modalProxy').data('url', urls.userEditPage).trigger('click');
+			});
+
 		});
 	</script>
 }

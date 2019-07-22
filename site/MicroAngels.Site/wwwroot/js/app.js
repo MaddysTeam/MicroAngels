@@ -28,10 +28,14 @@ urls = {
 	login: 'http://localhost:5000/account/login',
 	index: 'http://localhost:5000/',
 	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
-	userEdit: 'http://localhost:5000/user/edit',
+	edituser: 'http://192.168.1.2:5000/api/authserver/user/edit',
+	getRoles: 'http://192.168.1.2:5000/api/authserver/role/roles',
+	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
 	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
 	userPage: 'http://localhost:5000/user/index',
+	rolePage: 'http://localhost:5000/role/index',
+	userEditPage:'http://localhost:5000/user/edit',
 	interfacePage:'http://localhost:5000/assets/interfaceIndex'
 };
 
@@ -65,7 +69,7 @@ function showMenu() {
 				id: '1.1', title: '用户管理', link: urls.userPage
 			},
 			{
-				id: '1.2', title: '角色管理'
+				id: '1.2', title: '角色管理', link: urls.rolePage
 			},
 			{
 				id: '1.2', title: '资源管理'
@@ -146,8 +150,9 @@ var ajaxRequset = function(url,code,forbiddenUrl,data,success){
 function ajaxSubmitForm(selector, options) {
 	options = $.extend({
 		code: null,
-		isReplaceCommas:true,
-		afterSuccess: function () {}
+		isReplaceCommas: true,
+		dataUrl:'',
+		afterSuccess: function () {},
 	}, options);
 
 
@@ -161,7 +166,7 @@ function ajaxSubmitForm(selector, options) {
 			para = para.replace('%2c', ',');
 		}
 		if ($this.valid()) {
-			var ajaxReq = ajaxRequset($this.attr('action'), options.code, urls.login, para, options.afterSuccess);
+			var ajaxReq = ajaxRequset(options.dataUrl, options.code, urls.login, para, options.afterSuccess);
 			$.ajax(ajaxReq);
 		}
 	});

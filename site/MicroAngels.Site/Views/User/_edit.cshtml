@@ -18,7 +18,7 @@
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名</label>
 
 						<div class="col-sm-9">
-							<input type="text" id="Username" name="Username" placeholder="Username" class="col-xs-10" minlength="5" >
+							<input type="text" id="Username" name="Username" placeholder="Username" class="col-xs-10" minlength="5">
 						</div>
 					</div>
 					<div class="form-group">
@@ -26,6 +26,20 @@
 
 						<div class="col-sm-9">
 							<input type="text" id="RealName" name="RealName" placeholder="RealName" class="col-xs-10">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 邮箱</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Email" name="Email" placeholder="Email" class="col-xs-10">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 电话</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Phone" name="Phone" placeholder="Phone" class="col-xs-10">
 						</div>
 					</div>
 					<div class="form-group">
@@ -56,8 +70,11 @@
 		ajaxSubmitForm($('#form'),
 			{
 				code: '12345',
-				afterSuccess() {
+				dataUrl: urls.userEdit,
+				afterSuccess(data) {
+					alert(data.msg);
 					$('#firstModal').modal('hide');
+					//$('datatable').reload
 				}
 			});
 

@@ -19,9 +19,14 @@ namespace Controllers
 		}
 
 		[HttpPost("edit")]
-		public async Task<bool> Edit([FromBody] UserInfo userInfo)
+		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			return await _userService.Edit(userInfo);
+			var isSuccess= await _userService.Edit(new UserInfo { UserName=user.UserName, RealName=user.RealName, Email=user.RealName, Phone=user.Phone});
+
+			return new JsonResult(new {
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
+			});
 		}
 
 		[HttpPost("users")]
@@ -35,11 +40,11 @@ namespace Controllers
 				{
 					data = searchResults.Select(x => new
 					{
+						id=x.UserId,
 						username = x.UserName,
 						realname = x.RealName,
 						phone = x.Phone,
-						email = x.Email,
-						name5 = ""
+						email = x.Email
 					}),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
@@ -55,11 +60,9 @@ namespace Controllers
 			});
 		}
 
-
 		[HttpPost("info")]
 		public IActionResult GetInfo([FromForm]string userName)
 		{
-			var requset = Request;
 			var user = _userService.GetByName(userName);
 			return new JsonResult(new
 			{
@@ -67,6 +70,11 @@ namespace Controllers
 			});
 		}
 
+		[HttpPost("detail")]
+		public IActionResult GetInfo([FromForm] Guid userId)
+		{
+			throw  new NotImplementedException();
+		}
 
 		[HttpPost("bindRole")]
 		public IActionResult BindRole(Guid userId, Guid roleId)

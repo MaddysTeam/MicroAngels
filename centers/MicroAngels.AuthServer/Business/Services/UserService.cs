@@ -24,7 +24,13 @@ namespace Business
 				if (userInfo.UserId.IsEmpty())
 				{
 					var current = UserDb.GetSingle(ur => ur.UserName == userInfo.UserName);
-					return current.IsNull() ? await UserDb.AsInsertable(userInfo).ExecuteCommandAsync() > 0 : false;
+					if (current.IsNull())
+					{
+						userInfo.UserId = Guid.NewGuid();
+						return await UserDb.AsInsertable(userInfo).ExecuteCommandAsync() > 0;
+					}
+					else
+						return false;
 				}
 				else
 					return await UserDb.AsUpdateable(userInfo).ExecuteCommandAsync() > 0;

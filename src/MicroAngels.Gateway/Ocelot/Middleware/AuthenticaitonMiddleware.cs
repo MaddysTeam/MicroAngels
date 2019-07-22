@@ -31,20 +31,23 @@ namespace MicroAngels.Gateway.Ocelot
 			{
 				if (_options.IsUseCustomAuthenticate && !_authenticateService.IsNull())
 				{
-					var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
-					if (!result.IsNull() && !result.Principal.IsNull())
-					{
-						context.HttpContext.User = result.Principal;
-					}
-					if (await _authenticateService.ValidateAuthenticate(context))
-					{
-						await _next.Invoke(context);
-					}
-					else
-					{
-						await context.HttpContext.Response.SendForbiddenReponse("application/Json", new { message = "permission deny" }.ToJson());
-					}
+					await _next.Invoke(context);
+					//var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
+					//if (!result.IsNull() && !result.Principal.IsNull())
+					//{
+					//	context.HttpContext.User = result.Principal;
+					//}
+					//if (await _authenticateService.ValidateAuthenticate(context))
+					//{
+					//	await _next.Invoke(context);
+					//}
+					//else
+					//{
+					//	await context.HttpContext.Response.SendForbiddenReponse("application/Json", new { message = "permission deny" }.ToJson());
+					//}
 				}
+				else
+					await _next.Invoke(context);
 			}
 		}
 
