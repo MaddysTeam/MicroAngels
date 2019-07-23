@@ -69,7 +69,7 @@
 
 		ajaxSubmitForm($('#form'),
 			{
-				code: '12345',
+				code: checkCode(urls.login),
 				dataUrl: urls.userEdit,
 				afterSuccess(data) {
 					alert(data.msg);

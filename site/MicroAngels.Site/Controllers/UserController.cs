@@ -23,9 +23,9 @@ namespace Controllers
 
 		//Get   user/bindRoles
 
-		public IActionResult BindRoles(Guid? userId)
+		public IActionResult BindRoles(Guid userId)
 		{
-			return PartialView("_roles");
+			return PartialView("_roles",userId);
 		}
 
 	}

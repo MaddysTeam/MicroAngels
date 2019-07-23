@@ -15,6 +15,7 @@ namespace Business
 		IEnumerable<SystemRole> Search(Expression<Func<SystemRole, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
 		Task<List<SystemRole>> GetByUserName(string userName);
 		Task<List<SystemRole>> GetByUserIds(Guid[] userIds);
+		Task<List<SystemRole>> GetByUserId(Guid userid);
 	}
 
 }

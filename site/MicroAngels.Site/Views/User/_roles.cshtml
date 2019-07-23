@@ -1,4 +1,5 @@
-﻿<div class="modal-dialog">
+﻿@model Guid
+<div class="modal-dialog">
 	<!-- widget start -->
 	<div class="widget-box widget-color-blue ui-sortable-handle">
 
@@ -18,81 +19,80 @@
 					admin
 					@*<small>admin</small>*@
 				</h3>
+				<div class="row checkboxList">
+
+					@*<div class="control-group col-md-4">
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl">系统管理员</span>
+								</label>
+							</div>
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl">微服务配置管理员</span>
+								</label>
+							</div>
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl"> large checkbox</span>
+								</label>
+							</div>
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl"> large checkbox</span>
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group col-md-4">
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl">系统管理员</span>
+								</label>
+							</div>
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl">微服务配置管理员</span>
+								</label>
+							</div>
+
+							<div class="checkbox">
+								<label class="block">
+									<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
+									<span class="lbl"> large checkbox</span>
+								</label>
+							</div>
+
+							<div class="checkbox"><label class="block"><input name="form-field-checkbox" type="checkbox" checked="checked" class="ace input ace-checkbox-2"><span class="lbl"> large checkbox</span></label></div>
+
+						</div>*@
+
+
+
+
+				</div>
+
 				<div class="row">
-
-					<div class="control-group col-md-4">
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl">系统管理员</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl">微服务配置管理员</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl"> large checkbox</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl"> large checkbox</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="control-group col-md-4">
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl">系统管理员</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl">微服务配置管理员</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl"> large checkbox</span>
-							</label>
-						</div>
-
-						<div class="checkbox">
-							<label class="block">
-								<input name="form-field-checkbox" type="checkbox" class="ace input ace-checkbox-2">
-								<span class="lbl"> large checkbox</span>
-							</label>
-						</div>
-
-					</div>
-
 					<div class="col-md-12">
-						<button class="btn btn-success pull-right">
+						<button class="btn btn-success pull-right btn-bind">
 							<i class="ace-icon fa fa-check"></i>
 							绑定
 						</button>
 					</div>
-
 				</div>
 
-				
 			</div>
 		</div>
 
@@ -102,7 +102,33 @@
 <script>
 	$(function () {
 
+		var code = checkCode(urls.login);
+		var ajax = ajaxRequset(urls.getRolesByUserId, code, urls.login, { userId: '@Model' }, function (data) {
+			checkboxList(data.data);
+		});
+		$.ajax(ajax);
 
+		$('.btn-bind').on('click', function () {
+			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: '1,2' }, function (data) {
+				$('#firstModal').modal('hide');
+			});
+			$.ajax(ajax);
+		});
 
 	});
+
+	function checkboxList(data) {
+		$('.checkboxList').html('');
+		$(data).each(function (i) {
+			var m = this;
+			var $checkbox = $('<div class="checkbox"><label class="block"><input name="form-field-checkbox" type="checkbox" {1} class="ace input ace-checkbox-2"><span class="lbl">&nbsp;{0}</span></label></div>'.format(m.name, m.isChecked ? 'checked="checked"' : ''))
+			if (i % 4 == 0) {
+				$checkboxList = $('<div class="control-group col-md-4 checkboxList"></div>');
+				$('.checkboxList').append($checkboxList);
+			}
+
+			$checkboxList.append($checkbox);
+
+		});
+	}
 </script>

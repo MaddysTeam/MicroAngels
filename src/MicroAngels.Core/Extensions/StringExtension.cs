@@ -40,6 +40,14 @@ namespace MicroAngels.Core
 			return string.Equals(str, target, StringComparison.InvariantCultureIgnoreCase);
 		}
 
+		public static Guid ToGuid(this string str)
+		{
+			var output = Guid.Empty;
+			Guid.TryParse(str, out output);
+
+			return output;
+		}
+
 	}
 
 }

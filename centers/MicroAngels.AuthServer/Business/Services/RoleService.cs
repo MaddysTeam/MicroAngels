@@ -53,6 +53,24 @@ namespace Business
 			return await RoleDb.AsQueryable().FirstAsync(r => r.RoleId == id);
 		}
 
+		public async Task<List<SystemRole>> GetByUserId(Guid userid)
+		{
+			var query = DB
+					.Queryable<SystemRole, UserRole, UserInfo>((r, ur, u) => new object[]
+						 {
+						JoinType.Left,
+						 r.RoleId == ur.RoleId,
+						 JoinType.Left,
+						 ur.UserId==userid
+						 });
+
+			var result = await query.Select((r, ur, u) => 
+						new SystemRole { RoleId = r.RoleId, Description = r.Description, RoleName = r.RoleName, SystemId = r.SystemId, UserId = ur.UserId}
+						).Distinct().ToListAsync();
+
+			return result;
+		}
+
 		public async Task<List<SystemRole>> GetByUserIds(Guid[] userIds)
 		{
 			var query = DB

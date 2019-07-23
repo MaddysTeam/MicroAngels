@@ -36,33 +36,40 @@ namespace Controllers
 		public IActionResult GetRoles([FromForm]int start, [FromForm]int length)
 		{
 			var totalCount = 0;
-			var searchResults =  _service.Search(null, length, start, out totalCount);
-			if (!searchResults.IsNull() && searchResults.Count() > 0)
-			{
-				return new JsonResult(new
-				{
-					data = searchResults.Select(role => new
-					{
-						id=role.RoleId,
-						name=role.RoleName,
-						description=role.Description
-					}),
-					recordsTotal = totalCount,
-					recordsFiltered = totalCount,
-				});
-			}
+			var searchResults = _service.Search(null, length, start, out totalCount);
 
 			return new JsonResult(new
 			{
-				data = new { },
-				recordsTotal = 0,
-				recordsFiltered = 0,
+				data = searchResults.Select(role => new
+				{
+					id = role.RoleId,
+					name = role.RoleName,
+					description = role.Description
+				}),
+				recordsTotal = totalCount,
+				recordsFiltered = totalCount,
+			});
+
+		}
+
+		[HttpPost("userRoles")]
+		public async Task<IActionResult> GetRoelsByUserId([FromForm]Guid userId)
+		{
+			var result = await _service.GetByUserId(userId);
+			return new JsonResult(new
+			{
+				data = result.Select(role => new
+				{
+					id = role.RoleId,
+					name = role.RoleName,
+					isChecked = !role.UserId.IsEmpty() && role.UserId== userId
+				}).ToList()
 			});
 		}
 
 
 		private readonly IRoleService _service;
-		
+
 	}
 
 }

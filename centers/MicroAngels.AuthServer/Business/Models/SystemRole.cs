@@ -21,6 +21,10 @@ namespace Business
 		[SugarColumn(IsNullable = true, Length = 2000)]
 		public string Description { get; set; }
 
+		//TODO will use view model instead
+		[SugarColumn(IsIgnore =true)]
+		public Guid UserId { get; set; }
+
 
 		public static List<ValidateResult> Validate(SystemRole r)
 		{

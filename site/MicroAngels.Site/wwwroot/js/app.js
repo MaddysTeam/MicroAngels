@@ -30,6 +30,8 @@ urls = {
 	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
 	edituser: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	getRoles: 'http://192.168.1.2:5000/api/authserver/role/roles',
+	getRolesByUserId: 'http://192.168.1.2:5000/api/authserver/role/userRoles',
+	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
 	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
 	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',

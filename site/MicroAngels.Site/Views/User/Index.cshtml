@@ -112,10 +112,10 @@
 					<span class="bigger-110">新增用户</span>
 				</button>
 
-				<button class="btn btn-xs btn-warning pull-left btn-temp">
+				@*<button class="btn btn-xs btn-warning pull-left btn-temp">
 					<i class="ace-icon"></i>
 					<span class="bigger-110">temp</span>
-				</button>
+				</button>*@
 			</div>
 
 			<div class="row">
@@ -196,7 +196,7 @@
 					"targets": 4,
 					"render": function (data, type, row, meta) {
 						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" href="#" data-id='+row.id +' title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
-							'<a class="red" href="#" title="设定角色"><i class="ace-icon fa fa-users bigger-130"></i></a></div>';
+							'<a class="red btn-bind-role" href="#" title="设定角色" data-id=' + row.id +'><i class="ace-icon fa fa-users bigger-130"></i></a></div>';
 					}
 				}],
 
@@ -204,20 +204,22 @@
 				accessCode: code,
 				directUrlWhenForbidden: urls.loginUrl
 			})
-			.on('init.dt', function () {
-				$('#dynamic-table').find('.btn-edit').on('click', function () {
+			.on('draw', function () {
+				$table = $('#dynamic-table');
+				$table.find('.btn-edit').on('click', function () {
 					alert($(this).data('id'));
+				});
+
+				$table.find('.btn-bind-role').on('click', function () {
+					var url = urls.bindRolePage + '?userId=' + $(this).data('id');
+					$('#modalProxy').data('url', url ).trigger('click');
 				});
 			});
 
 
 			$('.btn-add').on('click', function () {
 				$('#modalProxy').data('url', urls.userEditPage).trigger('click');
-			});
-
-			$('.btn-temp').on('click', function () {
-				$('#modalProxy').data('url', urls.bindRolePage).trigger('click');
-			});
+			});		
 
 		});
 	</script>

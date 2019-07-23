@@ -69,6 +69,7 @@ namespace Business
 				var current = UserRoleDb.GetSingle(ur => ur.UserId == userRole.UserId & ur.RoleId == userRole.RoleId);
 				if (current.IsNull())
 				{
+					userRole.Id = Guid.NewGuid();
 					result = await UserRoleDb.AsInsertable(userRole).ExecuteCommandAsync() > 0;
 				}
 			}

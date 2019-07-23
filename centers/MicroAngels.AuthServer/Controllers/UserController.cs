@@ -77,14 +77,34 @@ namespace Controllers
 		}
 
 		[HttpPost("bindRole")]
-		public IActionResult BindRole(Guid userId, Guid roleId)
+		public async Task<IActionResult> BindRole([FromForm] BindRoleViewModel viewModel)
 		{
-			var result = _userService.BindRole(new UserRole { Id = Guid.NewGuid(), RoleId = userId, UserId = userId });
+			var isSuccess = false;
+			if(!viewModel.IsNull() && !viewModel.UserId.IsEmpty() && !string.IsNullOrEmpty(viewModel.RoleIds))
+			{
+				string[] roleIds = viewModel.RoleIds.Split(',');
+				foreach (var roleId in roleIds)
+				{
+					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId });
+				}
 
-			return new JsonResult(new {
-				isSuccess = result,
-				msg = ""
-			});
+				return new JsonResult(new
+				{
+					isSuccess,
+					msg = isSuccess ? "操作成功" : "操作失败"
+				});
+			}
+			else
+			{
+				return new JsonResult(new
+				{
+					isSuccess,
+					msg = "操作失败"
+				});
+			}
+
+			//var result = _userService.BindRole(new UserRole { Id = Guid.NewGuid(), RoleId = userId, UserId = userId });
+
 		}
 
 		private IUserService _userService;
