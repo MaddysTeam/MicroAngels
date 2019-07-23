@@ -35,8 +35,10 @@ urls = {
 	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
 	userPage: 'http://localhost:5000/user/index',
 	rolePage: 'http://localhost:5000/role/index',
-	userEditPage:'http://localhost:5000/user/edit',
-	interfacePage:'http://localhost:5000/assets/interfaceIndex'
+	userEditPage: 'http://localhost:5000/user/edit',
+	bindRolePage:'http://localhost:5000/user/bindRoles',
+	interfacePage: 'http://localhost:5000/assets/interfaceIndex',
+	assetsPage: 'http://localhost:5000/assets/index'
 };
 
 
@@ -72,11 +74,17 @@ function showMenu() {
 				id: '1.2', title: '角色管理', link: urls.rolePage
 			},
 			{
-				id: '1.2', title: '资源管理'
+				id: '1.3', title: '资源管理', link: urls.assetsPage
 			},
 			{
-				id: '1.2', title: '接口管理', link: urls.interfacePage
+				id: '1.4', title: '接口管理', link: urls.interfacePage
 			},
+			{
+				id: '1.5', title: '菜单管理', link: urls.interfacePage
+			},
+			{
+				id: '1.6', title: '按钮管理', link: urls.interfacePage
+			}
 		]
 	}];
 

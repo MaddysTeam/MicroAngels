@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Controllers
 {
 
 	public class UserController : Controller
 	{
+
+		//Get   user/index
 
 		public IActionResult Index()
 		{
@@ -18,20 +21,11 @@ namespace Controllers
 			return PartialView("_edit");
 		}
 
+		//Get   user/bindRoles
 
-		[HttpPost]
-		public IActionResult Edit(Temp user)
+		public IActionResult BindRoles(Guid? userId)
 		{
-			var req = Request;
-			return new JsonResult(new {
-
-			});
-		}
-
-		public class Temp
-		{
-			public string UserName { get; set; }
-			public string RealName { get; set; }
+			return PartialView("_roles");
 		}
 
 	}

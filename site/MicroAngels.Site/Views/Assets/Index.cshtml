@@ -15,7 +15,7 @@
 				<li>
 					<a href="#">系统设置</a>
 				</li>
-				<li class="active">用户管理</li>
+				<li class="active">资源管理</li>
 			</ul><!-- /.breadcrumb -->
 
 			<div class="nav-search" id="nav-search">
@@ -29,6 +29,7 @@
 		</div>
 
 		<div class="page-content">
+
 			<div class="ace-settings-container" id="ace-settings-container">
 				<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
 					<i class="ace-icon fa fa-cog bigger-130"></i>
@@ -98,127 +99,142 @@
 
 			<div class="page-header">
 				<h1>
-					用户
+					资源
 					<small>
 						<i class="ace-icon fa fa-angle-double-right"></i>
-						用户管理
+						资源管理
 					</small>
 				</h1>
 			</div><!-- /.page-header -->
+			<!--  BUTTONS BEGINS -->
+			<div class="buttons">
 
-			<div>
-				<button class="btn btn-xs btn-danger pull-left btn-add">
-					<i class="ace-icon"></i>
-					<span class="bigger-110">新增用户</span>
-				</button>
 
-				<button class="btn btn-xs btn-warning pull-left btn-temp">
-					<i class="ace-icon"></i>
-					<span class="bigger-110">temp</span>
-				</button>
 			</div>
+			<!--  BUTTONS ENDS -->
 
 			<div class="row">
-				<div class="col-xs-12">
-					<!-- PAGE CONTENT BEGINS -->
+				<div class="col-md-12">
 
-					<div class="row">
-						<div class="col-xs-12">
-							@*<h3 class="header smaller lighter blue">jQuery dataTables</h3>*@
+					<!--  NESTABLE BEGINS -->
+					<div class="dd" id="nestable">
+						<ol class="dd-list">
 
-							<div class="clearfix">
-								<div class="pull-right tableTools-container"></div>
-							</div>
-							<div class="table-header">
-								@*Results for "Latest Registered Domains"*@
-							</div>
+							<li class="dd-item" data-id="2">
+								@*<button data-action="collapse" type="button">Collapse</button><button data-action="expand" type="button" style="display: none;">Expand</button>*@
+								<div class="dd-handle">菜单：系统设置</div>
 
-							<!-- div.table-responsive -->
-							<!-- div.dataTables_borderWrap -->
-							<div>
-								<table id="dynamic-table" class="table table-striped table-bordered table-hover">
-									<thead>
-										<tr>
-											<th data-sortable="true" data-column="username">UserName</th>
-											<th data-sortable="true" data-column="realname">RealName</th>
-											<th data-sortable="true" data-column="phone">Phone</th>
-											<th data-sortable="true" data-column="email">Email</th>
-											<th data-sortable="true" data-operation="command">name6</th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-									@*<thead>
-										<tr>
-											<th class="center">
-												<label class="pos-rel">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"></span>
-												</label>
-											</th>
-											<th>Domain</th>
-											<th>Price</th>
-											<th class="hidden-480">Clicks</th>
+								<ol class="dd-list">
+									<li class="dd-item" data-id="3">
+										<div class="dd-handle">
+											菜单：用户管理
+											<a data-rel="tooltip" data-placement="left" title="" href="#" class="pull-right tooltip-info btn btn-primary btn-mini btn-white btn-bold" data-original-title="Change Date">
+												<i class="bigger-120 ace-icon fa fa-calendar"></i>
+											</a>
+										</div>
+										<ol class="dd-list">
+											<li class="dd-item item-orange" data-id="6">
+												<div class="dd-handle">按钮：新增按钮</div>
+											</li>
+										</ol>
+									</li>
 
-											<th>
-												<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-												Update
-											</th>
-											<th class="hidden-480">Status</th>
+									<li class="dd-item" data-id="4">
+										<div class="dd-handle">
+											<span class="orange">菜单：角色管理</span>
+											<span class="lighter grey">
+												&nbsp; with some description
+											</span>
+										</div>
+									</li>
 
-											<th></th>
-										</tr>
-									</thead>*@
-								</table>
-							</div>
-						</div>
+									@*<li class="dd-item" data-id="5">
+
+										<div class="dd-handle">
+											Item 5
+											<div class="pull-right action-buttons">
+												<a class="blue" href="#">
+													<i class="ace-icon fa fa-pencil bigger-130"></i>
+												</a>
+
+												<a class="red" href="#">
+													<i class="ace-icon fa fa-trash-o bigger-130"></i>
+												</a>
+											</div>
+										</div>
+
+										<ol class="dd-list">
+											<li class="dd-item item-orange" data-id="6">
+												<div class="dd-handle"> Item 6 </div>
+											</li>
+
+											<li class="dd-item item-red" data-id="7">
+												<div class="dd-handle">Item 7</div>
+											</li>
+
+											<li class="dd-item item-blue2" data-id="8">
+												<div class="dd-handle">Item 8</div>
+											</li>
+										</ol>
+
+									</li>*@
+
+									@*<li class="dd-item" data-id="9">
+										<div class="dd-handle btn-yellow no-hover">Item 9</div>
+									</li>
+
+									<li class="dd-item" data-id="10">
+										<div class="dd-handle">Item 10</div>
+									</li>*@
+								</ol>
+							</li>
+
+							<li class="dd-item" data-id="11">
+								<div class="dd-handle">
+									Item 11
+									<span class="sticker">
+										<span class="label label-success arrowed-in">
+											<i class="ace-icon fa fa-check bigger-110"></i>
+										</span>
+									</span>
+								</div>
+							</li>
+
+							<li class="dd-item" data-id="12">
+								<div class="dd-handle">Item 12</div>
+							</li>
+						</ol>
 					</div>
+					<!--  NESTABLE ENDS -->
 
-					<!-- PAGE CONTENT ENDS -->
 				</div><!-- /.col -->
 			</div><!-- /.row -->
 		</div><!-- /.page-content -->
 	</div>
 </div><!-- /.main-content -->
 
-@section Modals{ 
+@section Modals{
 	<button class="btn hidden" id="modalProxy" data-toggle="ajax-modal" data-target="#firstModal"></button>
 	<div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="firstModalLabel"></div>
 }
 
 @section Scripts{
+	<script src="~/js/jquery.nestable.min.js"></script>
 	<script>
-		$(function () {
+
+		jQuery(function ($) {
 
 			var code = checkCode(urls.loginUrl);
 
-			initTable('dynamic-table', {
-				columnsDefs: [{
-					"targets": 4,
-					"render": function (data, type, row, meta) {
-						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" href="#" data-id='+row.id +' title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
-							'<a class="red" href="#" title="设定角色"><i class="ace-icon fa fa-users bigger-130"></i></a></div>';
-					}
-				}],
+			$('.dd').nestable();
 
-				dataUrl: urls.getUsers,
-				accessCode: code,
-				directUrlWhenForbidden: urls.loginUrl
-			})
-			.on('init.dt', function () {
-				$('#dynamic-table').find('.btn-edit').on('click', function () {
-					alert($(this).data('id'));
-				});
+			$('.dd-handle a').on('mousedown', function (e) {
+				e.stopPropagation();
 			});
 
-
-			$('.btn-add').on('click', function () {
-				$('#modalProxy').data('url', urls.userEditPage).trigger('click');
-			});
-
-			$('.btn-temp').on('click', function () {
-				$('#modalProxy').data('url', urls.bindRolePage).trigger('click');
-			});
+			$('[data-rel="tooltip"]').tooltip();
 
 		});
+
 	</script>
 }

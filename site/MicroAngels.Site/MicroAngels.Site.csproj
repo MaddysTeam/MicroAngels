@@ -20,6 +20,9 @@
     <Content Update="Views\Shared\_anonymous.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\User\_roles.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\User\_edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
