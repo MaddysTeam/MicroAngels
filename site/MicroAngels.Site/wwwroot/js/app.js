@@ -34,6 +34,8 @@ urls = {
 	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
 	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
+	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/allUrls',
+	getMenu:'http://192.168.1.2:5000/api/authserver/assets/allMenus',
 	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
 	userPage: 'http://localhost:5000/user/index',
 	rolePage: 'http://localhost:5000/role/index',

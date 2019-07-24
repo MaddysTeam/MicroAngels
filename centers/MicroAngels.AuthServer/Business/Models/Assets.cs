@@ -59,6 +59,9 @@ namespace Business
 		[SugarColumn(IsPrimaryKey = true,Length =50)]
 		public Guid MenuId { get; set; }
 
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public Guid SystemId { get; set; }
+
 		[SugarColumn(IsNullable = false, Length = 200)]
 		public string Title { get; set; }
 

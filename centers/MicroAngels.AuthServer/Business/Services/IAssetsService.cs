@@ -12,6 +12,7 @@ namespace Business
 		IEnumerable<Interface> GetInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
 		Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames);
 		Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId);
+		Task<IEnumerable<Assets>> GetAssets(Expression<Func<Assets, bool>> whereExpressions);
 		Task<bool> Edit(Assets assets);
 		Task<bool> EditInterface(Interface iinterface);
 		Task<bool> EditMenu(Menu menu);

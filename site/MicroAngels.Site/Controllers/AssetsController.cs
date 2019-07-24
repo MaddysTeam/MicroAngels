@@ -21,6 +21,11 @@ namespace Controllers
 			return View();
 		}
 
+		public IActionResult MenuIndex()
+		{
+			return View();
+		}
+
 	}
 
 }

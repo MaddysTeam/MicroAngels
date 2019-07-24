@@ -16,6 +16,16 @@ namespace Business
 		{
 		}
 
+		public async Task<Assets> GetById(Guid assetId)
+		{
+			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
+		}
+
+		public Task<IEnumerable<Assets>> GetAssets(Expression<Func<Assets, bool>> whereExpressions)
+		{
+			throw new NotImplementedException();
+		}
+
 		public async Task<bool> Edit(Assets assets)
 		{
 			if (Assets.Validate(assets).All(validateResult => validateResult.IsSuccess))
@@ -54,20 +64,40 @@ namespace Business
 
 		public async Task<bool> EditMenu(Menu menu)
 		{
+			var result = false;
 			if (Menu.Validate(menu).All(validateResult => validateResult.IsSuccess))
 			{
-				if (menu.MenuId.IsEmpty())
+				if (menu.MenuId.IsEmpty() && MenuDb.GetSingle(m => m.Title == menu.Title).IsNull())
 				{
-					var current = MenuDb.GetSingle(m => m.Title == menu.Title);
-					return current.IsNull() ? await MenuDb.AsInsertable(menu).ExecuteCommandAsync() > 0 : false;
+					result = DB.UseTranAsync(async () =>
+					{
+						await DB.Insertable(menu).ExecuteCommandAsync();
+						await DB.Insertable(new Assets
+						{
+							AssetsName = menu.Title,
+							AssetsStatus = Keys.EnableStatus,
+							AssetsType = Keys.Assests.MenuType,
+							ItemId = menu.MenuId,
+							SystemId = menu.SystemId
+						}).ExecuteCommandAsync();
+					}).IsCompletedSuccessfully;
+
 				}
 				else
 				{
-					return await MenuDb.AsUpdateable(menu).ExecuteCommandAsync() > 0;
+					var assets = await GetAssets(ass => ass.ItemId == menu.MenuId);
+					if (assets.Count() > 0)
+					{
+						var asset = assets.FirstOrDefault();
+						asset.AssetsName = menu.Title;
+						result = await AssetsDb.AsUpdateable(asset).ExecuteCommandAsync() > 0;
+					}
+
+					result = await MenuDb.AsUpdateable(menu).ExecuteCommandAsync() > 0;
 				}
 			}
 
-			return false;
+			return result;
 		}
 
 		public async Task<bool> BindAssets(Guid assetsId, Guid itemId)
@@ -139,11 +169,6 @@ namespace Business
 			var result = await query.Select((r, ra, a, m) => m).ToListAsync();
 
 			return result;
-		}
-
-		public async Task<Assets> GetById(Guid assetId)
-		{
-			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
 		}
 
 		public async Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId)
