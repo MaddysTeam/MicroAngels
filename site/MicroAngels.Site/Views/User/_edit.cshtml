@@ -70,7 +70,7 @@
 		ajaxSubmitForm($('#form'),
 			{
 				code: checkCode(urls.login),
-				dataUrl: urls.userEdit,
+				dataUrl: urls.edituser,
 				afterSuccess(data) {
 					alert(data.msg);
 					$('#firstModal').modal('hide');

@@ -11,6 +11,11 @@ namespace Controllers
 			return View();
 		}
 
+		public IActionResult Edit()
+		{
+			return PartialView("_edit");
+		}
+
 	}
 
 }

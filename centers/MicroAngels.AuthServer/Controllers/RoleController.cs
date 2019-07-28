@@ -62,8 +62,27 @@ namespace Controllers
 				{
 					id = role.RoleId,
 					name = role.RoleName,
-					isChecked = !role.UserId.IsEmpty() && role.UserId== userId
+					isChecked = !role.UserId.IsEmpty() && role.UserId == userId
 				}).ToList()
+			});
+		}
+
+		[HttpPost("edit")]
+		public async Task<IActionResult> Edit([FromForm]RoleViewModel role)
+		{
+			var isSuccess = await _service.Edit(
+				new SystemRole
+				{
+					RoleId = role.Id,
+					Description = role.Description,
+					RoleName = role.RoleName,
+					SystemId = Keys.System.DefaultSystemId
+				});
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
 			});
 		}
 

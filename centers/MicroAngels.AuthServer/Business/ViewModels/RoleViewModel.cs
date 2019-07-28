@@ -5,9 +5,9 @@ namespace Business
 
 	public class RoleViewModel
 	{
-		public Guid RoleId { get; set; }
-		public Guid SystemId { get; set; }
-		public Guid RoleName { get; set; }
+		public Guid Id { get; set; }
+		public string RoleName { get; set; }
+		public string Description { get; set; }
 	}
 
 }

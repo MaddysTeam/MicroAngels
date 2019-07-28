@@ -21,11 +21,6 @@ namespace Business
 			return await AssetsDb.AsQueryable().FirstAsync(asset => asset.AssetsId == assetId);
 		}
 
-		public Task<IEnumerable<Assets>> GetAssets(Expression<Func<Assets, bool>> whereExpressions)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<bool> Edit(Assets assets)
 		{
 			if (Assets.Validate(assets).All(validateResult => validateResult.IsSuccess))
@@ -44,19 +39,35 @@ namespace Business
 			return false;
 		}
 
-		public async Task<bool> EditInterface(Interface iinterface)
+		public async Task<bool> EditInterface(Interface inter)
 		{
-			if (Interface.Validate(iinterface).All(validateResult => validateResult.IsSuccess))
+			var result = false;
+			if (Interface.Validate(inter).All(validateResult => validateResult.IsSuccess))
 			{
-				if (iinterface.InterfaceId.IsEmpty())
+				result = DB.UseTranAsync(async () =>
 				{
-					var current = InterfaceDb.GetSingle(inter => inter.Title == iinterface.Title);
-					return current.IsNull() ? await InterfaceDb.AsInsertable(iinterface).ExecuteCommandAsync() > 0 : false;
-				}
-				else
+					await DB.Insertable(inter).ExecuteCommandAsync();
+					await DB.Insertable(new Assets
+					{
+						AssetsName = inter.Title,
+						AssetsStatus = Keys.EnableStatus,
+						AssetsType = Keys.Assests.MenuType,
+						ItemId = inter.InterfaceId,
+						SystemId = Keys.System.DefaultSystemId
+					}).ExecuteCommandAsync();
+				}).IsCompletedSuccessfully;
+			}
+			else
+			{
+				var assets = await SearchAssets(ass => ass.ItemId == inter.InterfaceId);
+				if (assets.Count() > 0)
 				{
-					return await InterfaceDb.AsUpdateable(iinterface).ExecuteCommandAsync() > 0;
+					var asset = assets.FirstOrDefault();
+					asset.AssetsName = inter.Title;
+					result = await AssetsDb.AsUpdateable(asset).ExecuteCommandAsync() > 0;
 				}
+
+				result = await InterfaceDb.AsUpdateable(inter).ExecuteCommandAsync() > 0;
 			}
 
 			return false;
@@ -69,6 +80,7 @@ namespace Business
 			{
 				if (menu.MenuId.IsEmpty() && MenuDb.GetSingle(m => m.Title == menu.Title).IsNull())
 				{
+					menu.MenuId = Guid.NewGuid();
 					result = DB.UseTranAsync(async () =>
 					{
 						await DB.Insertable(menu).ExecuteCommandAsync();
@@ -85,7 +97,7 @@ namespace Business
 				}
 				else
 				{
-					var assets = await GetAssets(ass => ass.ItemId == menu.MenuId);
+					var assets = await SearchAssets(ass => ass.ItemId == menu.MenuId);
 					if (assets.Count() > 0)
 					{
 						var asset = assets.FirstOrDefault();
@@ -135,19 +147,6 @@ namespace Business
 			return result;
 		}
 
-		public IEnumerable<Interface> GetInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
-		{
-			totalCount = 0;
-			var query = whereExpressions == null ? InterfaceDb.AsQueryable() : InterfaceDb.AsQueryable().Where(whereExpressions);
-
-			if (pageSize.HasValue && pageIndex.HasValue)
-			{
-				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
-			}
-			else
-				return query.ToList();
-		}
-
 		public async Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames)
 		{
 			if (roleNames.IsNull())
@@ -194,6 +193,43 @@ namespace Business
 			return result;
 		}
 
+		public async Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions)
+		{
+			var query = whereExpressions == null ? AssetsDb.AsQueryable() : AssetsDb.AsQueryable().Where(whereExpressions);
+
+			return await query.ToListAsync();
+		}
+
+		public IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		{
+			totalCount = 0;
+			var query = whereExpressions == null ? InterfaceDb.AsQueryable() : InterfaceDb.AsQueryable().Where(whereExpressions);
+
+			if (pageSize.HasValue && pageIndex.HasValue)
+			{
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+			}
+			else
+				return query.ToList();
+		}
+
+		public IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		{
+			totalCount = 0;
+			var query = whereExpressions == null ? MenuDb.AsQueryable() : MenuDb.AsQueryable().Where(whereExpressions);
+
+			if (pageSize.HasValue && pageIndex.HasValue)
+			{
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+			}
+			else
+				return query.ToList();
+		}
+
+		public async Task<Menu> GetMenuById(Guid menuId)
+		{
+			return await MenuDb.AsQueryable().FirstAsync(menu => menu.MenuId == menuId);
+		}
 	}
 
 }

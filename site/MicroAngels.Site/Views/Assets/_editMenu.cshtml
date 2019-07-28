@@ -1,0 +1,85 @@
+﻿@model Guid
+<div class="modal-dialog">
+	<!-- widget start -->
+	<div class="widget-box widget-color-blue ui-sortable-handle">
+
+		<div class="widget-header">
+			<h4 class="widget-title lighter">编辑菜单</h4>
+			<div class="widget-toolbar no-border">
+				<a href="#" data-action="close" data-dismiss="modal">
+					<i class="ace-icon fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main">
+				<form class="form-horizontal" role="form" id="form">
+					<input type="hidden" id="Id" name="Id" value="@Model" />
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 菜单标题</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Title" name="Title" placeholder="菜单标题" class="col-xs-10" minlength="5">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 菜单链接</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="LinkUrl" name="LinkUrl" placeholder="菜单链接" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-info btn-submit" id="submit" type="submit">
+								<i class="ace-icon fa fa-check "></i>
+								提交
+							</button>
+
+							&nbsp; &nbsp; &nbsp;
+							<a class="btn btn-cancel" data-action="close" data-dismiss="modal">
+								<i class="ace-icon fa fa-close"></i>
+								取消
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- widget end -->
+</div>
+<script>
+	$(function () {
+
+		var code = checkCode(urls.login);
+
+		var menuid = '@Model';
+		if (menuid != '@Guid.Empty') {
+			$('.btn-submit').attr('disabled', 'disabled');
+			var ajax = ajaxRequset(urls.menuInfo, code, urls.login, { menuId: menuid }, function (data) {
+				$('#Title').val(data.data.title);
+				$('#LinkUrl').val(data.data.linkUrl);
+				$('.btn-submit').removeAttr('disabled');
+			});
+
+			$.ajax(ajax);
+		}
+
+		$('#form').attr('action', urls.editMenu);
+
+		ajaxSubmitForm($('#form'),
+			{
+				code: checkCode(urls.login),
+				afterSuccess(data) {
+					$('#firstModal').modal('hide');
+					//$('table').ajax.reload();
+				}
+			});
+
+	});
+</script>

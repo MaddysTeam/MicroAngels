@@ -65,7 +65,7 @@ namespace Business
 		[SugarColumn(IsNullable = false, Length = 200)]
 		public string Title { get; set; }
 
-		[SugarColumn(IsNullable = false, Length = 2000)]
+		[SugarColumn(IsNullable = true, Length = 2000)]
 		public string LinkUrl { get; set; }
 
 		public static List<ValidateResult> Validate(Menu menu)
@@ -73,7 +73,6 @@ namespace Business
 			return
 			menu
 			 .NotNullOrEmpty(menu.Title, "")
-			 .NotNullOrEmpty(menu.LinkUrl, "")
 			 .Validate();
 		}
 

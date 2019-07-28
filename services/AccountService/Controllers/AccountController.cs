@@ -4,10 +4,8 @@ using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
 
 namespace AccountService.Controllers

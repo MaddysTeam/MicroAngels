@@ -85,7 +85,7 @@ namespace Controllers
 				string[] roleIds = viewModel.RoleIds.Split(',');
 				foreach (var roleId in roleIds)
 				{
-					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId });
+					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId});
 				}
 
 				return new JsonResult(new

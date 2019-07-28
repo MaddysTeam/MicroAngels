@@ -1,0 +1,103 @@
+﻿<div class="modal-dialog">
+	<!-- widget start -->
+	<div class="widget-box widget-color-blue ui-sortable-handle">
+
+		<div class="widget-header">
+			<h4 class="widget-title lighter">编辑接口</h4>
+			<div class="widget-toolbar no-border">
+				<a href="#" data-action="close" data-dismiss="modal">
+					<i class="ace-icon fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main">
+				<form class="form-horizontal" role="form" id="form">
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口标题</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Title" name="Title" placeholder="填写角色名称" class="col-xs-10" minlength="5">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口地址</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Url" name="Url" placeholder="Url" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口参数</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Params" name="Params" placeholder="Params" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 请求方式</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Method" name="Method" placeholder="Method" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口版本</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Version" name="Version" placeholder="Version" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 是否可以匿名访问</label>
+
+						<div class="col-sm-9">
+							<input type="checkbox" id="IsAllowAnonymous" name="IsAllowAnonymous" placeholder="IsAllowAnonymous" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-info" type="submit">
+								<i class="ace-icon fa fa-check "></i>
+								提交
+							</button>
+
+							&nbsp; &nbsp; &nbsp;
+							<button class="btn" type="reset">
+								<i class="ace-icon fa fa-undo"></i>
+								取消
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- widget end -->
+</div>
+<script>
+	$(function () {
+
+		$('#form').attr('action', urls.editMenu);
+
+		ajaxSubmitForm($('#form'),
+			{
+				code: checkCode(urls.login),
+				dataUrl: urls.edit,
+				afterSuccess(data) {
+					$('#firstModal').modal('hide');
+					//$('datatable').reload
+				}
+			});
+
+	});
+</script>

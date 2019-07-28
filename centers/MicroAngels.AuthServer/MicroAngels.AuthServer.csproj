@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Logger\MicroAngels.Logger.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
     <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>

@@ -29,19 +29,26 @@ urls = {
 	index: 'http://localhost:5000/',
 	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
 	edituser: 'http://192.168.1.2:5000/api/authserver/user/edit',
+	editRole: 'http://192.168.1.2:5000/api/authserver/role/edit',
 	getRoles: 'http://192.168.1.2:5000/api/authserver/role/roles',
 	getRolesByUserId: 'http://192.168.1.2:5000/api/authserver/role/userRoles',
 	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
-	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
+	//userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
-	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/allUrls',
-	getMenu:'http://192.168.1.2:5000/api/authserver/assets/allMenus',
+	getAssets: 'http://192.168.1.2:5000/api/authserver/assets/assets',
+	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/interfaces',
+	getMenu: 'http://192.168.1.2:5000/api/authserver/assets/allMenus',
+	editMenu: 'http://192.168.1.2:5000/api/authserver/assets/editMenu',
+	menuInfo: 'http://192.168.1.2:5000/api/authserver/assets/menuInfo',
 	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
 	userPage: 'http://localhost:5000/user/index',
 	rolePage: 'http://localhost:5000/role/index',
 	userEditPage: 'http://localhost:5000/user/edit',
+	roleEditPage: 'http://localhost:5000/role/edit',
+	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
 	bindRolePage:'http://localhost:5000/user/bindRoles',
 	interfacePage: 'http://localhost:5000/assets/interfaceIndex',
+	menuPage:'http://localhost:5000/assets/menuIndex',
 	assetsPage: 'http://localhost:5000/assets/index'
 };
 
@@ -84,13 +91,14 @@ function showMenu() {
 				id: '1.4', title: '接口管理', link: urls.interfacePage
 			},
 			{
-				id: '1.5', title: '菜单管理', link: urls.interfacePage
-			},
-			{
-				id: '1.6', title: '按钮管理', link: urls.interfacePage
+				id: '1.5', title: '菜单管理', link: urls.menuPage
 			}
+			//{
+			//	id: '1.6', title: '按钮管理', link: urls.interfacePage
+			//}
 		]
 	}];
+
 
 	$(menus).each(function (i) {
 		var menu = menus[i];
@@ -163,7 +171,7 @@ function ajaxSubmitForm(selector, options) {
 	options = $.extend({
 		code: null,
 		isReplaceCommas: true,
-		dataUrl:'',
+		dataUrl: selector.attr('action'),
 		afterSuccess: function () {},
 	}, options);
 

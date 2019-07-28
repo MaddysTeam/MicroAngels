@@ -4,6 +4,7 @@ using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Services;
 using MicroAngels.IdentityServer.Validators;
+using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
@@ -57,7 +58,10 @@ namespace MicroAngels.AuthServer
 				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
 				.AddProfileService<UserClaimsProfileService>(); // add claims into user profile （such as context）
 
-			// for service
+			// add exceptionless logger
+			services.AddLessLog();
+
+			// for business service
 			services.AddTransient<ISystemService, SystemService>();
 			services.AddTransient<IAssetsService, AssetsService>();
 			services.AddTransient<IRoleService, RoleService>();
@@ -75,6 +79,8 @@ namespace MicroAngels.AuthServer
 			app.UseMvc();
 
 			app.UseIdentityServer();
+
+			app.UseLessLog(new ExcepitonLessOptions("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo"));
 
 			app.UseConsul(lifeTime, new ConsulService
 			{
