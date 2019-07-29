@@ -114,12 +114,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<select id="role" class="chosen-select form-control role_select">
-						<option value="2">选择角色</option>
-						<option value="3">Cheese</option>
-						<option value="4">Tomatoes</option>
-						<option value="5">Mozzarella</option>
-						<option value="6">Mushrooms</option>
-						<option value="7">Pepperoni</option>
+						
 					</select>
 				</div>
 			</div>
@@ -192,11 +187,22 @@
 
 		jQuery(function ($) {
 
-			bind();
+			var code = checkCode(urls.loginUrl);
 
-			$('.role_select').on('change', function () {
-				bind();
-			});		
+			ajaxDropdown($("#role"), {
+				code: code,
+				dataUrl: urls.getRoles,
+				afterSuccess: function (data) {
+					$(data.data).each(function (i) {
+						$("#role").append("<option value='{0}'>{1}</option>".format(this.id, this.name));
+					});
+
+					$("#role").on('change', function () {
+						bind(code, $(this).val());
+					}).trigger('change');	
+				}
+			});
+
 
 		});
 
@@ -215,15 +221,15 @@
 				'</div>'
 		};
 
-		function bind() {
-			var code = checkCode(urls.loginUrl);
-			var ajax = ajaxRequset(urls.getAssets, code, urls.loginUrl, null,function (data) {
+		function bind(code, roleId) {
+			
+			var ajax = ajaxRequset(urls.getAssets, code, urls.loginUrl, { roleId:roleId},function (data) {
 				var $list = $(component.ol).append(load(data.data));
 
 				// save when on nestable changed
 				$('#nestable').html('').append($list).nestable().off('change').on('change', function () {
 					var param = $('.dd').nestable('serialize');
-					var ajax = ajaxRequset('@Url.Action("Edit", "Assets")', code, urls.loginUrl, { list: param  }, function () { });
+					var ajax = ajaxRequset(urls.editAssetsList, code, urls.loginUrl, { list: param  }, function () { });
 					$.ajax(ajax);
 				});
 
@@ -231,7 +237,7 @@
 				$('.btn-auth').on('click', function () {
 					var $this = $(this);
 					if ($this.is(':checked')) {
-						var ajax = ajaxRequset('@Url.Action("BindRoleAsset", "Assets")', code, urls.loginUrl, { roleId: $('.role_select').val(), assetId:$(this).data("assetId")  }, function () { });
+						var ajax = ajaxRequset(urls.bindAssets, code, urls.loginUrl, { roleId: $('.role_select').val(), assetsId:$(this).data("assetId")  }, function () { });
 						$.ajax(ajax);
 					}
 					else {

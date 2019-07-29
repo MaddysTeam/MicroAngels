@@ -30,12 +30,14 @@ urls = {
 	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
 	edituser: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	editRole: 'http://192.168.1.2:5000/api/authserver/role/edit',
+	editAssetsList: 'http://192.168.1.2:5000/api/authserver/assets/editList',
 	getRoles: 'http://192.168.1.2:5000/api/authserver/role/roles',
 	getRolesByUserId: 'http://192.168.1.2:5000/api/authserver/role/userRoles',
 	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
-	//userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
+	bindAssets:'http://192.168.1.2:5000/api/authserver/role/bindAssets',
+	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 	showUser: 'http://192.168.1.2:5000/api/authserver/user/info',
-	getAssets: 'http://192.168.1.2:5000/api/authserver/assets/assets',
+	getAssets: 'http://192.168.1.2:5000/api/authserver/assets/roleAssets',
 	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/interfaces',
 	getMenu: 'http://192.168.1.2:5000/api/authserver/assets/allMenus',
 	editMenu: 'http://192.168.1.2:5000/api/authserver/assets/editMenu',
@@ -193,7 +195,6 @@ function ajaxSubmitForm(selector, options) {
 }
 
 
-
 /* ------------------------------------------------- ajax modals ------------------------------------------------------- */
 
 $(document).on('click.bs.modal.data-api', '[data-toggle="ajax-modal"]', function (event) {
@@ -212,6 +213,25 @@ $(document).on('click.bs.modal.data-api', '[data-toggle="ajax-modal"]', function
 
 });
 
+
+/* ------------------------------------------------- ajax dropdown ------------------------------------------------------- */
+
+function ajaxDropdown($selector, options) {
+	options = $.extend({
+		code: null,
+		dataUrl: options.dataUrl,
+		para: {} || options.para,
+		afterSuccess: function (data) {
+			$(data.data).each(function (i) {
+				$selector.append("<option value='{0}'>{1}</option>".format(this.id, this.name));
+			});
+		}
+	}, options);
+
+	var ajaxReq = ajaxRequset(options.dataUrl, options.code, urls.login, options.para, options.afterSuccess);
+	$.ajax(ajaxReq);
+
+}
 
 /* ------------------------------------------------- menus ------------------------------------------------------- */
 

@@ -28,30 +28,15 @@ namespace Controllers
 		}
 
 		[HttpPost("roleAssets")]
-		public async Task<IActionResult> GetAssets(Guid roleId)
+		public async Task<IActionResult> GetAssets([FromForm]Guid roleId)
 		{
-			//var assetsResult = await _service.SearchAssets(null);
+			var assetsList = await _service.GetRoleAssets(roleId);
+			var assetViewMode = HierarchyAssets(assetsList, Root);
 
-			return new JsonResult(new
-			{
-				data = new AssetsViewModel
-				{
-					title = "【目录】系统设置2",
-					id = 1,
-					parentId = 0,
-					children = new List<AssetsViewModel>
-					{
-						 new AssetsViewModel
-						 {
-							title = "【目录】目录设置2",
-							id = 2,
-							parentId = 1,
-							isbind=true,
-							children=new List<AssetsViewModel>()
-						 }
-					}
-				}
+			return new JsonResult(new {
+				data = assetViewMode
 			});
+
 		}
 
 		[HttpPost("interfaces")]
@@ -175,8 +160,58 @@ namespace Controllers
 			});
 		}
 
+		[HttpPost("editList")]
+		public async Task<IActionResult> EditAssetList([FromForm] List<AssetsViewModel> list)
+		{
+			var isSuccess = true;
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
+			});
+		}
+
 
 		private readonly IAssetsService _service;
+
+
+		private AssetsViewModel HierarchyAssets(IEnumerable<Assets> assetList, AssetsViewModel assetViewModel)
+		{
+			if (assetViewModel.IsNull())
+				assetViewModel = Root;
+
+			var parentId = assetViewModel.id;
+			var children = assetList.Where(x => x.ParentId == parentId);
+			foreach (var item in children)
+			{
+				var viewModel = new AssetsViewModel
+				{
+					id =item.AssetsId ,
+					parentId = parentId,
+					isbind = item.IsBind,
+					title = item.AssetsName,
+					children = new List<AssetsViewModel>()
+				};
+
+				assetViewModel.children.Add(viewModel);
+
+				HierarchyAssets(children, viewModel);
+			}
+
+			return assetViewModel;
+
+		}
+
+
+		private AssetsViewModel Root => new AssetsViewModel
+		{
+			children = new List<AssetsViewModel>(),
+			id = Guid.Empty,
+			parentId = Guid.Empty,
+			isbind = false,
+			title = "资源"
+		};
 
 	}
 

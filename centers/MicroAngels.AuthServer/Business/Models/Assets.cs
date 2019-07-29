@@ -35,6 +35,8 @@ namespace Business
 		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid ItemId { get; set; }
 
+		[SugarColumn(IsIgnore =true)]
+		public bool IsBind { get; set; }
 
 		public static List<ValidateResult> Validate(Assets assets)
 		{
@@ -132,10 +134,9 @@ namespace Business
 	{
 		public static Guid InterfaceType = Guid.Parse("94348b14-58a8-4156-b3bf-a5940a706932");
 		public static Guid MenuType = Guid.Parse("b78fa535-4a34-419d-9aa4-63f56224d0ba");
-
-		public static Guid EnableStatus = Guid.Parse("");
-		public static Guid DisableStatus = Guid.Parse("");
-		public static Guid ReadonlyStatus = Guid.Parse("");
+		//public static Guid EnableStatus = Guid.Parse("");
+		//public static Guid DisableStatus = Guid.Parse("");
+		//public static Guid ReadonlyStatus = Guid.Parse("");
 	}
 
 

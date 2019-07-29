@@ -193,11 +193,29 @@ namespace Business
 			return result;
 		}
 
-		public async Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions)
+		public async Task<IEnumerable<Assets>> GetRoleAssets(Guid roleId)
 		{
-			var query = whereExpressions == null ? AssetsDb.AsQueryable() : AssetsDb.AsQueryable().Where(whereExpressions);
+			var query = DB.Queryable<Assets, RoleAssets>((a, ra) =>
+					  new object[]{
+						JoinType.Left,
+						a.AssetsId==ra.AssetId && ra.RoleId==roleId,
+					  });
 
-			return await query.ToListAsync();
+			var result = await query.Select((a, ra) =>
+			new Assets
+			{
+				AssetsId = a.AssetsId,
+				AssetsName = a.AssetsName,
+				AssetsStatus = a.AssetsStatus,
+				AssetsType = a.AssetsType,
+				Description = a.Description,
+				IsBind = ra.Id != Guid.Empty,
+				ItemId = a.ItemId,
+				ParentId = a.ParentId,
+				SystemId = a.SystemId
+			}).ToListAsync();
+
+			return result;
 		}
 
 		public IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
@@ -226,10 +244,18 @@ namespace Business
 				return query.ToList();
 		}
 
+		public async Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions)
+		{
+			var query = whereExpressions == null ? AssetsDb.AsQueryable() : AssetsDb.AsQueryable().Where(whereExpressions);
+
+			return await query.ToListAsync();
+		}
+
 		public async Task<Menu> GetMenuById(Guid menuId)
 		{
 			return await MenuDb.AsQueryable().FirstAsync(menu => menu.MenuId == menuId);
 		}
+
 	}
 
 }

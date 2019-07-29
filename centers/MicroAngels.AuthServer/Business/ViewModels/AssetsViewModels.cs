@@ -25,8 +25,8 @@ namespace Business
 	public class AssetsViewModel
 	{
 		public string title { get; set; }
-		public int id { get; set; }
-		public int parentId { get; set; }
+		public Guid id { get; set; }
+		public Guid parentId { get; set; }
 		public bool isbind { get; set; }
 		public List<AssetsViewModel> children { get; set; }
 	}

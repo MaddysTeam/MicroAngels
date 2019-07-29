@@ -13,7 +13,8 @@ namespace Business
 		IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
 		Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames);
 		Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId);
-		//Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions);
+		Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions);
+		Task<IEnumerable<Assets>> GetRoleAssets(Guid roleId);
 		Task<bool> Edit(Assets assets);
 		Task<bool> EditInterface(Interface iinterface);
 		Task<bool> EditMenu(Menu menu);

@@ -33,7 +33,7 @@ namespace Controllers
 		}
 
 		[HttpPost("roles")]
-		public IActionResult GetRoles([FromForm]int start, [FromForm]int length)
+		public IActionResult GetRoles([FromForm]int? start, [FromForm]int? length)
 		{
 			var totalCount = 0;
 			var searchResults = _service.Search(null, length, start, out totalCount);
@@ -77,6 +77,24 @@ namespace Controllers
 					Description = role.Description,
 					RoleName = role.RoleName,
 					SystemId = Keys.System.DefaultSystemId
+				});
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
+			});
+		}
+
+		[HttpPost("BindAssets")]
+		public async Task<IActionResult> BindResource([FromForm] BindAssetsViewModel roleAssets)
+		{
+			var isSuccess= await _service.BindResource(
+				new RoleAssets
+				{
+					Id = Guid.NewGuid(),
+					AssetId = roleAssets.AssetsId,
+					RoleId = roleAssets.RoleId
 				});
 
 			return new JsonResult(new

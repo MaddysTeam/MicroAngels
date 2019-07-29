@@ -16,9 +16,9 @@ namespace Business
 		public static List<ValidateResult> Validate(RoleAssets ra)
 		{
 			return
-			ra.NotNull(ra.AssetId, "")
-			 .NotNull(ra.RoleId, "")
-			 .Validate();
+			ra.NotGuidEmpty(ra.AssetId, "")
+			  .NotGuidEmpty(ra.RoleId, "")
+			  .Validate();
 		}
 	}
 
