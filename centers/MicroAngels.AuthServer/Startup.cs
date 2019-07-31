@@ -1,5 +1,6 @@
 ﻿using Business;
 using MicroAngels.AuthServer.Services;
+using MicroAngels.Cache;
 using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Services;
@@ -25,7 +26,7 @@ namespace MicroAngels.AuthServer
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			// add mvc,include filters and etc..
 			services.AddMvcCore()
@@ -66,6 +67,12 @@ namespace MicroAngels.AuthServer
 			services.AddTransient<IAssetsService, AssetsService>();
 			services.AddTransient<IRoleService, RoleService>();
 			services.AddTransient<IUserService, UserService>();
+
+			var serviceProvider = services.AddCacheInterceptorContainer()
+				.AddInterceptor<UserInfo>(typeof(IUserCaching))
+				.BuildProvider();
+
+			return serviceProvider;
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,7 +107,7 @@ namespace MicroAngels.AuthServer
 				}
 			});
 
-			app.UseSugarORM(lifeTime,Configuration).InitTabels(MySqlDbContext.TableTypes);
+			app.UseSugarORM(lifeTime, Configuration).InitTabels(MySqlDbContext.TableTypes);
 
 		}
 	}

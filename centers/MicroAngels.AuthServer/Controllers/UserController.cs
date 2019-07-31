@@ -71,9 +71,14 @@ namespace Controllers
 		}
 
 		[HttpPost("detail")]
-		public IActionResult GetInfo([FromForm] Guid userId)
+		public async Task<IActionResult> GetInfo([FromForm] Guid userId)
 		{
-			throw  new NotImplementedException();
+			var user = await _userService.GetById(userId);
+
+			return new JsonResult(new
+			{
+				data = new { }
+			});
 		}
 
 		[HttpPost("bindRole")]

@@ -12,10 +12,6 @@ namespace Business
 
 	public class UserService : MySqlDbContext, IUserService
 	{
-		//public UserService(IRedisCache cache)
-		//{
-		//	_cache = cache;
-		//}
 
 		public async Task<bool> Edit(UserInfo userInfo)
 		{
@@ -34,17 +30,14 @@ namespace Business
 				}
 				else
 					return await UserDb.AsUpdateable(userInfo).ExecuteCommandAsync() > 0;
-
-				//_cache.AddOrRemove(userInfo.UserId,userInfo,TimeSpan.MaxValue);
 			}
-
 
 			return false;
 		}
 
-		public Task<UserInfo> GetById(Guid id)
+		public async Task<UserInfo> GetById(Guid id)
 		{
-			return Task.FromResult(UserDb.GetById(id));
+			return UserDb.GetById(id);
 		}
 
 		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
@@ -89,10 +82,6 @@ namespace Business
 			return Task.FromResult(result);
 		}
 
-		//public async Task<IEnumerable<UserRole>> SearchUserRole(Guid userId, Guid roleId)
-		//{
-		//	return await UserRoleDb.AsQueryable().Where(ur => ur.UserId == userId & ur.RoleId == roleId).WithCache().ToListAsync();
-		//}
 
 		public UserInfo GetByName(string name)
 		{
@@ -100,7 +89,7 @@ namespace Business
 			return user;
 		}
 
-		private readonly IRedisCache _cache;
+		//private readonly IRedisCache _cache;
 
 	}
 

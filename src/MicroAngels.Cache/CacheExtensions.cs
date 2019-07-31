@@ -17,7 +17,7 @@ namespace MicroAngels.Cache
 			return services.ToServiceContainer();
 		}
 
-		public static IServiceCollection AddInterceptor<T>(this IServiceCollection services,IServiceContainer container,Type cachingType)
+		public static IServiceContainer AddInterceptor<T>(this IServiceContainer container,Type cachingType)
 		{
 			container.AddType<CachingInterceptor<T>>();
 			container.Configure(config =>
@@ -25,10 +25,10 @@ namespace MicroAngels.Cache
 				config.Interceptors.AddTyped<CachingInterceptor<T>>(method => cachingType.IsAssignableFrom(method.DeclaringType));
 			});
 
-			return services;
+			return container;
 		}
 
-		public static IServiceProvider Build(this IServiceCollection services, IServiceContainer container)
+		public static IServiceProvider BuildProvider(this IServiceContainer container)
 		{
 			return container.Build();
 		}

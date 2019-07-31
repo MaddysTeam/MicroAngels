@@ -1,19 +1,21 @@
 ﻿namespace MicroAngels.Cache
 {
-    using System;
+	using System;
 
-    [AttributeUsage(AttributeTargets.Method, Inherited = true)]
-    public class CachingAttribute : Attribute
-    {
-        public int AbsoluteExpiration { get; set; } = 30;
+	[AttributeUsage(AttributeTargets.Method, Inherited = true)]
+	public class CachingAttribute : Attribute
+	{
+		public int AbsoluteExpiration { get; set; } = 30;
 
 		public ActionType ActionType { get; set; } = ActionType.search;
 
-		//add other settings ...
+		public string[] DeleteKeys { get; set; }
+
+		public bool IsAsync { get; set; }
 	}
 
 	public enum ActionType
 	{
-		edit,search
+		edit, search
 	}
 }
