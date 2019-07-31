@@ -19,3 +19,4 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Core\obj
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Core\obj\Debug\netcoreapp2.1\MicroAngels.Core.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Core\obj\Debug\netcoreapp2.1\MicroAngels.Core.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\src\MicroAngels.Core\obj\Debug\netcoreapp2.1\MicroAngels.Core.csprojAssemblyReference.cache
+E:\项目文件(GitLab)\MicroAngels\src\MicroAngels.Core\obj\Debug\netcoreapp2.1\MicroAngels.Core.csprojAssemblyReference.cache

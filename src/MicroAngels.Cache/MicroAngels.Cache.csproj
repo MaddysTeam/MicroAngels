@@ -1,15 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CSRedisCore" Version="3.0.57" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AspectCore.Core" Version="1.2.0" />
+		<PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="1.2.0" />
+		<PackageReference Include="CSRedisCore" Version="3.0.57" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
+	</ItemGroup>
 
 </Project>
