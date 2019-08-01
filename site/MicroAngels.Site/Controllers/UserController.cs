@@ -16,7 +16,7 @@ namespace Controllers
 
 		//Get   user/Edit
 
-		public IActionResult Edit()
+		public IActionResult Edit(Guid? id)
 		{
 			return PartialView("_edit");
 		}

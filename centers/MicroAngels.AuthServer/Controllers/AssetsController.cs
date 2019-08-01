@@ -161,7 +161,7 @@ namespace Controllers
 		}
 
 		[HttpPost("editList")]
-		public async Task<IActionResult> EditAssetList([FromForm] List<AssetsViewModel> list)
+		public async Task<IActionResult> EditAssetList([FromForm] AssetsViewModel assetsViewModel)
 		{
 			var isSuccess = true;
 
@@ -174,7 +174,6 @@ namespace Controllers
 
 
 		private readonly IAssetsService _service;
-
 
 		private AssetsViewModel HierarchyAssets(IEnumerable<Assets> assetList, AssetsViewModel assetViewModel)
 		{
@@ -203,6 +202,12 @@ namespace Controllers
 
 		}
 
+		private List<Assets> HierarchySaveAssets(AssetsViewModel  assetViewModel)
+		{
+			assetViewModel.children.ForEach(v => HierarchySaveAssets(v));
+
+			return null;
+		}
 
 		private AssetsViewModel Root => new AssetsViewModel
 		{

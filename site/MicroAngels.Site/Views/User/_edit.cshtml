@@ -13,7 +13,7 @@
 
 		<div class="widget-body">
 			<div class="widget-main">
-				<form class="form-horizontal" role="form" action="@Url.Action("Edit","User")" id="form">
+				<form class="form-horizontal" role="form"  id="form">
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名</label>
 
@@ -44,7 +44,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-3 col-md-9">
-							<button class="btn btn-info" type="submit">
+							<button class="btn btn-info btn-submit" type="submit">
 								<i class="ace-icon fa fa-check "></i>
 								Submit
 							</button>
@@ -67,10 +67,27 @@
 <script>
 	$(function () {
 
+
+		var code = checkCode(urls.login);
+
+		var userId = '@Model';
+		if (userId != '@Guid.Empty') {
+			$('.btn-submit').attr('disabled', 'disabled');
+			var ajax = ajaxRequset(urls.userInfo, code, urls.login, { id: userId }, function (data) {
+				$('#UserName').val(data.data.userName);
+				$('#RealName').val(data.data.realName);
+				$('#Email').val(data.data.email);
+				$('#Phone').val(data.data.phone);
+			});
+
+			$.ajax(ajax);
+		}
+
+		$('#form').attr('action', urls.editUser);
+
 		ajaxSubmitForm($('#form'),
 			{
 				code: checkCode(urls.login),
-				dataUrl: urls.edituser,
 				afterSuccess(data) {
 					alert(data.msg);
 					$('#firstModal').modal('hide');

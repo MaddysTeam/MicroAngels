@@ -19,12 +19,15 @@ namespace Controllers
 			_service = service;
 		}
 
-		[HttpPost("get")]
-		public async Task<SystemRole> Get(Guid id)
+		[HttpPost("info")]
+		public async Task<IActionResult> Get([FromForm] Guid id)
 		{
-			return await _service.GetById(id);
-		}
+			var result= await _service.GetById(id);
 
+			return new JsonResult(new {
+				data = new RoleViewModel { Id = result.RoleId, RoleName = result.RoleName, Description=result.Description	 }
+			});
+		}
 
 		[HttpPost("list")]
 		public async Task<List<SystemRole>> List(string username)

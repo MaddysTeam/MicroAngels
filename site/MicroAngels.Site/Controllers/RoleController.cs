@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Controllers
 {
@@ -11,9 +12,9 @@ namespace Controllers
 			return View();
 		}
 
-		public IActionResult Edit()
+		public IActionResult Edit(Guid? id)
 		{
-			return PartialView("_edit");
+			return PartialView("_edit",id);
 		}
 
 	}

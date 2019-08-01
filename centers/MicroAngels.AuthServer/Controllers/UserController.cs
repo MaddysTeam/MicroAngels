@@ -21,9 +21,10 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			var isSuccess= await _userService.Edit(new UserInfo { UserName=user.UserName, RealName=user.RealName, Email=user.RealName, Phone=user.Phone});
+			var isSuccess = await _userService.Edit(new UserInfo { UserName = user.UserName, RealName = user.RealName, Email = user.RealName, Phone = user.Phone });
 
-			return new JsonResult(new {
+			return new JsonResult(new
+			{
 				isSuccess,
 				msg = isSuccess ? "操作成功" : "操作失败"
 			});
@@ -40,7 +41,7 @@ namespace Controllers
 				{
 					data = searchResults.Select(x => new
 					{
-						id=x.UserId,
+						id = x.UserId,
 						username = x.UserName,
 						realname = x.RealName,
 						phone = x.Phone,
@@ -60,7 +61,7 @@ namespace Controllers
 			});
 		}
 
-		[HttpPost("info")]
+		[HttpPost("briefInfo")]
 		public IActionResult GetInfo([FromForm]string userName)
 		{
 			var user = _userService.GetByName(userName);
@@ -70,14 +71,21 @@ namespace Controllers
 			});
 		}
 
-		[HttpPost("detail")]
+		[HttpPost("info")]
 		public async Task<IActionResult> GetInfo([FromForm] Guid userId)
 		{
 			var user = await _userService.GetById(userId);
 
 			return new JsonResult(new
 			{
-				data = new { }
+				data = new UserViewModel
+				{
+					Id = user.UserId,
+					Email = user.Email,
+					Phone = user.Phone,
+					RealName = user.RealName,
+					UserName = user.UserName
+				}
 			});
 		}
 
@@ -85,12 +93,12 @@ namespace Controllers
 		public async Task<IActionResult> BindRole([FromForm] BindRoleViewModel viewModel)
 		{
 			var isSuccess = false;
-			if(!viewModel.IsNull() && !viewModel.UserId.IsEmpty() && !string.IsNullOrEmpty(viewModel.RoleIds))
+			if (!viewModel.IsNull() && !viewModel.UserId.IsEmpty() && !string.IsNullOrEmpty(viewModel.RoleIds))
 			{
 				string[] roleIds = viewModel.RoleIds.Split(',');
 				foreach (var roleId in roleIds)
 				{
-					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId});
+					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId });
 				}
 
 				return new JsonResult(new

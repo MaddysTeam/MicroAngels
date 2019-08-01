@@ -207,7 +207,8 @@
 			.on('draw', function () {
 				$table = $('#dynamic-table');
 				$table.find('.btn-edit').on('click', function () {
-					alert($(this).data('id'));
+					var userId = $(this).data('id')
+					$('#modalProxy').data('url', urls.userEditPage.format(userId)).trigger('click');
 				});
 
 				$table.find('.btn-bind-role').on('click', function () {

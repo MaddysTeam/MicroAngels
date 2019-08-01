@@ -153,7 +153,7 @@
 	</div>
 </div><!-- /.main-content -->
 
-@section Modals{ 
+@section Modals{
 	<button class="btn hidden" id="modalProxy" data-toggle="ajax-modal" data-target="#firstModal"></button>
 	<div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="firstModalLabel"></div>
 }
@@ -168,21 +168,28 @@
 				columnsDefs: [{
 					"targets": 2,
 					"render": function (data, type, row, meta) {
-						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green" href="#" title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>';
+						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" href="#" title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>';
 					}
 				}],
 
 				dataUrl: urls.getRoles,
 				accessCode: code,
 				directUrlWhenForbidden: urls.loginUrl
-			});
+			})
+				.on('draw', function () {
+					$table = $('#dynamic-table');
+					$table.find('.btn-edit').on('click', function () {
+						var roleId = $(this).data('id');
+						$('#modalProxy').data('url', urls.roleEditPage.format(roleId)).trigger('click');
+					});
+				});
 
 
 			$('.btn-edit').on('click', function () {
 				$('#modalProxy').data('url', urls.roleEditPage).trigger('click');
 			});
 
-			
+
 		});
 	</script>
 }

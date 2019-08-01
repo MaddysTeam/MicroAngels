@@ -2,7 +2,7 @@
 
 namespace Business
 {
-	public interface IUserCaching:ICaching
-	{
-	}
+
+	public interface IUserCaching:ICaching{}
+
 }
