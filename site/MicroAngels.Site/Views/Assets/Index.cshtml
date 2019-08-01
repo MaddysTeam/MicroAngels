@@ -194,7 +194,7 @@
 				dataUrl: urls.getRoles,
 				afterSuccess: function (data) {
 					$(data.data).each(function (i) {
-						$("#role").append("<option value='{0}'>{1}</option>".format(this.id, this.name));
+						$("#role").append("<option value='{0}'>{1}</option>".format(this.id, this.roleName));
 					});
 
 					$("#role").on('change', function () {
@@ -229,6 +229,7 @@
 				// save when on nestable changed
 				$('#nestable').html('').append($list).nestable().off('change').on('change', function () {
 					var param = $('.dd').nestable('serialize');
+					console.log(param);
 					var ajax = ajaxRequset(urls.editAssetsList, code, urls.loginUrl, { list: param  }, function () { });
 					$.ajax(ajax);
 				});

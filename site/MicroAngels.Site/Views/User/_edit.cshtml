@@ -1,4 +1,5 @@
-﻿<div class="modal-dialog">
+﻿@model Guid
+<div class="modal-dialog">
 	<!-- widget start -->
 	<div class="widget-box widget-color-blue ui-sortable-handle">
 
@@ -18,7 +19,7 @@
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名</label>
 
 						<div class="col-sm-9">
-							<input type="text" id="Username" name="Username" placeholder="Username" class="col-xs-10" minlength="5">
+							<input type="text" id="UserName" name="UserName" placeholder="UserName" class="col-xs-10" minlength="5">
 						</div>
 					</div>
 					<div class="form-group">
@@ -46,14 +47,14 @@
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-info btn-submit" type="submit">
 								<i class="ace-icon fa fa-check "></i>
-								Submit
+								提交
 							</button>
 
 							&nbsp; &nbsp; &nbsp;
-							<button class="btn" type="reset">
-								<i class="ace-icon fa fa-undo"></i>
-								Reset
-							</button>
+							<a class="btn btn-cancel" data-action="close" data-dismiss="modal">
+								<i class="ace-icon fa fa-close"></i>
+								取消
+							</a>
 						</div>
 					</div>
 				</form>
@@ -67,13 +68,14 @@
 <script>
 	$(function () {
 
-
 		var code = checkCode(urls.login);
 
 		var userId = '@Model';
 		if (userId != '@Guid.Empty') {
 			$('.btn-submit').attr('disabled', 'disabled');
 			var ajax = ajaxRequset(urls.userInfo, code, urls.login, { id: userId }, function (data) {
+				console.log(data.data);
+				$('.btn-submit').removeAttr('disabled');
 				$('#UserName').val(data.data.userName);
 				$('#RealName').val(data.data.realName);
 				$('#Email').val(data.data.email);

@@ -72,7 +72,11 @@
 			// 执行方法体之后加入缓存
 			if (!string.IsNullOrWhiteSpace(cacheKey))
 			{
-				CacheProvider.AddOrRemove(cacheKey, context.ReturnValue, TimeSpan.FromSeconds(attribute.AbsoluteExpiration));
+				var o = attribute.IsAsync ? (context.ReturnValue as Task<T>).Result : context.ReturnValue;
+				//if (attribute.IsAsync)
+				//	var returnValue = (context.ReturnValue as Task<T>).Result;
+
+				CacheProvider.AddOrRemove(cacheKey, o, TimeSpan.FromSeconds(attribute.AbsoluteExpiration));
 			}
 		}
 

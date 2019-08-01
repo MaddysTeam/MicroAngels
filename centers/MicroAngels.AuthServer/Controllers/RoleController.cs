@@ -22,10 +22,11 @@ namespace Controllers
 		[HttpPost("info")]
 		public async Task<IActionResult> Get([FromForm] Guid id)
 		{
-			var result= await _service.GetById(id);
+			var role= await _service.GetById(id);
+			var viewModel = role.Map<SystemRole, RoleViewModel>();
 
 			return new JsonResult(new {
-				data = new RoleViewModel { Id = result.RoleId, RoleName = result.RoleName, Description=result.Description	 }
+				data = viewModel
 			});
 		}
 
@@ -43,12 +44,7 @@ namespace Controllers
 
 			return new JsonResult(new
 			{
-				data = searchResults.Select(role => new
-				{
-					id = role.RoleId,
-					name = role.RoleName,
-					description = role.Description
-				}),
+				data = searchResults.Select(role => role.Map<SystemRole, RoleViewModel>()),
 				recordsTotal = totalCount,
 				recordsFiltered = totalCount,
 			});
@@ -61,6 +57,7 @@ namespace Controllers
 			var result = await _service.GetByUserId(userId);
 			return new JsonResult(new
 			{
+
 				data = result.Select(role => new
 				{
 					id = role.RoleId,
@@ -71,16 +68,11 @@ namespace Controllers
 		}
 
 		[HttpPost("edit")]
-		public async Task<IActionResult> Edit([FromForm]RoleViewModel role)
+		public async Task<IActionResult> Edit([FromForm]RoleViewModel roleViewModel)
 		{
-			var isSuccess = await _service.Edit(
-				new SystemRole
-				{
-					RoleId = role.Id,
-					Description = role.Description,
-					RoleName = role.RoleName,
-					SystemId = Keys.System.DefaultSystemId
-				});
+			var role = roleViewModel.Map<RoleViewModel, SystemRole>();
+			role.SystemId = Keys.System.DefaultSystemId;
+			var isSuccess = await _service.Edit(role);
 
 			return new JsonResult(new
 			{

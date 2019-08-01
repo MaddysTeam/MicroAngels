@@ -16,6 +16,7 @@ namespace Business
 		Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions);
 		Task<IEnumerable<Assets>> GetRoleAssets(Guid roleId);
 		Task<bool> Edit(Assets assets);
+		//Task<bool> EditPartial(Assets assets);
 		Task<bool> EditInterface(Interface iinterface);
 		Task<bool> EditMenu(Menu menu);
 		Task<bool> BindAssets(Guid assetId, Guid itemId);

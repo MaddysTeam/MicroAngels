@@ -9,6 +9,7 @@ namespace Business
 		public Guid Id { get; set; }
 		public string Title { get; set; }
 		public string LinkUrl { get; set; }
+		public Guid SystemId { get; set; }
 	}
 
 	public class InterfaceViewModel

@@ -128,8 +128,9 @@ function showMenu() {
 
 function showUser() {
 	var code = checkCode(urls.login);
-	var ajax = ajaxRequset(urls.showUser, code, location.href, { userName:'admin'}, function (data) {
-		$('.user-info').append('<small>{0}</small>'.format(data.data.username));
+	var ajax = ajaxRequset(urls.showUser, code, location.href, { userName: 'admin' }, function (data) {
+		console.log(data);
+		$('.user-info').append('<small>{0}</small>'.format(data.data.userName));
 	});
 
 	$.ajax(ajax);

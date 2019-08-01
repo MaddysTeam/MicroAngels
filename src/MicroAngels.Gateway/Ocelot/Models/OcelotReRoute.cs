@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MicroAngels.Gateway.Ocelot
+﻿namespace MicroAngels.Gateway.Ocelot
 {
 
 	internal class OcelotReRoute

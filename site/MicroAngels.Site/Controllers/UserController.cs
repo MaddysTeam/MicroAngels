@@ -18,7 +18,7 @@ namespace Controllers
 
 		public IActionResult Edit(Guid? id)
 		{
-			return PartialView("_edit");
+			return PartialView("_edit",id);
 		}
 
 		//Get   user/bindRoles

@@ -31,9 +31,10 @@ namespace Controllers
 		public async Task<IActionResult> GetAssets([FromForm]Guid roleId)
 		{
 			var assetsList = await _service.GetRoleAssets(roleId);
-			var assetViewMode = HierarchyAssets(assetsList, Root);
+			var assetViewMode = HierarchyMapFromAssets(assetsList, Root);
 
-			return new JsonResult(new {
+			return new JsonResult(new
+			{
 				data = assetViewMode
 			});
 
@@ -49,14 +50,7 @@ namespace Controllers
 			{
 				return new JsonResult(new
 				{
-					data = interfacesResults.Select(x => new
-					{
-						title = x.Title,
-						url = x.Url,
-						method = x.Method,
-						param = x.Parmas,
-						IsAnonymous = x.IsAllowAnonymous
-					}),
+					data = interfacesResults.Select(x => x.Map<Interface, InterfaceViewModel>()),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
 				});
@@ -79,13 +73,7 @@ namespace Controllers
 			{
 				return new JsonResult(new
 				{
-					data = searchResults.Select(x => new
-					{
-						id = x.MenuId,
-						title = x.Title,
-						systemId = x.SystemId,
-						url = x.LinkUrl
-					}),
+					data = searchResults.Select(x => x.Map<Menu, MenuViewModel>()),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
 
@@ -111,25 +99,20 @@ namespace Controllers
 		[HttpPost("menuInfo")]
 		public async Task<IActionResult> GetMenuInfo([FromForm] Guid menuId)
 		{
-			var result = await _service.GetMenuById(menuId);
+			var menu = await _service.GetMenuById(menuId);
 
 			return new JsonResult(new
 			{
-				data = new MenuViewModel { Id = result.MenuId, LinkUrl = result.LinkUrl, Title = result.Title }
+				data = menu.Map<Menu, MenuViewModel>()
 			});
 		}
 
 		[HttpPost("editMenu")]
-		public async Task<IActionResult> EditMenu([FromForm] MenuViewModel menu)
+		public async Task<IActionResult> EditMenu([FromForm] MenuViewModel menuViewModel)
 		{
 			var isSuccess = await _service.EditMenu(
-				new Menu
-				{
-					MenuId = menu.Id,
-					LinkUrl = menu.LinkUrl,
-					Title = menu.Title,
-					SystemId = Keys.System.DefaultSystemId
-				});
+				 menuViewModel.Map<MenuViewModel, Menu>()
+				 );
 
 			return new JsonResult(new
 			{
@@ -139,19 +122,11 @@ namespace Controllers
 		}
 
 		[HttpPost("editInterface")]
-		public async Task<IActionResult> EditInterface([FromForm] InterfaceViewModel inter)
+		public async Task<IActionResult> EditInterface([FromForm] InterfaceViewModel interViewModel)
 		{
 			var isSuccess = await _service.EditInterface(
-				new Interface
-				{
-					InterfaceId = inter.Id,
-					Method = inter.Method,
-					IsAllowAnonymous = inter.IsAllowAnonymous,
-					Url = inter.Url,
-					Version = inter.Version,
-					Parmas = inter.Params,
-					Title = inter.Title
-				});
+				interViewModel.Map<InterfaceViewModel, Interface>()
+				);
 
 			return new JsonResult(new
 			{
@@ -161,9 +136,12 @@ namespace Controllers
 		}
 
 		[HttpPost("editList")]
-		public async Task<IActionResult> EditAssetList([FromForm] AssetsViewModel assetsViewModel)
+		public async Task<IActionResult> EditAssetList([FromForm]  List<AssetsViewModel> list)
 		{
 			var isSuccess = true;
+
+			var assets = new List<Assets>();
+			assets = HierarchyMapToAssets(assets, list[0]);
 
 			return new JsonResult(new
 			{
@@ -175,7 +153,7 @@ namespace Controllers
 
 		private readonly IAssetsService _service;
 
-		private AssetsViewModel HierarchyAssets(IEnumerable<Assets> assetList, AssetsViewModel assetViewModel)
+		private AssetsViewModel HierarchyMapFromAssets(IEnumerable<Assets> assetList, AssetsViewModel assetViewModel)
 		{
 			if (assetViewModel.IsNull())
 				assetViewModel = Root;
@@ -184,29 +162,37 @@ namespace Controllers
 			var children = assetList.Where(x => x.ParentId == parentId);
 			foreach (var item in children)
 			{
-				var viewModel = new AssetsViewModel
-				{
-					id =item.AssetsId ,
-					parentId = parentId,
-					isbind = item.IsBind,
-					title = item.AssetsName,
-					children = new List<AssetsViewModel>()
-				};
-
+				var viewModel = item.Map<Assets, AssetsViewModel>();
+				viewModel.children = new List<AssetsViewModel>();
 				assetViewModel.children.Add(viewModel);
 
-				HierarchyAssets(children, viewModel);
+				HierarchyMapFromAssets(children, viewModel);
 			}
 
 			return assetViewModel;
 
 		}
 
-		private List<Assets> HierarchySaveAssets(AssetsViewModel  assetViewModel)
+		private List<Assets> HierarchyMapToAssets(List<Assets> assetList, AssetsViewModel assetViewModel)
 		{
-			assetViewModel.children.ForEach(v => HierarchySaveAssets(v));
+			if (assetViewModel.IsNull() || assetList.IsNull())
+				return assetList;
 
-			return null;
+			Assets parent = assetViewModel.Map<AssetsViewModel, Assets>();
+			if (!assetList.Exists(x=>x.AssetsId==parent.AssetsId))
+				assetList.Add(parent);
+
+			var children = assetViewModel.children ?? new List<AssetsViewModel>();
+			children.ForEach(v =>
+			{
+				var child = v.Map<AssetsViewModel, Assets>();
+				child.ParentId = parent.AssetsId;
+				assetList.Add(child);
+
+				HierarchyMapToAssets(assetList, v);
+			});
+
+			return assetList;
 		}
 
 		private AssetsViewModel Root => new AssetsViewModel

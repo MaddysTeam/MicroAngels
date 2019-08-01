@@ -19,7 +19,9 @@ namespace Business
 		public async Task<bool> BindResource(RoleAssets roleAccess)
 		{
 			var validteReuslt = RoleAssets.Validate(roleAccess);
-			if (validteReuslt.All(x => x.IsSuccess))
+			if (validteReuslt.All(x => x.IsSuccess) &&
+				 RoleAssetsDb.GetSingle(ra => ra.RoleId == roleAccess.RoleId && ra.AssetId == roleAccess.AssetId).IsNull()
+				)
 			{
 				var effectCount = await RoleAssetsDb.AsInsertable(roleAccess).ExecuteCommandAsync();
 

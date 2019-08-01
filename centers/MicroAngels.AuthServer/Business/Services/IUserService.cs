@@ -9,10 +9,12 @@ namespace Business
 
 	public interface IUserService : IUserCaching
 	{
-		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true, DeleteKeys =new string[] { "UserService:Search" })]
+		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetById(Guid id);
 
+		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search)]
 		UserInfo GetByName(string name);
+
 		Task<bool> Edit(UserInfo userInfo);
 		Task<bool> BindRole(UserRole userRole);
 		Task<bool> UnbindRole(Guid userRoleId);

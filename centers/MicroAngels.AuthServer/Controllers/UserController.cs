@@ -21,7 +21,7 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			var isSuccess = await _userService.Edit(new UserInfo { UserName = user.UserName, RealName = user.RealName, Email = user.RealName, Phone = user.Phone });
+			var isSuccess = false;//await _userService.Edit(new UserInfo { UserName = user.UserName, RealName = user.RealName, Email = user.RealName, Phone = user.Phone });
 
 			return new JsonResult(new
 			{
@@ -39,14 +39,7 @@ namespace Controllers
 			{
 				return new JsonResult(new
 				{
-					data = searchResults.Select(x => new
-					{
-						id = x.UserId,
-						username = x.UserName,
-						realname = x.RealName,
-						phone = x.Phone,
-						email = x.Email
-					}),
+					data = searchResults.Select(x => x.Map<UserInfo, UserViewModel>()),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
 
@@ -65,27 +58,22 @@ namespace Controllers
 		public IActionResult GetInfo([FromForm]string userName)
 		{
 			var user = _userService.GetByName(userName);
+			var viewMode = user.Map<UserInfo, UserViewModel>();
+
 			return new JsonResult(new
 			{
-				data = new { userId = user.UserId, username = user.UserName }
+				data = viewMode
 			});
 		}
 
 		[HttpPost("info")]
-		public async Task<IActionResult> GetInfo([FromForm] Guid userId)
+		public async Task<IActionResult> GetInfo([FromForm] Guid id)
 		{
-			var user = await _userService.GetById(userId);
+			var user = await _userService.GetById(id);
 
 			return new JsonResult(new
 			{
-				data = new UserViewModel
-				{
-					Id = user.UserId,
-					Email = user.Email,
-					Phone = user.Phone,
-					RealName = user.RealName,
-					UserName = user.UserName
-				}
+				data = user.Map<UserInfo, UserViewModel>()
 			});
 		}
 
