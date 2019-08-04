@@ -44,8 +44,8 @@ namespace Business
 			.ForMember(dest => dest.title, opt => opt.MapFrom(src => src.AssetsName))
 			.ForMember(dest => dest.parentId, opt => opt.MapFrom(src => src.ParentId))
 			.ForMember(dest => dest.isbind, opt => opt.MapFrom(src => src.IsBind))
+			.ForMember(dest => dest.link, opt => opt.MapFrom(src => src.Menu.LinkUrl))
 			.ReverseMap();
-
 		}
 	}
 

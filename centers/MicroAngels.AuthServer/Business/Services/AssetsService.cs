@@ -256,6 +256,19 @@ namespace Business
 			return await MenuDb.AsQueryable().FirstAsync(menu => menu.MenuId == menuId);
 		}
 
+		public async Task<bool> MultiEdit(List<Assets> assetsList)
+		{
+			var result = await DB.UseTranAsync(async () =>
+			{
+				foreach (var assets in assetsList)
+				{
+					//if (Assets.Validate(assets).All(validateResult => validateResult.IsSuccess))
+					 AssetsDb.Update(a=>new Assets{ ParentId= assets.ParentId }, it => it.AssetsId == assets.AssetsId);
+				}
+			});
+
+			return result.IsSuccess;
+		}
 	}
 
 }

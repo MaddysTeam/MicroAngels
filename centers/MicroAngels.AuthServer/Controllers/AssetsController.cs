@@ -76,7 +76,6 @@ namespace Controllers
 					data = searchResults.Select(x => x.Map<Menu, MenuViewModel>()),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
-
 				});
 			}
 
@@ -94,6 +93,28 @@ namespace Controllers
 			var menus = await _service.GetMenusByUserId(userId);
 
 			return menus.ToList();
+		}
+
+		[HttpPost("hierarchyMenus")]
+		public async Task<IActionResult> GetHierarchyMenus([FromForm]Guid userId)
+		{
+			var menus = await _service.GetMenusByUserId(userId);
+			var assetsList = await _service.SearchAssets(asset=>asset.AssetsType==Keys.Assests.MenuType);
+			//bind link url
+			foreach(var assets in assetsList)
+			{
+				var menu = menus.FirstOrDefault(m => m.MenuId == assets.ItemId);
+				assets.Menu = menu;
+			}
+
+			//get hierachy asset view model
+			var assetViewMode = HierarchyMapFromAssets(assetsList, Root);
+
+			return new JsonResult(new
+			{
+				data = assetViewMode
+			});
+
 		}
 
 		[HttpPost("menuInfo")]
@@ -138,10 +159,10 @@ namespace Controllers
 		[HttpPost("editList")]
 		public async Task<IActionResult> EditAssetList([FromForm]  List<AssetsViewModel> list)
 		{
-			var isSuccess = true;
+			var assetsList = new List<Assets>();
+			assetsList = HierarchyMapToAssets(assetsList, list[0]);
 
-			var assets = new List<Assets>();
-			assets = HierarchyMapToAssets(assets, list[0]);
+			var isSuccess = await _service.MultiEdit(assetsList);
 
 			return new JsonResult(new
 			{
@@ -166,7 +187,7 @@ namespace Controllers
 				viewModel.children = new List<AssetsViewModel>();
 				assetViewModel.children.Add(viewModel);
 
-				HierarchyMapFromAssets(children, viewModel);
+				HierarchyMapFromAssets(assetList, viewModel);
 			}
 
 			return assetViewModel;

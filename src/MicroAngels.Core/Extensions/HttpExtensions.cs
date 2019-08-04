@@ -28,6 +28,13 @@ namespace MicroAngels.Core
 			await response.WriteAsync(error);
 		}
 
+		public static async Task SendAnauthorizedReponse(this HttpResponse response, string contentType, string error)
+		{
+			response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
+			response.ContentType = contentType;
+			await response.WriteAsync(error);
+		}
+
 	}
 
 }

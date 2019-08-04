@@ -35,7 +35,7 @@ urls = {
 	editMenu: 'http://192.168.1.2:5000/api/authserver/assets/editMenu',
 
 	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
-	bindAssets:'http://192.168.1.2:5000/api/authserver/role/bindAssets',
+	bindAssets: 'http://192.168.1.2:5000/api/authserver/role/bindAssets',
 	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
 
 	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
@@ -55,16 +55,16 @@ urls = {
 	userEditPage: 'http://localhost:5000/user/edit?id={0}',
 	roleEditPage: 'http://localhost:5000/role/edit?id={0}',
 	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
-	bindRolePage:'http://localhost:5000/user/bindRoles',
+	bindRolePage: 'http://localhost:5000/user/bindRoles',
 	interfacePage: 'http://localhost:5000/assets/interfaceIndex',
-	menuPage:'http://localhost:5000/assets/menuIndex',
+	menuPage: 'http://localhost:5000/assets/menuIndex',
 	assetsPage: 'http://localhost:5000/assets/index'
 };
 
 
 function checkCode(returnUrl) {
 	var code = localStorage.getItem('code');
-	if (code === undefined || code === '' || code==null) {
+	if (code === undefined || code === '' || code == null) {
 		location.href = returnUrl;
 	}
 	return code;
@@ -77,53 +77,42 @@ function cleanCode() {
 
 function whenForbidden(redirectUrl) {
 	cleanCode();
-	alert(redirectUrl);
 	location.href = redirectUrl;
 }
 
+var menuComponents = {
+	menuStr: '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>',
+	submenuStr: '<ul class="submenu"></ul>',
+	submenuItemStr: '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>',
+};
+
 function showMenu() {
-	var menuStr = '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>';
-	var submenuStr = '<ul class="submenu"></ul>'
-	var submenuItemStr = '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>';
-	var menus = [{
-		id: '1', title: '系统设置', children: [
+
+	var data = {
+		id: '1', title: '系统管理', children: [
 			{
-				id: '1.1', title: '用户管理', link: urls.userPage
+				id: '1.1', title: '用户管理', link: urls.rolePage, children:[]
 			},
 			{
-				id: '1.2', title: '角色管理', link: urls.rolePage
+				id: '1.2', title: '角色管理', link: urls.rolePage, children: []
 			},
 			{
-				id: '1.3', title: '资源管理', link: urls.assetsPage
+				id: '1.3', title: '资源管理', link: urls.assetsPage, children: []
 			},
 			{
-				id: '1.4', title: '接口管理', link: urls.interfacePage
+				id: '1.4', title: '接口管理', link: urls.interfacePage, children: []
 			},
 			{
-				id: '1.5', title: '菜单管理', link: urls.menuPage
+				id: '1.5', title: '菜单管理', link: urls.menuPage, children: []
+			},
+			{
+				id: '1.6', title: '消息管理', link: urls.menuPage, children: []
 			}
-			//{
-			//	id: '1.6', title: '按钮管理', link: urls.interfacePage
-			//}
 		]
-	}];
+	};
 
-
-	$(menus).each(function (i) {
-		var menu = menus[i];
-		var $menu_container = $('#SideBar');
-		var $menu_body = $(menuStr.format(menu.title));
-		var $submenu_container = $(submenuStr);
-
-		var j = 0;
-		while (menu.children) {
-			if (j == menu.children.length) break;
-			var submenu = menu.children[j++];
-			$submenu_container.append(submenuItemStr.format(submenu.title, submenu.link));
-		}
-
-		$menu_body.append($submenu_container).appendTo($menu_container)
-	});
+	var menus = showMenuHierarchy(data);
+	$('#SideBar').append(menus);
 }
 
 function showUser() {
@@ -143,9 +132,8 @@ function signOut() {
 	location.href = urls.login;
 }
 
-
-var ajaxRequset = function(url,code,forbiddenUrl,data,success){
-	var ajax= {
+var ajaxRequset = function (url, code, forbiddenUrl, data, success) {
+	var ajax = {
 		type: "POST",
 		url: url,
 		xhrFields: {
@@ -157,8 +145,9 @@ var ajaxRequset = function(url,code,forbiddenUrl,data,success){
 			'Authorization': 'Bearer ' + code
 		},
 		error: function (o) {
-			//alert(o.status);
-			if (o.status == 403) {
+			if (!forbiddenUrl)
+				forbiddenUrl = urls.login;
+			if (o.status == 403 || o.status== 401) {
 				whenForbidden(forbiddenUrl);
 			}
 		}
@@ -175,6 +164,30 @@ var ajaxRequset = function(url,code,forbiddenUrl,data,success){
 	return ajax;
 };
 
+function showMenuHierarchy(data) {
+	var $item = $(menuComponents.menuStr.format(data.title));
+
+	for (var i = 0; i < data.children.length; i++) {
+		var submenu = data.children[i];
+		if (data.children[i].children.length > 0) {
+			var $sublist = showMenuHierarchy(data.children[i]);
+			var $subContainer = $(menuComponents.submenuStr);
+			$subContainer
+				.append($sublist)
+				.appendTo($item);
+		}
+		else {
+			$(menuComponents.submenuStr)
+				.append(menuComponents.submenuItemStr.format(submenu.title, submenu.link))
+				.appendTo($item);
+		}
+
+	}
+
+	return $item;
+
+}
+
 /* ------------------------------------------------- ajax forms ------------------------------------------------------- */
 
 function ajaxSubmitForm(selector, options) {
@@ -182,7 +195,7 @@ function ajaxSubmitForm(selector, options) {
 		code: null,
 		isReplaceCommas: true,
 		dataUrl: selector.attr('action'),
-		afterSuccess: function () {},
+		afterSuccess: function () { },
 	}, options);
 
 
@@ -328,7 +341,7 @@ var initTable = function (id, options) {
 		serverSide: false,
 		dataUrl: '',
 		accessCode: '',
-		directUrlWhenForbidden:''
+		directUrlWhenForbidden: ''
 	}, options);
 
 	var $tableSelector = $('#' + id);
@@ -347,7 +360,7 @@ var initTable = function (id, options) {
 		$tableSelector
 			//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 			.DataTable({
-				ajax: ajaxRequset(options.dataUrl,options.accessCode, options.forbiddenUrl),
+				ajax: ajaxRequset(options.dataUrl, options.accessCode, options.forbiddenUrl),
 				bAutoWidth: false,
 				columnDefs: options.columnsDefs || [],
 				columns: columns,
@@ -579,6 +592,11 @@ var initTable = function (id, options) {
 
 	return myTable;
 };
+
+
+function refreshTable(selector) {
+	$(selector).dataTable().ajax.reload();
+}
 
 
 

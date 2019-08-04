@@ -32,6 +32,11 @@ namespace MicroAngels.OcelotGateway.Services
 			var roleClaims = context.HttpContext.User.Claims.Where(c => c.Value == "role");
 			var roles = roleClaims.Count() <= 0 ? new string[] { } : roleClaims.Select(x => x.Type).ToArray();
 
+			//if (context.HttpContext.User.IsNull())
+			//{
+			//	var permissionUrls = await client.PostAsync<string[]>(serivceUrl, roles);
+			//}
+
 			// find interface service
 			var services = await _serviceFinder.FindByNameAsync(_configuration["RemoteService:Name"]);
 			if (!services.IsNull() && services.Count > 0)

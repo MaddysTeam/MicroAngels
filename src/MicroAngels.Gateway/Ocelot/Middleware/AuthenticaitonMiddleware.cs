@@ -33,7 +33,7 @@ namespace MicroAngels.Gateway.Ocelot
 				{
 					await _next.Invoke(context);
 					//var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
-					//if (!result.IsNull() && !result.Principal.IsNull())
+					//if (result.Succeeded)
 					//{
 					//	context.HttpContext.User = result.Principal;
 					//}

@@ -91,9 +91,8 @@
 			{
 				code: checkCode(urls.login),
 				afterSuccess(data) {
-					alert(data.msg);
 					$('#firstModal').modal('hide');
-					//$('datatable').reload
+					refreshTable('#dynamic-table')
 				}
 			});
 

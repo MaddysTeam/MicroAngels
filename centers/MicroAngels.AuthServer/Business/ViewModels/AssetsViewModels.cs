@@ -30,6 +30,8 @@ namespace Business
 		public Guid parentId { get; set; }
 		public bool isbind { get; set; }
 		public List<AssetsViewModel> children { get; set; }
+
+		public string link { get; set; }
 	}
 
 }

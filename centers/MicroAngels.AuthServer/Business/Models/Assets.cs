@@ -38,6 +38,9 @@ namespace Business
 		[SugarColumn(IsIgnore =true)]
 		public bool IsBind { get; set; }
 
+		[SugarColumn(IsIgnore = true)]
+		public Menu Menu { get; set; }
+
 		public static List<ValidateResult> Validate(Assets assets)
 		{
 			return assets
