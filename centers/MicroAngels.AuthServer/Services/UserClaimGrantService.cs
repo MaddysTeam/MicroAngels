@@ -24,26 +24,27 @@ namespace MicroAngels.AuthServer.Services
 		public async Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
 		{
 			var claims = new List<Claim>();
+
 			// get user id as client Id and put into claims 
 			int userCount = 0;
-			var users =  _userService.Search(u => u.UserName == context.UserName, null, null,out userCount);
-			if (!users.IsNull() && userCount > 0)
+			var users = _userService.Search(u => u.UserName == context.UserName, null, null, out userCount);
+			if (!users.IsNull() && users.Count() > 0)
 			{
 				var userid = users.First().UserId.ToString();
-				claims.Add(new Claim("userId", userid ));
+				claims.Add(new Claim(CoreKeys.USER_ID, userid));
 			}
 
 			// get user roles by user name
 			var roles = await _roleService.GetByUserName(context.UserName);
 			foreach (var role in roles)
 			{
-				claims.Add(new Claim(role.RoleName, "role"));
+				claims.Add(new Claim(role.RoleName, CoreKeys.ROLE));
 			}
 
 			return claims.ToArray();
 		}
 
-		private readonly IRedisCache _cache;
+		//TODO:		private readonly IRedisCache _cache;
 		private readonly IRoleService _roleService;
 		private readonly IUserService _userService;
 	}

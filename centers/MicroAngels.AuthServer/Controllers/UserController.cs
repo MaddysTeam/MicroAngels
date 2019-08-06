@@ -1,5 +1,6 @@
 ﻿using Business;
 using MicroAngels.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			var isSuccess = false;//await _userService.Edit(new UserInfo { UserName = user.UserName, RealName = user.RealName, Email = user.RealName, Phone = user.Phone });
+			var isSuccess = await _userService.Edit(user.Map<UserViewModel,UserInfo>());
 
 			return new JsonResult(new
 			{
@@ -55,9 +56,10 @@ namespace Controllers
 		}
 
 		[HttpPost("briefInfo")]
-		public IActionResult GetInfo([FromForm]string userName)
+		public async Task<IActionResult> GetInfo()
 		{
-			var user = _userService.GetByName(userName);
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var user = await _userService.GetById(userId.ToGuid());
 			var viewMode = user.Map<UserInfo, UserViewModel>();
 
 			return new JsonResult(new
@@ -67,9 +69,11 @@ namespace Controllers
 		}
 
 		[HttpPost("info")]
-		public async Task<IActionResult> GetInfo([FromForm] Guid id)
+		public async Task<IActionResult> GetInfo([FromForm] Guid? id)
 		{
-			var user = await _userService.GetById(id);
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			Guid uid = userId.IsNullOrEmpty() ? id.Value : userId.ToGuid();
+			var user = await _userService.GetById(uid);
 
 			return new JsonResult(new
 			{

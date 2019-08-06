@@ -3,6 +3,7 @@ using MicroAngels.AuthServer.Services;
 using MicroAngels.Cache;
 using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
+using MicroAngels.IdentityServer.Models;
 using MicroAngels.IdentityServer.Services;
 using MicroAngels.IdentityServer.Validators;
 using MicroAngels.Logger.ExceptionLess;
@@ -59,6 +60,17 @@ namespace MicroAngels.AuthServer
 				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
 				.AddProfileService<UserClaimsProfileService>(); // add claims into user profile （such as context）
 
+
+			//token authentication
+			services.AddIdsAuthentication(new IdentityAuthenticationOptions
+			{
+				Scheme = Configuration["IdentityService:DefaultScheme"],
+				Authority = Configuration["IdentityService:Uri"],
+				RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
+				ApiSecret = "secreta",
+				ApiName = "MessageCenter"
+			});
+
 			// add exceptionless logger
 			services.AddLessLog();
 
@@ -82,6 +94,8 @@ namespace MicroAngels.AuthServer
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseAuthentication();
 
 			app.UseMvc();
 

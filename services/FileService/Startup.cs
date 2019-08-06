@@ -64,7 +64,7 @@ namespace FileService
 			});
 
 			services.AddTransient<IFileService, FileService.Business.FileService>();
-			services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
+			//services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
 
 			// regist hystrix polly aop serive
 			return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services);

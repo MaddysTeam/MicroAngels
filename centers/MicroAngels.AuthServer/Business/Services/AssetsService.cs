@@ -172,24 +172,21 @@ namespace Business
 
 		public async Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId)
 		{
-			if (!userId.IsEmpty())
-			{
-				return null;
-			}
-
-			var query = DB.Queryable<UserInfo, SystemRole, RoleAssets, Assets, Menu>((u, r, ra, a, m) =>
+			var query = DB.Queryable<UserInfo, UserRole, SystemRole, RoleAssets, Assets, Menu>((u, ur, r, ra, a, m) =>
 				 new object[]{
 						JoinType.Inner,
-						u.UserId==r.RoleId,
+						u.UserId==ur.UserId,
+						JoinType.Inner,
+						ur.RoleId==r.RoleId,
 						JoinType.Inner,
 						r.RoleId==ra.RoleId,
 						JoinType.Inner,
 						ra.AssetId==a.AssetsId,
 						JoinType.Inner,
 						a.ItemId== m.MenuId
-				 }).Where((u, r, ra, a, m) => u.UserId == userId);
+				 }).Where((u, ur, r, ra, a, m) => u.UserId == userId);
 
-			var result = await query.Select((u, r, ra, a, m) => m).ToListAsync();
+			var result = await query.Select((u,ur,r, ra, a, m) => m).ToListAsync();
 			return result;
 		}
 

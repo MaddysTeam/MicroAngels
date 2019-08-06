@@ -310,7 +310,6 @@ namespace MicroAngels.Core.Plugins
 
 		#endregion
 
-
 		#region 创建私钥
 
 		public static List<string> CreateKeys(int keySize, KeyFormat keyFormat)

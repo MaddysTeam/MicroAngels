@@ -44,6 +44,7 @@ urls = {
 	getAssets: 'http://192.168.1.2:5000/api/authserver/assets/roleAssets',
 	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/interfaces',
 	getMenu: 'http://192.168.1.2:5000/api/authserver/assets/allMenus',
+	getHierarchyMenus:'http://192.168.1.2:5000/api/authserver/assets/hierarchyMenus',
 
 	menuInfo: 'http://192.168.1.2:5000/api/authserver/assets/menuInfo',
 	roleInfo: 'http://192.168.1.2:5000/api/authserver/role/info',
@@ -84,40 +85,20 @@ var menuComponents = {
 	menuStr: '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>',
 	submenuStr: '<ul class="submenu"></ul>',
 	submenuItemStr: '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>',
-};
+};	
 
 function showMenu() {
-
-	var data = {
-		id: '1', title: '系统管理', children: [
-			{
-				id: '1.1', title: '用户管理', link: urls.rolePage, children:[]
-			},
-			{
-				id: '1.2', title: '角色管理', link: urls.rolePage, children: []
-			},
-			{
-				id: '1.3', title: '资源管理', link: urls.assetsPage, children: []
-			},
-			{
-				id: '1.4', title: '接口管理', link: urls.interfacePage, children: []
-			},
-			{
-				id: '1.5', title: '菜单管理', link: urls.menuPage, children: []
-			},
-			{
-				id: '1.6', title: '消息管理', link: urls.menuPage, children: []
-			}
-		]
-	};
-
-	var menus = showMenuHierarchy(data);
-	$('#SideBar').append(menus);
+	var code = checkCode(urls.login);
+	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null , function (data) {
+		var menus = showMenuHierarchy(data.data);
+		$('#SideBar').append(menus);
+	});
+	$.ajax(ajax);
 }
 
 function showUser() {
 	var code = checkCode(urls.login);
-	var ajax = ajaxRequset(urls.showUser, code, location.href, { userName: 'admin' }, function (data) {
+	var ajax = ajaxRequset(urls.showUser, code, location.href, null, function (data) {
 		console.log(data);
 		$('.user-info').append('<small>{0}</small>'.format(data.data.userName));
 	});
@@ -595,7 +576,7 @@ var initTable = function (id, options) {
 
 
 function refreshTable(selector) {
-	$(selector).dataTable().ajax.reload();
+	$(selector).dataTable().reload();
 }
 
 

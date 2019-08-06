@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "94d79ff06e9d1d663e56ca8d94fb54c154d10713"
+    "signature": "61c0ffd031d03c0705c466523a5b533bc1a757b4"
   },
   "compilationOptions": {},
   "targets": {
@@ -16,6 +16,18 @@
         },
         "runtime": {
           "MicroAngels.Bus.dll": {}
+        }
+      },
+      "AutoMapper/8.0.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.0"
+          }
         }
       },
       "Confluent.Kafka/0.11.6": {
@@ -3822,6 +3834,7 @@
       },
       "MicroAngels.Core/1.0.0": {
         "dependencies": {
+          "AutoMapper": "8.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Newtonsoft.Json": "11.0.2",
           "XC.RSAUtil": "1.1.0",
@@ -3838,6 +3851,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoMapper/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kcbje0Y71XkvzPn8k6OROZGOn2SKaWimon3Bu1WUTVoV5GTJVym+k+zQuKApyyFVRfk7bisumj/qUX4xIIXS+Q==",
+      "path": "automapper/8.0.0",
+      "hashPath": "automapper.8.0.0.nupkg.sha512"
     },
     "Confluent.Kafka/0.11.6": {
       "type": "package",

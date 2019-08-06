@@ -20,7 +20,7 @@
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 菜单标题</label>
 
 						<div class="col-sm-9">
-							<input type="text" id="Title" name="Title" placeholder="菜单标题" class="col-xs-10" minlength="5">
+							<input type="text" id="Title" name="Title" placeholder="菜单标题" class="col-xs-10" minlength="4">
 						</div>
 					</div>
 					<div class="form-group">
@@ -77,6 +77,7 @@
 				code: checkCode(urls.login),
 				afterSuccess(data) {
 					$('#firstModal').modal('hide');
+					refreshTable('#table')
 					//$('table').ajax.reload();
 				}
 			});

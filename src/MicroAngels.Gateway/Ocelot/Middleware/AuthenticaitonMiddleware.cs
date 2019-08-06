@@ -31,12 +31,15 @@ namespace MicroAngels.Gateway.Ocelot
 			{
 				if (_options.IsUseCustomAuthenticate && !_authenticateService.IsNull())
 				{
+					
+					var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
+					if (result.Succeeded)
+					{
+						context.HttpContext.User = result.Principal;
+					}
+
 					await _next.Invoke(context);
-					//var result = await context.HttpContext.AuthenticateAsync(context.DownstreamReRoute.AuthenticationOptions.AuthenticationProviderKey);
-					//if (result.Succeeded)
-					//{
-					//	context.HttpContext.User = result.Principal;
-					//}
+
 					//if (await _authenticateService.ValidateAuthenticate(context))
 					//{
 					//	await _next.Invoke(context);

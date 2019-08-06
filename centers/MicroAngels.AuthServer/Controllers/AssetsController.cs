@@ -87,21 +87,31 @@ namespace Controllers
 			});
 		}
 
-		[HttpPost("menus")]
-		public async Task<List<Menu>> GetMenus([FromForm]Guid userId)
-		{
-			var menus = await _service.GetMenusByUserId(userId);
+		//[HttpPost("menus")]
+		//public async Task<List<Menu>> GetMenus()
+		//{
+		//	var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+		//	var menus = await _service.GetMenusByUserId(userId.ToGuid());
 
-			return menus.ToList();
-		}
+		//	return menus.ToList();
+		//}
 
 		[HttpPost("hierarchyMenus")]
-		public async Task<IActionResult> GetHierarchyMenus([FromForm]Guid userId)
+		public async Task<IActionResult> GetHierarchyMenus()
 		{
-			var menus = await _service.GetMenusByUserId(userId);
-			var assetsList = await _service.SearchAssets(asset=>asset.AssetsType==Keys.Assests.MenuType);
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var menus = await _service.GetMenusByUserId(userId.ToGuid());
+			var assetsList = await _service.SearchAssets(asset => asset.AssetsType == Keys.Assests.MenuType);
 			//bind link url
-			foreach(var assets in assetsList)
+			if (menus.Count() <= 0)
+			{
+				return new JsonResult(new
+				{
+					data = Root
+				});
+
+			}
+			foreach (var assets in assetsList)
 			{
 				var menu = menus.FirstOrDefault(m => m.MenuId == assets.ItemId);
 				assets.Menu = menu;
@@ -114,7 +124,6 @@ namespace Controllers
 			{
 				data = assetViewMode
 			});
-
 		}
 
 		[HttpPost("menuInfo")]
