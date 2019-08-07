@@ -23,39 +23,43 @@
 
 
 /* ------------------------------------------------- bussiness ------------------------------------------------------- */
-
+var apiDomain = "http://192.168.1.2:5000";
 urls = {
+
+	editUser: '{0}/api/authserver/user/edit'.format(apiDomain),
+	editRole: '{0}/api/authserver/role/edit'.format(apiDomain),
+	editAssetsList: '{0}/api/authserver/assets/editList'.format(apiDomain),
+	editMenu: '{0}/api/authserver/assets/editMenu'.format(apiDomain),
+	editInterface: '{0}/api/authserver/assets/editInterface'.format(apiDomain),
+
+	bindRole: '{0}/api/authserver/user/bindRole'.format(apiDomain),
+	bindAssets: '{0}/api/authserver/role/bindAssets'.format(apiDomain),
+	userEdit: '{0}/api/authserver/user/edit'.format(apiDomain),
+
+	getUsers: '{0}/api/authserver/user/users'.format(apiDomain),
+	getRoles: '{0}/api/authserver/role/roles'.format(apiDomain),
+	getRolesByUserId: '{0}/api/authserver/role/userRoles'.format(apiDomain),
+	getAssets: '{0}/api/authserver/assets/roleAssets'.format(apiDomain),
+	getInterface: '{0}/api/authserver/assets/interfaces'.format(apiDomain),
+	getMenu: '{0}/api/authserver/assets/allMenus'.format(apiDomain),
+	getHierarchyMenus: '{0}/api/authserver/assets/hierarchyMenus'.format(apiDomain),
+
+	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
+	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
+	roleInfo: '{0}/api/authserver/role/info'.format(apiDomain),
+	userInfo: '{0}/api/authserver/user/info'.format(apiDomain),
+	showUser: '{0}/api/authserver/user/briefInfo'.format(apiDomain),
+
+
 	login: 'http://localhost:5000/account/login',
 	index: 'http://localhost:5000/',
-	signOut: 'http://192.168.1.2:5000/api/accountservice/signout',
-
-	editUser: 'http://192.168.1.2:5000/api/authserver/user/edit',
-	editRole: 'http://192.168.1.2:5000/api/authserver/role/edit',
-	editAssetsList: 'http://192.168.1.2:5000/api/authserver/assets/editList',
-	editMenu: 'http://192.168.1.2:5000/api/authserver/assets/editMenu',
-
-	bindRole: 'http://192.168.1.2:5000/api/authserver/user/bindRole',
-	bindAssets: 'http://192.168.1.2:5000/api/authserver/role/bindAssets',
-	userEdit: 'http://192.168.1.2:5000/api/authserver/user/edit',
-
-	getUsers: 'http://192.168.1.2:5000/api/authserver/user/users',
-	getRoles: 'http://192.168.1.2:5000/api/authserver/role/roles',
-	getRolesByUserId: 'http://192.168.1.2:5000/api/authserver/role/userRoles',
-	getAssets: 'http://192.168.1.2:5000/api/authserver/assets/roleAssets',
-	getInterface: 'http://192.168.1.2:5000/api/authserver/assets/interfaces',
-	getMenu: 'http://192.168.1.2:5000/api/authserver/assets/allMenus',
-	getHierarchyMenus:'http://192.168.1.2:5000/api/authserver/assets/hierarchyMenus',
-
-	menuInfo: 'http://192.168.1.2:5000/api/authserver/assets/menuInfo',
-	roleInfo: 'http://192.168.1.2:5000/api/authserver/role/info',
-	userInfo: 'http://192.168.1.2:5000/api/authserver/user/info',
-	showUser: 'http://192.168.1.2:5000/api/authserver/user/briefInfo',
-
+	signOut: '{0}/api/accountservice/signout'.format(apiDomain),
 	userPage: 'http://localhost:5000/user/index',
 	rolePage: 'http://localhost:5000/role/index',
 	userEditPage: 'http://localhost:5000/user/edit?id={0}',
 	roleEditPage: 'http://localhost:5000/role/edit?id={0}',
 	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
+	interfaceEditPage: 'http://localhost:5000/assets/EditInterface?interfaceId={0}',
 	bindRolePage: 'http://localhost:5000/user/bindRoles',
 	interfacePage: 'http://localhost:5000/assets/interfaceIndex',
 	menuPage: 'http://localhost:5000/assets/menuIndex',

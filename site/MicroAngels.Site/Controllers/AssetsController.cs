@@ -31,52 +31,9 @@ namespace Controllers
 			return PartialView("_editMenu", menuId);
 		}
 
-		public IActionResult EditInterface()
+		public IActionResult EditInterface(Guid? interfaceId)
 		{
-			return PartialView("_editMenu");
-		}
-
-		[HttpPost]
-		public IActionResult GetAssets()
-		{
-			return new JsonResult(new
-			{
-				data = new TempViewModel
-				{
-					title = "【目录】系统设置",
-					id = 1,
-					parentId = 0,
-					children = new List<TempViewModel>
-					{
-						 new TempViewModel
-						 {
-							title = "【目录】目录设置",
-							id = 2,
-							parentId = 1,
-							isbind=true,
-							children=new List<TempViewModel>()
-						 }
-					}
-				}
-			});
-		}
-
-		[HttpPost]
-		public IActionResult Edit(List<TempViewModel> list)
-		{
-			return new JsonResult(new {
-
-			});
-		}
-
-
-		[HttpPost]
-		public IActionResult BindRoleAsset(string roleId,string assetId)
-		{
-			return new JsonResult(new
-			{
-
-			});
+			return PartialView("_editInterface", interfaceId);
 		}
 
 	}

@@ -137,6 +137,17 @@ namespace Controllers
 			});
 		}
 
+		[HttpPost("interfaceInfo")]
+		public async Task<IActionResult> GetInterfaceInfo([FromForm] Guid interfaceId)
+		{
+			var inter = await _service.GetInterfaceById(interfaceId);
+
+			return new JsonResult(new
+			{
+				data = inter.Map<Interface, InterfaceViewModel>()
+			});
+		}
+
 		[HttpPost("editMenu")]
 		public async Task<IActionResult> EditMenu([FromForm] MenuViewModel menuViewModel)
 		{

@@ -109,7 +109,7 @@
 		$.ajax(ajax);
 
 		$('.btn-bind').on('click', function () {
-			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: '1,2' }, function (data) {
+			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: 'c2c1c796-2c94-4c19-9bfd-51df88839c9b' }, function (data) {
 				$('#firstModal').modal('hide');
 			});
 			$.ajax(ajax);
@@ -121,7 +121,7 @@
 		$('.checkboxList').html('');
 		$(data).each(function (i) {
 			var m = this;
-			var $checkbox = $('<div class="checkbox"><label class="block"><input name="form-field-checkbox" type="checkbox" {1} class="ace input ace-checkbox-2"><span class="lbl">&nbsp;{0}</span></label></div>'.format(m.name, m.isChecked ? 'checked="checked"' : ''))
+			var $checkbox = $('<div class="checkbox"><label class="block"><input name="form-field-checkbox" type="checkbox" {1} {2} class="ace input ace-checkbox-2"><span class="lbl">&nbsp;{0}</span></label></div>'.format(m.name, m.isChecked ? 'checked="checked"' : '','data-id='+m.id))
 			if (i % 4 == 0) {
 				$checkboxList = $('<div class="control-group col-md-4 checkboxList"></div>');
 				$('.checkboxList').append($checkboxList);

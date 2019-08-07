@@ -69,11 +69,9 @@ namespace Controllers
 		}
 
 		[HttpPost("info")]
-		public async Task<IActionResult> GetInfo([FromForm] Guid? id)
+		public async Task<IActionResult> GetInfo([FromForm] Guid id)
 		{
-			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
-			Guid uid = userId.IsNullOrEmpty() ? id.Value : userId.ToGuid();
-			var user = await _userService.GetById(uid);
+			var user = await _userService.GetById(id);
 
 			return new JsonResult(new
 			{

@@ -14,8 +14,9 @@
 		<div class="widget-body">
 			<div class="widget-main">
 				<form class="form-horizontal" role="form" id="form">
+					<input type="hidden" id="Id" name="Id" value="@Model" />
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口标题</label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 接口名称</label>
 
 						<div class="col-sm-9">
 							<input type="text" id="Title" name="Title" placeholder="填写角色名称" class="col-xs-10" minlength="5">
@@ -70,8 +71,8 @@
 							</button>
 
 							&nbsp; &nbsp; &nbsp;
-							<button class="btn" type="reset">
-								<i class="ace-icon fa fa-undo"></i>
+							<button class="btn" type="reset" data-dismiss="modal">
+								<i class="ace-icon fa fa-close"></i>
 								取消
 							</button>
 						</div>
@@ -87,12 +88,37 @@
 <script>
 	$(function () {
 
-		$('#form').attr('action', urls.editMenu);
+		var code = checkCode(urls.login);
+
+		var interfaceId = '@Model';
+		if (interfaceId != '@Guid.Empty') {
+			$('.btn-submit').attr('disabled', 'disabled');
+			var ajax = ajaxRequset(urls.interfaceInfo, code, urls.login, { interfaceId: interfaceId }, function (data) {
+				console.log(data.data);
+				$('#Title').val(data.data.title);
+				$('#Url').val(data.data.url);
+				$('#Params').val(data.data.params);
+				$('#Method').val(data.data.method);
+				$('#Version').val(data.data.version);
+				$('#IsAllowAnonymous')
+					.val(data.data.isAllowAnonymous)
+					.on('click', function () {
+						$(this).val($(this).is(':checked'));
+					});
+				if (data.data.isAllowAnonymous) {
+					$('#IsAllowAnonymous').attr('checked','checked');
+				}
+				$('.btn-submit').removeAttr('disabled');
+			});
+
+			$.ajax(ajax);
+		}
+
+		$('#form').attr('action', urls.editInterface);
 
 		ajaxSubmitForm($('#form'),
 			{
 				code: checkCode(urls.login),
-				dataUrl: urls.edit,
 				afterSuccess(data) {
 					$('#firstModal').modal('hide');
 					//$('datatable').reload

@@ -22,6 +22,7 @@ namespace Business
 		Task<bool> BindAssets(Guid assetId, Guid itemId);
 		Task<Assets> GetById(Guid assetId);
 		Task<Menu> GetMenuById(Guid menuId);
+		Task<Interface> GetInterfaceById(Guid interfaceId);
 	}
 
 }

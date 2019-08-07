@@ -44,32 +44,34 @@ namespace Business
 			var result = false;
 			if (Interface.Validate(inter).All(validateResult => validateResult.IsSuccess))
 			{
-				result = DB.UseTranAsync(async () =>
+				if (inter.InterfaceId.IsEmpty() && InterfaceDb.GetSingle(m => m.Title == inter.Title).IsNull())
 				{
-					await DB.Insertable(inter).ExecuteCommandAsync();
-					await DB.Insertable(new Assets
+					result = DB.UseTranAsync(async () =>
 					{
-						AssetsName = inter.Title,
-						AssetsStatus = Keys.EnableStatus,
-						AssetsType = Keys.Assests.MenuType,
-						ItemId = inter.InterfaceId,
-						SystemId = Keys.System.DefaultSystemId
-					}).ExecuteCommandAsync();
-				}).IsCompletedSuccessfully;
-			}
-			else
-			{
-				var assets = await SearchAssets(ass => ass.ItemId == inter.InterfaceId);
-				if (assets.Count() > 0)
-				{
-					var asset = assets.FirstOrDefault();
-					asset.AssetsName = inter.Title;
-					result = await AssetsDb.AsUpdateable(asset).ExecuteCommandAsync() > 0;
+						await DB.Insertable(inter).ExecuteCommandAsync();
+						await DB.Insertable(new Assets
+						{
+							AssetsName = inter.Title,
+							AssetsStatus = Keys.EnableStatus,
+							AssetsType = Keys.Assests.MenuType,
+							ItemId = inter.InterfaceId,
+							SystemId = Keys.System.DefaultSystemId
+						}).ExecuteCommandAsync();
+					}).IsCompletedSuccessfully;
 				}
+				else
+				{
+					var assets = await SearchAssets(ass => ass.ItemId == inter.InterfaceId);
+					if (assets.Count() > 0)
+					{
+						var asset = assets.FirstOrDefault();
+						asset.AssetsName = inter.Title;
+						result = await AssetsDb.AsUpdateable(asset).ExecuteCommandAsync() > 0;
+					}
 
-				result = await InterfaceDb.AsUpdateable(inter).ExecuteCommandAsync() > 0;
+					result = await InterfaceDb.AsUpdateable(inter).ExecuteCommandAsync() > 0;
+				}
 			}
-
 			return false;
 		}
 
@@ -253,6 +255,11 @@ namespace Business
 			return await MenuDb.AsQueryable().FirstAsync(menu => menu.MenuId == menuId);
 		}
 
+		public async Task<Interface> GetInterfaceById(Guid interfaceId)
+		{
+			return await InterfaceDb.AsQueryable().FirstAsync(inter => inter.InterfaceId == interfaceId);
+		}
+
 		public async Task<bool> MultiEdit(List<Assets> assetsList)
 		{
 			var result = await DB.UseTranAsync(async () =>
@@ -266,6 +273,7 @@ namespace Business
 
 			return result.IsSuccess;
 		}
+
 	}
 
 }

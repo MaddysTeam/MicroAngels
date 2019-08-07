@@ -70,6 +70,9 @@ namespace Business
 						new SystemRole { RoleId = r.RoleId, Description = r.Description, RoleName = r.RoleName, SystemId = r.SystemId, UserId = ur.UserId}
 						).Distinct().ToListAsync();
 
+			if (!result.IsNull() && result.Count > 0)
+				result = result.Where(x => x.UserId.IsEmpty() || x.UserId == userid)?.ToList();
+
 			return result;
 		}
 
