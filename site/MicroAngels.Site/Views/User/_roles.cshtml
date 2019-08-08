@@ -109,7 +109,16 @@
 		$.ajax(ajax);
 
 		$('.btn-bind').on('click', function () {
-			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: 'c2c1c796-2c94-4c19-9bfd-51df88839c9b' }, function (data) {
+			var $checkboxList = $('.checkboxList').find('input[type="checkbox"]');
+			var checkValues = [];
+			$checkboxlist.each(function (i) {
+				var $this = $(this);
+				if ($this.is(':checked')) {
+					checkValues.push($this.data('id'));
+				}
+			});
+			var roleIds = checkValues.join(',');
+			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: roleIds }, function (data) {
 				$('#firstModal').modal('hide');
 			});
 			$.ajax(ajax);
