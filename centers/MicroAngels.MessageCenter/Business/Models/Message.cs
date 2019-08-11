@@ -117,7 +117,7 @@ namespace Business.Models
     public class UserMessage
     {
         public string Id { get; set; }
-        public string ServiceId { get; set; } // 接收时用，表示默人在某个service 中已收某条消息，新增时默认为空
+        public string ServiceId { get; set; } // 接收时用，表默认示默人在某个service 中已收某条消息，新增时为空
         public string MessageId { get; set; }
         public string ReceiverId { get; set; }
         public string StatusId { get; set; }

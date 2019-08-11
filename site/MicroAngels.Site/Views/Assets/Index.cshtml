@@ -3,170 +3,166 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<div class="main-content">
-	<div class="main-content-inner">
-		<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-			<ul class="breadcrumb">
-				<li>
-					<i class="ace-icon fa fa-home home-icon"></i>
-					<a href="#">首页</a>
-				</li>
 
-				<li>
-					<a href="#">系统设置</a>
-				</li>
-				<li class="active">资源管理</li>
-			</ul><!-- /.breadcrumb -->
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			<a href="#">首页</a>
+		</li>
 
-			<div class="nav-search" id="nav-search">
-				<form class="form-search">
-					<span class="input-icon">
-						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-						<i class="ace-icon fa fa-search nav-search-icon"></i>
-					</span>
-				</form>
-			</div><!-- /.nav-search -->
-		</div>
+		<li>
+			<a href="#">系统设置</a>
+		</li>
+		<li class="active">资源管理</li>
+	</ul><!-- /.breadcrumb -->
 
-		<div class="page-content">
-
-			<div class="ace-settings-container" id="ace-settings-container">
-				<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-					<i class="ace-icon fa fa-cog bigger-130"></i>
-				</div>
-
-				<div class="ace-settings-box clearfix" id="ace-settings-box">
-					<div class="pull-left width-50">
-						<div class="ace-settings-item">
-							<div class="pull-left">
-								<select id="skin-colorpicker" class="hide">
-									<option data-skin="no-skin" value="#438EB9">#438EB9</option>
-									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-								</select>
-							</div>
-							<span>&nbsp; Choose Skin</span>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
-							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
-							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
-							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
-							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
-							<label class="lbl" for="ace-settings-add-container">
-								Inside
-								<b>.container</b>
-							</label>
-						</div>
-					</div><!-- /.pull-left -->
-
-					<div class="pull-left width-50">
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
-							<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
-							<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
-						</div>
-
-						<div class="ace-settings-item">
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
-							<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
-						</div>
-					</div><!-- /.pull-left -->
-				</div><!-- /.ace-settings-box -->
-			</div><!-- /.ace-settings-container -->
-
-			<div class="page-header">
-				<h1>
-					资源
-					<small>
-						<i class="ace-icon fa fa-angle-double-right"></i>
-						资源管理
-					</small>
-				</h1>
-			</div><!-- /.page-header -->
-			<!--  BUTTONS BEGINS -->
-			<div class="buttons">
-			</div>
-			<!--  BUTTONS ENDS -->
-			<!--  DROPDOWN BEGINS -->
-			<div class="row">
-				<div class="col-sm-3">
-					<select id="role" class="chosen-select form-control role_select">
-						
-					</select>
-				</div>
-			</div>
-			<!--  DROPDOWN END -->
-
-			<div class="row">
-				<div class="col-md-12">
-
-					<!--  NESTABLE BEGINS -->
-					<div class="dd" id="nestable">
-						@*<ol class="dd-list">
-								<li class="dd-item dd2-item" data-id="1">
-									<div class="dd-handle dd2-handle">
-										<i class="normal-icon ace-icon fa fa-bars blue bigger-130"></i>
-										<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-									</div>
-									<div class="dd2-content">
-										<span>【目录】系统设置</span>
-										<div class="pull-right action-buttons">
-											<label>
-												<input name="switch-field-1" class="ace ace-switch ace-switch-6" type="checkbox">
-												<span class="lbl"></span>
-											</label>
-										</div>
-									</div>
-								</li>
-								<li class="dd-item dd2-item" data-id="2">
-									<div class="dd-handle dd2-handle">
-										<i class="normal-icon ace-icon fa fa-bars blue bigger-130"></i>
-										<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-									</div>
-									<div class="dd2-content">
-										<span>【目录】用户管理</span>
-										<div class="pull-right action-buttons">
-											<label>
-												<input name="switch-field-1" class="ace ace-switch ace-switch-6" type="checkbox">
-												<span class="lbl"></span>
-											</label>
-										</div>
-									</div>
-								</li>
-
-							</ol>*@
-					</div>
-					<!--  NESTABLE ENDS -->
-
-				</div><!-- /.col -->
-			</div><!-- /.row -->
-		</div>
-
-	</div><!-- /.page-content -->
+	<div class="nav-search" id="nav-search">
+		<form class="form-search">
+			<span class="input-icon">
+				<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+				<i class="ace-icon fa fa-search nav-search-icon"></i>
+			</span>
+		</form>
+	</div><!-- /.nav-search -->
 </div>
+
+<div class="page-content">
+
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="ace-icon fa fa-cog bigger-130"></i>
+		</div>
+
+		<div class="ace-settings-box clearfix" id="ace-settings-box">
+			<div class="pull-left width-50">
+				<div class="ace-settings-item">
+					<div class="pull-left">
+						<select id="skin-colorpicker" class="hide">
+							<option data-skin="no-skin" value="#438EB9">#438EB9</option>
+							<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+							<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+							<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+						</select>
+					</div>
+					<span>&nbsp; Choose Skin</span>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
+					<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
+					<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
+					<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
+					<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
+					<label class="lbl" for="ace-settings-add-container">
+						Inside
+						<b>.container</b>
+					</label>
+				</div>
+			</div><!-- /.pull-left -->
+
+			<div class="pull-left width-50">
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
+					<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
+					<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+				</div>
+
+				<div class="ace-settings-item">
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
+					<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+				</div>
+			</div><!-- /.pull-left -->
+		</div><!-- /.ace-settings-box -->
+	</div><!-- /.ace-settings-container -->
+
+	<div class="page-header">
+		<h1>
+			资源
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				资源管理
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+	<!--  BUTTONS BEGINS -->
+	<div class="buttons">
+	</div>
+	<!--  BUTTONS ENDS -->
+	<!--  DROPDOWN BEGINS -->
+	<div class="row">
+		<div class="col-sm-3">
+			<select id="role" class="chosen-select form-control role_select"></select>
+		</div>
+	</div>
+	<!--  DROPDOWN END -->
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<!--  NESTABLE BEGINS -->
+			<div class="dd" id="nestable">
+				@*<ol class="dd-list">
+						<li class="dd-item dd2-item" data-id="1">
+							<div class="dd-handle dd2-handle">
+								<i class="normal-icon ace-icon fa fa-bars blue bigger-130"></i>
+								<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
+							</div>
+							<div class="dd2-content">
+								<span>【目录】系统设置</span>
+								<div class="pull-right action-buttons">
+									<label>
+										<input name="switch-field-1" class="ace ace-switch ace-switch-6" type="checkbox">
+										<span class="lbl"></span>
+									</label>
+								</div>
+							</div>
+						</li>
+						<li class="dd-item dd2-item" data-id="2">
+							<div class="dd-handle dd2-handle">
+								<i class="normal-icon ace-icon fa fa-bars blue bigger-130"></i>
+								<i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
+							</div>
+							<div class="dd2-content">
+								<span>【目录】用户管理</span>
+								<div class="pull-right action-buttons">
+									<label>
+										<input name="switch-field-1" class="ace ace-switch ace-switch-6" type="checkbox">
+										<span class="lbl"></span>
+									</label>
+								</div>
+							</div>
+						</li>
+
+					</ol>*@
+			</div>
+			<!--  NESTABLE ENDS -->
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div>
+
+
 <!-- /.main-content -->
 
 @section Modals{
@@ -199,7 +195,7 @@
 
 					$("#role").on('change', function () {
 						bind(code, $(this).val());
-					}).trigger('change');	
+					}).trigger('change');
 				}
 			});
 
@@ -222,15 +218,15 @@
 		};
 
 		function bind(code, roleId) {
-			
-			var ajax = ajaxRequset(urls.getAssets, code, urls.loginUrl, { roleId:roleId},function (data) {
+
+			var ajax = ajaxRequset(urls.getAssets, code, urls.loginUrl, { roleId: roleId }, function (data) {
 				var $list = $(component.ol).append(load(data.data));
 
 				// save when on nestable changed
 				$('#nestable').html('').append($list).nestable().off('change').on('change', function () {
 					var param = $('.dd').nestable('serialize');
 					console.log(param);
-					var ajax = ajaxRequset(urls.editAssetsList, code, urls.loginUrl, { list: param  }, function () { });
+					var ajax = ajaxRequset(urls.editAssetsList, code, urls.loginUrl, { list: param }, function () { });
 					$.ajax(ajax);
 				});
 
@@ -238,7 +234,7 @@
 				$('.btn-auth').on('click', function () {
 					var $this = $(this);
 					if ($this.is(':checked')) {
-						var ajax = ajaxRequset(urls.bindAssets, code, urls.loginUrl, { roleId: $('.role_select').val(), assetsId:$(this).data("assetId")  }, function () { });
+						var ajax = ajaxRequset(urls.bindAssets, code, urls.loginUrl, { roleId: $('.role_select').val(), assetsId: $(this).data("assetId") }, function () { });
 						$.ajax(ajax);
 					}
 					else {
@@ -252,7 +248,7 @@
 
 		function load(data) {
 			var $list = $(component.ol);
-			var $item = $(component.li.format(data.id, data.parentId)).append($(component.body.format(data.title, data.id, data.isbind?'checked':'')));
+			var $item = $(component.li.format(data.id, data.parentId)).append($(component.body.format(data.title, data.id, data.isbind ? 'checked' : '')));
 
 			for (var i = 0; i < data.children.length; i++) {
 				if (data.children[i].children.length > 0) {

@@ -48,7 +48,7 @@ namespace Controllers
 		//[Route("send")]
 		[HttpGet("send")]
 		[Authorize]
-		public string SendMessage()
+		public string SendAnnounceMessage()
 		{
 			throw new NotImplementedException();
 		}

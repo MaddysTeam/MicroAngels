@@ -169,24 +169,29 @@ namespace Business.Services
         public async Task<bool> AnnounceAsync(string message)
         {
             Message msg = JsonConvert.DeserializeObject<Message>(message);
-            if (!msg.IsValidate)
-            {
-                return false;
-            }
+			return await AnnounceAsync(msg);
+		}
 
-            var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
-            if (topicObj.IsNull())
-            {
-                return false;
-            }
+		public async Task<bool> AnnounceAsync(Message message)
+		{
+			if (!message.IsValidate)
+			{
+				return false;
+			}
 
-            msg.Id = Guid.NewGuid().ToString();
-            msg.TopicId = topicObj.Id;
-            msg.TypeId = StaticKeys.MessageTypeId_Announce;
-            msg.ReceiveTime = DateTime.UtcNow;
+			var topicObj = await _topicService.GetTopicAsync(message.Topic, message.ServiceId);
+			if (topicObj.IsNull())
+			{
+				return false;
+			}
 
-            return MessageDb.Insert(msg);
-        }
+			message.Id = Guid.NewGuid().ToString();
+			message.TopicId = topicObj.Id;
+			message.TypeId = StaticKeys.MessageTypeId_Announce;
+			message.ReceiveTime = DateTime.UtcNow;
+
+			return MessageDb.Insert(message);
+		}
 
         public Task<bool> AddUserMessage(UserMessage userMessage)
         {
@@ -204,7 +209,7 @@ namespace Business.Services
             return Task.FromResult(result);
         }
 
-        private readonly ITopicService _topicService;
+		private readonly ITopicService _topicService;
         private readonly ISubscribeService _subscribeService;
         private readonly ILogger<MessageService> _logger;
     }

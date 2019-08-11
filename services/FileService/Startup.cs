@@ -1,6 +1,5 @@
 ﻿using FileService.Business;
 using MicroAngels.Bus.CAP;
-using MicroAngels.Core.Plugins.Auth;
 using MicroAngels.GRPC.Server;
 using MicroAngels.Hystrix.Polly;
 using MicroAngels.IdentityServer.Extensions;

@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="~/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 	<link rel="stylesheet" href="~/css/ace-skins.min.css" />
 	<link rel="stylesheet" href="~/css/ace-rtl.min.css" />
-	@RenderSection("Css",required:false)
+	@RenderSection("Css", required: false)
 
 	<!--[if lte IE 9]>
 	  <link rel="stylesheet" href="~/css/ace-ie.min.css" />
@@ -39,7 +39,11 @@
 	@await Html.PartialAsync("_sidebar")
 	<!-- side bar end -->
 	<!-- body start -->
-	@RenderBody()
+	<div class="main-content">
+		<div class="main-content-inner">
+			@RenderBody()
+		</div>
+	</div>
 	<!-- body end-->
 	<!-- basic scripts -->
 	<!--[if !IE]> -->

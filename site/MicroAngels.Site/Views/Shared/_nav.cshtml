@@ -21,7 +21,7 @@
 
 		<div class="navbar-buttons navbar-header pull-right" role="navigation">
 			<ul class="nav ace-nav">
-				<li class="grey dropdown-modal">
+				@*<li class="grey dropdown-modal">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 						<i class="ace-icon fa fa-tasks"></i>
 						<span class="badge badge-grey">4</span>
@@ -96,7 +96,7 @@
 							</a>
 						</li>
 					</ul>
-				</li>
+				</li>*@
 
 				<li class="purple dropdown-modal">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -289,16 +289,9 @@
 
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 						<li>
-							<a href="#">
-								<i class="ace-icon fa fa-cog"></i>
-								Settings
-							</a>
-						</li>
-
-						<li>
-							<a href="profile.html">
+							<a href="@Url.Action("Profile","User")">
 								<i class="ace-icon fa fa-user"></i>
-								Profile
+								个人空间
 							</a>
 						</li>
 
@@ -307,7 +300,7 @@
 						<li>
 							<a class="signOut" href="#">
 								<i class="ace-icon fa fa-power-off"></i>
-								Logout
+								退出系统
 							</a>
 						</li>
 					</ul>

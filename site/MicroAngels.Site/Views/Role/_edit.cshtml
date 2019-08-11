@@ -15,18 +15,19 @@
 		<div class="widget-body">
 			<div class="widget-main">
 				<form class="form-horizontal" role="form" id="form">
+					<input type="hidden" id="Id" name="Id" value="@Model" />
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 角色名称</label>
 
 						<div class="col-sm-9">
-							<input type="text" id="RoleName" name="RoleName" placeholder="填写角色名称" class="col-xs-10" minlength="5">
+							<input type="text" id="RoleName" name="RoleName" placeholder="填写角色名称" class="col-xs-10" minlength="5" maxlength="20">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 角色描述</label>
 
 						<div class="col-sm-9">
-							<input type="text" id="Description" name="Description" placeholder="RealName" class="col-xs-10">
+							<input type="text" id="Description" name="Description" placeholder="RealName" class="col-xs-10" maxlength="200">
 						</div>
 					</div>
 
@@ -76,9 +77,8 @@
 				code: code,
 				dataUrl: urls.editRole,
 				afterSuccess(data) {
-					alert(data.msg);
 					$('#firstModal').modal('hide');
-					//$('datatable').reload
+					refreshTable('#table');
 				}
 			});
 

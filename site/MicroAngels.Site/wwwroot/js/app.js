@@ -93,7 +93,8 @@ var menuComponents = {
 
 function showMenu() {
 	var code = checkCode(urls.login);
-	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null , function (data) {
+	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null, function (data) {
+		console.log(data.data);
 		var menus = showMenuHierarchy(data.data);
 		$('#SideBar').append(menus);
 	});
@@ -580,7 +581,7 @@ var initTable = function (id, options) {
 
 
 function refreshTable(selector) {
-	$(selector).dataTable().reload();
+	$(selector).DataTable().draw(true);
 }
 
 

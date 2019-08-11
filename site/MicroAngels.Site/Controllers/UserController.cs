@@ -28,6 +28,13 @@ namespace Controllers
 			return PartialView("_roles",userId);
 		}
 
+		//Get user/profile
+
+		public IActionResult Profile()
+		{
+			return PartialView();
+		}
+
 	}
 
 }

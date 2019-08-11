@@ -111,13 +111,14 @@
 		$('.btn-bind').on('click', function () {
 			var $checkboxList = $('.checkboxList').find('input[type="checkbox"]');
 			var checkValues = [];
-			$checkboxlist.each(function (i) {
+			$checkboxList.each(function (i) {
 				var $this = $(this);
 				if ($this.is(':checked')) {
 					checkValues.push($this.data('id'));
 				}
 			});
 			var roleIds = checkValues.join(',');
+			console.log(roleIds);
 			var ajax = ajaxRequset(urls.bindRole, code, urls.login, { userId: '@Model', roleIds: roleIds }, function (data) {
 				$('#firstModal').modal('hide');
 			});
@@ -128,16 +129,20 @@
 
 	function checkboxList(data) {
 		$('.checkboxList').html('');
+		var colIndex = -1;
 		$(data).each(function (i) {
 			var m = this;
 			var $checkbox = $('<div class="checkbox"><label class="block"><input name="form-field-checkbox" type="checkbox" {1} {2} class="ace input ace-checkbox-2"><span class="lbl">&nbsp;{0}</span></label></div>'.format(m.name, m.isChecked ? 'checked="checked"' : '','data-id='+m.id))
+			$subList = $('<div class="control-group col-md-4"></div>');
 			if (i % 4 == 0) {
-				$checkboxList = $('<div class="control-group col-md-4 checkboxList"></div>');
-				$('.checkboxList').append($checkboxList);
+				$('.checkboxList').append($subList);
+				colIndex++;
+			}
+			else {
+				$subList = $('.checkboxList').children().eq(colIndex);
 			}
 
-			$checkboxList.append($checkbox);
-
+			$subList.append($checkbox);
 		});
 	}
 </script>

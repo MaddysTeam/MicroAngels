@@ -57,23 +57,18 @@ namespace Business
 
 		public async Task<List<SystemRole>> GetByUserId(Guid userid)
 		{
-			var query = DB
-					.Queryable<SystemRole, UserRole, UserInfo>((r, ur, u) => new object[]
-						 {
-						JoinType.Left,
-						 r.RoleId == ur.RoleId,
-						 JoinType.Left,
-						 ur.UserId==userid
-						 });
+			var roles = RoleDb.GetList();
+			var userRoles =  UserRoleDb.AsQueryable().Where(ur=>ur.UserId==userid).Select(ur=>ur);
+			
+			foreach(var role in roles)
+			{
+				if(userRoles.Any(x=>x.RoleId== role.RoleId))
+				{
+					role.UserId = userid;
+				}
+			}
 
-			var result = await query.Select((r, ur, u) => 
-						new SystemRole { RoleId = r.RoleId, Description = r.Description, RoleName = r.RoleName, SystemId = r.SystemId, UserId = ur.UserId}
-						).Distinct().ToListAsync();
-
-			if (!result.IsNull() && result.Count > 0)
-				result = result.Where(x => x.UserId.IsEmpty() || x.UserId == userid)?.ToList();
-
-			return result;
+			return roles;
 		}
 
 		public async Task<List<SystemRole>> GetByUserIds(Guid[] userIds)

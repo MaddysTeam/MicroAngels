@@ -53,18 +53,16 @@ namespace Business
 				return query.ToList();
 		}
 
-		public async Task<bool> BindRole(UserRole userRole)
+		public async Task<bool> BindRoles(Guid userId, string[] roleIds)
 		{
 			bool result = false;
-			var validteReuslt = UserRole.Validate(userRole);
-			if (validteReuslt.All(x => x.IsSuccess))
+
+			await UserRoleDb.AsDeleteable().Where(ur => ur.UserId == userId).ExecuteCommandAsync();
+
+			foreach (var roleId in roleIds)
 			{
-				var current = UserRoleDb.GetSingle(ur => ur.UserId == userRole.UserId & ur.RoleId == userRole.RoleId);
-				if (current.IsNull())
-				{
-					userRole.Id = Guid.NewGuid();
-					result = await UserRoleDb.AsInsertable(userRole).ExecuteCommandAsync() > 0;
-				}
+				var userRole = new UserRole() { Id = Guid.NewGuid(), RoleId = roleId.ToGuid(), UserId = userId };
+				result = await UserRoleDb.AsInsertable(userRole).ExecuteCommandAsync() > 0;
 			}
 
 			return result;

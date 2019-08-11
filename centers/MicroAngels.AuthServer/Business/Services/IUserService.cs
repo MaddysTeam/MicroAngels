@@ -16,9 +16,10 @@ namespace Business
 		UserInfo GetByName(string name);
 
 		Task<bool> Edit(UserInfo userInfo);
-		Task<bool> BindRole(UserRole userRole);
-		Task<bool> UnbindRole(Guid userRoleId);
+		Task<bool> BindRoles(Guid userId, string[] roleIds);
 		IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex,out int totalCount);
+
+		Task<bool> Send
 	}
 
 }

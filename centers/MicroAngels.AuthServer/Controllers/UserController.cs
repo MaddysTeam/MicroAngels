@@ -22,7 +22,7 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			var isSuccess = await _userService.Edit(user.Map<UserViewModel,UserInfo>());
+			var isSuccess = await _userService.Edit(user.Map<UserViewModel, UserInfo>());
 
 			return new JsonResult(new
 			{
@@ -83,13 +83,10 @@ namespace Controllers
 		public async Task<IActionResult> BindRole([FromForm] BindRoleViewModel viewModel)
 		{
 			var isSuccess = false;
-			if (!viewModel.IsNull() && !viewModel.UserId.IsEmpty() && !string.IsNullOrEmpty(viewModel.RoleIds))
+			if (!viewModel.IsNull() && !viewModel.UserId.IsEmpty())
 			{
-				string[] roleIds = viewModel.RoleIds.Split(',');
-				foreach (var roleId in roleIds)
-				{
-					isSuccess = await _userService.BindRole(new UserRole { RoleId = roleId.ToGuid(), UserId = viewModel.UserId });
-				}
+				string[] roleIds = viewModel.RoleIds.IsNullOrEmpty() ? new string[] { } : viewModel.RoleIds.Split(',');
+				isSuccess = await _userService.BindRoles(viewModel.UserId, roleIds);
 
 				return new JsonResult(new
 				{
