@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using MicroAngels.Core;
+﻿using MicroAngels.Core;
 using SqlSugar;
+using System;
 
-namespace Business.Models
+namespace Business
 {
 
-    /// <summary>
-    /// 消息topic 用于管理
-    /// </summary>
-    public class Topic
+	/// <summary>
+	/// 消息topic 用于管理
+	/// </summary>
+	public class Topic
     {
 		[SugarColumn(IsPrimaryKey =true,Length =50)]
         public string Id { get; set; }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using MicroAngels.Logger.ExceptionLess;
 
 namespace MessageCenter
 {
@@ -75,6 +76,8 @@ namespace MessageCenter
 				ApiName = "MessageCenter"
 			});
 
+			services.AddLessLog();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,6 +115,8 @@ namespace MessageCenter
 					   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
 				   }
 			   });
+
+			app.UseLessLog(new ExcepitonLessOptions("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo"));
 
 			app.UseSugarORM(lifeTime, Configuration);  // register orm sugar
 		}

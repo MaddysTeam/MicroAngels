@@ -43,7 +43,7 @@ namespace Business
 		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
 		{
 			totalCount = 0;
-			var query = whereExpressions == null ? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
+			var query = whereExpressions.IsNull()? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
 
 			if (pageSize.HasValue && pageIndex.HasValue)
 			{

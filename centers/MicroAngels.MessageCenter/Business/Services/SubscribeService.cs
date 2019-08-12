@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using Infrastructure.Orms.Sugar;
+﻿using Infrastructure.Orms.Sugar;
 using MicroAngels.Core;
 using Microsoft.Extensions.Logging;
 using System;

@@ -73,3 +73,5 @@ E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.csproj.CopyComplete
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.dll
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.pdb

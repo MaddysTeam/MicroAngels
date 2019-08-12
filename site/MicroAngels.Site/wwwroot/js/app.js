@@ -31,6 +31,7 @@ urls = {
 	editAssetsList: '{0}/api/authserver/assets/editList'.format(apiDomain),
 	editMenu: '{0}/api/authserver/assets/editMenu'.format(apiDomain),
 	editInterface: '{0}/api/authserver/assets/editInterface'.format(apiDomain),
+	editTopic: '{0}/api/MessageCenter/topic/edit'.format(apiDomain),
 
 	bindRole: '{0}/api/authserver/user/bindRole'.format(apiDomain),
 	bindAssets: '{0}/api/authserver/role/bindAssets'.format(apiDomain),
@@ -43,6 +44,7 @@ urls = {
 	getInterface: '{0}/api/authserver/assets/interfaces'.format(apiDomain),
 	getMenu: '{0}/api/authserver/assets/allMenus'.format(apiDomain),
 	getHierarchyMenus: '{0}/api/authserver/assets/hierarchyMenus'.format(apiDomain),
+	getTopics: '{0}/api/MessageCenter/topic/list'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
@@ -58,6 +60,7 @@ urls = {
 	rolePage: 'http://localhost:5000/role/index',
 	userEditPage: 'http://localhost:5000/user/edit?id={0}',
 	roleEditPage: 'http://localhost:5000/role/edit?id={0}',
+	topicEditPage:'http://localhost:5000/topic/edit?id={0}',
 	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
 	interfaceEditPage: 'http://localhost:5000/assets/EditInterface?interfaceId={0}',
 	bindRolePage: 'http://localhost:5000/user/bindRoles',

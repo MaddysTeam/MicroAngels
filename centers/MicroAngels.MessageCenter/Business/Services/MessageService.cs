@@ -1,4 +1,4 @@
-﻿using Business.Models;
+﻿using Business;
 using MicroAngels.Core;
 using DotNetCore.CAP;
 using Infrastructure.Orms.Sugar;
