@@ -30,6 +30,8 @@ namespace MicroAngels.Site
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
+			var item = Configuration.GetSection("temp:demos").GetChildren().ToArray().Select(c => c.Value).ToArray();
+
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}

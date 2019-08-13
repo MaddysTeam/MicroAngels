@@ -15,6 +15,12 @@ namespace Controllers
 		}
 
 
+		public IActionResult TopicIndex()
+		{
+			return View();
+		}
+
+
 	}
 
 }

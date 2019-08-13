@@ -14,6 +14,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MicroAngels.Bus\MicroAngels.Bus.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />

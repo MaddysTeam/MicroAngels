@@ -1,5 +1,6 @@
 ﻿using Business;
 using MicroAngels.AuthServer.Services;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Cache;
 using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
@@ -34,6 +35,13 @@ namespace MicroAngels.AuthServer
 			.AddControllersAsServices()
 			.AddAuthorization()
 			.AddJsonFormatters();
+
+			// add cap service
+			services.AddCAPService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
 
 			// add redis cache
 			services.AddRedisCache(new RedisCacheOption

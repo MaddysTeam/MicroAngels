@@ -1,6 +1,5 @@
-﻿using MicroAngels.Cache.Redis;
+﻿using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
-using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,11 @@ namespace Business
 
 	public class UserService : MySqlDbContext, IUserService
 	{
+
+		public UserService(ICAPPublisher publisher)
+		{
+			_publisher = publisher;
+		}
 
 		public async Task<bool> Edit(UserInfo userInfo)
 		{
@@ -43,7 +47,7 @@ namespace Business
 		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
 		{
 			totalCount = 0;
-			var query = whereExpressions.IsNull()? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
+			var query = whereExpressions.IsNull() ? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
 
 			if (pageSize.HasValue && pageIndex.HasValue)
 			{
@@ -87,7 +91,18 @@ namespace Business
 			return user;
 		}
 
-		//private readonly IRedisCache _cache;
+		public async Task<bool> Focus(Guid userId,Guid targetId)
+		{
+			var mo = new  { Topic = "", ServiceId = Keys.System.DefaultSystemId, SenderId = userId, SendTime = DateTime.Now, SubscriberId = userId, TargetId = targetId };
+			var message = Newtonsoft.Json.JsonConvert.SerializeObject(mo);
+
+			await _publisher.PublishAsync(new CAPMessage("MessageCenter.Subscribe", message, false));
+
+			return true;
+		}
+
+
+		private ICAPPublisher _publisher;
 
 	}
 

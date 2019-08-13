@@ -44,11 +44,11 @@ namespace Controllers
 			});
 		}
 
-		[HttpPost("list")]
-		public async Task<IActionResult> GetTopics([FromForm]int pageSize, [FromForm] int pageIndex)
+		[HttpPost("topics")]
+		public IActionResult GetTopics([FromForm]int start, [FromForm] int length)
 		{
 			var totalCount = 0;
-			var topics =  _topicService.Search(null, pageSize, pageIndex, out totalCount);
+			var topics =  _topicService.Search(null, start, length, out totalCount);
 			var mapper = Mapper.Create(typeof(MapperProfile));
 			if (topics.IsNull() && topics.Count() > 0)
 			{
@@ -60,7 +60,12 @@ namespace Controllers
 				});
 			}
 
-			return new JsonResult(new { data = new List<TopicViewModel>() });
+			return new JsonResult(new
+			{
+				data = new { },
+				recordsTotal = 0,
+				recordsFiltered = 0,
+			});
 		}
 
 		[HttpPost("single")]

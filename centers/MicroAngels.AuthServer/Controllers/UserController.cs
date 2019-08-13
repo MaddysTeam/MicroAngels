@@ -1,6 +1,6 @@
 ﻿using Business;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -14,9 +14,10 @@ namespace Controllers
 	public class UserController : ControllerBase
 	{
 
-		public UserController(IUserService userService)
+		public UserController(IUserService userService, ICAPPublisher publisher)
 		{
 			_userService = userService;
+			_publisher = publisher;			
 		}
 
 		[HttpPost("edit")]
@@ -43,7 +44,6 @@ namespace Controllers
 					data = searchResults.Select(x => x.Map<UserInfo, UserViewModel>()),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
-
 				});
 			}
 
@@ -108,6 +108,7 @@ namespace Controllers
 		}
 
 		private IUserService _userService;
+		private ICAPPublisher _publisher;
 
 	}
 

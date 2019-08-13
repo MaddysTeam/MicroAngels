@@ -44,7 +44,7 @@ urls = {
 	getInterface: '{0}/api/authserver/assets/interfaces'.format(apiDomain),
 	getMenu: '{0}/api/authserver/assets/allMenus'.format(apiDomain),
 	getHierarchyMenus: '{0}/api/authserver/assets/hierarchyMenus'.format(apiDomain),
-	getTopics: '{0}/api/MessageCenter/topic/list'.format(apiDomain),
+	getTopics: '{0}/api/messagecenter/topic/topics'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
