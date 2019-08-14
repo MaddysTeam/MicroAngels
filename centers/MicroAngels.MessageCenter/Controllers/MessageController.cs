@@ -1,14 +1,15 @@
-﻿using Business.Services;
+﻿using Business;
+using Business.Helpers;
+using Business.Services;
 using DotNetCore.CAP;
-using Infrastructure;
 using MicroAngels.Bus.CAP;
-using Microsoft.AspNetCore.Authorization;
+using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
-using System.Threading.Tasks;	
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Controllers
 {
@@ -19,7 +20,7 @@ namespace Controllers
 	//[ApiVersion("1.0")]
 	[Route("api/[controller]")]
 	[ApiController]
-	public class MessageController : ControllerBase
+	public class MessageController : BaseController
 	{
 
 		/// <summary>
@@ -30,34 +31,44 @@ namespace Controllers
 		/// <param name="context"></param>
 		/// <param name="serviceBus"></param>
 		/// <param name="configuraton"></param>
-		public MessageController(
-			IMessageService messageService,
-			ILogger<MessageController> logger,
-			CAPMysqlDbContext context,
-			ICapPublisher serviceBus,
-			IConfiguration configuraton
-			)
+		public MessageController(IMessageService messageService) : base()
 		{
-			_logger = logger;
-			_dbContext = context;
-			_serviceBus = serviceBus;
-			_configuration = configuraton;
 			_messageService = messageService;
 		}
 
-		//[Route("send")]
+
 		[HttpGet("send")]
-		[Authorize]
 		public string SendAnnounceMessage()
 		{
 			throw new NotImplementedException();
 		}
 
+		[HttpPost("announces")]
+		public async Task<IActionResult> GetAnnounceMessage([FromForm] string topicId, [FromForm]string serviceId, [FromForm]int start, [FromForm] int length)
+		{
+			var totalCount = 0;
+			var searchResults = await _messageService.Search(topicId, serviceId, StaticKeys.MessageTypeId_Announce, length, start, out totalCount);
+			if (!searchResults.IsNull() && searchResults.Count() > 0)
+			{
+				return new JsonResult(new
+				{
+					data = searchResults.Select(m => Mapper.Map<Message, MessageViewModel>(m)),
+					recordsTotal = totalCount,
+					recordsFiltered = totalCount,
+				});
+			}
 
-		private readonly ILogger<MessageController> _logger;
-		private readonly CAPMysqlDbContext _dbContext;
-		private readonly ICapPublisher _serviceBus;
+			return new JsonResult(new
+			{
+				data = new { },
+				recordsTotal = 0,
+				recordsFiltered = 0,
+			});
+		}
+
+
 		private readonly IMessageService _messageService;
-		private readonly IConfiguration _configuration;
+
 	}
+
 }

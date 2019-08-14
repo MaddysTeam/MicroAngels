@@ -28,14 +28,14 @@ namespace Business.Services
             return Task.FromResult(MessageDb.GetById(messageId));
         }
 
-        public Task<List<Message>> GetMessagesAsync(string topic, string serviceId, string typeId, int pageIndex, int pageSize, out int pageCount)
+        public Task<List<Message>> Search(string topicId, string serviceId, string typeId, int pageIndex, int pageSize, out int pageCount)
         {
             var query = DB.Queryable<Message, Topic>((m, t) => new object[] {
                 JoinType.Inner,m.TopicId == t.Id
             });
 
-            if (!topic.IsNullOrEmpty())
-                query.Where((m, t) => t.Name == topic);
+            if (!topicId.IsNullOrEmpty())
+                query.Where((m, t) => m.TopicId == topicId);
             if (!serviceId.IsNullOrEmpty())
                 query.Where((m, t) => m.ServiceId == serviceId);
             if (!typeId.IsNullOrEmpty())

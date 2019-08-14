@@ -7,19 +7,26 @@ namespace Controllers
 	public class MessageController : Controller
 	{
 
-		//Get   user/index
+		//Get   message/AnnouncementIndex
 
-		public IActionResult Index()
+		public IActionResult AnnounceIndex()
 		{
 			return View();
 		}
 
+		//Get   message/index
 
 		public IActionResult TopicIndex()
 		{
 			return View();
 		}
 
+		//Get   message/topicEdit
+
+		public IActionResult TopicEdit(Guid id)
+		{
+			return PartialView("_editTopic", id);
+		}
 
 	}
 

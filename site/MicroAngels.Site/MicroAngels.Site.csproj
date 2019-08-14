@@ -32,7 +32,7 @@
     <Content Update="Views\Message\TopicIndex.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Message\Index.cshtml">
+    <Content Update="Views\Message\AnnounceIndex.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Message\_send.cshtml">

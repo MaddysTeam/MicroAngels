@@ -19,9 +19,11 @@ namespace Business
         [SugarColumn(IsNullable =false)]
         public string Name { get; set; }
 
-		[SugarColumn(IsIgnore=true)]
+		[SugarColumn(IsNullable = true)]
         public string Description { get; set; }
-        public DateTime CreateTime { get; set; }
+
+		[SugarColumn(IsNullable = false)]
+		public DateTime CreateTime { get; set; }
 
         [SugarColumn(IsIgnore = true)]
         public bool IsValidate => !ServiceId.IsNullOrEmpty() && !Name.IsNullOrEmpty();
@@ -41,6 +43,9 @@ namespace Business
 
 		[SugarColumn(IsNullable = false, Length = 50)]
 		public string TypeId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 200)]
+		public string Title { get; set; }
 
         public string Body { get; set; }
 

@@ -51,7 +51,7 @@ urls = {
 	roleInfo: '{0}/api/authserver/role/info'.format(apiDomain),
 	userInfo: '{0}/api/authserver/user/info'.format(apiDomain),
 	showUser: '{0}/api/authserver/user/briefInfo'.format(apiDomain),
-
+	topicInfo: '{0}/api/messagecenter/topic/info'.format(apiDomain),
 
 	login: 'http://localhost:5000/account/login',
 	index: 'http://localhost:5000/',
@@ -60,7 +60,7 @@ urls = {
 	rolePage: 'http://localhost:5000/role/index',
 	userEditPage: 'http://localhost:5000/user/edit?id={0}',
 	roleEditPage: 'http://localhost:5000/role/edit?id={0}',
-	topicEditPage:'http://localhost:5000/topic/edit?id={0}',
+	topicEditPage:'http://localhost:5000/message/topicEdit?id={0}',
 	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
 	interfaceEditPage: 'http://localhost:5000/assets/EditInterface?interfaceId={0}',
 	bindRolePage: 'http://localhost:5000/user/bindRoles',
@@ -98,6 +98,7 @@ function showMenu() {
 	var code = checkCode(urls.login);
 	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null, function (data) {
 		console.log(data.data);
+		if (!data.data) whenForbidden(urls.login);
 		var menus = showMenuHierarchy(data.data);
 		$('#SideBar').append(menus);
 	});
@@ -108,6 +109,7 @@ function showUser() {
 	var code = checkCode(urls.login);
 	var ajax = ajaxRequset(urls.showUser, code, location.href, null, function (data) {
 		console.log(data);
+		if (!data.data) whenForbidden(urls.login);
 		$('.user-info').append('<small>{0}</small>'.format(data.data.userName));
 	});
 

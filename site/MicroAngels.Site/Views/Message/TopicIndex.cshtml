@@ -101,7 +101,7 @@
 					消息
 					<small>
 						<i class="ace-icon fa fa-angle-double-right"></i>
-						Topic管理
+						消息主题管理
 					</small>
 				</h1>
 			</div><!-- /.page-header -->
@@ -109,7 +109,7 @@
 			<div>
 				<button class="btn btn-xs btn-danger pull-left btn-edit">
 					<i class="ace-icon"></i>
-					<span class="bigger-110">新增Topic</span>
+					<span class="bigger-110">新增消息主题</span>
 				</button>
 			</div>
 
@@ -134,8 +134,8 @@
 								<table id="table" class="table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
-											<th data-sortable="true" data-column="roleName">名称</th>
-											<th data-sortable="true" data-column="serivceId">系统Id</th>
+											<th data-sortable="true" data-column="name">名称</th>
+											<th data-sortable="true" data-column="serviceId">系统Id</th>
 											<th data-sortable="true" data-column="description">描述</th>
 											<th data-sortable="true" data-operation="command">操作</th>
 										</tr>
@@ -179,15 +179,15 @@
 				.on('draw', function () {
 					$table = $('#table');
 					$table.find('.btn-edit').on('click', function () {
-						var roleId = $(this).data('id');
-						$('#modalProxy').data('url', urls.roleEditPage.format(roleId)).trigger('click');
+						var id = $(this).data('id');
+						$('#modalProxy').data('url', urls.topicEditPage.format(id)).trigger('click');
 					});
 				});
 
 
-			//$('.btn-edit').on('click', function () {
-			//	$('#modalProxy').data('url', urls.roleEditPage).trigger('click');
-			//});
+			$('.btn-edit').on('click', function () {
+				$('#modalProxy').data('url', urls.topicEditPage).trigger('click');
+			});
 
 
 		});

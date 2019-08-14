@@ -18,7 +18,7 @@ namespace Business.Services
 			_logger = logger;
 		}
 
-		public Task<bool> EditTopicAsync(Topic topic)
+		public async Task<bool> EditTopicAsync(Topic topic)
 		{
 			var result = true;
 			topic.EnsureNotNull(() => new ArgumentException());
@@ -26,7 +26,7 @@ namespace Business.Services
 			if (isExists)
 			{
 				// upadate
-				result = TopicsDb.Update(t => topic, t => t.Id == topic.Id);
+				result = await TopicsDb.AsUpdateable(topic).ExecuteCommandAsync() > 0;
 			}
 			else
 			{
@@ -37,10 +37,10 @@ namespace Business.Services
 					result = false;
 
 				// add
-				result = TopicsDb.Insert(topic);
+				result = await TopicsDb.AsInsertable(topic).ExecuteCommandAsync() > 0;
 			}
 
-			return Task.FromResult(result);
+			return result;
 		}
 
 
@@ -63,13 +63,13 @@ namespace Business.Services
 			return Task.FromResult(topic);
 		}
 
-		public  IEnumerable<Topic> Search(Expression<Func<Topic, bool>> whereExpressions, int? pageIndex, int? pageSize, out int pageCount)
+		public IEnumerable<Topic> Search(Expression<Func<Topic, bool>> whereExpressions, int? pageIndex, int? pageSize, out int pageCount)
 		{
 			pageCount = 0;
 			var query = whereExpressions.IsNull() ? TopicsDb.AsQueryable() : TopicsDb.AsQueryable().Where(whereExpressions);
 			if (pageSize.HasValue && pageIndex.HasValue)
 			{
-				return  query.ToPageList(pageIndex.Value, pageSize.Value,ref pageCount);
+				return query.ToPageList(pageIndex.Value, pageSize.Value, ref pageCount);
 			}
 			else
 				return query.ToList();

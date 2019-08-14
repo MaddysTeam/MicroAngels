@@ -1,1 +1,96 @@
-﻿
+﻿@model Guid
+<div class="modal-dialog">
+	<!-- widget start -->
+	<div class="widget-box widget-color-blue ui-sortable-handle">
+
+		<div class="widget-header">
+			<h4 class="widget-title lighter">编辑消息主题</h4>
+			<div class="widget-toolbar no-border">
+				<a href="#" data-action="close" data-dismiss="modal">
+					<i class="ace-icon fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main">
+				<form class="form-horizontal" role="form" id="form">
+					<input type="hidden" id="Id" name="Id" value="@Model" />
+					<input type="hidden" id="CreateTime" name="CreateTime"  />
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 消息主题名称</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Name" name="Name" placeholder="主题名称" class="col-xs-10" minlength="4">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 服务(系统)ID</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="ServiceId" name="ServiceId" placeholder="服务（系统）ID" class="col-xs-10">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 主题描述</label>
+
+						<div class="col-sm-9">
+							<input type="text" id="Description" name="Description" placeholder="服务（系统）ID" class="col-xs-10">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-info btn-submit" id="submit" type="submit">
+								<i class="ace-icon fa fa-check "></i>
+								提交
+							</button>
+
+							&nbsp; &nbsp; &nbsp;
+							<a class="btn btn-cancel" data-action="close" data-dismiss="modal">
+								<i class="ace-icon fa fa-close"></i>
+								取消
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- widget end -->
+</div>
+<script>
+	$(function () {
+
+		var code = checkCode(urls.login);
+
+		var id = '@Model';
+		if (id != '@Guid.Empty') {
+			$('.btn-submit').attr('disabled', 'disabled');
+			var ajax = ajaxRequset(urls.topicInfo, code, urls.login, { id: id }, function (data) {
+				$('#Name').val(data.data.name);
+				$('#ServiceId').val(data.data.serviceId);
+				$('#Description').val(data.data.description);
+				$('#CreateTime').val(data.data.createTime);
+				$('.btn-submit').removeAttr('disabled');
+			});
+
+			$.ajax(ajax);
+		}
+
+		$('#form').attr('action', urls.editTopic);
+
+		ajaxSubmitForm($('#form'),
+			{
+				code: checkCode(urls.login),
+				afterSuccess(data) {
+					$('#firstModal').modal('hide');
+					refreshTable('#table')
+					//$('table').ajax.reload();
+				}
+			});
+
+	});
+</script>
