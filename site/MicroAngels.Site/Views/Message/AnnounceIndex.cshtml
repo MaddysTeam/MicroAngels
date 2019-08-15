@@ -135,9 +135,10 @@
 									<thead>
 										<tr>
 											@*<th data-sortable="true" data-column="system"></th>*@
-											<th data-sortable="true" data-column="roleName">系统名称</th>
-											<th data-sortable="true" data-column="description">消息标题</th>
-											<th data-sortable="true" data-column="description">消息内容</th>
+											<th data-sortable="true" data-column="serviceId">系统id</th>
+											<th data-sortable="true" data-column="topic">消息主题</th>
+											<th data-sortable="true" data-column="title">标题</th>
+											<th data-sortable="true" data-column="body">内容</th>
 											<th data-sortable="true" data-operation="command">操作</th>
 										</tr>
 									</thead>
@@ -160,35 +161,40 @@
 }
 
 @section Scripts{
+	<script src="~/js/markdown.min.js"></script>
+	<script src="~/js/bootstrap-markdown.min.js"></script>
+	<script src="~/js/jquery.hotkeys.index.min.js"></script>
+	<script src="~/js/bootstrap-wysiwyg.min.js"></script>
+	<script src="~/js/bootbox.js"></script>
 	<script>
 		$(function () {
 
 			var code = checkCode(urls.loginUrl);
 
-			//initTable('table', {
-			//	columnsDefs: [{
-			//		"targets": 2,
-			//		"render": function (data, type, row, meta) {
-			//			return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" data-id=' + row.id +' href="#" title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>';
-			//		}
-			//	}],
+			initTable('table', {
+				columnsDefs: [{
+					"targets": 4,
+					"render": function (data, type, row, meta) {
+						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" data-id=' + row.id + ' href="#" title="查看详细"><i class="ace-icon fa fa-eye bigger-130"></i></a>';
+					}
+				}],
 
-			//	dataUrl: urls.getRoles,
-			//	accessCode: code,
-			//	directUrlWhenForbidden: urls.loginUrl
-			//})
-			//	.on('draw', function () {
-			//		$table = $('#table');
-			//		$table.find('.btn-edit').on('click', function () {
-			//			var roleId = $(this).data('id');
-			//			$('#modalProxy').data('url', urls.roleEditPage.format(roleId)).trigger('click');
-			//		});
-			//	});
+				dataUrl: urls.getAnnounces,
+				accessCode: code,
+				directUrlWhenForbidden: urls.loginUrl
+			})
+				.on('draw', function () {
+					$table = $('#table');
+					$table.find('.btn-edit').on('click', function () {
+						var roleId = $(this).data('id');
+						//$('#modalProxy').data('url', urls.roleEditPage.format(roleId)).trigger('click');
+					});
+				});
 
 
-			//$('.btn-edit').on('click', function () {
-			//	$('#modalProxy').data('url', urls.roleEditPage).trigger('click');
-			//});
+			$('.btn-edit').on('click', function () {
+				$('#modalProxy').data('url', urls.announceSendPage).trigger('click');
+			});
 
 
 		});

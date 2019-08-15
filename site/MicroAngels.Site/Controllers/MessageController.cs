@@ -7,12 +7,21 @@ namespace Controllers
 	public class MessageController : Controller
 	{
 
+
 		//Get   message/AnnouncementIndex
 
 		public IActionResult AnnounceIndex()
 		{
 			return View();
 		}
+
+		//Get   message/AnnounceSend
+
+		public IActionResult AnnounceSend()
+		{
+			return PartialView("_announceSend");
+		}
+
 
 		//Get   message/index
 

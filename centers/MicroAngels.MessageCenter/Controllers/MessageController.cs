@@ -37,10 +37,18 @@ namespace Controllers
 		}
 
 
-		[HttpGet("send")]
-		public string SendAnnounceMessage()
+		[HttpPost("sendAnnounce")]
+		public async Task<IActionResult> SendAnnounceMessage([FromForm] MessageViewModel messageViewModel)
 		{
-			throw new NotImplementedException();
+			var message = Mapper.Map<MessageViewModel, Message>(messageViewModel);
+			message.SenderId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var isSuccess = await _messageService.AnnounceAsync(message);
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "发送成功" : "发送失败"
+			});
 		}
 
 		[HttpPost("announces")]

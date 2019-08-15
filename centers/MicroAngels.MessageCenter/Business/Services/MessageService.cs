@@ -179,7 +179,7 @@ namespace Business.Services
 				return false;
 			}
 
-			var topicObj = await _topicService.GetTopicAsync(message.Topic, message.ServiceId);
+			var topicObj = await _topicService.GetTopicAsync(message.TopicId);
 			if (topicObj.IsNull())
 			{
 				return false;
@@ -188,6 +188,7 @@ namespace Business.Services
 			message.Id = Guid.NewGuid().ToString();
 			message.TopicId = topicObj.Id;
 			message.TypeId = StaticKeys.MessageTypeId_Announce;
+			message.SendTime = DateTime.UtcNow;
 			message.ReceiveTime = DateTime.UtcNow;
 
 			return MessageDb.Insert(message);

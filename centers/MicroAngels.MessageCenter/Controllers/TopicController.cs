@@ -45,7 +45,7 @@ namespace Controllers
 		}
 
 		[HttpPost("topics")]
-		public IActionResult GetTopics([FromForm]int start, [FromForm] int length)
+		public IActionResult GetTopics([FromForm]int? start, [FromForm] int? length)
 		{
 			var totalCount = 0;
 			var topics =  _topicService.Search(null, start, length, out totalCount);

@@ -23,9 +23,9 @@
 
 
 /* ------------------------------------------------- bussiness ------------------------------------------------------- */
-var apiDomain = "http://192.168.1.2:5000";
+var apiDomain = 'http://192.168.1.2:5000';
+var local = 'http://localhost:5000';
 urls = {
-
 	editUser: '{0}/api/authserver/user/edit'.format(apiDomain),
 	editRole: '{0}/api/authserver/role/edit'.format(apiDomain),
 	editAssetsList: '{0}/api/authserver/assets/editList'.format(apiDomain),
@@ -45,6 +45,7 @@ urls = {
 	getMenu: '{0}/api/authserver/assets/allMenus'.format(apiDomain),
 	getHierarchyMenus: '{0}/api/authserver/assets/hierarchyMenus'.format(apiDomain),
 	getTopics: '{0}/api/messagecenter/topic/topics'.format(apiDomain),
+	getAnnounces: '{0}/api/messagecenter/message/announces'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
@@ -53,20 +54,23 @@ urls = {
 	showUser: '{0}/api/authserver/user/briefInfo'.format(apiDomain),
 	topicInfo: '{0}/api/messagecenter/topic/info'.format(apiDomain),
 
-	login: 'http://localhost:5000/account/login',
-	index: 'http://localhost:5000/',
+	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
+
+	login: '{0}/account/login'.format(local),
+	index: '{0}/'.format(local),
 	signOut: '{0}/api/accountservice/signout'.format(apiDomain),
-	userPage: 'http://localhost:5000/user/index',
-	rolePage: 'http://localhost:5000/role/index',
-	userEditPage: 'http://localhost:5000/user/edit?id={0}',
-	roleEditPage: 'http://localhost:5000/role/edit?id={0}',
-	topicEditPage:'http://localhost:5000/message/topicEdit?id={0}',
-	menuEditPage: 'http://localhost:5000/assets/EditMenu?menuId={0}',
-	interfaceEditPage: 'http://localhost:5000/assets/EditInterface?interfaceId={0}',
-	bindRolePage: 'http://localhost:5000/user/bindRoles',
-	interfacePage: 'http://localhost:5000/assets/interfaceIndex',
-	menuPage: 'http://localhost:5000/assets/menuIndex',
-	assetsPage: 'http://localhost:5000/assets/index'
+	userPage: '{0}/user/index'.format(local),
+	rolePage: '{0}/role/index'.format(local),
+	userEditPage: local +'/user/edit?id={0}',
+	roleEditPage: local +'/role/edit?id={0}',
+	topicEditPage: local +'/message/topicEdit?id={0}',
+	menuEditPage: local +'/assets/EditMenu?menuId={0}',
+	interfaceEditPage: local+'/assets/EditInterface?interfaceId={0}',
+	bindRolePage: '{0}/user/bindRoles'.format(local),
+	interfacePage: '{0}/assets/interfaceIndex'.format(local),
+	menuPage: '{0}/assets/menuIndex'.format(local),
+	assetsPage: '{0}/assets/index'.format(local),
+	announceSendPage: '{0}/message/AnnounceSend'.format(local)
 };
 
 

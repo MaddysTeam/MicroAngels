@@ -139,4 +139,9 @@ namespace Business
         Subscribe, // 订阅
     }
 
+	public enum TopicType
+	{
+
+	}
+
 }
