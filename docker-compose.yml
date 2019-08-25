@@ -19,6 +19,15 @@ services:
     ports:
       - "5000:5000"
 
+  message_service:
+    image: micoangels.service.message
+    container_name: message_service
+    build: 
+      context: centers/MicroAngels.MessageCenter
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+
   account_service:
     image: micoangels.service.account
     container_name: account_service
@@ -27,3 +36,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5999:5999"
+
+  message_service:
+    image: micoangels.service.file
+    container_name: file_service
+    build: 
+      context: services/FileService
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
