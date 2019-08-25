@@ -1,0 +1,33 @@
+﻿.cover-bg {
+	width: 100%;
+	background-image: url('../img/diagonal-stripe.png');
+	padding: 10px;
+	border: 1px #ccc solid;
+	cursor: pointer;
+}
+
+text-align: center;
+
+.cover-bg span {
+	font-size: 36px;
+	text-align: center;
+	color: #A4A4A4;
+}
+
+.cover-bg span:before {
+	font-family: FontAwesome;
+	content: '\f0ee';
+	display: block;
+	font-size: 4em;
+	line-height: 1;
+}
+
+.cover-img {
+	width: 100%;
+}
+
+.img-frame {
+	padding: 5px;
+	border: #d3d3d3 1px solid;
+	background-color: #fff;
+}

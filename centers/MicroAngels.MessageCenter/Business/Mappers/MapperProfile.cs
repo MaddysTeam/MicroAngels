@@ -25,7 +25,23 @@ namespace Business
 			.ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
 			.ForMember(dest => dest.SendTime, opt => opt.MapFrom(src => src.SendTime))
 			.ReverseMap();
-			
+
+			CreateMap<UserMessage, UserMessageViewModel>()
+			.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+			.ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
+			.ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.ReceiverId))
+			.ForMember(dest => dest.MessageId, opt => opt.MapFrom(src => src.MessageId))
+			.ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Message.Body));
+
+			CreateMap<Subscribe, SubscribeViewModel>()
+			.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+			.ForMember(dest => dest.TopicId, opt => opt.MapFrom(src => src.TopicId))
+			.ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
+			.ForMember(dest => dest.SubscriberId, opt => opt.MapFrom(src => src.SubscriberId))
+			.ForMember(dest => dest.TargetId, opt => opt.MapFrom(src => src.TargetId))
+			.ForMember(dest => dest.Target, opt => opt.MapFrom(src => src.Target))
+			.ForMember(dest => dest.Subsriber, opt => opt.MapFrom(src => src.Subscriber))
+			.ReverseMap();
 		}
 
 	}

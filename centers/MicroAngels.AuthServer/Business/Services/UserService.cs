@@ -44,14 +44,19 @@ namespace Business
 			return UserDb.GetById(id);
 		}
 
-		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page)
 		{
-			totalCount = 0;
+			
 			var query = whereExpressions.IsNull() ? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
 
-			if (pageSize.HasValue && pageIndex.HasValue)
+			if (!page.IsNull() && page.IsValidate)
 			{
-				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+				var totalCount = 0;
+				var results= query.ToPageList(page.PageIndex, page.PageSize, ref totalCount);
+
+				page.TotalCount = totalCount;
+
+				return results;
 			}
 			else
 				return query.ToList();

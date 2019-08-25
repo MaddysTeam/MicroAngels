@@ -1,13 +1,8 @@
 ﻿using Business;
 using Business.Helpers;
 using Business.Services;
-using DotNetCore.CAP;
-using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,9 +26,10 @@ namespace Controllers
 		/// <param name="context"></param>
 		/// <param name="serviceBus"></param>
 		/// <param name="configuraton"></param>
-		public MessageController(IMessageService messageService) : base()
+		public MessageController(IMessageService messageService, ISubscribeService subscribeService) : base()
 		{
 			_messageService = messageService;
+			_subscribeService = subscribeService;
 		}
 
 
@@ -52,17 +48,18 @@ namespace Controllers
 		}
 
 		[HttpPost("announces")]
-		public async Task<IActionResult> GetAnnounceMessage([FromForm] string topicId, [FromForm]string serviceId, [FromForm]int start, [FromForm] int length)
+		public async Task<IActionResult> GetAnnounceMessage([FromForm]int start, [FromForm]int length)
 		{
-			var totalCount = 0;
-			var searchResults = await _messageService.Search(topicId, serviceId, StaticKeys.MessageTypeId_Announce, length, start, out totalCount);
+			var systemId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var page = new PageOptions(start, length);
+			var searchResults =await _messageService.Search(new MessageSearchOptions { serviceId = systemId, typeId = StaticKeys.MessageTypeId_Announce }, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
 					data = searchResults.Select(m => Mapper.Map<Message, MessageViewModel>(m)),
-					recordsTotal = totalCount,
-					recordsFiltered = totalCount,
+					recordsTotal = page.TotalCount,
+					recordsFiltered = page.TotalCount,
 				});
 			}
 
@@ -75,7 +72,84 @@ namespace Controllers
 		}
 
 
+		[HttpPost("unreadAnnounces")]
+		public async Task<IActionResult> UnRreadAnnounceMessage()
+		{
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var searchOptions = new MessageSearchOptions { serviceId = serviceId, typeId = StaticKeys.MessageTypeId_Announce, reveiverId = userId };
+			var result = await _messageService.GetUnReadMessage(searchOptions);
+
+			return new JsonResult(new
+			{
+				data = result.Select(m => Mapper.Map<UserMessage, UserMessageViewModel>(m))
+			});
+		}
+
+		[HttpPost("receiveAnnounce")]
+		public async Task<IActionResult> ReceiveAnnounce()
+		{
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var searchOptions = new MessageSearchOptions { reveiverId = userId, serviceId = serviceId, typeId = StaticKeys.MessageTypeId_Announce };
+			var isSuccess = await _messageService.ReceiveMessages(searchOptions);
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
+			});
+		}
+
+		[HttpPost("targetMessages")]
+		public async Task<IActionResult> GetTargetMessages([FromForm] string topicId, [FromForm]int start, [FromForm]int length)
+		{
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			// get all subscribe target id 
+			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { subscriberId = userId }, null);
+			var searchOptions = new MessageSearchOptions
+			{
+				reveiverId = userId,
+				serviceId = serviceId,
+				topicId = topicId,
+				typeId=StaticKeys.MessageTypeId_Notify,
+				senderIds = targetIds.IsNull() || targetIds.Count <= 0 ? new string[] { } : targetIds.Select(t => t.TargetId).ToArray()
+			};
+			var result = await _messageService.SearchUserMessage(searchOptions, new PageOptions(start, length));
+
+			return new JsonResult(new
+			{
+				data = result.Select(m => Mapper.Map<UserMessage, UserMessageViewModel>(m))
+			});
+		}
+
+		[HttpPost("receiveTargetMessages")]
+		public async Task<IActionResult> ReceiveTargetMessages([FromForm]string topicId)
+		{
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { subscriberId = userId }, null);
+			var searchOptions = new MessageSearchOptions
+			{
+				reveiverId = userId,
+				serviceId = serviceId,
+				topicId = topicId,
+				typeId  = StaticKeys.MessageTypeId_Notify,
+				senderIds = targetIds.IsNull() || targetIds.Count <= 0 ? new string[] { } : targetIds.Select(t => t.TargetId).ToArray()
+			};
+
+			var isSuccess = await _messageService.ReceiveMessages(searchOptions);
+
+			return new JsonResult(new
+			{
+				isSuccess,
+				msg = isSuccess ? "操作成功" : "操作失败"
+			});
+		}
+
 		private readonly IMessageService _messageService;
+		private readonly ISubscribeService _subscribeService;
 
 	}
 

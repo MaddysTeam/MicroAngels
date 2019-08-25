@@ -17,7 +17,7 @@ namespace Business
 
 		Task<bool> Edit(UserInfo userInfo);
 		Task<bool> BindRoles(Guid userId, string[] roleIds);
-		IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, int? pageSize, int? pageIndex,out int totalCount);
+		IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page);
 
 		Task<bool> Focus(Guid userId,Guid targetIds);
 

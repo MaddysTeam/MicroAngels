@@ -16,7 +16,7 @@ namespace FileService.Business
 		public Guid FildId { get; set; }
 
 		[Key(1)]
-		[SugarColumn(IsNullable = false, Length = 50)]
+		[SugarColumn(IsNullable = true, Length = 50)]
 		public Guid FileType { get; set; }
 
 		[Key(2)]

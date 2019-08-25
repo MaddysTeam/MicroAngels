@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.ORM.Suger
 {
@@ -42,6 +40,7 @@ namespace MicroAngels.ORM.Suger
 					InitKeyType = InitKeyType.Attribute,
 					ConfigureExternalServices = new ConfigureExternalServices()
 					{
+						//TODO:redis cache if possible
 						//DataInfoCacheService = new SugarRedisCache();
 					}
 				});

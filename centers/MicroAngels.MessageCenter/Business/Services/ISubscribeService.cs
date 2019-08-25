@@ -10,7 +10,7 @@ namespace Business.Services
     {
         Task<bool> SubscribeAsync(Subscribe subscribe);
         Task<bool> UnSubsribeAsync(Subscribe subscribe);     
-        Task<List<Subscribe>> GetSubscribes(Expression<Func<Subscribe, bool>> whereExpressions, int? pageIndex, int? pageSize);
+        Task<List<Subscribe>> Search(SubscribeSearchOptions options, PageOptions page);
     }
 
    

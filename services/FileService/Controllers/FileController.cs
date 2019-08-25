@@ -17,21 +17,28 @@ namespace FileService.Controllers
 	public class FileController : ControllerBase
 	{
 
-		public FileController(IHostingEnvironment hosting, IFileService fileService)
+		public FileController(IFileService fileService)
 		{
-			_folder = $@"{hosting.ContentRootPath}\uploader";
 			_fileService = fileService;
 		}
 
 		[HttpPost("upload")]
 		public ActionResult Upload()
 		{
-			if (!Directory.Exists(_folder))
-				Directory.CreateDirectory(_folder);
+			var uploadFiles = _fileService.UploadFiles(Request.Form.Files);
 
-			var uploadFiles = _fileService.UploadFiles(Request.Form.Files, _folder);
+			if (uploadFiles.Count == 1)
+			{
+				return new JsonResult(new
+				{
+					path = uploadFiles.FirstOrDefault().FilePath
+				});
+			}
 
-			return Ok(uploadFiles);
+			return new JsonResult(new
+			{
+			});
+
 		}
 
 		[HttpPost("file")]

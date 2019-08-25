@@ -46,6 +46,7 @@ urls = {
 	getHierarchyMenus: '{0}/api/authserver/assets/hierarchyMenus'.format(apiDomain),
 	getTopics: '{0}/api/messagecenter/topic/topics'.format(apiDomain),
 	getAnnounces: '{0}/api/messagecenter/message/announces'.format(apiDomain),
+	getUnReadAnnounces: '{0}/api/messagecenter/message/unreadAnnounces'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
@@ -55,23 +56,30 @@ urls = {
 	topicInfo: '{0}/api/messagecenter/topic/info'.format(apiDomain),
 
 	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
+	receiveAnnounce: '{0}/api/messagecenter/message/receiveAnnounce'.format(apiDomain),
+
+	fileUpload: '{0}/api/fileservice/upload'.format(apiDomain),
 
 	login: '{0}/account/login'.format(local),
 	index: '{0}/'.format(local),
 	signOut: '{0}/api/accountservice/signout'.format(apiDomain),
 	userPage: '{0}/user/index'.format(local),
 	rolePage: '{0}/role/index'.format(local),
-	userEditPage: local +'/user/edit?id={0}',
-	roleEditPage: local +'/role/edit?id={0}',
-	topicEditPage: local +'/message/topicEdit?id={0}',
-	menuEditPage: local +'/assets/EditMenu?menuId={0}',
-	interfaceEditPage: local+'/assets/EditInterface?interfaceId={0}',
+	userEditPage: local + '/user/edit?id={0}',
+	roleEditPage: local + '/role/edit?id={0}',
+	topicEditPage: local + '/message/topicEdit?id={0}',
+	menuEditPage: local + '/assets/EditMenu?menuId={0}',
+	interfaceEditPage: local + '/assets/EditInterface?interfaceId={0}',
 	bindRolePage: '{0}/user/bindRoles'.format(local),
 	interfacePage: '{0}/assets/interfaceIndex'.format(local),
 	menuPage: '{0}/assets/menuIndex'.format(local),
 	assetsPage: '{0}/assets/index'.format(local),
-	announceSendPage: '{0}/message/AnnounceSend'.format(local)
+	announceSendPage: '{0}/message/AnnounceSend'.format(local),
+	profilePage: local + '/user/profile?userId={0}'
 };
+
+var code = checkCode(urls.login);
+
 
 
 function checkCode(returnUrl) {
@@ -96,7 +104,7 @@ var menuComponents = {
 	menuStr: '<li class=""><a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-list"></i><span class="menu-text"> {0} </span><b class="arrow fa fa-angle-down"></b></a></li>',
 	submenuStr: '<ul class="submenu"></ul>',
 	submenuItemStr: '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>',
-};	
+};
 
 function showMenu() {
 	var code = checkCode(urls.login);
@@ -114,7 +122,11 @@ function showUser() {
 	var ajax = ajaxRequset(urls.showUser, code, location.href, null, function (data) {
 		console.log(data);
 		if (!data.data) whenForbidden(urls.login);
+
+		var coverPath = apiDomain + '/api' + data.data.headerImagePath;
+		$('.nav-user-photo').attr('src', coverPath);
 		$('.user-info').append('<small>{0}</small>'.format(data.data.userName));
+		$('.user-profile').attr('href', urls.profilePage.format(data.data.id));
 	});
 
 	$.ajax(ajax);
@@ -142,7 +154,7 @@ var ajaxRequset = function (url, code, forbiddenUrl, data, success) {
 		error: function (o) {
 			if (!forbiddenUrl)
 				forbiddenUrl = urls.login;
-			if (o.status == 403 || o.status== 401) {
+			if (o.status == 403 || o.status == 401) {
 				whenForbidden(forbiddenUrl);
 			}
 		}
@@ -183,6 +195,37 @@ function showMenuHierarchy(data) {
 
 }
 
+/* ------------------------------------------------- messages------------------------------------------------------- */
+
+function announceNotification() {
+	var code = checkCode(urls.login);
+	setInterval(function () {
+		var ajax = ajaxRequset(urls.getUnReadAnnounces, code, urls.login, {}, function (data) {
+			var messageCount = data.data.length;
+			if (messageCount > 0) {
+				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-animated-bell"></i><span class="badge badge-important">{0}</span>'.format(messageCount));
+				$('.messageCount').html(messageCount);
+			}
+			else {
+				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
+			}
+		});
+
+		$.ajax(ajax);
+	}, 20000);
+}
+
+function reveiveAnnounce() {
+	var ajax = ajaxRequset(urls.receiveAnnounce, code, urls.login, {}, function (data) {
+
+		$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
+
+	});
+
+	$.ajax(ajax);
+}
+
+
 /* ------------------------------------------------- ajax forms ------------------------------------------------------- */
 
 function ajaxSubmitForm(selector, options) {
@@ -200,9 +243,13 @@ function ajaxSubmitForm(selector, options) {
 		e.preventDefault();
 		var $this = $(this);
 		var para = $this.serialize();
-		if (options.isReplaceCommas == true) {
-			para = para.replace('%2c', ',');
-		}
+		//if (options.isReplaceCommas == true) {
+		//	para = para.replace('%2c', ',');
+		//}
+		console.log(para);
+		console.log(options.dataUrl);
+		console.log(options.code);
+		console.log($this.valid());
 		if ($this.valid()) {
 			var ajaxReq = ajaxRequset(options.dataUrl, options.code, urls.login, para, options.afterSuccess);
 			$.ajax(ajaxReq);
@@ -594,5 +641,5 @@ function refreshTable(selector) {
 }
 
 
-
+/* ------------------------------------------------- timer ------------------------------------------------------- */
 

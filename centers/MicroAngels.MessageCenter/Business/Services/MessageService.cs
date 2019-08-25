@@ -1,174 +1,167 @@
-﻿using Business;
-using MicroAngels.Core;
+﻿using Business.Helpers;
 using DotNetCore.CAP;
 using Infrastructure.Orms.Sugar;
+using MicroAngels.Core;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Helpers;
 
 namespace Business.Services
 {
 
-    public class MessageService : MySqlDbContext, IMessageService, ICapSubscribe
-    {
+	public class MessageService : MySqlDbContext, IMessageService, ICapSubscribe
+	{
 
-        public MessageService(ITopicService topicService, ISubscribeService subscribeService, ILogger<MessageService> logger)
-        {
-            _topicService = topicService;
-            _subscribeService = subscribeService;
-            _logger = logger;
-        }
+		public MessageService(ITopicService topicService, ISubscribeService subscribeService, ILogger<MessageService> logger)
+		{
+			_topicService = topicService;
+			_subscribeService = subscribeService;
+			_logger = logger;
+		}
 
-        public Task<Message> GetMessage(string messageId)
-        {
-            return Task.FromResult(MessageDb.GetById(messageId));
-        }
+		public async Task<Message> GetMessage(string messageId)
+		{
+			return await MessageDb.AsQueryable().FirstAsync(m => m.Id == messageId);
+		}
 
-        public Task<List<Message>> Search(string topicId, string serviceId, string typeId, int pageIndex, int pageSize, out int pageCount)
-        {
-            var query = DB.Queryable<Message, Topic>((m, t) => new object[] {
-                JoinType.Inner,m.TopicId == t.Id
-            });
+		public async Task<List<Message>> Search(MessageSearchOptions options, PageOptions page)
+		{
+			var query = DB.Queryable<Message, Topic>((m, t) => new object[] {
+				JoinType.Inner,m.TopicId == t.Id
+			});
 
-            if (!topicId.IsNullOrEmpty())
-                query.Where((m, t) => m.TopicId == topicId);
-            if (!serviceId.IsNullOrEmpty())
-                query.Where((m, t) => m.ServiceId == serviceId);
-            if (!typeId.IsNullOrEmpty())
-                query.Where((m, t) => m.TypeId == typeId);
+			if (!options.topicId.IsNullOrEmpty())
+				query.Where((m, t) => m.TopicId == options.topicId);
+			if (!options.serviceId.IsNullOrEmpty())
+				query.Where((m, t) => m.ServiceId == options.serviceId);
+			if (!options.typeId.IsNullOrEmpty())
+				query.Where((m, t) => m.TypeId == options.typeId);
 
-            pageCount = query.Count();
+			page.TotalCount = query.Count();
 
-            var result = query.Select((m, t) => new Message
-            {
-                Id = m.Id,
-                Topic = t.Name,
-                Body = m.Body,
-                ReceiveTime = m.ReceiveTime,
-                SenderId = m.SenderId,
-                SendTime = m.SendTime,
-                ServiceId = m.ServiceId,
-                StatusId = m.StatusId,
-                TopicId = m.TopicId,
-                TypeId = m.TypeId
-            });
+			var result = query.Select((m, t) => new Message
+			{
+				Id = m.Id,
+				Topic = t.Name,
+				Body = m.Body,
+				ReceiveTime = m.ReceiveTime,
+				SenderId = m.SenderId,
+				SendTime = m.SendTime,
+				ServiceId = m.ServiceId,
+				StatusId = m.StatusId,
+				TopicId = m.TopicId,
+				TypeId = m.TypeId,
+				Title = m.Title
+			});
 
-            return pageSize <= 0 ? result.ToListAsync() : result.ToPageListAsync(pageIndex, pageSize);
-        }
+			return !page.IsValidate ? await result.ToListAsync() : await result.ToPageListAsync(page.PageIndex, page.PageSize);
+		}
 
-        public Task<List<UserMessage>> GetUserMessagesAsync(string userid, string serviceId, string topicId, string typeId, int pageIndex, int pageSize, out int pageCount)
-        {
-            var query = DB.Queryable<Message, UserMessage>((m, um) => new object[] {
-                JoinType.Left,m.Id==um.MessageId
-            })
-            .Where((m, um) => um.ReceiverId == userid);
+		public async Task<List<UserMessage>> SearchUserMessage(MessageSearchOptions options, PageOptions page)
+		{
+			var serviceId = options?.serviceId;
+			var typeId = options?.typeId;
+			var topicId = options?.topicId;
+			var receiverId = options?.reveiverId;
+			var statusId = options?.statusId;
+			var senderIds = options?.senderIds;
 
-            if (!serviceId.IsNullOrEmpty())
-                query.Where((m, um) => m.ServiceId == serviceId || um.ServiceId == serviceId);
-            if (!typeId.IsNullOrEmpty())
-                query.Where((m, um) => m.TypeId == typeId);
-            if (!topicId.IsNullOrEmpty())
-                query.Where((m, um) => m.TopicId == topicId);
+			var query = DB.Queryable<Message, UserMessage>((m, um) => new object[] {
+				JoinType.Left,m.Id==um.MessageId && um.ReceiverId==receiverId
+			});
 
-            pageCount = query.Count();
+			if (!senderIds.IsNull() && senderIds.Length > 0)
+				query.In((m, um) => m.SenderId, senderIds);
 
-            var result = query.Select((m, um) => new UserMessage
-            {
-                Id = um.Id,
-                ReceiverId = um.ReceiverId,
-                MessageId = um.MessageId,
-                ServiceId = um.ServiceId,
-                Message = m,
-            });
+			if (statusId == StaticKeys.UserMessageStatusId_Waiting)
+				query.Where((m, um) => string.IsNullOrEmpty(um.ReceiverId));
 
-            return pageSize <= 0 ? result.ToListAsync() : result.ToPageListAsync(pageIndex, pageSize);
-        }
+			if (!serviceId.IsNullOrEmpty())
+				query.Where((m, um) => m.ServiceId == serviceId || um.ServiceId == serviceId);
 
+			if (!typeId.IsNullOrEmpty())
+				query.Where((m, um) => m.TypeId == typeId);
 
-        [CapSubscribe(AppKeys.MessageCenterSubscribe)]
-        public async Task<bool> SubscribeAsync(string message)
-        {
-            //validate message 
-            Message msg = JsonConvert.DeserializeObject<Message>(message);
-            if (!msg.IsValidate || msg.SubscriberId.IsNullOrEmpty() || msg.TargetId.IsNullOrEmpty())
-            {
-                _logger.LogError(AlterKeys.Error.MESSAGE_INVALID, msg.Id);
-                return false;
-            }
+			if (!topicId.IsNullOrEmpty())
+				query.Where((m, um) => m.TopicId == topicId);
 
-            var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
-            if (topicObj.IsNull())
-            {
-                return false;
-            }
+			if (!page.IsNull())
+				page.TotalCount = query.Count();
 
-            msg.Id = Guid.NewGuid().ToString();
-            msg.TopicId = topicObj.Id;
-            msg.TypeId = StaticKeys.MessageTypeId_Subscribe;
-            msg.ReceiveTime = DateTime.UtcNow;
-            if (!MessageDb.Insert(msg))
-            {
-                return false;
-            }
+			var result = query.Select((m, um) => new UserMessage
+			{
+				Id = um.Id,
+				ReceiverId = um.ReceiverId,
+				MessageId = um.MessageId,
+				ServiceId = um.ServiceId,
 
-            // handle message logic
-            var subscribe = new Subscribe(Guid.NewGuid().ToString(), msg.ServiceId, msg.TopicId, msg.SubscriberId, msg.TargetId);
-            return await _subscribeService.SubscribeAsync(subscribe);
-        }
+				Message = m,
+			});
 
-        [CapSubscribe(AppKeys.MessageCenterNotfiy)]
-        public async Task<bool> NotifyAsync(string message)
-        {
-            Message msg = JsonConvert.DeserializeObject<Message>(message);
-            if (!msg.IsValidate)
-            {
-                return false;
-            }
+			return page.IsNull() || !page.IsValidate ? await result.ToListAsync() : await result.ToPageListAsync(page.PageIndex, page.PageSize);
+		}
 
-            var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
-            if (topicObj.IsNull())
-            {
-                return false;
-            }
+		[CapSubscribe(AppKeys.MessageCenterSubscribe)]
+		public async Task<bool> SubscribeAsync(string message)
+		{
+			//validate message 
+			Message msg = JsonConvert.DeserializeObject<Message>(message);
+			if (!msg.IsValidate || msg.SubscriberId.IsNullOrEmpty() || msg.TargetId.IsNullOrEmpty())
+			{
+				_logger.LogError(AlterKeys.Error.MESSAGE_INVALID, msg.Id);
+				return false;
+			}
 
-            msg.Id = Guid.NewGuid().ToString();
-            msg.TopicId = topicObj.Id;
-            msg.TypeId = StaticKeys.MessageTypeId_Notify;
-            msg.ReceiveTime = DateTime.UtcNow;
-            if (!MessageDb.Insert(msg))
-            {
-                return false;
-            }
+			var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
+			if (topicObj.IsNull())
+			{
+				return false;
+			}
 
-			// 找出所有当前message订阅者，然后将当前message插入user message,注意订阅对象是senderid
-			var userMessages = new List<UserMessage>();
-			var subscribes = await _subscribeService.GetSubscribes(s => s.ServiceId == msg.ServiceId && s.TargetId == msg.TargetId && s.TopicId == msg.TopicId, null, null);
-            foreach (var item in subscribes)
-            {
-                var um = new UserMessage
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MessageId = msg.Id,
-                    ReceiverId = item.SubscriberId,
-                    ServiceId = msg.ServiceId,
-                    StatusId = StaticKeys.UserMessageStatusId_Waiting
-                };
+			msg.Id = Guid.NewGuid().ToString();
+			msg.TopicId = topicObj.Id;
+			msg.TypeId = StaticKeys.MessageTypeId_Subscribe;
+			msg.ReceiveTime = DateTime.UtcNow;
+			if (!MessageDb.Insert(msg))
+			{
+				return false;
+			}
 
-                if (um.IsValidate)
-                    userMessages.Add(um);
-            }
+			// handle message logic
+			var subscribe = new Subscribe(Guid.NewGuid().ToString(), msg.ServiceId, msg.TopicId, msg.SubscriberId, msg.TargetId);
+			return await _subscribeService.SubscribeAsync(subscribe);
+		}
 
-            return UserMessageDb.InsertRange(userMessages.ToArray());
-        }
+		[CapSubscribe(AppKeys.MessageCenterNotfiy)]
+		public async Task<bool> NotifyAsync(string message)
+		{
+			Message msg = JsonConvert.DeserializeObject<Message>(message);
+			if (!msg.IsValidate)
+			{
+				return false;
+			}
 
-        [CapSubscribe(AppKeys.MessageCenterAnnounce)]
-        public async Task<bool> AnnounceAsync(string message)
-        {
-            Message msg = JsonConvert.DeserializeObject<Message>(message);
+			var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
+			if (topicObj.IsNull())
+			{
+				return false;
+			}
+
+			msg.Id = Guid.NewGuid().ToString();
+			msg.TopicId = topicObj.Id;
+			msg.TypeId = StaticKeys.MessageTypeId_Notify;
+			msg.ReceiveTime = DateTime.UtcNow;
+
+			return MessageDb.Insert(msg);
+		}
+
+		[CapSubscribe(AppKeys.MessageCenterAnnounce)]
+		public async Task<bool> AnnounceAsync(string message)
+		{
+			Message msg = JsonConvert.DeserializeObject<Message>(message);
 			return await AnnounceAsync(msg);
 		}
 
@@ -194,25 +187,54 @@ namespace Business.Services
 			return MessageDb.Insert(message);
 		}
 
-        public Task<bool> AddUserMessage(UserMessage userMessage)
-        {
-            if (userMessage.IsValidate)
-            {
-                return Task.FromResult(false);
-            }
+		public Task<bool> AddUserMessage(UserMessage userMessage)
+		{
+			if (userMessage.IsValidate)
+			{
+				return Task.FromResult(false);
+			}
 
-            var result = UserMessageDb.Insert(new UserMessage
-            {
-                MessageId = userMessage.MessageId,
-                ReceiverId = userMessage.ReceiverId,
-            });
+			var result = UserMessageDb.Insert(new UserMessage
+			{
+				MessageId = userMessage.MessageId,
+				ReceiverId = userMessage.ReceiverId,
+			});
 
-            return Task.FromResult(result);
-        }
+			return Task.FromResult(result);
+		}
+
+		public async Task<List<UserMessage>> GetUnReadMessage(MessageSearchOptions options)
+		{
+			options.statusId = StaticKeys.UserMessageStatusId_Waiting;
+			var userMessages = await SearchUserMessage(options, null);
+
+			return userMessages;
+			//return userMessages?.FindAll(m => m.ReceiverId.IsNullOrEmpty());
+		}
+
+		public async Task<bool> ReceiveMessages(MessageSearchOptions options)
+		{
+			var unreadMessages = await GetUnReadMessage(options);
+
+			foreach (var message in unreadMessages)
+			{
+				UserMessageDb.Insert(
+					new UserMessage
+					{
+						Id = Guid.NewGuid().ToString(),
+						MessageId = message.Message.Id,
+						ReceiverId = options?.reveiverId,
+						ServiceId = options?.serviceId,
+						StatusId = Guid.Empty.ToString()
+					});
+			}
+
+			return true;
+		}
 
 		private readonly ITopicService _topicService;
-        private readonly ISubscribeService _subscribeService;
-        private readonly ILogger<MessageService> _logger;
-    }
+		private readonly ISubscribeService _subscribeService;
+		private readonly ILogger<MessageService> _logger;
+	}
 
 }

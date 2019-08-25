@@ -26,8 +26,7 @@ namespace MicroAngels.AuthServer.Services
 			var claims = new List<Claim>();
 
 			// get user id as client Id and put into claims 
-			int userCount = 0;
-			var users = _userService.Search(u => u.UserName == context.UserName, null, null, out userCount);
+			var users = _userService.Search(u => u.UserName == context.UserName, null);
 			if (!users.IsNull() && users.Count() > 0)
 			{
 				var userid = users.First().UserId.ToString();
@@ -40,6 +39,9 @@ namespace MicroAngels.AuthServer.Services
 			{
 				claims.Add(new Claim(role.RoleName, CoreKeys.ROLE));
 			}
+
+			// set serviceId(systemid) to claim 
+			claims.Add(new Claim(CoreKeys.SYSTEM_ID, Keys.System.DefaultSystemId.ToString()));
 
 			return claims.ToArray();
 		}

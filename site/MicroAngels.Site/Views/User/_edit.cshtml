@@ -4,7 +4,7 @@
 	<div class="widget-box widget-color-blue ui-sortable-handle">
 
 		<div class="widget-header">
-			<h4 class="widget-title lighter">新增用户</h4>
+			<h4 class="widget-title lighter">编辑用户</h4>
 			<div class="widget-toolbar no-border">
 				<a href="#" data-action="close" data-dismiss="modal">
 					<i class="ace-icon fa fa-times"></i>
@@ -14,7 +14,9 @@
 
 		<div class="widget-body">
 			<div class="widget-main">
-				<form class="form-horizontal" role="form"  id="form">
+				<form action="" class="dropzone cover hidden"></form>
+				<form class="form-horizontal" role="form" id="form">
+					<input type="hidden" id="Id" name="Id" value="@Model" />
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 用户名</label>
 
@@ -44,6 +46,17 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 头像</label>
+
+						<div class="col-sm-9">
+							<div id="showCover" title="点击选择头像" class="cover-bg">
+								<span>点击选择头像</span>
+								<img class="cover-img hidden" />
+							</div>
+						</div>
+						<input type="hidden" id="HeaderImagePath" name="HeaderImagePath" />
+					</div>
+					<div class="form-group">
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-info btn-submit" type="submit">
 								<i class="ace-icon fa fa-check "></i>
@@ -65,6 +78,8 @@
 	</div>
 	<!-- widget end -->
 </div>
+
+<script src="~/plugins/dropzone-4.0.0/dropzone.js"></script>
 <script>
 	$(function () {
 
@@ -76,10 +91,15 @@
 			var ajax = ajaxRequset(urls.userInfo, code, urls.login, { id: userId }, function (data) {
 				console.log(data.data);
 				$('.btn-submit').removeAttr('disabled');
+				$('#Id').val(userId);
 				$('#UserName').val(data.data.userName);
 				$('#RealName').val(data.data.realName);
 				$('#Email').val(data.data.email);
 				$('#Phone').val(data.data.phone);
+
+				var path = data.data.headerImagePath
+				$('#HeaderImagePath').val(path);
+				showCover(path);
 			});
 
 			$.ajax(ajax);
@@ -89,12 +109,42 @@
 
 		ajaxSubmitForm($('#form'),
 			{
-				code: checkCode(urls.login),
+				code: code,
 				afterSuccess(data) {
 					$('#firstModal').modal('hide');
 					refreshTable('#dynamic-table')
 				}
 			});
 
+		$('.dropzone.cover').dropzone({
+			url: urls.fileUpload,
+			addRemoveLinks: !0,
+			maxFiles: 100,
+			acceptedFiles: "image/*",
+			dictResponseError: "File Upload Error.",
+			init: function () {
+				this.on("success", function (file, data) {
+					$("#CoverPath").val(data.path);
+					$('#HeaderImagePath').val(data.path);
+
+					showCover(data.path);
+				});
+				this.on("error", function (file, message) {
+					alert(message)
+				});
+			}
+		});
+
+		$('#showCover').on('click', function () {
+			$('.dropzone').trigger('click');
+		});
+
 	});
+
+	function showCover(path) {
+		if (path && path != '') {
+			var path = apiDomain + '/api' + path;
+			$("#showCover").remove('.cover-img').html('<img src="' + path + '" class="cover-img" />');
+		}
+	}
 </script>

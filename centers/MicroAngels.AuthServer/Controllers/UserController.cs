@@ -17,7 +17,7 @@ namespace Controllers
 		public UserController(IUserService userService, ICAPPublisher publisher)
 		{
 			_userService = userService;
-			_publisher = publisher;			
+			_publisher = publisher;
 		}
 
 		[HttpPost("edit")]
@@ -35,15 +35,15 @@ namespace Controllers
 		[HttpPost("users")]
 		public IActionResult GetUsers([FromForm]int start, [FromForm]int length)
 		{
-			var totalCount = 0;
-			var searchResults = _userService.Search(null, length, start, out totalCount);
+			var page = new PageOptions(start, length);
+			var searchResults = _userService.Search(null, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
 					data = searchResults.Select(x => x.Map<UserInfo, UserViewModel>()),
-					recordsTotal = totalCount,
-					recordsFiltered = totalCount,
+					recordsTotal = page.TotalCount,
+					recordsFiltered = page.TotalCount,
 				});
 			}
 

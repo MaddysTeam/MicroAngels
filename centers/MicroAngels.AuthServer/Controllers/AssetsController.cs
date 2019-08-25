@@ -43,16 +43,15 @@ namespace Controllers
 		[HttpPost("interfaces")]
 		public IActionResult GetInterfaces([FromForm]int start, [FromForm]int length)
 		{
-			var totalCount = 0;
-			var interfacesResults = _service.SearchInterface(null, length, start, out totalCount);
-
+			var page = new PageOptions(start, length);
+			var interfacesResults = _service.SearchInterface(null, page);
 			if (!interfacesResults.IsNull() && interfacesResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
 					data = interfacesResults.Select(x => x.Map<Interface, InterfaceViewModel>()),
-					recordsTotal = totalCount,
-					recordsFiltered = totalCount,
+					recordsTotal = page.TotalCount,
+					recordsFiltered = page.TotalCount,
 				});
 			}
 
@@ -67,15 +66,15 @@ namespace Controllers
 		[HttpPost("allMenus")]
 		public IActionResult GetAllMenus([FromForm]int start, [FromForm]int length)
 		{
-			var totalCount = 0;
-			var searchResults = _service.SearchMenu(null, length, start, out totalCount);
+			var page = new PageOptions(start, length);
+			var searchResults = _service.SearchMenu(null, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
 					data = searchResults.Select(x => x.Map<Menu, MenuViewModel>()),
-					recordsTotal = totalCount,
-					recordsFiltered = totalCount,
+					recordsTotal = page.TotalCount,
+					recordsFiltered = page.TotalCount,
 				});
 			}
 
@@ -87,14 +86,6 @@ namespace Controllers
 			});
 		}
 
-		//[HttpPost("menus")]
-		//public async Task<List<Menu>> GetMenus()
-		//{
-		//	var userId = User.GetClaimsValue(CoreKeys.USER_ID);
-		//	var menus = await _service.GetMenusByUserId(userId.ToGuid());
-
-		//	return menus.ToList();
-		//}
 
 		[HttpPost("hierarchyMenus")]
 		public async Task<IActionResult> GetHierarchyMenus()
@@ -220,7 +211,7 @@ namespace Controllers
 				return assetList;
 
 			Assets parent = assetViewModel.Map<AssetsViewModel, Assets>();
-			if (!assetList.Exists(x=>x.AssetsId==parent.AssetsId))
+			if (!assetList.Exists(x => x.AssetsId == parent.AssetsId))
 				assetList.Add(parent);
 
 			var children = assetViewModel.children ?? new List<AssetsViewModel>();

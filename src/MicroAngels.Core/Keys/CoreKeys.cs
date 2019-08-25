@@ -9,6 +9,7 @@ namespace MicroAngels.Core
 	{
 		public const string USER_ID = "userId";
 		public const string ROLE = "role";
+		public const string SYSTEM_ID = "systemId";
 	}
 
 }

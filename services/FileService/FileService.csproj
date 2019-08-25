@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Business\Exceptions\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\uploader\" />
   </ItemGroup>
 
   <ItemGroup>

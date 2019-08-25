@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using MicroAngels.Logger.ExceptionLess;
+using MicroAngels.Core.Plugins;
 
 namespace MessageCenter
 {
@@ -31,6 +32,9 @@ namespace MessageCenter
 			services.AddTransient<ITopicService, TopicService>();
 			services.AddTransient<ISubscribeService, SubscribeService>();
 			services.AddTransient<IMessageService, MessageService>();
+
+			// plugin injection
+			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
 
 			// add cap
 			services.AddCAPService(new CAPService
@@ -77,6 +81,13 @@ namespace MessageCenter
 			});
 
 			services.AddLessLog();
+
+			services.AddServiceFinder(
+			new ConsulHostConfiguration
+			{
+				Host = Configuration["Consul:Host"],
+				Port = Convert.ToInt32(Configuration["Consul:Port"])
+			});
 
 		}
 

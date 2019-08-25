@@ -84,8 +84,6 @@ namespace Business
 			&& !Body.IsNullOrEmpty()
 			&& !SenderId.IsNullOrEmpty()
 			&& !ServiceId.IsNullOrEmpty();
-            //&& SendTime < DateTime.UtcNow;
-
     }
 
 
@@ -109,8 +107,14 @@ namespace Business
         public string TopicId { get; set; }
         public string TargetId { get; set; }
         public string ServiceId { get; set; }
-        //public string TipsId { get; set; }
-    }
+		[SugarColumn(IsIgnore = true)]
+		public string Subscriber { get; set; }
+		[SugarColumn(IsIgnore = true)]
+		public string Target { get; set; }
+
+
+		public bool IsValidate => !TopicId.IsNullOrEmpty() && !SubscriberId.IsNullOrEmpty() && !ServiceId.IsNullOrEmpty() && !TargetId.IsNullOrEmpty();
+	}
 
     /// <summary>
     /// 用户消息
@@ -127,8 +131,8 @@ namespace Business
         public Message Message { get; set; }
 
         [SugarColumn(IsIgnore = true)]
-        public bool IsValidate => !MessageId.IsNullOrEmpty() && !ReceiverId.IsNullOrEmpty() && !StatusId.IsNullOrEmpty()    ;
-    }
+        public bool IsValidate => !MessageId.IsNullOrEmpty() && !ReceiverId.IsNullOrEmpty() && !StatusId.IsNullOrEmpty();
+	}
 
 
     public enum MessageType
@@ -138,10 +142,5 @@ namespace Business
         Notice,   // 提醒
         Subscribe, // 订阅
     }
-
-	public enum TopicType
-	{
-
-	}
 
 }

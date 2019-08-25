@@ -1,12 +1,10 @@
-﻿using MicroAngels.Core;
-using Business;
+﻿using Business;
 using Microsoft.AspNetCore.Mvc;
-using MicroAngels.Core.Plugins;
 
 namespace Controllers
 {
 
-    public class BaseController : ControllerBase
+	public class BaseController : ControllerBase
     {
 
 		public BaseController()

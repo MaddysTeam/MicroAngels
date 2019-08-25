@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace Controllers
@@ -6,6 +7,11 @@ namespace Controllers
 
 	public class UserController : Controller
 	{
+
+		public UserController(IConfiguration configuration)
+		{
+			_conf = configuration;
+		}
 
 		//Get   user/index
 
@@ -18,6 +24,8 @@ namespace Controllers
 
 		public IActionResult Edit(Guid? id)
 		{
+			ViewBag.ApiDomain = _conf["apis:apiDomain"];
+
 			return PartialView("_edit",id);
 		}
 
@@ -30,10 +38,12 @@ namespace Controllers
 
 		//Get user/profile
 
-		public IActionResult Profile()
+		public IActionResult Profile(Guid userId)
 		{
-			return PartialView();
+			return View(userId);
 		}
+
+		private IConfiguration _conf;
 
 	}
 

@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using System;
+using System.IO;
 
 namespace FileService
 {
@@ -25,7 +27,7 @@ namespace FileService
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public IServiceProvider ConfigureServices(IServiceCollection services)
+		public void ConfigureServices(IServiceCollection services)
 		{
 
 			//add cap
@@ -66,7 +68,7 @@ namespace FileService
 			//services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
 
 			// regist hystrix polly aop serive
-			return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services);
+			//return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +82,14 @@ namespace FileService
 			app.UseAuthentication();
 
 			app.UseMvc();
+
+			app.UseStaticFiles(new StaticFileOptions
+			{
+				//配置除了默认的wwwroot文件中的静态文件以外的文件夹  提供 Web 根目录外的文件  经过此配置以后，就可以访问StaticFiles文件下的文件
+				FileProvider = new PhysicalFileProvider(
+					  Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+				RequestPath = "/StaticFiles",
+			});
 
 			app.UseConsul(lifeTime, new ConsulService
 			{

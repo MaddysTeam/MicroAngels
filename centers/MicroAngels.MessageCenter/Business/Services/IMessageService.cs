@@ -11,8 +11,10 @@ namespace Business.Services
         Task<bool> AnnounceAsync(string message);
 		Task<bool> AnnounceAsync(Message message);
 		Task<Message> GetMessage(string messageId);
-        Task<List<Message>> Search(string topicId,string serviceId,string typeId,int pageIndex,int pageSize,out int pageCount);
-        Task<List<UserMessage>> GetUserMessagesAsync(string userid, string serviceId, string topicId, string typeId, int pageIndex, int pageSize, out int pageCount);
+		Task<List<UserMessage>> GetUnReadMessage(MessageSearchOptions options);
+		Task<List<Message>> Search(MessageSearchOptions options, PageOptions pageViewModel);
+        Task<List<UserMessage>> SearchUserMessage(MessageSearchOptions options, PageOptions pageViewModel);
+		Task<bool> ReceiveMessages(MessageSearchOptions options);
     }
 
 }

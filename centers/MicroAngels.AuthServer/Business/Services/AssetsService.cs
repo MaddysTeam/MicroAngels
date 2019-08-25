@@ -217,27 +217,33 @@ namespace Business
 			return result;
 		}
 
-		public IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
-		{
-			totalCount = 0;
+		public IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, PageOptions page)
+		{	
 			var query = whereExpressions == null ? InterfaceDb.AsQueryable() : InterfaceDb.AsQueryable().Where(whereExpressions);
 
-			if (pageSize.HasValue && pageIndex.HasValue)
+			if (!page.IsNull() && page.IsValidate)
 			{
-				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+				var totalCount = 0;
+				var results= query.ToPageList(page.PageIndex, page.PageSize, ref totalCount);
+				page.TotalCount = totalCount;
+
+				return results;
 			}
 			else
 				return query.ToList();
 		}
 
-		public IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		public IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, PageOptions page)
 		{
-			totalCount = 0;
 			var query = whereExpressions == null ? MenuDb.AsQueryable() : MenuDb.AsQueryable().Where(whereExpressions);
 
-			if (pageSize.HasValue && pageIndex.HasValue)
+			if (!page.IsNull() && page.IsValidate)
 			{
-				return query.ToPageList(pageIndex.Value, pageSize.Value, ref totalCount);
+				var totalCount = 0;
+				var results = query.ToPageList(page.PageIndex, page.PageSize, ref totalCount);
+				page.TotalCount = totalCount;
+
+				return results;
 			}
 			else
 				return query.ToList();

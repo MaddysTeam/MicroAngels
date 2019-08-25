@@ -10,6 +10,7 @@ namespace Business
 	/// </summary>
 	public class UserInfo
 	{
+
 		[SugarColumn(IsPrimaryKey = true, Length = 50)]
 		public Guid UserId { get;  set; }
 
@@ -27,6 +28,9 @@ namespace Business
 		[SugarColumn(IsNullable = true, Length = 255)]
 		public string Email { get; set; }
 
+		[SugarColumn(IsNullable = true, Length = 500)]
+		public string HeaderImagePath { get; set; }
+
 		public static List<ValidateResult> Validate(UserInfo u)
 		{
 			return
@@ -35,6 +39,7 @@ namespace Business
 			 .Length(u.Phone,11,"")
 			 .Validate();
 		}
+
 	}
 
 }

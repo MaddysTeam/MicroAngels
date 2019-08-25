@@ -9,8 +9,8 @@ namespace Business
 	public interface IAssetsService
 	{
 		Task<IEnumerable<Interface>> GetInterfaceByRoleNames(string[] roleNames);
-		IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
-		IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
+		IEnumerable<Interface> SearchInterface(Expression<Func<Interface, bool>> whereExpressions, PageOptions page);
+		IEnumerable<Menu> SearchMenu(Expression<Func<Menu, bool>> whereExpressions, PageOptions page);
 		Task<IEnumerable<Menu>> GetMenusByRoleNames(string[] roleNames);
 		Task<IEnumerable<Menu>> GetMenusByUserId(Guid userId);
 		Task<IEnumerable<Assets>> SearchAssets(Expression<Func<Assets, bool>> whereExpressions);

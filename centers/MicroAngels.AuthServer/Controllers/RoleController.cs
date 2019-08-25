@@ -37,16 +37,16 @@ namespace Controllers
 		}
 
 		[HttpPost("roles")]
-		public IActionResult GetRoles([FromForm]int? start, [FromForm]int? length)
+		public IActionResult GetRoles([FromForm]int start, [FromForm]int length)
 		{
-			var totalCount = 0;
-			var searchResults = _service.Search(null, length, start, out totalCount);
+			var page = new PageOptions(start, length);
+			var searchResults = _service.Search(null, page);
 
 			return new JsonResult(new
 			{
 				data = searchResults.Select(role => role.Map<SystemRole, RoleViewModel>()),
-				recordsTotal = totalCount,
-				recordsFiltered = totalCount,
+				recordsTotal = page.TotalCount,
+				recordsFiltered = page.TotalCount,
 			});
 
 		}
