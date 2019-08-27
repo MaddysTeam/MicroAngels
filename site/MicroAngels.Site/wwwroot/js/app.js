@@ -47,6 +47,7 @@ urls = {
 	getTopics: '{0}/api/messagecenter/topic/topics'.format(apiDomain),
 	getAnnounces: '{0}/api/messagecenter/message/announces'.format(apiDomain),
 	getUnReadAnnounces: '{0}/api/messagecenter/message/unreadAnnounces'.format(apiDomain),
+	getFriends: '{0}/api/messagecenter/subscribe/targets'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
@@ -57,6 +58,7 @@ urls = {
 
 	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
 	receiveAnnounce: '{0}/api/messagecenter/message/receiveAnnounce'.format(apiDomain),
+	subscribe: '{0}/api/messagecenter/subscribe/subscribe'.format(apiDomain),
 
 	fileUpload: '{0}/api/fileservice/upload'.format(apiDomain),
 

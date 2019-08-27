@@ -41,20 +41,19 @@ namespace Business
 
 		public async Task<UserInfo> GetById(Guid id)
 		{
-			return UserDb.GetById(id);
+			return await UserDb.AsQueryable().FirstAsync(u=>u.UserId==id);
 		}
 
-		public IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page)
+		public async Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page)
 		{
 			
 			var query = whereExpressions.IsNull() ? UserDb.AsQueryable() : UserDb.AsQueryable().Where(whereExpressions);
 
 			if (!page.IsNull() && page.IsValidate)
 			{
-				var totalCount = 0;
-				var results= query.ToPageList(page.PageIndex, page.PageSize, ref totalCount);
+				var results= await query.ToPageListAsync(page.PageIndex, page.PageSize);
 
-				page.TotalCount = totalCount;
+				page.TotalCount = query.Count();
 
 				return results;
 			}
@@ -77,22 +76,21 @@ namespace Business
 			return result;
 		}
 
-		public Task<bool> UnbindRole(Guid userRoleId)
+		public async Task<bool> UnbindRole(Guid userRoleId)
 		{
 			var result = false;
 			var userRole = UserRoleDb.GetById(userRoleId);
 			if (!userRole.IsNull())
 			{
-				result = UserRoleDb.DeleteById(userRoleId);
+				result = await UserRoleDb.AsDeleteable().ExecuteCommandAsync()>0;
 			}
 
-			return Task.FromResult(result);
+			return result;
 		}
 
-
-		public UserInfo GetByName(string name)
+		public async Task<UserInfo> GetByName(string name)
 		{
-			var user = UserDb.GetSingle(u => string.Equals(u.UserName, name, StringComparison.InvariantCultureIgnoreCase));
+			var user =await UserDb.AsQueryable().FirstAsync(u => string.Equals(u.UserName, name, StringComparison.InvariantCultureIgnoreCase));
 			return user;
 		}
 
@@ -105,7 +103,6 @@ namespace Business
 
 			return true;
 		}
-
 
 		private ICAPPublisher _publisher;
 

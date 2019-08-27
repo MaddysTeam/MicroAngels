@@ -73,7 +73,7 @@ namespace AccountService
 
 			app.UseMvc();
 
-			app.UseLessLog(new ExcepitonLessOptions("2KgsjbuAo0t2qTv8uuoLmEuTMOzYfoAD8VI01Elo"));
+			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 
 			app.UseConsul(lifeTime, new ConsulService
 			{

@@ -4,6 +4,7 @@ using MicroAngels.GRPC.Server;
 using MicroAngels.Hystrix.Polly;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
+using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +65,9 @@ namespace FileService
 				ApiName = Configuration["IdentityService:Client:Scopes"]
 			});
 
+			//add exceptionless logger
+			services.AddLessLog();
+
 			services.AddTransient<IFileService, FileService.Business.FileService>();
 			//services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
 
@@ -82,6 +86,8 @@ namespace FileService
 			app.UseAuthentication();
 
 			app.UseMvc();
+
+			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 
 			app.UseStaticFiles(new StaticFileOptions
 			{

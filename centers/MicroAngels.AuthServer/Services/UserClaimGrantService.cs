@@ -26,7 +26,7 @@ namespace MicroAngels.AuthServer.Services
 			var claims = new List<Claim>();
 
 			// get user id as client Id and put into claims 
-			var users = _userService.Search(u => u.UserName == context.UserName, null);
+			var users = await _userService.Search(u => u.UserName == context.UserName, null);
 			if (!users.IsNull() && users.Count() > 0)
 			{
 				var userid = users.First().UserId.ToString();

@@ -3,6 +3,7 @@ using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
 using MicroAngels.Core.Service;
 using MicroAngels.ServiceDiscovery.Consul;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,11 +15,12 @@ namespace Business.Services
 	public class SubscribeService : MySqlDbContext, ISubscribeService
 	{
 
-		public SubscribeService(IServiceFinder<ConsulService> serviceFinder, ILoadBalancer loadBalancer,ITopicService topicService)
+		public SubscribeService(IServiceFinder<ConsulService> serviceFinder, ILoadBalancer loadBalancer, ITopicService topicService,IConfiguration conf)
 		{
 			_serviceFinder = serviceFinder;
 			_loadBalancer = loadBalancer;
 			_topicServce = topicService;
+			_conf = conf;
 		}
 
 		public async Task<bool> SubscribeAsync(Subscribe sub)
@@ -80,7 +82,9 @@ namespace Business.Services
 			var users = new List<UserViewModel>();
 			using (var client = new HttpClient())
 			{
-				users = await client.PostAsync<List<UserViewModel>, ConsulService>("AuthService", _serviceFinder, _loadBalancer);
+				var fromService = _conf["UserServcie:From"];
+				var virtualPath = _conf["VirtualPath"];
+				users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, null, _serviceFinder, _loadBalancer);
 			}
 
 			return targets.Select(t =>
@@ -100,6 +104,8 @@ namespace Business.Services
 		private IServiceFinder<ConsulService> _serviceFinder;
 		private ILoadBalancer _loadBalancer;
 		private ITopicService _topicServce;
+		private IConfiguration _conf;
+
 	}
 
 }

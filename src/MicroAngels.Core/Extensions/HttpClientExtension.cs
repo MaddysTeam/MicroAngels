@@ -2,6 +2,7 @@
 using MicroAngels.Core.Service;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MicroAngels.Core
 {
@@ -33,10 +34,19 @@ namespace MicroAngels.Core
 		}
 
 
-		public static async Task<T> PostAsync<T,S>(this HttpClient httpClient, string serviceName, IServiceFinder<S> serviceFinder,ILoadBalancer balancer) where S:IService
+		public static async Task<T> PostAsync<T, S>(
+			this HttpClient httpClient,
+			string serviceName,
+			string virtualPath,
+			object body = null,
+			IServiceFinder<S> serviceFinder = null,
+			ILoadBalancer balancer=null) where S : IService
 		{
-			if (string.IsNullOrEmpty(serviceName))
+			if (serviceName.IsNullOrEmpty())
 				throw new AngleExceptions("service name not exits");
+
+			if (virtualPath.IsNullOrEmpty())
+				throw new AngleExceptions("virtualPath not exits");
 
 			if (serviceFinder.IsNull())
 				throw new AngleExceptions("serviceFinder cannot be null");
@@ -44,11 +54,16 @@ namespace MicroAngels.Core
 			balancer = balancer ?? new WeightRoundBalancer();
 
 			var userServices = await serviceFinder.FindByNameAsync(serviceName);
-			var userService = userServices[0];
+			var foundedService = default(S);
+			if (!userServices.IsNull() && userServices.Count > 0)
+			{
+				var servicesDictionary = (from us in userServices select new { service = us, weight = us.Weight, }).ToDictionary(x => x.service, y => y.weight);
+				foundedService = balancer.Balance(servicesDictionary);
+			}
 
 			using (var client = new HttpClient())
 			{
-				var url = string.Empty;
+				var url = foundedService?.Address.ToString() + @"\" + virtualPath;
 				return await client.PostAsync<T>(url);
 			}
 		}

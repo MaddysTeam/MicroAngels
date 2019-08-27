@@ -1,4 +1,5 @@
 ﻿using MicroAngels.Gateway.Ocelot;
+using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.OcelotGateway.Services;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
@@ -57,6 +58,8 @@ namespace MicroAngels.OcelotGateway
 					Port=  Convert.ToInt32(Configuration["Consul:Port"])
 				});
 
+			services.AddLessLog();
+
 			//inject CustomAuthenticateService for gateway
 			services.AddTransient<ICustomAuthenticateService, CustomAuthenticateService>();
 			services.AddTransient<ICustomTokenRefreshService, CustomTokenRefreshService>();
@@ -69,6 +72,8 @@ namespace MicroAngels.OcelotGateway
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 
 			app.UseCors("CorsPolicy");
 

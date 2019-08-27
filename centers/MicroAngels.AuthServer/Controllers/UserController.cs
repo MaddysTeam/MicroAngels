@@ -33,10 +33,10 @@ namespace Controllers
 		}
 
 		[HttpPost("users")]
-		public IActionResult GetUsers([FromForm]int start, [FromForm]int length)
+		public async Task<IActionResult> GetUsers([FromForm]int start, [FromForm]int length)
 		{
 			var page = new PageOptions(start, length);
-			var searchResults = _userService.Search(null, page);
+			var searchResults =await _userService.Search(null, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new

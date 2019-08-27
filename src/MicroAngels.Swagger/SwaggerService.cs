@@ -18,7 +18,8 @@ namespace MicroAngels.Swagger
         public string Doc { get; set; }
         public string HealthStatus { get; set; }
         public string XMLPath { get; set; }
-    }
+		public int Weight { get; set; }
+	}
 
 
     public class SwaggerUIOptions

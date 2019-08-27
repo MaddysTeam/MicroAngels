@@ -11,16 +11,12 @@ namespace Business
 	{
 		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetById(Guid id);
-
-		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search)]
-		UserInfo GetByName(string name);
-
+		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
+		Task<UserInfo> GetByName(string name);
 		Task<bool> Edit(UserInfo userInfo);
 		Task<bool> BindRoles(Guid userId, string[] roleIds);
-		IEnumerable<UserInfo> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page);
-
-		Task<bool> Focus(Guid userId,Guid targetIds);
-
+		Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page);
+		Task<bool> Focus(Guid userId, Guid targetIds);
 	}
 
 }

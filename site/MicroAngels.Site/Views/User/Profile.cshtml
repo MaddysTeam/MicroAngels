@@ -854,7 +854,7 @@
 
 			var userId = '@Model';
 			if (userId != '@Guid.Empty') {
-				var ajax = ajaxRequset(urls.userInfo, code, urls.login, { id: userId }, function (data) {
+				var getInfoRequest = ajaxRequset(urls.userInfo, code, urls.login, { id: userId }, function (data) {
 					$('.userName').html(data.data.userName);
 					$('.realName').html(data.data.realName);
 					$('.email').html(data.data.email);
@@ -869,10 +869,12 @@
 					});
 				});
 
-				$.ajax(ajax);
-			}
+				$.ajax(getInfoRequest);
 
-			
+				var getFriendsRequest = ajaxRequset(urls.getFriends, code, url.login, { id: userId }, function (data) {
+
+				});
+			}
 
 		});
 
