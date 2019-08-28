@@ -14,6 +14,7 @@ namespace Business
 			.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
 			.ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone))
 			.ForMember(dest => dest.HeaderImagePath, opt => opt.MapFrom(src => src.HeaderImagePath))
+			.ForMember(dest => dest.IsFriend, opt => opt.MapFrom(src => src.IsFriend))
 			.ReverseMap();
 
 			CreateMap<SystemRole, RoleViewModel>()

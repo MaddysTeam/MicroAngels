@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MicroAngels.AuthServer</name>
+    </assembly>
+    <members>
+        <member name="T:Business.Assets">
+            <summary>
+            Assets for describe some resouce
+            </summary>
+        </member>
+        <member name="T:Business.Menu">
+            <summary>
+            assets menu
+            </summary>
+        </member>
+        <member name="T:Business.Interface">
+            <summary>
+            assets interface
+            </summary>
+        </member>
+        <member name="T:Business.System">
+            <summary>
+            系统
+            </summary>
+        </member>
+        <member name="T:Business.UserInfo">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="M:MicroAngels.AuthServer.Services.UserValidateService.ValidatePassword(IdentityServer4.Validation.ResourceOwnerPasswordValidationContext)">
+            <summary>
+             validate password sercice when been invoked in ResourceOwnerPasswordValidator
+            </summary>
+            <param name="ResourceOwnerPasswordValidationContext"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

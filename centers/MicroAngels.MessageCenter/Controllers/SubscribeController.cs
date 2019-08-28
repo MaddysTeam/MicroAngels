@@ -2,7 +2,7 @@
 using Business.Services;
 using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Controllers
@@ -20,21 +20,25 @@ namespace Controllers
 
 
 		[HttpPost("targets")]
-		public async Task<IActionResult> GetSubscribeTarget([FromForm]int start, [FromForm] int length)
+		public async Task<List<SubscribeViewModel>> GetSubscribeTarget([FromBody]SubscribeViewModel viewModel)
 		{
-			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
-			var serivceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var userId = viewModel?.SubscriberId ?? User.GetClaimsValue(CoreKeys.USER_ID);
+			var serivceId = viewModel?.ServiceId ?? User.GetClaimsValue(CoreKeys.SYSTEM_ID);
 			var subscribes = await _subscribeService.Search(
 				new SubscribeSearchOptions { serviceId = serivceId, subscriberId = userId },
-				new PageOptions(start, length)
+				null
 				);
 
-			return new JsonResult(new
+			List<SubscribeViewModel> results = new List<SubscribeViewModel>();
+			foreach (var item in subscribes)
 			{
-				data = subscribes.Select(r => Mapper.Map<SubscribeViewModel>(r))
-			});
+				results.Add(Mapper.Map<SubscribeViewModel>(item));
+			}
 
+			return results;
 		}
+
+
 
 		[HttpPost("subscribe")]
 		public async Task<IActionResult> Subscribe([FromForm]SubscribeViewModel viewModel)

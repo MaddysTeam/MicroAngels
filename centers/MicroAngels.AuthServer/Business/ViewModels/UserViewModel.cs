@@ -11,15 +11,21 @@ namespace Business
 		public string Phone { get; set; }
 		public string Email { get; set; }
 		public string HeaderImagePath { get; set; }
+		public bool IsFriend { get; set; }
 	}
 
 	public class FriendViewModel
 	{
-		public string Id { get; set; }
 		public string SubscriberId { get; set; }
 		public string TopicId { get; set; }
 		public string TargetId { get; set; }
 		public string ServiceId { get; set; }
 	}
+
+	public class UserSearchOption: BaseViewModel
+	{
+
+	}
+
 
 }

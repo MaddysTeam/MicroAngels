@@ -21,7 +21,7 @@
 		public async override Task Invoke(AspectContext context, AspectDelegate next)
 		{
 			var cacheAttribute = GetAttribute(context.ServiceMethod);
-			if (cacheAttribute != null)
+			if (cacheAttribute != null && cacheAttribute.TargetType==typeof(T))
 			{
 				await ExecuteCaching(context, next, cacheAttribute);
 			}
@@ -73,8 +73,6 @@
 			if (!string.IsNullOrWhiteSpace(cacheKey))
 			{
 				var o = attribute.IsAsync ? (context.ReturnValue as Task<T>).Result : context.ReturnValue;
-				//if (attribute.IsAsync)
-				//	var returnValue = (context.ReturnValue as Task<T>).Result;
 
 				CacheProvider.AddOrRemove(cacheKey, o, TimeSpan.FromSeconds(attribute.AbsoluteExpiration));
 			}

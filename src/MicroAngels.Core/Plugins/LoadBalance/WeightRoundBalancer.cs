@@ -18,17 +18,21 @@ namespace MicroAngels.Core.Plugins
 				return default(T);
 
 			var tmp = new List<T>();
-			foreach(var key in source.Keys)
+			foreach (var key in source.Keys)
 			{
 				var weight = source[key];
-				for (int i = 0; i < weight; i++)
+				for (int i = 0; i <= weight; i++)
 				{
 					tmp.Add(key);
 				}
 			}
 
 			var rand = new Random(tmp.Count);
-			return tmp[rand.Next()];
+			var next = rand.Next();
+			if (next > tmp.Count)
+				next = tmp.Count - 1;
+
+			return tmp[next];
 		}
 	}
 

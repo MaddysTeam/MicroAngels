@@ -3,6 +3,7 @@ using MicroAngels.AuthServer.Services;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Cache;
 using MicroAngels.Cache.Redis;
+using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.IdentityServer.Services;
@@ -10,11 +11,13 @@ using MicroAngels.IdentityServer.Validators;
 using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
+using MicroAngels.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 
 namespace MicroAngels.AuthServer
 {
@@ -30,11 +33,30 @@ namespace MicroAngels.AuthServer
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			// add swagger service
+			services.AddSwaggerService(new SwaggerService
+			{
+				Name = Configuration["swagger:name"],
+				Title = Configuration["swagger:title"],
+				Version = Configuration["swagger:version"],
+				XMLPath = Path.Combine(
+						Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
+						$"{ Configuration["swagger:name"]}.xml"
+					)
+			}, opt =>
+			{
+				// set document or operation filter
+				//opt.documentfilter<>
+				//opt.operationfilter<>
+				//opt.addsecuritydefinition()
+			});
+
 			// add mvc,include filters and etc..
 			services.AddMvcCore()
-			.AddControllersAsServices()
+			.AddApiExplorer()
 			.AddAuthorization()
 			.AddJsonFormatters();
+
 
 			// add cap service
 			services.AddCAPService(new CAPService
@@ -82,6 +104,16 @@ namespace MicroAngels.AuthServer
 			// add exceptionless logger
 			services.AddLessLog();
 
+			services.AddServiceFinder(
+			new ConsulHostConfiguration
+			{
+				Host = Configuration["Consul:Host"],
+				Port = Convert.ToInt32(Configuration["Consul:Port"])
+			});
+
+			// balancer
+			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
+
 			// for business service
 			services.AddTransient<ISystemService, SystemService>();
 			services.AddTransient<IAssetsService, AssetsService>();
@@ -90,6 +122,7 @@ namespace MicroAngels.AuthServer
 
 			var serviceProvider = services.AddCacheInterceptorContainer()
 				.AddInterceptor<UserInfo>(typeof(IUserCaching))
+				.AddInterceptor<System.Collections.Generic.IEnumerable<UserInfo>>(typeof(IUserCaching))
 				.BuildProvider();
 
 			return serviceProvider;
@@ -104,6 +137,11 @@ namespace MicroAngels.AuthServer
 			}
 
 			app.UseAuthentication();
+
+			// use swagger service
+			app.UseSwaggerService(
+			 new SwaggerService { Name = Configuration["Swagger:Name"] },
+			 new SwaggerUIOptions { IsShowExtensions = true });
 
 			app.UseMvc();
 

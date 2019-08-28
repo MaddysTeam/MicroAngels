@@ -12,6 +12,8 @@
 		public string[] DeleteKeys { get; set; }
 
 		public bool IsAsync { get; set; }
+
+		public Type TargetType { get; set; }
 	}
 
 	public enum ActionType

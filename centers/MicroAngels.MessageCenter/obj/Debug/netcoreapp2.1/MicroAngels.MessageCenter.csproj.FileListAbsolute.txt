@@ -78,3 +78,4 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Mess
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.dll
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.pdb
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.xml
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.xml

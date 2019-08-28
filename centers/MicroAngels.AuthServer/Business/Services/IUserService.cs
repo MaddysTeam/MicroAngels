@@ -9,15 +9,16 @@ namespace Business
 
 	public interface IUserService : IUserCaching
 	{
-		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
+		//[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetById(Guid id);
-		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
+		//[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetByName(string name);
 		Task<bool> Edit(UserInfo userInfo);
 		Task<bool> BindRoles(Guid userId, string[] roleIds);
 		Task<IEnumerable<UserInfo>> Search(Expression<Func<UserInfo, bool>> whereExpressions, PageOptions page);
-		Task<IEnumerable<UserInfo>> SearchFriends(Guid id, string code, PageOptions page);
-		Task<bool> Focus(Guid userId, Guid targetIds);
+
+		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true, TargetType =typeof(IEnumerable<UserInfo>))]
+		Task<IEnumerable<UserInfo>> SearchWithFriends(UserSearchOption option, PageOptions page);
 	}
 
 }

@@ -2,7 +2,7 @@ version: '3'
 
 services: 
   auth_service:
-    image: micoangels.authserver
+    image: micoangels.center.authserver
     container_name: auth_server_container
     build: 
       context: centers/MicroAngels.AuthServer
@@ -11,7 +11,7 @@ services:
       - "2012:2012"
      
   gateway_service:
-    image: micoangels.gateway
+    image: micoangels.center.gateway
     container_name: micro_angels_gatway
     build: 
       context: centers/MicroAngels.OcelotGateway
@@ -20,7 +20,7 @@ services:
       - "5000:5000"
 
   message_service:
-    image: micoangels.service.message
+    image: micoangels.center.message
     container_name: message_service
     build: 
       context: centers/MicroAngels.MessageCenter

@@ -35,15 +35,41 @@ namespace Controllers
 		[HttpPost("users")]
 		public async Task<IActionResult> GetUsers([FromForm]int start, [FromForm]int length)
 		{
-			var code = Request.Headers["Authorization"];
 			var userId = User.GetClaimsValue(CoreKeys.USER_ID).ToGuid();
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID).ToGuid();
 			var page = new PageOptions(start, length);
-			var searchResults =await _userService.SearchFriends(userId, code, page);
+			var searchResults =await _userService.SearchWithFriends(new UserSearchOption { UserId=userId.ToString(), ServiceId=serviceId.ToString(), TopicId="" },page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
 					data = searchResults.Select(x => x.Map<UserInfo, UserViewModel>()),
+					recordsTotal = page.TotalCount,
+					recordsFiltered = page.TotalCount,
+				});
+			}
+
+			return new JsonResult(new
+			{
+				data = new { },
+				recordsTotal = 0,
+				recordsFiltered = 0,
+			});
+		}
+
+		[HttpPost("friends")]
+		public async Task<IActionResult> GetFriends([FromForm]int start, [FromForm]int length)
+		{
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID).ToGuid();
+			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID).ToGuid();
+			var page = new PageOptions(start, length);
+			var searchResults = await _userService.SearchWithFriends(new UserSearchOption { UserId = userId.ToString(), ServiceId = serviceId.ToString(), TopicId = "" }, page);
+			if (!searchResults.IsNull() && searchResults.Count() > 0)
+			{
+				var onlyFriends = searchResults.ToList().FindAll(x => x.IsFriend);
+				return new JsonResult(new
+				{
+					data = onlyFriends?.Select(x => x.Map<UserInfo, UserViewModel>()),
 					recordsTotal = page.TotalCount,
 					recordsFiltered = page.TotalCount,
 				});

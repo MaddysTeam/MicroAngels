@@ -70,7 +70,7 @@
 								<div class="row">
 									<div class="col-xs-12 col-sm-3 center">
 										<span class="profile-picture">
-											<img class="editable img-responsive cover" alt="Alex's Avatar" id="avatar2" src="http://img.52z.com/upload/news/image/20181108/20181108171959_47156.jpg">
+											<img class="editable img-responsive cover" alt="Alex's Avatar" id="avatar2" >
 										</span>
 
 										<div class="space space-4"></div>
@@ -78,15 +78,15 @@
 											<i class="ace-icon fa fa-pencil bigger-110"></i>
 											<span class="bigger-110">编辑个人信息</span>
 										</a>
-										<a href="#" class="btn btn-sm btn-block btn-success">
+										@*<a href="#" class="btn btn-sm btn-block btn-success">
 											<i class="ace-icon fa fa-plus-circle bigger-120"></i>
 											<span class="bigger-110">添加好友</span>
-										</a>
+										</a>*@
 
-										<a href="#" class="btn btn-sm btn-block btn-primary">
+										@*<a href="#" class="btn btn-sm btn-block btn-primary">
 											<i class="ace-icon fa fa-envelope-o bigger-110"></i>
 											<span class="bigger-110">发送消息</span>
-										</a>
+										</a>*@
 									</div>
 									<div class="col-xs-12 col-sm-9">
 										<h4 class="blue">
@@ -871,9 +871,9 @@
 
 				$.ajax(getInfoRequest);
 
-				var getFriendsRequest = ajaxRequset(urls.getFriends, code, url.login, { id: userId }, function (data) {
+				//var getFriendsRequest = ajaxRequset(urls.getFriends, code, url.login, { id: userId }, function (data) {
 
-				});
+				//});
 			}
 
 		});

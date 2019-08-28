@@ -4,6 +4,9 @@
     <AssemblyName>MicroAngels.AuthServer</AssemblyName>
     <DockerTargetOS>Linux</DockerTargetOS>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
@@ -20,6 +23,7 @@
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Logger\MicroAngels.Logger.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Swagger\MicroAngels.Swagger.csproj" />
     <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +32,9 @@
   <ItemGroup>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="AuthService.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

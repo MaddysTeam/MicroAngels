@@ -4,6 +4,7 @@ using MicroAngels.Core.Plugins;
 using MicroAngels.Core.Service;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -55,6 +56,7 @@ namespace Business.Services
 
 		public async Task<List<Subscribe>> Search(SubscribeSearchOptions options, PageOptions page)
 		{
+			
 			var subscriberId = options?.subscriberId;
 			var targetId = options?.targetId;
 			var serviceId = options?.serviceId;
@@ -72,33 +74,44 @@ namespace Business.Services
 				query.Where(s => s.TopicId == topicId);
 
 			var targets = new List<Subscribe>();
-			if (page.IsValidate)
+			if (!page.IsNull() && page.IsValidate)
 				targets = await query.ToPageListAsync(page.PageIndex, page.PageSize);
 			else
-				targets = await query.ToListAsync();
-
-			if (targets.Count < 0)
-				return new List<Subscribe>();
-
-			var users = new List<UserViewModel>();
-			using (var client = new HttpClient())
 			{
-				var fromService = _conf["UserServcie:From"];
-				var virtualPath = _conf["VirtualPath"];
-				users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, code, null, _serviceFinder, _loadBalancer);
+				try
+				{
+					targets = await query.ToListAsync();
+				}
+				catch(Exception e)
+				{
+
+				}
+			
 			}
 
-			return targets.Select(t =>
-			{
-				var user = users.Find(u => u.Id.ToString() == t.TargetId);
-				if (!user.IsNull())
-				{
-					t.Target = user.UserName;
-					t.Subscriber = user.RealName;
-				}
+			return targets;
+			//if (targets.Count < 0)
+			//	return new List<Subscribe>();
 
-				return t;
-			}).ToList();
+			//var users = new List<UserViewModel>();
+			//using (var client = new HttpClient())
+			//{
+			//	var fromService = _conf["UserServcie:From"];
+			//	var virtualPath = _conf["VirtualPath"];
+			//	users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, code, null, _serviceFinder, _loadBalancer);
+			//}
+
+			//return targets.Select(t =>
+			//{
+			//	var user = users.Find(u => u.Id.ToString() == t.TargetId);
+			//	if (!user.IsNull())
+			//	{
+			//		t.Target = user.UserName;
+			//		t.Subscriber = user.RealName;
+			//	}
+
+			//	return t;
+			//}).ToList();
 		}
 
 

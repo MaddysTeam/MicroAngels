@@ -9,7 +9,7 @@
   
     <DocumentationFile></DocumentationFile>
   
-    <NoWarn>sssssssssssssssss</NoWarn>
+    <NoWarn></NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

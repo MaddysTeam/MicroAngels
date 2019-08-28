@@ -112,7 +112,7 @@ namespace Business
 		[SugarColumn(IsIgnore = true)]
 		public string Target { get; set; }
 
-
+		[SugarColumn(IsIgnore = true)]
 		public bool IsValidate => !TopicId.IsNullOrEmpty() && !SubscriberId.IsNullOrEmpty() && !ServiceId.IsNullOrEmpty() && !TargetId.IsNullOrEmpty();
 	}
 

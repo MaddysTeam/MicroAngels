@@ -4,12 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.Swagger
 {
-    public static class SwaggerServiceCollection
+	public static class SwaggerServiceCollection
     {
 
         public static IServiceCollection AddSwaggerService(this IServiceCollection services, SwaggerService swaggerService,Action<SwaggerGenOptions> customOption=null)
