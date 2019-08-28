@@ -35,8 +35,10 @@ namespace Controllers
 		[HttpPost("users")]
 		public async Task<IActionResult> GetUsers([FromForm]int start, [FromForm]int length)
 		{
+			var code = Request.Headers["Authorization"];
+			var userId = User.GetClaimsValue(CoreKeys.USER_ID).ToGuid();
 			var page = new PageOptions(start, length);
-			var searchResults =await _userService.Search(null, page);
+			var searchResults =await _userService.SearchFriends(userId, code, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new

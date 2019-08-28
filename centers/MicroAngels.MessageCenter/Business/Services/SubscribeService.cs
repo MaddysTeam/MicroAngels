@@ -59,6 +59,7 @@ namespace Business.Services
 			var targetId = options?.targetId;
 			var serviceId = options?.serviceId;
 			var topicId = options?.topicId;
+			var code = options?.code;
 
 			var query = DB.Queryable<Subscribe>();
 			if (!subscriberId.IsNullOrEmpty())
@@ -84,7 +85,7 @@ namespace Business.Services
 			{
 				var fromService = _conf["UserServcie:From"];
 				var virtualPath = _conf["VirtualPath"];
-				users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, null, _serviceFinder, _loadBalancer);
+				users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, code, null, _serviceFinder, _loadBalancer);
 			}
 
 			return targets.Select(t =>

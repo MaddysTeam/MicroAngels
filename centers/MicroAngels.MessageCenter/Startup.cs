@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.Core.Plugins;
+using MicroAngels.Swagger;
+using System.IO;
 
 namespace MessageCenter
 {
@@ -44,21 +46,22 @@ namespace MessageCenter
 			});
 
 			// add swagger
-			//services.AddSwaggerService(new SwaggerService
-			//{
-			//	Name = Configuration["Swagger:Name"],
-			//	Title = Configuration["Swagger:Title"],
-			//	Version = Configuration["Swagger:Version"],
-			//	XMLPath = Path.Combine(
-			//			Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
-			//			$"{ Configuration["Swagger:Name"]}.xml"
-			//		)
-			//},opt=> {
-			//	// set document or operation filter
-			//	//opt.DocumentFilter<>
-			//	//opt.OperationFilter<>
-			//	//opt.AddSecurityDefinition()
-			//});
+			services.AddSwaggerService(new SwaggerService
+			{
+				Name = Configuration["swagger:name"],
+				Title = Configuration["swagger:title"],
+				Version = Configuration["swagger:version"],
+				XMLPath = Path.Combine(
+						Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath,
+						$"{ Configuration["swagger:name"]}.xml"
+					)
+			}, opt =>
+			{
+				// set document or operation filter
+				//opt.documentfilter<>
+				//opt.operationfilter<>
+				//opt.addsecuritydefinition()
+			});
 
 			//add mvc core
 			services.AddMvcCore(options =>
@@ -100,32 +103,32 @@ namespace MessageCenter
 			}
 
 			// use swagger service
-			//app.UseSwaggerService(
-			// new SwaggerService { Name = Configuration["Swagger:Name"] },
-			// new SwaggerUIOptions { IsShowExtensions = true });
+			app.UseSwaggerService(
+			 new SwaggerService { Name = Configuration["Swagger:Name"] },
+			 new SwaggerUIOptions { IsShowExtensions = true });
 
 
 			// use authentiaction
-			app.UseAuthentication();
+			//app.UseAuthentication();
 
 			app.UseMvc()   // use mvc with swagger
 			   .UseConsul(lifeTime, new ConsulService //regsiter consul
-			   {
-				   Id = Configuration["Service:Id"],
-				   Host = Configuration["Service:Host"],
-				   Port = Convert.ToInt32(Configuration["Service:Port"]),
-				   Name = Configuration["Service:Name"],
-				   HostConfiguration = new ConsulHostConfiguration
-				   {
-					   Host = Configuration["Consul:Host"],
-					   Port = Convert.ToInt32(Configuration["Consul:Port"])
-				   },
-				   HealthCheckOptoins = new ConsuleHealthCheckOptoins
-				   {
-					   HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
-					   IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
-				   }
-			   });
+				{
+					Id = Configuration["Service:Id"],
+					Host = Configuration["Service:Host"],
+					Port = Convert.ToInt32(Configuration["Service:Port"]),
+					Name = Configuration["Service:Name"],
+					HostConfiguration = new ConsulHostConfiguration
+					{
+						Host = Configuration["Consul:Host"],
+						Port = Convert.ToInt32(Configuration["Consul:Port"])
+					},
+					HealthCheckOptoins = new ConsuleHealthCheckOptoins
+					{
+						HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+						IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+					}
+				});
 
 			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 

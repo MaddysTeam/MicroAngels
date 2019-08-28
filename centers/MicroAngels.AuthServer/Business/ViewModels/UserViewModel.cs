@@ -13,4 +13,13 @@ namespace Business
 		public string HeaderImagePath { get; set; }
 	}
 
+	public class FriendViewModel
+	{
+		public string Id { get; set; }
+		public string SubscriberId { get; set; }
+		public string TopicId { get; set; }
+		public string TargetId { get; set; }
+		public string ServiceId { get; set; }
+	}
+
 }

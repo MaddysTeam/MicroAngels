@@ -31,6 +31,9 @@ namespace Business
 		[SugarColumn(IsNullable = true, Length = 500)]
 		public string HeaderImagePath { get; set; }
 
+		[SugarColumn(IsIgnore = true)]
+		public bool IsFriend { get; set; }
+
 		public static List<ValidateResult> Validate(UserInfo u)
 		{
 			return

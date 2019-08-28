@@ -31,6 +31,7 @@ namespace Business
 		public string serviceId { get; set; }
 		public string subscriberId { get; set; }
 		public string targetId { get; set; }
+		public string code { get; set; }
 	}
 
 

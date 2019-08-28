@@ -51,6 +51,4 @@ namespace MicroAngels.Swagger
         }
     }
 
-
-
 }

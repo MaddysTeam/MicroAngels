@@ -38,9 +38,10 @@ namespace MicroAngels.Core
 			this HttpClient httpClient,
 			string serviceName,
 			string virtualPath,
+			string code = null,
 			object body = null,
 			IServiceFinder<S> serviceFinder = null,
-			ILoadBalancer balancer=null) where S : IService
+			ILoadBalancer balancer = null) where S : IService
 		{
 			if (serviceName.IsNullOrEmpty())
 				throw new AngleExceptions("service name not exits");
@@ -64,6 +65,9 @@ namespace MicroAngels.Core
 			using (var client = new HttpClient())
 			{
 				var url = foundedService?.Address.ToString() + @"\" + virtualPath;
+				if (!code.IsNullOrEmpty())
+					client.DefaultRequestHeaders.Add("Authorization", code);
+
 				return await client.PostAsync<T>(url);
 			}
 		}

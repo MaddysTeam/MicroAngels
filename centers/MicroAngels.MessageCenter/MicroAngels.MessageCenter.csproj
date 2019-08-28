@@ -49,4 +49,10 @@
     <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MessageCenter.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
