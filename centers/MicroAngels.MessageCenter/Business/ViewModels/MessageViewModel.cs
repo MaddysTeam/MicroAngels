@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MicroAngels.Bus;
+using System;
 
 namespace Business
 {
@@ -12,6 +13,7 @@ namespace Business
 		public string Topic { get; set; }
 		public string ServiceId { get; set; }
 		public DateTime SendTime { get; set; }
+		public bool HasTrans { get; set; }
 	}
 
 	public class MessageSearchOptions

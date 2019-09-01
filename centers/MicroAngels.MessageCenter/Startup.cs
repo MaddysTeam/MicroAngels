@@ -109,7 +109,7 @@ namespace MessageCenter
 
 
 			// use authentiaction
-			//app.UseAuthentication();
+			app.UseAuthentication();
 
 			app.UseMvc()   // use mvc with swagger
 			   .UseConsul(lifeTime, new ConsulService //regsiter consul

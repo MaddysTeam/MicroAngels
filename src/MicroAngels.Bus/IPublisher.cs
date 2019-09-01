@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 namespace MicroAngels.Bus
 {
 
-	public interface IPublisher<Message> where Message:IMessage
+	public interface IPublisher
 	{
-		Task<Message> PublishAsync(Message messge);
+		Task<Message> PublishAsync<Message>(Message messge) where Message:IMessage;
 	}
 
 }

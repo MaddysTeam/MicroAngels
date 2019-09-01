@@ -10,7 +10,7 @@ namespace MicroAngels.ServiceDiscovery.Test
 	{
 
 		private readonly ConsulServiceFinder _finder;
-		private string _serviceName= "FileService";
+		private string _serviceName= "AuthService";
 
 		public ConsulServiceFinderTest()
 		{

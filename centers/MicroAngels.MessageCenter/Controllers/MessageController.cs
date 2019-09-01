@@ -33,6 +33,8 @@ namespace Controllers
 		}
 
 
+		//Post  Send announce message
+
 		[HttpPost("sendAnnounce")]
 		public async Task<IActionResult> SendAnnounceMessage([FromForm] MessageViewModel messageViewModel)
 		{

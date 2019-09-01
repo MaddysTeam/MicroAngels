@@ -13,9 +13,7 @@ pipeline{
         }
         stage('unittest'){
             steps{
-                echo "execute unit test"
-                 bat  '''cd "C:\\project\\micro_service\\Surgin\\MicroAngels\\MicroAngels\\test\\MicroAngels.Core.Test"
-                     dotnet test -v n --no-build MicroAngels.Core.Test.csproj '''
+          
                  echo "Unit Test Done"
             }
         }
@@ -32,13 +30,17 @@ pipeline{
         }
         stage('push to remote repository'){
             echo "ready to pull images to registry"
-            bat ''' docker tag micoangels.gateway 192.168.1.7:5000/micro_angels/gateway
-                    docker tag micoangels.authserver 192.168.1.7:5000/micro_angels/authserver
-                    docker tag micoangels.service.account 192.168.1.7:5000/micro_angels/service.account
-                    
-                    docker push 192.168.1.7:5000/micro_angels/gateway
-                    docekr push 192.168.1.7:5000/micro_angels/authserver
-                    docker push 192.168.1.7:5000/micro_angels/service.account
+            bat ''' docker tag micoangels.center.gateway:1.0.0 192.168.1.7/micro_angels/gateway:1.0.0
+                    docker tag micoangels.center.authserver:1.0.0  192.168.1.7/micro_angels/auth_server:1.0.0
+                    docker tag micoangels.center.message:1.0.0  192.168.1.7/micro_angels/message_center:1.0.0
+	            docker tag micoangels.service.account:1.0.0  192.168.1.7/micro_angels/account_service:1.0.0
+	            docker tag micoangels.service.file:1.0.0  192.168.1.7/micro_angels/file_service:1.0.0                    
+
+                    docker push 192.168.1.7/micro_angels/gateway:1.0.0
+                    docekr push 192.168.1.7/micro_angels/auth_server:1.0.0
+                    docker push 192.168.1.7/micro_angels/message_center:1.0.0
+                    docker push 192.168.1.7/micro_angels/account_service:1.0.0
+                    docker push 192.168.1.7/micro_angels/file_service:1.0.0 
                     
             '''
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace MicroAngels.Bus.CAP
 {
 
-	public interface ICAPPublisher: IPublisher<CAPMessage>
+	public interface ICAPPublisher: IPublisher
 	{
 
 	}
@@ -19,9 +19,9 @@ namespace MicroAngels.Bus.CAP
 			_capService = capService;
 		}
 
-		public async Task<CAPMessage> PublishAsync(CAPMessage msg)
+		public async Task<Message> PublishAsync<Message>(Message msg) where Message : IMessage
 		{
-			msg.EnsureNotNull(()=> new MicroAngels.Core.AngleExceptions(""));
+			msg.EnsureNotNull(()=> new MicroAngels.Core.AngleExceptions("message instance cannot be null"));
 
 			if (msg.HasTrans)
 			{
@@ -37,6 +37,7 @@ namespace MicroAngels.Bus.CAP
 
 			return msg;
 		}
+
 
 		private readonly ICapPublisher _inner;
 		private readonly CAPService _capService;

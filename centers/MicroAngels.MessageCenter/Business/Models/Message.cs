@@ -1,4 +1,5 @@
-﻿using MicroAngels.Core;
+﻿using MicroAngels.Bus;
+using MicroAngels.Core;
 using SqlSugar;
 using System;
 
@@ -33,8 +34,8 @@ namespace Business
     /// <summary>
     /// 消息实体
     /// </summary>
-    public class Message
-    {
+    public class Message: IMessage
+	{
 		[SugarColumn(IsPrimaryKey = true, Length = 50)]
 		public string Id { get; set; }
 
@@ -79,12 +80,16 @@ namespace Business
         public bool IsTimeout { get { return ReceiveTime + Timeout > DateTime.UtcNow; } }
 
 		[SugarColumn(IsIgnore = true)]
+		public bool HasTrans { get; set; }
+
+		[SugarColumn(IsIgnore = true)]
 		public bool IsValidate =>
 			   !Topic.IsNullOrEmpty()
 			&& !Body.IsNullOrEmpty()
 			&& !SenderId.IsNullOrEmpty()
 			&& !ServiceId.IsNullOrEmpty();
-    }
+
+	}
 
 
     /// <summary>

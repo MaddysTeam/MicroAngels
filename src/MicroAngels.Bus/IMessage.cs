@@ -10,6 +10,7 @@ namespace MicroAngels.Bus
 	{
 		string Topic { get; }
 		string Body { get; }
+		bool HasTrans { get; }
 	}
 
 }

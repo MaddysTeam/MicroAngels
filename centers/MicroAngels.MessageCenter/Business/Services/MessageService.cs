@@ -144,16 +144,16 @@ namespace Business.Services
 				return false;
 			}
 
-			var topicObj = await _topicService.GetTopicAsync(msg.Topic, msg.ServiceId);
+			var topicObj = await _topicService.GetTopicAsync(msg.TopicId);
 			if (topicObj.IsNull())
 			{
 				return false;
 			}
 
-			msg.Id = Guid.NewGuid().ToString();
+			msg.Id = msg.Id ?? Guid.NewGuid().ToString();
 			msg.TopicId = topicObj.Id;
 			msg.TypeId = StaticKeys.MessageTypeId_Notify;
-			msg.ReceiveTime = DateTime.UtcNow;
+			//msg.ReceiveTime = DateTime.UtcNow;
 
 			return MessageDb.Insert(msg);
 		}
@@ -235,6 +235,7 @@ namespace Business.Services
 		private readonly ITopicService _topicService;
 		private readonly ISubscribeService _subscribeService;
 		private readonly ILogger<MessageService> _logger;
+
 	}
 
 }

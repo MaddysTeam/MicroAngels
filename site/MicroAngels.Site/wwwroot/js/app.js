@@ -80,6 +80,13 @@ urls = {
 	profilePage: local + '/user/profile?userId={0}'
 };
 
+topics = {
+	friendTopic:''
+};
+
+/*
+ * global oauth code 
+*/
 var code = checkCode(urls.login);
 
 

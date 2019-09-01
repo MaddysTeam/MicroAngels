@@ -1,7 +1,10 @@
 ﻿using Business;
+using Business.Helpers;
 using Business.Services;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,9 +16,10 @@ namespace Controllers
 	public class SubscribeController : BaseController
 	{
 
-		public SubscribeController(ISubscribeService subscribeService)
+		public SubscribeController(ISubscribeService subscribeService, ICAPPublisher publisher)
 		{
 			_subscribeService = subscribeService;
+			_publisher = publisher;
 		}
 
 
@@ -43,6 +47,10 @@ namespace Controllers
 		[HttpPost("subscribe")]
 		public async Task<IActionResult> Subscribe([FromForm]SubscribeViewModel viewModel)
 		{
+			viewModel = viewModel ?? new SubscribeViewModel();
+			viewModel.ServiceId = CurrnetUser.ServiceId;
+			viewModel.SubscriberId = CurrnetUser.UserId;
+
 			var subscribe = Mapper.Map<SubscribeViewModel, Subscribe>(viewModel);
 			if (subscribe.IsNull() || !ModelState.IsValid)
 			{
@@ -50,6 +58,9 @@ namespace Controllers
 			}
 
 			var isSuccess = await _subscribeService.SubscribeAsync(subscribe);
+
+			if (isSuccess)
+				await _publisher.PublishAsync(new Message { Topic=AppKeys.MessageCenterNotfiy, ServiceId=CurrnetUser.ServiceId, TopicId=viewModel.TopicId, Body="", HasTrans=false,SendTime=DateTime.UtcNow });
 
 			return new JsonResult(new
 			{
@@ -79,6 +90,6 @@ namespace Controllers
 
 
 		private ISubscribeService _subscribeService;
-
+		private ICAPPublisher _publisher;
 	}
 }
