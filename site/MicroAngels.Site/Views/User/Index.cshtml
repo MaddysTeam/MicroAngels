@@ -168,7 +168,7 @@
 					"render": function (data, type, row, meta) {
 						return '<div class="hidden-sm hidden-xs action-buttons"><a class="green btn-edit" href="#" data-id=' + row.id + ' title="编辑"><i class="ace-icon fa fa-pencil bigger-130"></i></a>' +
 							'<a class="blue btn-bind-role" href="#" title="设定角色" data-id=' + row.id + '><i class="ace-icon fa fa-users bigger-130"></i></a>' +
-							'<a class="red btn-subscribe" href="#" title="关注他" data-id=' + row.id + '><i class="ace-icon ' + (row.isFriend ? 'fa fa-heart' : 'fa fa-heart-o') + ' bigger-130"></i>' +
+							'<a class="red btn-subscribe" href="#" title="关注他" data-id=' + row.id + ' data-is-friend=' + row.isFriend + ' data-real-name=' + row.realName+' ><i class="ace-icon ' + (row.isFriend ? 'fa fa-heart' : 'fa fa-heart-o') + ' bigger-130"></i>' +
 							'</div>';
 					}
 				}],
@@ -191,11 +191,12 @@
 
 					$table.find('.btn-subscribe').on('click', function () {
 						var $this = $(this);
+						var isFriend = $(this).data('isFriend');
 						var targetId = $this.data('id');
-						var req = ajaxRequset(urls.subscribe, code, urls.login, { TargetId: targetId, TopicId: friendTopic}, function (data) {
+						var target = $this.data('realName');
+						var req = ajaxRequset(isFriend ? urls.unSubscribe : urls.subscribe, code, urls.login, { TargetId: targetId, TopicId: topics.friendTopicId, Target: target}, function (data) {
 							if (data.isSuccess) {
-								alert();
-								$this.removeClass("fa-heart-o").addClass('fa-heart');
+								refreshTable('#dynamic-table');
 							}
 						});
 

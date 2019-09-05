@@ -82,15 +82,17 @@ namespace AccountService.Controllers
 		}
 
 		[HttpPost("refresh")]
-		public async Task<IActionResult> Refresh([FromBody] RefreshTokenModel refreshTokenModel)
+		public async Task<AngelTokenResponse> Refresh([FromBody] RefreshTokenModel refreshTokenModel)
 		{
-			var response = await RefreshTokenRequest(refreshTokenModel.AccessToken, refreshTokenModel.RefreshToken);
+			AngelTokenResponse response = await RefreshTokenRequest(refreshTokenModel.AccessToken, refreshTokenModel.RefreshToken);
 
-			return new JsonResult(new
-			{
-				isSuccess = true,
-				message = "操作成功"
-			});
+			return response;
+			//return new JsonResult(new
+			//{
+			//	isSuccess = true,
+			//	data=response,
+			//	message = "操作成功"
+			//});
 		}
 
 		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)

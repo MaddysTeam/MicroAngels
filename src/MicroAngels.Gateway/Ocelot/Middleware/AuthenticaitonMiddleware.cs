@@ -1,5 +1,6 @@
 ﻿using MicroAngels.Core;
 using Microsoft.AspNetCore.Authentication;
+using Ocelot.Configuration.Creator;
 using Ocelot.Logging;
 using Ocelot.Middleware;
 using System.Threading.Tasks;

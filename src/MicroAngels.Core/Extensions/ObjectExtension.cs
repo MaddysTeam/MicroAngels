@@ -24,6 +24,7 @@ namespace MicroAngels.Core
 		{
 			return JsonConvert.SerializeObject(o);
 		}
+
 	}
 
 }

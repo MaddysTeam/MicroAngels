@@ -26,8 +26,8 @@ namespace Controllers
 		[HttpPost("targets")]
 		public async Task<List<SubscribeViewModel>> GetSubscribeTarget([FromBody]SubscribeViewModel viewModel)
 		{
-			var userId = viewModel?.SubscriberId ?? User.GetClaimsValue(CoreKeys.USER_ID);
-			var serivceId = viewModel?.ServiceId ?? User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var userId = viewModel?.SubscriberId ?? User.GetUserId();
+			var serivceId = viewModel?.ServiceId ?? User.GetServiceId();
 			var subscribes = await _subscribeService.Search(
 				new SubscribeSearchOptions { serviceId = serivceId, subscriberId = userId },
 				null
@@ -48,8 +48,8 @@ namespace Controllers
 		public async Task<IActionResult> Subscribe([FromForm]SubscribeViewModel viewModel)
 		{
 			viewModel = viewModel ?? new SubscribeViewModel();
-			viewModel.ServiceId = CurrnetUser.ServiceId;
-			viewModel.SubscriberId = CurrnetUser.UserId;
+			viewModel.ServiceId = User.GetServiceId();
+			viewModel.SubscriberId = User.GetUserId();
 
 			var subscribe = Mapper.Map<SubscribeViewModel, Subscribe>(viewModel);
 			if (subscribe.IsNull() || !ModelState.IsValid)
@@ -58,9 +58,20 @@ namespace Controllers
 			}
 
 			var isSuccess = await _subscribeService.SubscribeAsync(subscribe);
-
 			if (isSuccess)
-				await _publisher.PublishAsync(new Message { Topic=AppKeys.MessageCenterNotfiy, ServiceId=CurrnetUser.ServiceId, TopicId=viewModel.TopicId, Body="", HasTrans=false,SendTime=DateTime.UtcNow });
+				await _publisher.PublishAsync(
+					new Message
+					{
+						Topic = AppKeys.MessageCenterNotfiy,
+						ServiceId = viewModel.ServiceId,
+						SenderId = User.GetUserId(),
+						TopicId = viewModel.TopicId,
+						TargetId= viewModel.TargetId,
+						Title= string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
+						Body = string.Format(AppKeys.Subscribe,viewModel.Subsriber, viewModel.Target),
+						HasTrans = false,
+						SendTime = DateTime.UtcNow
+					});
 
 			return new JsonResult(new
 			{
@@ -73,6 +84,10 @@ namespace Controllers
 		[HttpPost("unSubscribe")]
 		public async Task<IActionResult> UnSubscribe([FromForm]SubscribeViewModel viewModel)
 		{
+			viewModel = viewModel ?? new SubscribeViewModel();
+			viewModel.ServiceId = User.GetServiceId();
+			viewModel.SubscriberId = User.GetUserId();
+
 			var subscribe = Mapper.Map<SubscribeViewModel, Subscribe>(viewModel);
 			if (subscribe.IsNull() || !ModelState.IsValid)
 			{
@@ -80,6 +95,20 @@ namespace Controllers
 			}
 
 			var isSuccess = await _subscribeService.UnSubsribeAsync(subscribe);
+			if (isSuccess)
+				await _publisher.PublishAsync(
+					new Message
+					{
+						Topic = AppKeys.MessageCenterNotfiy,
+						ServiceId = viewModel.ServiceId,
+						SenderId = User.GetUserId(),
+						TopicId = viewModel.TopicId,
+						TargetId = viewModel.TargetId,
+						Title = string.Format(AppKeys.UnSubscribe, viewModel.Subsriber, viewModel.Target),
+						Body = string.Format(AppKeys.UnSubscribe, viewModel.Subsriber, viewModel.Target),
+						HasTrans = false,
+						SendTime = DateTime.UtcNow
+					});
 
 			return new JsonResult(new
 			{

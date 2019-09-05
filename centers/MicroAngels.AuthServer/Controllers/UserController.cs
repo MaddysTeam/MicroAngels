@@ -1,6 +1,7 @@
 ﻿using Business;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
+using MicroAngels.Core.Plugins;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Controllers
 
 	[Route("api/[controller]")]
 	[ApiController]
-	public class UserController : ControllerBase
+	public class UserController : BaseController
 	{
 
 		public UserController(IUserService userService, ICAPPublisher publisher)
@@ -35,10 +36,10 @@ namespace Controllers
 		[HttpPost("users")]
 		public async Task<IActionResult> GetUsers([FromForm]int start, [FromForm]int length)
 		{
-			var userId = User.GetClaimsValue(CoreKeys.USER_ID).ToGuid();
-			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID).ToGuid();
+			var userId = User.GetUserId();
+			var serviceId = User.GetServiceId();
 			var page = new PageOptions(start, length);
-			var searchResults =await _userService.SearchWithFriends(new UserSearchOption { UserId=userId.ToString(), ServiceId=serviceId.ToString(), TopicId="" },page);
+			var searchResults =await _userService.SearchWithFriends(new UserSearchOption { UserId=userId, ServiceId=serviceId, TopicId="" },page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
@@ -60,10 +61,10 @@ namespace Controllers
 		[HttpPost("friends")]
 		public async Task<IActionResult> GetFriends([FromForm]int start, [FromForm]int length)
 		{
-			var userId = User.GetClaimsValue(CoreKeys.USER_ID).ToGuid();
-			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID).ToGuid();
+			var userId = User.GetUserId();
+			var serviceId = User.GetServiceId();
 			var page = new PageOptions(start, length);
-			var searchResults = await _userService.SearchWithFriends(new UserSearchOption { UserId = userId.ToString(), ServiceId = serviceId.ToString(), TopicId = "" }, page);
+			var searchResults = await _userService.SearchWithFriends(new UserSearchOption { UserId = userId, ServiceId = serviceId, TopicId = "" }, page);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				var onlyFriends = searchResults.ToList().FindAll(x => x.IsFriend);
@@ -92,7 +93,8 @@ namespace Controllers
 
 			return new JsonResult(new
 			{
-				data = viewMode
+				data = viewMode,
+				tokens = CurrentToken,
 			});
 		}
 
@@ -103,7 +105,7 @@ namespace Controllers
 
 			return new JsonResult(new
 			{
-				data = user.Map<UserInfo, UserViewModel>()
+				data = user.Map<UserInfo, UserViewModel>(),
 			});
 		}
 
@@ -119,7 +121,7 @@ namespace Controllers
 				return new JsonResult(new
 				{
 					isSuccess,
-					msg = isSuccess ? "操作成功" : "操作失败"
+					msg = isSuccess ? "操作成功" : "操作失败",
 				});
 			}
 			else
@@ -127,7 +129,7 @@ namespace Controllers
 				return new JsonResult(new
 				{
 					isSuccess,
-					msg = "操作失败"
+					msg = "操作失败",
 				});
 			}
 

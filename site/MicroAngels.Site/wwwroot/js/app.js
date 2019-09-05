@@ -59,6 +59,7 @@ urls = {
 	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
 	receiveAnnounce: '{0}/api/messagecenter/message/receiveAnnounce'.format(apiDomain),
 	subscribe: '{0}/api/messagecenter/subscribe/subscribe'.format(apiDomain),
+	unSubscribe: '{0}/api/messagecenter/subscribe/unSubscribe'.format(apiDomain),
 
 	fileUpload: '{0}/api/fileservice/upload'.format(apiDomain),
 
@@ -81,7 +82,7 @@ urls = {
 };
 
 topics = {
-	friendTopic:''
+	friendTopicId: '897fdb63-d5f2-4ff4-a88f-219251a34675'
 };
 
 /*
@@ -99,9 +100,18 @@ function checkCode(returnUrl) {
 	return code;
 }
 
+function getRefreshCode() {
+	return localStorage.getItem('refreshToken');
+}
+
+function setToken(token, refreshToken) {
+	localStorage.setItem('code', token);
+	localStorage.setItem('refreshToken', refreshToken);
+}
+
 function cleanCode() {
 	localStorage.removeItem('code');
-	localStorage.removeItem('refreshCode');
+	localStorage.removeItem('refreshToken');
 }
 
 function whenForbidden(redirectUrl) {
@@ -158,7 +168,56 @@ var ajaxRequset = function (url, code, forbiddenUrl, data, success) {
 		contentType: 'application/x-www-form-urlencoded',
 		dataType: 'json',
 		headers: {
-			'Authorization': 'Bearer ' + code
+			'Authorization': 'Bearer ' + code,
+			'AccessToken': code,
+			'RefreshToken': getRefreshCode()
+		},
+		error: function (o) {
+			if (!forbiddenUrl)
+				forbiddenUrl = urls.login;
+			if (o.status == 403 || o.status == 401) {
+				whenForbidden(forbiddenUrl);
+			}
+		},
+		success: function (data) {
+			if (data.tokens) {
+				var token = data.tokens.accessToken;
+				var refreshToken = data.tokens.refreshToken;
+				console.log('token', token);
+				console.log('refresh', refreshToken);
+
+				if (token != '' && refreshToken != '') {
+					setToken(token, refreshToken);
+				}
+
+				delete data.tokens;
+			}
+			if (success) {
+				success(data);
+			}
+		}
+	};
+
+	if (data) {
+		ajax.data = data;
+	}
+
+	return ajax;
+};
+
+var ajaxRequsetWithoutKey = function (url, code, forbiddenUrl, data, success) {
+	var ajax = {
+		type: "POST",
+		url: url,
+		xhrFields: {
+			withCredentials: false // 设置运行跨域操作
+		},
+		contentType: 'application/x-www-form-urlencoded',
+		dataType: 'json',
+		headers: {
+			'Authorization': 'Bearer ' + code,
+			'AccessToken': code,
+			'RefreshToken': getRefreshCode()
 		},
 		error: function (o) {
 			if (!forbiddenUrl)
@@ -176,6 +235,7 @@ var ajaxRequset = function (url, code, forbiddenUrl, data, success) {
 	if (success) {
 		ajax.success = success;
 	}
+
 
 	return ajax;
 };
@@ -207,21 +267,21 @@ function showMenuHierarchy(data) {
 /* ------------------------------------------------- messages------------------------------------------------------- */
 
 function announceNotification() {
-	var code = checkCode(urls.login);
-	setInterval(function () {
-		var ajax = ajaxRequset(urls.getUnReadAnnounces, code, urls.login, {}, function (data) {
-			var messageCount = data.data.length;
-			if (messageCount > 0) {
-				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-animated-bell"></i><span class="badge badge-important">{0}</span>'.format(messageCount));
-				$('.messageCount').html(messageCount);
-			}
-			else {
-				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
-			}
-		});
+	//var code = checkCode(urls.login);
+	//setInterval(function () {
+	//	var ajax = ajaxRequset(urls.getUnReadAnnounces, code, urls.login, {}, function (data) {
+	//		var messageCount = data.data.length;
+	//		if (messageCount > 0) {
+	//			$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-animated-bell"></i><span class="badge badge-important">{0}</span>'.format(messageCount));
+	//			$('.messageCount').html(messageCount);
+	//		}
+	//		else {
+	//			$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
+	//		}
+	//	});
 
-		$.ajax(ajax);
-	}, 20000);
+	//	$.ajax(ajax);
+	//}, 20000);
 }
 
 function reveiveAnnounce() {
@@ -411,7 +471,7 @@ var initTable = function (id, options) {
 		$tableSelector
 			//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 			.DataTable({
-				ajax: ajaxRequset(options.dataUrl, options.accessCode, options.forbiddenUrl),
+				ajax: ajaxRequsetWithoutKey(options.dataUrl, options.accessCode, options.forbiddenUrl),
 				bAutoWidth: false,
 				columnDefs: options.columnsDefs || [],
 				columns: columns,

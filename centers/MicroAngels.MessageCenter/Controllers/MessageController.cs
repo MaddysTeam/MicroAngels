@@ -91,8 +91,8 @@ namespace Controllers
 		[HttpPost("receiveAnnounce")]
 		public async Task<IActionResult> ReceiveAnnounce()
 		{
-			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
-			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
+			var userId = User.GetUserId();
+			var serviceId = User.GetServiceId();
 			var searchOptions = new MessageSearchOptions { reveiverId = userId, serviceId = serviceId, typeId = StaticKeys.MessageTypeId_Announce };
 			var isSuccess = await _messageService.ReceiveMessages(searchOptions);
 

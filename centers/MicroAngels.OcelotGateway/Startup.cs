@@ -1,4 +1,6 @@
-﻿using MicroAngels.Gateway.Ocelot;
+﻿using MicroAngels.Cache.Redis;
+using MicroAngels.Core.Plugins;
+using MicroAngels.Gateway.Ocelot;
 using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.OcelotGateway.Services;
 using MicroAngels.ServiceDiscovery.Consul;
@@ -37,9 +39,19 @@ namespace MicroAngels.OcelotGateway
 				c.ConnectString = Configuration["Database:Mysql:OcelotConn"];
 				c.RedisConnectStrings = new string[] { Configuration["Redis:OcelotConn"] };
 				c.IsUseCustomAuthenticate = true;
+				c.TokenRefreshIterval = TimeSpan.FromSeconds(Convert.ToDouble(Configuration["Redis:TimeoutSeconds"]));
 			})
 			.AddConsul()
 			.AddPolly();
+
+			// add redis cache
+			services.AddRedisCache(new RedisCacheOption
+				(
+				 Configuration["Redis:Host"],
+				 Convert.ToInt32(Configuration["Redis:Port"]),
+				 0,
+				 3600
+				));
 
 			// add cors for ocelot
 			services.AddCors(options =>
@@ -57,6 +69,8 @@ namespace MicroAngels.OcelotGateway
 					Host = Configuration["Consul:Host"],
 					Port=  Convert.ToInt32(Configuration["Consul:Port"])
 				});
+
+			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
 
 			services.AddLessLog();
 

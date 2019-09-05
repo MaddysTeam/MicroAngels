@@ -29,8 +29,11 @@ namespace MicroAngels.AuthServer.Services
 			var users = await _userService.Search(u => u.UserName == context.UserName, null);
 			if (!users.IsNull() && users.Count() > 0)
 			{
-				var userid = users.First().UserId.ToString();
+				var user = users.First();
+				var userid = user.UserId.ToString();
+				var realName = user.RealName;
 				claims.Add(new Claim(CoreKeys.USER_ID, userid));
+				claims.Add(new Claim(CoreKeys.USER, user.ToJson()));
 			}
 
 			// get user roles by user name

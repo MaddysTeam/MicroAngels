@@ -107,11 +107,21 @@ namespace Business
             SubscriberId = subscriberId;
         }
 
-        public string Id { get; set; }
-        public string SubscriberId { get; set; }
-        public string TopicId { get; set; }
-        public string TargetId { get; set; }
-        public string ServiceId { get; set; }
+		[SugarColumn(IsPrimaryKey = true, Length = 50)]
+		public string Id { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string SubscriberId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string TopicId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string TargetId { get; set; }
+
+		[SugarColumn(IsNullable = false, Length = 50)]
+		public string ServiceId { get; set; }
+
 		[SugarColumn(IsIgnore = true)]
 		public string Subscriber { get; set; }
 		[SugarColumn(IsIgnore = true)]

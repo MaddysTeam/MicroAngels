@@ -38,10 +38,10 @@
 
 		private async Task ExecuteCaching(AspectContext context, AspectDelegate next, CachingAttribute attribute)
 		{
-			// 生成缓存key 策略是 class + method + para values  使key既能唯一，又能方便用于删除
+			// generate key secnario is  （class + method + para） values pattern
 			var cacheKey = GenerateCacheKey(context);
 
-			//如果是查询则先从缓存找，找到便中断方法
+			// search from cache first
 			if (attribute.ActionType == ActionType.search)
 			{
 				var cacheValue = CacheProvider.Get<T>(cacheKey);

@@ -34,6 +34,7 @@ namespace Business
 		public string subscriberId { get; set; }
 		public string targetId { get; set; }
 		public string code { get; set; }
+		public bool IsJoinUser { get; set; }
 	}
 
 
