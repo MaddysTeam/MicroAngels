@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_anonymous.cshtml";
+	ViewData["Title"] = "Login";
+	Layout = "~/Views/Shared/_anonymous.cshtml";
 }
 
 <body class="login-layout">
@@ -28,35 +28,35 @@
 									<div class="widget-main">
 										<h4 class="header blue lighter bigger">
 											<i class="ace-icon fa fa-coffee green"></i>
-										 用户登录
+											用户登录
 										</h4>
 
 										<div class="space-6"></div>
 
-										<form>
+										<form id="form" method="post" action="">
 											<fieldset>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" id="username" placeholder="用户名" minlength="5"/>
+														<input type="text" class="form-control" id="username" name="username" placeholder="用户名" required/>
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control"  id="password" placeholder="密码" minlength="8"/>
+														<input type="password" class="form-control" id="password" name="password" placeholder="密码" required  minlength="6" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
 
-												<label class="block clearfix">
+												@*<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" placeholder="输入下方的6位随机数" />
+														<input type="text" class="form-control" placeholder="输入下方的6位随机数" />
 														<i class="ace-icon fa fa-retweet"></i>
 													</span>
 												</label>
 
-												<div class="widget-box">dddddddd</div>
+												<div class="widget-box">dddddddd</div>*@
 
 												<div class="space"></div>
 
@@ -74,12 +74,12 @@
 									</div><!-- /.widget-main -->
 
 									<div class="toolbar clearfix">
-										<div>
+										@*<div>
 											<a href="#" data-target="#forgot-box" class="forgot-password-link">
 												<i class="ace-icon fa fa-arrow-left"></i>
 												忘记密码？
 											</a>
-										</div>
+										</div>*@
 
 										<div>
 											<a href="#" data-target="#signup-box" class="user-signup-link">
@@ -154,7 +154,7 @@
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control"  placeholder="用户名" />
+														<input type="text" class="form-control" placeholder="用户名" />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
@@ -222,13 +222,25 @@
 	</div><!-- /.main-container -->
 	<!-- basic scripts -->
 
-@section  Scripts{ 
-	<script type="text/javascript">
+	@section Scripts{
+		<script type="text/javascript">
 
 		$(function () {
-			
-			$('#login').on('click', function () {
 
+			$("#form").validate({
+				messages: {
+					username: {
+						required: '*必须填写用户名'
+					},
+					password: {
+						required: '*必须填写密码',
+						minlength: '*密码长度必须大于等于6'
+					}
+				}
+			});
+
+			$('#login').on('click', function () {
+				if (!$("#form").valid()) { return false;}
 				$.ajax({
 					type: "POST",
 					url: 'http://192.168.1.2:5000/api/accountservice/signin',
@@ -253,8 +265,8 @@
 
 		});
 
-	</script>
-}
+		</script>
+	}
 
 </body>
 

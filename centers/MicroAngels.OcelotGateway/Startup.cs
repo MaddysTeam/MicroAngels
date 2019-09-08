@@ -28,8 +28,9 @@ namespace MicroAngels.OcelotGateway
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// global accesstoken for all service
+			var serviceAuthenticationOptions = new ServiceAuthenticationOptions(Configuration);
 			services.AddAuthentication()
-				.AddIdentityServerAuthentication(ServiceAuthenticationOptions.GlobalApiAuthenticationKey, ServiceAuthenticationOptions.GlobalApiClient);
+				.AddIdentityServerAuthentication(serviceAuthenticationOptions.GlobalApiAuthenticationKey, serviceAuthenticationOptions.GlobalApiClient);
 
 			// if you need use different token for each service , you comment following code below:
 			//.AddIdentityServerAuthentication(ServiceAuthenticationOptions.OtherKey, ServiceAuthenticationOptions.OtherClient);

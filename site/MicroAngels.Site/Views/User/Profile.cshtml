@@ -70,7 +70,7 @@
 								<div class="row">
 									<div class="col-xs-12 col-sm-3 center">
 										<span class="profile-picture">
-											<img class="editable img-responsive cover" alt="Alex's Avatar" id="avatar2" >
+											<img class="editable img-responsive cover" alt="Alex's Avatar" id="avatar2">
 										</span>
 
 										<div class="space space-4"></div>
@@ -78,15 +78,15 @@
 											<i class="ace-icon fa fa-pencil bigger-110"></i>
 											<span class="bigger-110">编辑个人信息</span>
 										</a>
-										@*<a href="#" class="btn btn-sm btn-block btn-success">
-											<i class="ace-icon fa fa-plus-circle bigger-120"></i>
-											<span class="bigger-110">添加好友</span>
-										</a>*@
+										<a href="#" class="btn btn-sm btn-block btn-success">
+												<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+												<span class="bigger-110">修改密码</span>
+											</a>
 
 										@*<a href="#" class="btn btn-sm btn-block btn-primary">
-											<i class="ace-icon fa fa-envelope-o bigger-110"></i>
-											<span class="bigger-110">发送消息</span>
-										</a>*@
+												<i class="ace-icon fa fa-envelope-o bigger-110"></i>
+												<span class="bigger-110">发送消息</span>
+											</a>*@
 									</div>
 									<div class="col-xs-12 col-sm-9">
 										<h4 class="blue">
@@ -871,9 +871,61 @@
 
 				$.ajax(getInfoRequest);
 
+
+				var getFriendRequest = ajaxRequset('', code, urls.login, {}, function () {
+					var friendsItem=''
+				});
+
+				$.ajax(getFriendRequest);
+
+				var friendActivityFeedRequest = ajaxRequset('', code, urls.login, {}, function () { });
+
+
+
+
 				//var getFriendsRequest = ajaxRequset(urls.getFriends, code, url.login, { id: userId }, function (data) {
 
 				//});
+
+				var friendItem = '<div class="itemdiv memberdiv">' +
+					'<div class="inline pos-rel">' +
+					'<div class="user">' +
+					'<a href="#">' +
+					'<img src="assets/images/avatars/avatar1.png" alt="Rose Doe avatar">' +
+					'</a>' +
+					'</div>' +
+					'<div class="body">' +
+					'<div class="name">' +
+					'<a href="#">' +
+					'<span class="user-status status-offline"></span>' +
+					'Rose Doe' +
+					'</a>' +
+					'</div>' +
+					'</div>' +
+					'<div class="popover right">' +
+					'<div class="arrow"></div>' +
+					'<div class="popover-content">' +
+					'<div class="bolder">Graphic Designer</div>' +
+					'<div class="time">' +
+					'<i class="ace-icon fa fa-clock-o middle bigger-120 grey"></i>' +
+					'<span class="grey"> 30 min ago </span>' +
+					'</div>' +
+					'<div class="hr dotted hr-8"></div>' +
+					'<div class="tools action-buttons">' +
+					'<a href="#">' +
+					'<i class="ace-icon fa fa-facebook-square blue bigger-150"></i>' +
+					'</a>' +
+					'<a href="#">' +
+					'<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>' +
+					'</a>' +
+					'<a href="#">' +
+					'<i class="ace-icon fa fa-google-plus-square red bigger-150"></i>' +
+					'</a>' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'</div>';
 			}
 
 		});

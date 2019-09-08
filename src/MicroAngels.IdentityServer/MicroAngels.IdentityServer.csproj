@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
+    <ProjectReference Include="..\MicroAngels.Logger\MicroAngels.Logger.csproj" />
   </ItemGroup>
 
   <ItemGroup>

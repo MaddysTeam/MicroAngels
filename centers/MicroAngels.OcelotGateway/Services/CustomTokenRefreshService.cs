@@ -28,8 +28,8 @@ namespace MicroAngels.OcelotGateway.Services
 		public async Task<DownstreamContext> Refresh(DownstreamContext context)
 		{
 			// 1 get userid
-			// 2 get refresh date from redis by using userid
-			// 3 if current date minus refresh date is bigger than optinos.TokenRefresh then refresh token
+			// 2 get refresh date from redis by using user id
+			// 3 refresh token when token response cache is null
 
 			var userId = context.HttpContext.User.GetUserId();
 			if (userId.IsNull())

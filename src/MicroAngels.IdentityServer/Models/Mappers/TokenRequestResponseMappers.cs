@@ -80,9 +80,9 @@ namespace MicroAngels.IdentityServer.Models
 				.ForMember(dest => dest.Scope, opt => opt.MapFrom(src => src.Scopes));
 
 			CreateMap<AngelTokenRequest, TokenRevocationRequest>()
-				//.ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
-				//.ForMember(dest => dest.ClientSecret, opt => opt.MapFrom(src => src.ClientSecret))
-				//.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+				.ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
+				.ForMember(dest => dest.ClientSecret, opt => opt.MapFrom(src => src.ClientSecret))
+				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
 				.ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Token));
 		}
 	}

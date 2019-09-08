@@ -1,8 +1,10 @@
-﻿using Exceptionless;
+﻿using Business;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Cache.Redis;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger.ExceptionLess;
+using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,10 +39,7 @@ namespace AccountService
 				));
 
 			//add mvc core
-			services.AddMvcCore(options =>
-			{
-				//options.Filters.Add<ExcepitonFilter>();
-			})
+			services.AddMvcCore()
 			.AddApiExplorer() // for swagger
 			.AddAuthorization()
 			.AddJsonFormatters()
@@ -56,8 +55,18 @@ namespace AccountService
 				ApiName = "MessageCenter"
 			});
 
+			// add cap service
+			services.AddCAPService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
+
 			//add exceptionless logger
 			services.AddLessLog();
+
+			//business
+			services.AddTransient<IAccountService, Business.AccountService>();
 
 		}
 
@@ -94,6 +103,7 @@ namespace AccountService
 			});
 
 
+			//app.UseSugarORM(lifeTime, Configuration).InitTabels(MySqlDbContext.TableTypes);
 		}
 
 	}

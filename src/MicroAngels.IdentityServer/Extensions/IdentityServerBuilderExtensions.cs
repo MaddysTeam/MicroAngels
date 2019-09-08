@@ -43,14 +43,14 @@ namespace MicroAngels.IdentityServer.Extensions
 		}
 
 
-		public static IIdentityServerBuilder UseRedisGrantStore(this IIdentityServerBuilder builder, Action<RedisStoreOptions> storeOptionAction)
+		public static IIdentityServerBuilder UseRedisGrantStore(this IIdentityServerBuilder builder, RedisOperationalStoreOptions storeOptionAction)
 		{
-			var storeOption = new RedisStoreOptions();
-			storeOptionAction?.Invoke(storeOption);
-			builder.Services.AddSingleton<RedisStoreOptions>(storeOption);
+			//var storeOption = new RedisStoreOptions();
+			//storeOptionAction?.Invoke(storeOption);
+			builder.Services.AddSingleton(storeOptionAction);
 
 			builder.Services.AddTransient<IGrantStoreProvider, RedisGrantStoreProvider>();
-			builder.Services.AddTransient<IPersistedGrantStore, GrantStore>();
+			//builder.Services.AddTransient<IPersistedGrantStore, GrantStore>();
 
 			return builder;
 		}

@@ -1,4 +1,5 @@
-﻿using AccountService.Models;
+﻿using Business;
+using Controllers;
 using MicroAngels.Cache.Redis;
 using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Clients;
@@ -13,14 +14,12 @@ namespace AccountService.Controllers
 	//[ServiceFilter(typeof(LoggerAttribute))]
 	[Route("api/[controller]")]
 	[ApiController]
-	public class AccountController : ControllerBase
+	public class AccountController : BaseController
 	{
 
-		public AccountController(ILogger logger, IConfiguration configuraton, IRedisCache cache)
+		public AccountController(IAccountService accountService)
 		{
-			_logger = logger;
-			_configuation = configuraton;
-			_cache = cache;
+			_accountService = accountService;
 		}
 
 		// POST api/validateNumber
@@ -45,11 +44,10 @@ namespace AccountService.Controllers
 		// GET api/signin
 
 		[HttpPost("signin")]
-		public async Task<IActionResult> SignIn([FromBody]LoginModel model)
+		public async Task<IActionResult> SignIn([FromBody]LoginViewModel model)
 		{
 			//decrypt  password
-
-			var response = await SignInTokenRequest(TokenRequestType.resource_password, model.UserName, model.Password);
+			var response = await _accountService.SignIn(model);
 
 			return new JsonResult(new
 			{
@@ -62,7 +60,7 @@ namespace AccountService.Controllers
 		[HttpPost("signout")]
 		public async Task<IActionResult> SignOut([FromForm]string token)
 		{
-			var response = await SignOutTokenRequest(token);
+			var response = await _accountService.SignOut(token);
 
 			return new JsonResult(new {
 				isSuccess=true,
@@ -71,9 +69,10 @@ namespace AccountService.Controllers
 		}
 
 		[HttpPost("signup")]
-		public async Task<IActionResult> SignUp([FromBody] SignupModel signupModel)
+		public async Task<IActionResult> SignUp([FromBody] SignupViewModel signupModel)
 		{
-			// implement sign up logic here
+			var account = Mapper.Map<SignupViewModel, Account>(signupModel);
+			var response=await _accountService.SignUp(account);
 
 			return new JsonResult(new {
 				isSuccess=true,
@@ -84,68 +83,26 @@ namespace AccountService.Controllers
 		[HttpPost("refresh")]
 		public async Task<AngelTokenResponse> Refresh([FromBody] RefreshTokenModel refreshTokenModel)
 		{
-			AngelTokenResponse response = await RefreshTokenRequest(refreshTokenModel.AccessToken, refreshTokenModel.RefreshToken);
-
-			return response;
-			//return new JsonResult(new
-			//{
-			//	isSuccess = true,
-			//	data=response,
-			//	message = "操作成功"
-			//});
-		}
-
-		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)
-		{
-			var request = CreateBasiceRequest();
-			if (requestType == TokenRequestType.resource_password)
-			{
-				request.UserName = username;
-				request.Password = password;
-			}
-
-			var response = await ClientHelper.GetTokenResponse(request, requestType);
+			AngelTokenResponse response = await _accountService.Refresh(refreshTokenModel);
 
 			return response;
 		}
 
-		private async Task<AngelTokenResponse> SignOutTokenRequest(string token)
+		[HttpPost("changePassword")]
+		public async Task<bool> ChangePassword([FromBody] ChangePasswordViewModel model)
 		{
-			var request = CreateBasiceRequest();
-			request.GrantType = string.Empty;
-			request.Token = token;
-			var response = await ClientHelper.GetTokenResponse(request, TokenRequestType.revocation);
-
-			return response;
+			return await _accountService.ChangePassword(model);
 		}
 
 
-		private async Task<AngelTokenResponse> RefreshTokenRequest(string token,string refreshToken)
-		{
-			var request = CreateBasiceRequest();
-			request.Token = token;
-			request.RefreshToken = refreshToken;
-			var response = await ClientHelper.GetTokenResponse(request, TokenRequestType.refresh);
+		//[HttpPost("refresh")]
+		//public async Task<bool> FogetPassword([FromBody] ChangePasswordViewModel model)
+		//{
+		//	return await _accountService.ChangePassword(model);
+		//}
 
-			return response;
-		}
 
-		private AngelTokenRequest CreateBasiceRequest()
-		{
-			return new AngelTokenRequest
-			{
-				ClientId = _configuation["IdentityService:Client:Id"],
-				ClientSecret = _configuation["IdentityService:Client:Secret"],
-				Scopes = _configuation["IdentityService:Client:Scopes"],
-				Address = _configuation["IdentityService:Client:Address"],
-				GrantType = _configuation["IdentityService:Client:GrantType"],
-				//RefreshToken = "9aa22e7229cfc841b89965cef6331d4205f861afd9dcd8cbbc32f29a172a6a6e",
-			};
-		}
-
-		private readonly ILogger _logger;
-		private readonly IConfiguration _configuation;
-		private readonly IRedisCache _cache;
+		private readonly IAccountService _accountService;
 
 	}
 

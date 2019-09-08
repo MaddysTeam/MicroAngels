@@ -1,6 +1,5 @@
 ﻿using Business;
 using MicroAngels.Core;
-using MicroAngels.Core.Plugins;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ namespace Controllers
 		public async Task<IActionResult> GetAssets([FromForm]Guid roleId)
 		{
 			var assetsList = await _service.GetRoleAssets(roleId);
-			var assetViewMode = HierarchyMapFromAssets(assetsList, Root);
+			var assetViewMode = HierarchyMapFromAssets(assetsList, null);
 
 			return new JsonResult(new
 			{
@@ -110,7 +109,7 @@ namespace Controllers
 			}
 
 			//get hierachy asset view model
-			var assetViewMode = HierarchyMapFromAssets(assetsList, Root);
+			var assetViewMode = HierarchyMapFromAssets(assetsList, null);
 
 			return new JsonResult(new
 			{
@@ -188,15 +187,16 @@ namespace Controllers
 
 		private AssetsViewModel HierarchyMapFromAssets(IEnumerable<Assets> assetList, AssetsViewModel assetViewModel)
 		{
-			if (assetViewModel.IsNull())
-				assetViewModel = Root;
-
+			assetViewModel = assetViewModel ?? new AssetsViewModel();
 			var parentId = assetViewModel.id;
 			var children = assetList.Where(x => x.ParentId == parentId);
 			foreach (var item in children)
 			{
 				var viewModel = item.Map<Assets, AssetsViewModel>();
 				viewModel.children = new List<AssetsViewModel>();
+				if (assetViewModel.children.IsNull())
+					assetViewModel.children = new List<AssetsViewModel>();
+
 				assetViewModel.children.Add(viewModel);
 
 				HierarchyMapFromAssets(assetList, viewModel);

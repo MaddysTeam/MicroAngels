@@ -6,6 +6,7 @@ using MicroAngels.Cache.Redis;
 using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
+using MicroAngels.IdentityServer.Providers.Redis;
 using MicroAngels.IdentityServer.Services;
 using MicroAngels.IdentityServer.Validators;
 using MicroAngels.Logger.ExceptionLess;
@@ -57,6 +58,9 @@ namespace MicroAngels.AuthServer
 			.AddAuthorization()
 			.AddJsonFormatters();
 
+			// add exceptionless logger
+			services.AddLessLog();
+
 
 			// add cap service
 			services.AddCAPService(new CAPService
@@ -88,8 +92,8 @@ namespace MicroAngels.AuthServer
 				.UseValidateService<UserValidateService>()
 				.UseClaimsGrantService<UserClaimGrantService>()
 				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-				.AddProfileService<UserClaimsProfileService>(); // add claims into user profile （such as context）
-
+				.AddProfileService<UserClaimsProfileService>();// add claims into user profile （such as context）
+				//.UseRedisGrantStore(new RedisOperationalStoreOptions("192.168.1.9:6379") );
 
 			//token authentication
 			services.AddIdsAuthentication(new IdentityAuthenticationOptions
@@ -101,8 +105,7 @@ namespace MicroAngels.AuthServer
 				ApiName = "MessageCenter"
 			});
 
-			// add exceptionless logger
-			services.AddLessLog();
+			
 
 			services.AddServiceFinder(
 			new ConsulHostConfiguration

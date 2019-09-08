@@ -11,7 +11,6 @@ namespace Business
 	{
 		//[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetById(Guid id);
-		//[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true)]
 		Task<UserInfo> GetByName(string name);
 		Task<bool> Edit(UserInfo userInfo);
 		Task<bool> BindRoles(Guid userId, string[] roleIds);

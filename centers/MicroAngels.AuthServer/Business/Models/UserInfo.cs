@@ -39,7 +39,7 @@ namespace Business
 			return
 			u
 			 .NotNull(u.UserName, "")
-			 .Length(u.Phone,11,"")
+			// .Length(u.Phone,11,"")
 			 .Validate();
 		}
 

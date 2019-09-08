@@ -1,25 +1,30 @@
 ﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MicroAngels.OcelotGateway.Services
 {
 
 	public class ServiceAuthenticationOptions
 	{
-		public static string GlobalApiAuthenticationKey = "MessageServiceKey";
+		public ServiceAuthenticationOptions(IConfiguration configuration)
+		{
+			_conf = configuration;
+		}
+
+		public  string GlobalApiAuthenticationKey = "MessageServiceKey";
 		//public static string AccountApiAuthenticationKey = "AccountServiceKey";
 
-		public static Action<IdentityServerAuthenticationOptions> GlobalApiClient = option =>
-		 {
-			 option.Authority = "http://192.168.1.2:2012";
-			 option.ApiName = "MessageCenter";
-			 option.RequireHttpsMetadata = false;// Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
-			 option.SupportedTokens = SupportedTokens.Both;
-			 option.ApiSecret = "secreta";// Configuration["IdentityService:ApiSecrets:clientservice"];
+		public Action<IdentityServerAuthenticationOptions> GlobalApiClient = option =>
+		{
+			option.Authority = _conf["IdentityServices:Uri"];
+			option.ApiName = _conf["IdentityServices:Audience"];
+			option.RequireHttpsMetadata = Convert.ToBoolean(_conf["IdentityServices:UseHttps"]);
+			option.SupportedTokens = SupportedTokens.Both;
+			option.ApiSecret = _conf["IdentityServices:ApiSecret"];
 		};
+
+		 static IConfiguration _conf;
 
 	}
 

@@ -1,6 +1,6 @@
 ﻿using IdentityServer4.Models;
+using MicroAngels.Logger;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
@@ -69,7 +69,10 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 	/// </summary>
 	public class RedisOperationalStoreOptions : RedisOptions
 	{
-
+		public RedisOperationalStoreOptions(string conn)
+		{
+			RedisConnectionString = conn;
+		}
 	}
 
 	/// <summary>
@@ -112,18 +115,17 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 
 		private readonly IDatabase database;
 
-		private readonly ILogger<RedisGrantStoreProvider> logger;
+		private readonly ILogger logger;
 
 		private ISystemClock clock;
 
-		public RedisGrantStoreProvider(RedisMultiplexer<RedisOperationalStoreOptions> multiplexer, ILogger<RedisGrantStoreProvider> logger, ISystemClock clock)
+		public RedisGrantStoreProvider(RedisOperationalStoreOptions optons, ILogger logger)
 		{
-			if (multiplexer is null)
-				throw new ArgumentNullException(nameof(multiplexer));
+			var multiplexer = new RedisMultiplexer<RedisOperationalStoreOptions>(optons);
 			options = multiplexer.RedisOptions;
 			database = multiplexer.Database;
 			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-			this.clock = clock;
+			//this.clock = clock;
 		}
 
 		private string GetKey(string key) => $"{this.options.KeyPrefix}{key}";
@@ -142,7 +144,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			{
 				var data = ConvertToJson(grant);
 				var grantKey = GetKey(grant.Key);
-				var expiresIn = grant.Expiration - this.clock.UtcNow;
+				var expiresIn = new TimeSpan(0,0,50);
 				if (!string.IsNullOrEmpty(grant.SubjectId))
 				{
 					var setKey = GetSetKey(grant.SubjectId, grant.ClientId, grant.Type);
@@ -153,28 +155,38 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 					var ttlOfSubjectSet = this.database.KeyTimeToLiveAsync(setKeyforSubject);
 
 					await Task.WhenAll(ttlOfSubjectSet, ttlOfClientSet).ConfigureAwait(false);
+					await database.StringSetAsync(grantKey, data, expiresIn);
+					await database.StringSetAsync(setKeyforSubject, grantKey);
+					await database.StringSetAsync(setKeyforClient, grantKey);
+					await database.StringSetAsync(setKey, grantKey);
+					//if ((ttlOfSubjectSet.Result ?? TimeSpan.Zero) <= expiresIn)
+					//	await database.KeyExpireAsync(setKeyforSubject, expiresIn);
+					//if ((ttlOfClientSet.Result ?? TimeSpan.Zero) <= expiresIn)
+					//	await database.KeyExpireAsync(setKeyforClient, expiresIn);
 
-					var transaction = this.database.CreateTransaction();
-					await transaction.StringSetAsync(grantKey, data, expiresIn);
-					await transaction.SetAddAsync(setKeyforSubject, grantKey);
-					await transaction.SetAddAsync(setKeyforClient, grantKey);
-					await transaction.SetAddAsync(setKey, grantKey);
-					if ((ttlOfSubjectSet.Result ?? TimeSpan.Zero) <= expiresIn)
-						await transaction.KeyExpireAsync(setKeyforSubject, expiresIn);
-					if ((ttlOfClientSet.Result ?? TimeSpan.Zero) <= expiresIn)
-						await transaction.KeyExpireAsync(setKeyforClient, expiresIn);
-					await transaction.KeyExpireAsync(setKey, expiresIn);
-					await transaction.ExecuteAsync().ConfigureAwait(false);
+					//await database.KeyExpireAsync(setKey, expiresIn);
+					
+					//var transaction = this.database.CreateTransaction();
+					//await transaction.StringSetAsync(grantKey, data, expiresIn);
+					//await transaction.SetAddAsync(setKeyforSubject, grantKey);
+					//await transaction.SetAddAsync(setKeyforClient, grantKey);
+					//await transaction.SetAddAsync(setKey, grantKey);
+					//if ((ttlOfSubjectSet.Result ?? TimeSpan.Zero) <= expiresIn)
+					//	await transaction.KeyExpireAsync(setKeyforSubject, expiresIn);
+					//if ((ttlOfClientSet.Result ?? TimeSpan.Zero) <= expiresIn)
+					//	await transaction.KeyExpireAsync(setKeyforClient, expiresIn);
+					//await transaction.KeyExpireAsync(setKey, expiresIn);
+					//await transaction.ExecuteAsync().ConfigureAwait(false);
 				}
 				else
 				{
 					await this.database.StringSetAsync(grantKey, data, expiresIn).ConfigureAwait(false);
 				}
-				logger.LogDebug($"grant for subject {grant.SubjectId}, clientId {grant.ClientId}, grantType {grant.Type} persisted successfully");
+				logger.Info($"grant for subject {grant.SubjectId}, clientId {grant.ClientId}, grantType {grant.Type} persisted successfully", null);
 			}
 			catch (Exception ex)
 			{
-				logger.LogError($"exception storing persisted grant to Redis database for subject {grant.SubjectId}, clientId {grant.ClientId}, grantType {grant.Type} : {ex.Message}");
+				logger.Error($"exception storing persisted grant to Redis database for subject {grant.SubjectId}, clientId {grant.ClientId}, grantType {grant.Type} : {ex.Message}", null);
 				throw ex;
 			}
 		}
@@ -182,7 +194,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 		public async Task<PersistedGrant> GetAsync(string key)
 		{
 			var data = await this.database.StringGetAsync(GetKey(key)).ConfigureAwait(false);
-			logger.LogDebug($"{key} found in database: {data.HasValue}");
+			logger.Info($"{key} found in database: {data.HasValue}", null);
 			return data.HasValue ? ConvertFromJson(data) : null;
 		}
 
@@ -192,7 +204,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			var (grants, keysToDelete) = await GetGrants(setKey).ConfigureAwait(false);
 			if (keysToDelete.Any())
 				await this.database.SetRemoveAsync(setKey, keysToDelete.ToArray()).ConfigureAwait(false);
-			logger.LogDebug($"{grants.Count()} persisted grants found for {subjectId}");
+			logger.Info($"{grants.Count()} persisted grants found for {subjectId}", null);
 			return grants.Where(_ => _.HasValue).Select(_ => ConvertFromJson(_));
 		}
 
@@ -214,11 +226,11 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 				var grant = await this.GetAsync(key).ConfigureAwait(false);
 				if (grant == null)
 				{
-					logger.LogDebug($"no {key} persisted grant found in database");
+					logger.Info($"no {key} persisted grant found in database");
 					return;
 				}
 				var grantKey = GetKey(key);
-				logger.LogDebug($"removing {key} persisted grant from database");
+				logger.Info($"removing {key} persisted grant from database");
 				var transaction = this.database.CreateTransaction();
 				await transaction.KeyDeleteAsync(grantKey);
 				await transaction.SetRemoveAsync(GetSetKey(grant.SubjectId), grantKey);
@@ -228,7 +240,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			}
 			catch (Exception ex)
 			{
-				logger.LogError($"exception removing {key} persisted grant from database: {ex.Message}");
+				logger.Error($"exception removing {key} persisted grant from database: {ex.Message}");
 				throw ex;
 			}
 
@@ -240,7 +252,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			{
 				var setKey = GetSetKey(subjectId, clientId);
 				var grantsKeys = await this.database.SetMembersAsync(setKey).ConfigureAwait(false);
-				logger.LogDebug($"removing {grantsKeys.Count()} persisted grants from database for subject {subjectId}, clientId {clientId}");
+				logger.Info($"removing {grantsKeys.Count()} persisted grants from database for subject {subjectId}, clientId {clientId}");
 				if (!grantsKeys.Any()) return;
 				var transaction = this.database.CreateTransaction();
 				await transaction.KeyDeleteAsync(grantsKeys.Select(_ => (RedisKey)_.ToString()).Concat(new RedisKey[] { setKey }).ToArray());
@@ -249,7 +261,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			}
 			catch (Exception ex)
 			{
-				logger.LogError($"exception removing persisted grants from database for subject {subjectId}, clientId {clientId}: {ex.Message}");
+				logger.Error($"exception removing persisted grants from database for subject {subjectId}, clientId {clientId}: {ex.Message}");
 				throw ex;
 			}
 		}
@@ -260,7 +272,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			{
 				var setKey = GetSetKey(subjectId, clientId, type);
 				var grantsKeys = await this.database.SetMembersAsync(setKey).ConfigureAwait(false);
-				logger.LogDebug($"removing {grantsKeys.Count()} persisted grants from database for subject {subjectId}, clientId {clientId}, grantType {type}");
+				logger.Info($"removing {grantsKeys.Count()} persisted grants from database for subject {subjectId}, clientId {clientId}, grantType {type}");
 				if (!grantsKeys.Any()) return;
 				var transaction = this.database.CreateTransaction();
 				await transaction.KeyDeleteAsync(grantsKeys.Select(_ => (RedisKey)_.ToString()).Concat(new RedisKey[] { setKey }).ToArray());
@@ -270,7 +282,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			}
 			catch (Exception ex)
 			{
-				logger.LogError($"exception removing persisted grants from database for subject {subjectId}, clientId {clientId}, grantType {type}: {ex.Message}");
+				logger.Error($"exception removing persisted grants from database for subject {subjectId}, clientId {clientId}, grantType {type}: {ex.Message}");
 				throw ex;
 			}
 		}

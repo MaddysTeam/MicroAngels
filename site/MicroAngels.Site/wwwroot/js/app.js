@@ -130,8 +130,8 @@ function showMenu() {
 	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null, function (data) {
 		console.log(data.data);
 		if (!data.data) whenForbidden(urls.login);
-		var menus = showMenuHierarchy(data.data);
-		$('#SideBar').append(menus);
+		showMenuHierarchy($('#SideBar'),data.data);
+
 	});
 	$.ajax(ajax);
 }
@@ -153,9 +153,12 @@ function showUser() {
 
 function signOut() {
 	var code = checkCode(urls.login);
-	localStorage.removeItem('code');
-	localStorage.removeItem('refreshToken');
-	location.href = urls.login;
+	var ajax = ajaxRequset(urls.signOut, code, location.href, {token:code}, function (data) {
+		localStorage.removeItem('code');
+		localStorage.removeItem('refreshToken');
+		location.href = urls.login;
+	});
+	$.ajax(ajax);
 }
 
 var ajaxRequset = function (url, code, forbiddenUrl, data, success) {
@@ -240,28 +243,21 @@ var ajaxRequsetWithoutKey = function (url, code, forbiddenUrl, data, success) {
 	return ajax;
 };
 
-function showMenuHierarchy(data) {
-	var $item = $(menuComponents.menuStr.format(data.title));
-
+function showMenuHierarchy($container,data) {
 	for (var i = 0; i < data.children.length; i++) {
-		var submenu = data.children[i];
 		if (data.children[i].children.length > 0) {
-			var $sublist = showMenuHierarchy(data.children[i]);
+			var $current = $(menuComponents.menuStr.format(data.children[i].title));
 			var $subContainer = $(menuComponents.submenuStr);
-			$subContainer
-				.append($sublist)
-				.appendTo($item);
+			showMenuHierarchy($subContainer,data.children[i]);
+			
+			$subContainer.appendTo($current);
+			$current.appendTo($container);
 		}
 		else {
-			$(menuComponents.submenuStr)
-				.append(menuComponents.submenuItemStr.format(submenu.title, submenu.link))
-				.appendTo($item);
+			$(menuComponents.submenuItemStr.format(data.children[i].title, data.children[i].link)).appendTo($container);
 		}
-
 	}
-
-	return $item;
-
+	return $container;
 }
 
 /* ------------------------------------------------- messages------------------------------------------------------- */
