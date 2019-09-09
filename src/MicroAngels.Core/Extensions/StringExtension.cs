@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -54,6 +56,15 @@ namespace MicroAngels.Core
 			long.TryParse(str, out result);
 
 			return result;
+		}
+
+
+		public static string ToMD5(this string str)
+		{
+			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+			byte[] bytes = Encoding.UTF8.GetBytes(str);
+			string result = BitConverter.ToString(md5.ComputeHash(bytes));
+			return result.Replace("-", "");
 		}
 
 	}

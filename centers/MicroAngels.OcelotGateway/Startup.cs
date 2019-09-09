@@ -40,7 +40,7 @@ namespace MicroAngels.OcelotGateway
 				c.ConnectString = Configuration["Database:Mysql:OcelotConn"];
 				c.RedisConnectStrings = new string[] { Configuration["Redis:OcelotConn"] };
 				c.IsUseCustomAuthenticate = true;
-				c.TokenRefreshIterval = TimeSpan.FromSeconds(Convert.ToDouble(Configuration["Redis:TimeoutSeconds"]));
+				c.TokenRefreshIterval = TimeSpan.FromMilliseconds(Convert.ToDouble(Configuration["Redis:TimeoutMillonSeconds"]));
 			})
 			.AddConsul()
 			.AddPolly();

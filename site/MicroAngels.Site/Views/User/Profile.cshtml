@@ -868,6 +868,7 @@
 					});
 
 					$('.btn-password').on('click', function () {
+						alert(userId);
 						$('#modalProxy').data('url', urls.changePasswordPage.format(userId)).trigger('click');
 					});
 				});

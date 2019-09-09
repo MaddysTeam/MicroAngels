@@ -1607,6 +1607,7 @@
           "IdentityServer4": "2.3.0",
           "IdentityServer4.AccessTokenValidation": "2.7.0",
           "MicroAngels.Core": "1.0.0",
+          "MicroAngels.Logger": "1.0.0",
           "MySql.Data": "8.0.15",
           "StackExchange.Redis": "2.0.600"
         },

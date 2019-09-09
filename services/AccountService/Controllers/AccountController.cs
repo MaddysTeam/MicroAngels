@@ -1,6 +1,7 @@
 ﻿using Business;
 using Controllers;
 using MicroAngels.Cache.Redis;
+using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
 using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
@@ -44,7 +45,7 @@ namespace AccountService.Controllers
 		// GET api/signin
 
 		[HttpPost("signin")]
-		public async Task<IActionResult> SignIn([FromBody]LoginViewModel model)
+		public async Task<IActionResult> SignIn([FromForm]LoginViewModel model)
 		{
 			//decrypt  password
 			var response = await _accountService.SignIn(model);
@@ -53,30 +54,33 @@ namespace AccountService.Controllers
 			{
 				isSuccess = !response.IsError,
 				token = response.Token,
-				refreshToken=response.RefreshToken
+				refreshToken = response.RefreshToken
 			});
 		}
 
 		[HttpPost("signout")]
 		public async Task<IActionResult> SignOut([FromForm]string token)
 		{
-			var response = await _accountService.SignOut(token);
+			var userId = User.GetUserId();
+			var response = await _accountService.SignOut(new SignoutViewModel { AccessToken = token, UserId = userId });
 
-			return new JsonResult(new {
-				isSuccess=true,
-				message="操作成功"
+			return new JsonResult(new
+			{
+				isSuccess = true,
+				message = "操作成功"
 			});
 		}
 
 		[HttpPost("signup")]
-		public async Task<IActionResult> SignUp([FromBody] SignupViewModel signupModel)
+		public async Task<IActionResult> SignUp([FromForm] SignupViewModel signupModel)
 		{
 			var account = Mapper.Map<SignupViewModel, Account>(signupModel);
-			var response=await _accountService.SignUp(account);
+			var response = await _accountService.SignUp(account);
 
-			return new JsonResult(new {
-				isSuccess=true,
-				message="操作成功"
+			return new JsonResult(new
+			{
+				isSuccess = true,
+				message = "操作成功"
 			});
 		}
 
@@ -89,9 +93,14 @@ namespace AccountService.Controllers
 		}
 
 		[HttpPost("changePassword")]
-		public async Task<bool> ChangePassword([FromBody] ChangePasswordViewModel model)
+		public async Task<bool> ChangePassword([FromForm] ChangePasswordViewModel model)
 		{
-			return await _accountService.ChangePassword(model);
+			if (model.IsValidate)
+			{
+				return await _accountService.ChangePassword(model);
+			}
+
+			return false;
 		}
 
 

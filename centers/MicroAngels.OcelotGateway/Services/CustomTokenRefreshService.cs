@@ -32,7 +32,7 @@ namespace MicroAngels.OcelotGateway.Services
 			// 3 refresh token when token response cache is null
 
 			var userId = context.HttpContext.User.GetUserId();
-			if (userId.IsNull())
+			if (userId.IsNull() || context.DownstreamRequest.AbsolutePath.IndexOf("briefInfo") < 0)
 				return context;
 
 			if(_cache.Lock(userId, _options.TokenRefreshIterval))
@@ -50,14 +50,13 @@ namespace MicroAngels.OcelotGateway.Services
 							RefreshTokenInHeaders(context,tokenResponse);
 						}
 					}
-
-					_cache.Unlock(userId);
 				}
 			}
-			//else
-			//{
-			//	RefreshTokenInHeaders(context, tokenResponse);
-			//}
+			else
+			{
+				context.DownstreamRequest.Headers.Remove(CoreKeys.RefreshToken);
+				context.DownstreamRequest.Headers.Remove(CoreKeys.AccessToken);
+			}
 
 			return context;
 		}

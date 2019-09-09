@@ -16,9 +16,9 @@ namespace Controllers
 		}
 
 
-		public IActionResult ChangePassword(Guid? id)
+		public IActionResult ChangePassword(Guid userId)
 		{
-			return PartialView(id);
+			return PartialView("_changePassword", userId);
 		} 
 
 	}

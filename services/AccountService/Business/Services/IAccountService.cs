@@ -10,7 +10,7 @@ namespace Business
 		Task<AngelTokenResponse> SignIn(LoginViewModel model);
 		Task<bool> SignUp(Account model);
 		Task<bool> SignUp(ChangePasswordViewModel model);
-		Task<AngelTokenResponse> SignOut(string accessToken);
+		Task<AngelTokenResponse> SignOut(SignoutViewModel model);
 		Task<AngelTokenResponse> Refresh(RefreshTokenModel model);
 		Task<bool> ChangePassword(ChangePasswordViewModel model);
 		bool Validate(string name, string password);

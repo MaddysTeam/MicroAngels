@@ -61,7 +61,7 @@
 												<div class="space"></div>
 
 												<div class="clearfix">
-													<button id="login" type="button" class="width-65 pull-right  btn btn-sm btn-primary">
+													<button id="login" type="submit" class="width-65 pull-right  btn btn-sm btn-primary">
 														<i class="ace-icon fa fa-key"></i>
 														<span class="bigger-110">登录</span>
 													</button>
@@ -244,8 +244,8 @@
 
 			ajaxSubmitForm($('#loginForm'),
 			{
-				dataUrl = loginUrl,
-				afterSuccess(data) {
+				dataUrl: loginUrl,
+				afterSuccess: function (data) {
 				if (!data.isSuccess) {
 						alert('用户名或密码错误');
 				}

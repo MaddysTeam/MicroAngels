@@ -6,6 +6,7 @@ using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
 using Microsoft.Extensions.Configuration;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Business
@@ -37,9 +38,14 @@ namespace Business
 			return await SignInTokenRequest(TokenRequestType.resource_password, model.UserName, model.Password);
 		}
 
-		public async Task<AngelTokenResponse> SignOut(string accessToken)
+		public async Task<AngelTokenResponse> SignOut(SignoutViewModel model)
 		{
-			return await SignOutTokenRequest(accessToken);
+			if (_cache.ExistKey(model.UserId))
+			{
+				_cache.Remove(model.UserId);
+			}
+
+			return await SignOutTokenRequest(model.AccessToken);
 		}
 
 		public async Task<bool> SignUp(Account model)
@@ -131,10 +137,10 @@ namespace Business
 
 		public async Task<bool> ChangePassword(ChangePasswordViewModel model)
 		{
-			var exitAccount =await AccountDb.AsQueryable().FirstAsync(a => a.Name == model.UserName && a.Password==model.OldPassword);
+			var exitAccount =await AccountDb.AsQueryable().SingleAsync(a => a.Id == model.UserId.ToGuid() && a.Password==model.OldPassword.ToMD5());
 			if (!exitAccount.IsNull())
 			{
-				exitAccount.ChangePassword( model.NewPassword);
+				exitAccount.ChangePassword( model.NewPassword.ToMD5());
 				return AccountDb.Update(exitAccount);
 			}
 

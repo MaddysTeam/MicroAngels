@@ -58,7 +58,7 @@ namespace MicroAngels.Cache.Redis
 
 		public bool Remove(string key)
 		{
-			var res= RedisHelper.Del(key);
+			var res = RedisHelper.Del(key);
 			return res >= 0;
 		}
 
@@ -74,26 +74,28 @@ namespace MicroAngels.Cache.Redis
 
 		public bool Lock(string lockKey, TimeSpan lockTimeout)
 		{
-			var currentTime = DateTime.UtcNow;
-			var expireMillisecond = (currentTime + lockTimeout).Millisecond;
+			var currentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+			var expireMillisecond = currentTime + lockTimeout.Milliseconds;
 			if (RedisHelper.SetNx(lockKey, expireMillisecond))
 			{
 				return RedisHelper.Expire(lockKey, lockTimeout);
 			}
-			else
-			{
-				var lockValue = RedisHelper.Get(lockKey);
-				if(!lockValue.IsNullOrEmpty() && expireMillisecond > lockValue.ToLong())
-				{
-					expireMillisecond = DateTime.UtcNow.Millisecond;
-					var oldKey = RedisHelper.GetSet(lockKey, expireMillisecond);
-					return !oldKey.IsNullOrEmpty();
-				}
-				else
-				{
-					return false;
-				}
-			}
+
+			return false;
+			//else
+			//{
+			//	var lockValue = RedisHelper.Get(lockKey);
+			//	var t = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+			//	if (!lockValue.IsNullOrEmpty() && t > lockValue.ToLong())
+			//	{
+			//		var result = RedisHelper.GetSet(lockKey, t);
+			//		return result.IsNullOrEmpty() || (result.IsNullOrEmpty() && result == lockValue);
+			//	}
+			//	else
+			//	{
+			//		return false;
+			//	}
+			//}
 		}
 
 		public bool Unlock(string lockKey)

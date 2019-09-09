@@ -103,7 +103,7 @@ namespace AccountService
 			});
 
 
-			//app.UseSugarORM(lifeTime, Configuration).InitTabels(MySqlDbContext.TableTypes);
+			app.UseSugarORM(lifeTime, Configuration).InitTabels(MySqlDbContext.TableTypes);
 		}
 
 	}

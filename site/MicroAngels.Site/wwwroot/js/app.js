@@ -81,7 +81,7 @@ urls = {
 	assetsPage: '{0}/assets/index'.format(local),
 	announceSendPage: '{0}/message/AnnounceSend'.format(local),
 	profilePage: local + '/user/profile?userId={0}',
-	changePasswordPage: local + '/account/changePassword?userId={0}'
+	changePasswordPage: local + '/account/changePassword?id={0}'
 };
 
 topics = {
