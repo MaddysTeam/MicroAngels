@@ -1,4 +1,5 @@
 ﻿using Business.Helpers;
+using DotNetCore.CAP;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Cache.Redis;
 using MicroAngels.Core;
@@ -6,7 +7,6 @@ using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
 using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Business
@@ -48,6 +48,7 @@ namespace Business
 			return await SignOutTokenRequest(model.AccessToken);
 		}
 
+		[CapSubscribe(AppKeys.CreateAccount)]
 		public async Task<bool> SignUp(Account model)
 		{
 			// implement sign up logic here
@@ -67,9 +68,6 @@ namespace Business
 					result = await AccountDb.AsInsertable(model).ExecuteCommandAsync() > 0;
 				}
 			}
-
-			if (result)
-				await _publisher.PublishAsync(new CreateUserMessage { });
 
 			return result;
 		}

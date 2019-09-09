@@ -37,7 +37,7 @@ namespace Business
 		public string Email { get; private set; }
 
 		[SugarColumn(IsIgnore = true)]
-		public bool IsValidate => !Id.IsEmpty() && !Name.IsNullOrEmpty() && !Password.IsNullOrEmpty();
+		public bool IsValidate => !Name.IsNullOrEmpty() && !Password.IsNullOrEmpty();
 
 	}
 }

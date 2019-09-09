@@ -77,10 +77,26 @@ namespace AccountService.Controllers
 			var account = Mapper.Map<SignupViewModel, Account>(signupModel);
 			var response = await _accountService.SignUp(account);
 
+			//var isSuccess = await _subscribeService.SubscribeAsync(subscribe);
+			//if (isSuccess)
+			//	await _publisher.PublishAsync(
+			//		new Message
+			//		{
+			//			Topic = AppKeys.MessageCenterNotfiy,
+			//			ServiceId = viewModel.ServiceId,
+			//			SenderId = User.GetUserId(),
+			//			TopicId = viewModel.TopicId,
+			//			TargetId = viewModel.TargetId,
+			//			Title = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
+			//			Body = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
+			//			HasTrans = false,
+			//			SendTime = DateTime.UtcNow
+			//		});
+
 			return new JsonResult(new
 			{
-				isSuccess = true,
-				message = "操作成功"
+				isSuccess = response,
+				message = response ? "操作成功" : "操作失败"
 			});
 		}
 

@@ -66,7 +66,7 @@ urls = {
 
 	login: '{0}/account/login'.format(local),
 	index: '{0}/'.format(local),
-	signUp: '{0}/api/accountservice/signup'.format(local),
+	signUp: '{0}/api/accountservice/signup'.format(apiDomain),
 	signOut: '{0}/api/accountservice/signout'.format(apiDomain),
 	userPage: '{0}/user/index'.format(local),
 	rolePage: '{0}/role/index'.format(local),

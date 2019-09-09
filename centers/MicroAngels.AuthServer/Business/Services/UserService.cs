@@ -1,4 +1,6 @@
-﻿using MicroAngels.Bus.CAP;
+﻿using Business.Helpers;
+using DotNetCore.CAP;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
 using MicroAngels.Core.Service;
@@ -25,6 +27,7 @@ namespace Business
 			_conf = configuration;
 		}
 
+		[CapSubscribe(AppKeys.AddUser)]
 		public async Task<bool> Edit(UserInfo userInfo)
 		{
 			if (UserInfo.Validate(userInfo).All(u => u.IsSuccess))

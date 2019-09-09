@@ -34,7 +34,6 @@ E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debu
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MessageCenter.xml
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.deps.json
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.runtimeconfig.json
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.runtimeconfig.dev.json

@@ -143,32 +143,32 @@
 										<div class="space-6"></div>
 										<p> 请输入以下内容: </p>
 
-										<form>
+										<form id="registerForm">
 											<fieldset>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="email" class="form-control" placeholder="邮箱地址" />
+														<input type="email" id="Email" name="Email" class="form-control" placeholder="邮箱地址" />
 														<i class="ace-icon fa fa-envelope"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" placeholder="用户名" />
+														<input type="text" id="UserName" name="UserName" class="form-control" placeholder="用户名" />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" placeholder="密码" />
+														<input type="password" id="Password" name="Password" class="form-control" placeholder="密码" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" placeholder="再次输入密码" />
+														<input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="再次输入密码" />
 														<i class="ace-icon fa fa-retweet"></i>
 													</span>
 												</label>
@@ -176,12 +176,12 @@
 												<div class="space-24"></div>
 
 												<div class="clearfix">
-													<button type="reset" class="width-30 pull-left btn btn-sm">
+													<button type="reset" class="width-30 pull-left btn btn-sm btn-reset">
 														<i class="ace-icon fa fa-refresh"></i>
 														<span class="bigger-110">重置</span>
 													</button>
 
-													<button id="login" type="button" class="width-65 pull-right btn btn-sm btn-success">
+													<button id="login" type="submit" class="width-65 pull-right btn btn-sm btn-success">
 														<span class="bigger-110">注册</span>
 
 														<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -192,7 +192,7 @@
 									</div>
 
 									<div class="toolbar center">
-										<a href="#" data-target="#login-box" class="back-to-login-link">
+										<a href="#" data-target="#login-box" class="back-to-login-link back">
 											<i class="ace-icon fa fa-arrow-left"></i>
 											返回
 										</a>
@@ -257,6 +257,22 @@
 				}
 			});
 
+			ajaxSubmitForm($('#registerForm'),
+			{
+				dataUrl: signupUrl,
+				afterSuccess: function (data) {
+					if (!data.isSuccess) {
+						alert('注册失败');
+					}
+					else {
+						alert('注册成功');
+						$('.btn-reset').trigger('click');
+					}
+				}
+			});
+			
+
+			
 		});
 
 			function ajaxSubmitForm(selector, options) {
