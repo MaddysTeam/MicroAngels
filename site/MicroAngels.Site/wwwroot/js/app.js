@@ -55,6 +55,7 @@ urls = {
 	userInfo: '{0}/api/authserver/user/info'.format(apiDomain),
 	showUser: '{0}/api/authserver/user/briefInfo'.format(apiDomain),
 	topicInfo: '{0}/api/messagecenter/topic/info'.format(apiDomain),
+	changePassword: '{0}/api/accountservice/changePassword'.format(apiDomain),
 
 	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
 	receiveAnnounce: '{0}/api/messagecenter/message/receiveAnnounce'.format(apiDomain),
@@ -65,6 +66,7 @@ urls = {
 
 	login: '{0}/account/login'.format(local),
 	index: '{0}/'.format(local),
+	signUp: '{0}/api/accountservice/signup'.format(local),
 	signOut: '{0}/api/accountservice/signout'.format(apiDomain),
 	userPage: '{0}/user/index'.format(local),
 	rolePage: '{0}/role/index'.format(local),
@@ -78,7 +80,8 @@ urls = {
 	menuPage: '{0}/assets/menuIndex'.format(local),
 	assetsPage: '{0}/assets/index'.format(local),
 	announceSendPage: '{0}/message/AnnounceSend'.format(local),
-	profilePage: local + '/user/profile?userId={0}'
+	profilePage: local + '/user/profile?userId={0}',
+	changePasswordPage: local + '/account/changePassword?userId={0}'
 };
 
 topics = {

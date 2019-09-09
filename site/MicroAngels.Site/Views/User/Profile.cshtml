@@ -78,7 +78,7 @@
 											<i class="ace-icon fa fa-pencil bigger-110"></i>
 											<span class="bigger-110">编辑个人信息</span>
 										</a>
-										<a href="#" class="btn btn-sm btn-block btn-success">
+										<a href="#" class="btn btn-sm btn-block btn-success btn-password">
 												<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 												<span class="bigger-110">修改密码</span>
 											</a>
@@ -862,10 +862,13 @@
 
 					var path = apiDomain + '/api' + data.data.headerImagePath;
 					$('.cover').attr('src',path);
-					//showCover(path);
-
+		
 					$('.btn-edit').on('click', function () {
 						$('#modalProxy').data('url', urls.userEditPage.format(userId)).trigger('click');
+					});
+
+					$('.btn-password').on('click', function () {
+						$('#modalProxy').data('url', urls.changePasswordPage.format(userId)).trigger('click');
 					});
 				});
 
@@ -876,16 +879,9 @@
 					var friendsItem=''
 				});
 
-				$.ajax(getFriendRequest);
+				// $.ajax(getFriendRequest);
 
-				var friendActivityFeedRequest = ajaxRequset('', code, urls.login, {}, function () { });
-
-
-
-
-				//var getFriendsRequest = ajaxRequset(urls.getFriends, code, url.login, { id: userId }, function (data) {
-
-				//});
+				var friendActivityFeedRequest = ajaxRequset('', code, urls.login, {}, function () { });			
 
 				var friendItem = '<div class="itemdiv memberdiv">' +
 					'<div class="inline pos-rel">' +

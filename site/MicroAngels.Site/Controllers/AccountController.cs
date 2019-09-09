@@ -15,6 +15,12 @@ namespace Controllers
 			return View();
 		}
 
+
+		public IActionResult ChangePassword(Guid? id)
+		{
+			return PartialView(id);
+		} 
+
 	}
 
 }

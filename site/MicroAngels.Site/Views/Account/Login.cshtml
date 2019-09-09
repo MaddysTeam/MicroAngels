@@ -33,30 +33,30 @@
 
 										<div class="space-6"></div>
 
-										<form id="form" method="post" action="">
+										<form id="loginForm" method="post" action="">
 											<fieldset>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" id="username" name="username" placeholder="用户名" required/>
+														<input type="text" class="form-control" id="username" name="username" placeholder="用户名" required />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
 
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" id="password" name="password" placeholder="密码" required  minlength="6" />
+														<input type="password" class="form-control" id="password" name="password" placeholder="密码" required minlength="6" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
 
 												@*<label class="block clearfix">
-													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" placeholder="输入下方的6位随机数" />
-														<i class="ace-icon fa fa-retweet"></i>
-													</span>
-												</label>
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" placeholder="输入下方的6位随机数" />
+															<i class="ace-icon fa fa-retweet"></i>
+														</span>
+													</label>
 
-												<div class="widget-box">dddddddd</div>*@
+													<div class="widget-box">dddddddd</div>*@
 
 												<div class="space"></div>
 
@@ -75,11 +75,11 @@
 
 									<div class="toolbar clearfix">
 										@*<div>
-											<a href="#" data-target="#forgot-box" class="forgot-password-link">
-												<i class="ace-icon fa fa-arrow-left"></i>
-												忘记密码？
-											</a>
-										</div>*@
+												<a href="#" data-target="#forgot-box" class="forgot-password-link">
+													<i class="ace-icon fa fa-arrow-left"></i>
+													忘记密码？
+												</a>
+											</div>*@
 
 										<div>
 											<a href="#" data-target="#signup-box" class="user-signup-link">
@@ -227,6 +227,9 @@
 
 		$(function () {
 
+			var loginUrl = 'http://192.168.1.2:5000/api/accountservice/signin';
+			var signupUrl = 'http://192.168.1.2:5000/api/accountservice/signup';
+
 			$("#form").validate({
 				messages: {
 					username: {
@@ -239,34 +242,95 @@
 				}
 			});
 
-			$('#login').on('click', function () {
-				if (!$("#form").valid()) { return false;}
-				$.ajax({
-					type: "POST",
-					url: 'http://192.168.1.2:5000/api/accountservice/signin',
-					xhrFields: {
-						withCredentials: false // 设置运行跨域操作
-					},
-					contentType: 'application/json',
-					dataType: 'json',
-					data: JSON.stringify({ "UserName": $('#username').val(), "Password": $('#password').val() }),
-					success: function (data) {
-						if (!data.isSuccess) {
-							alert('用户名或密码错误');
-						}
-						else {
-							localStorage.setItem('code', data.token);
-							localStorage.setItem('refreshToken', data.refreshToken);
-							location.href = "@Url.Action("Index","Home")";
-						}
+			ajaxSubmitForm($('#loginForm'),
+			{
+				dataUrl = loginUrl,
+				afterSuccess(data) {
+				if (!data.isSuccess) {
+						alert('用户名或密码错误');
+				}
+				else {
+					localStorage.setItem('code', data.token);
+					localStorage.setItem('refreshToken', data.refreshToken);
+					location.href = "@Url.Action("Index","Home")";
 					}
-				});
+				}
 			});
 
 		});
+
+			function ajaxSubmitForm(selector, options) {
+				options = $.extend({
+					code: null,
+					isReplaceCommas: true,
+					dataUrl: selector.attr('action'),
+					afterSuccess: function () { },
+				}, options);
+
+
+				$.validator.unobtrusive.parse(selector);
+
+				selector.submit(function (e) {
+					e.preventDefault();
+					var $this = $(this);
+					var para = $this.serialize();
+					if ($this.valid()) {
+						var ajaxReq = ajaxRequset(options.dataUrl, para, options.afterSuccess);
+						$.ajax(ajaxReq);
+					}
+				});
+			}
+
+			var ajaxRequset = function (url, data, success) {
+				var ajax = {
+					type: "POST",
+					url: url,
+					xhrFields: {
+						withCredentials: false // 设置运行跨域操作
+					},
+					contentType: 'application/x-www-form-urlencoded',
+					dataType: 'json',
+					success: function (data) {
+						if (success) {
+							success(data);
+						}
+					}
+				};
+
+				if (data) {
+					ajax.data = data;
+				}
+
+				return ajax;
+			};
 
 		</script>
 	}
 
 </body>
+
+
+@*$('#login').on('click', function () {
+		if (!$("#form").valid()) { return false;}
+		$.ajax({
+			type: "POST",
+			url: 'http://192.168.1.2:5000/api/accountservice/signin',
+			xhrFields: {
+				withCredentials: false // 设置运行跨域操作
+			},
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify({ "UserName": $('#username').val(), "Password": $('#password').val() }),
+			success: function (data) {
+				if (!data.isSuccess) {
+					alert('用户名或密码错误');
+				}
+				else {
+					localStorage.setItem('code', data.token);
+					localStorage.setItem('refreshToken', data.refreshToken);
+					location.href = "@Url.Action("Index","Home")";
+				}
+			}
+		});
+	});*@
 

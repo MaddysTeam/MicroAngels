@@ -35,8 +35,7 @@ namespace MicroAngels.OcelotGateway.Services
 			if (userId.IsNull())
 				return context;
 
-			var tokenResponse = _cache.Get<TokenResponse>(userId);
-			if (tokenResponse.IsNull())
+			if(_cache.Lock(userId, _options.TokenRefreshIterval))
 			{
 				var rk = context.HttpContext.Request.Headers[CoreKeys.RefreshToken].ToString();
 				// refresh token
@@ -44,21 +43,21 @@ namespace MicroAngels.OcelotGateway.Services
 				{
 					using (var client = new HttpClient())
 					{
-						tokenResponse = await client.PostAsync<TokenResponse, ConsulService>("AccountService", "api/account/refresh", null, new { RefreshToken = rk }, _serviceFinder, _loadBalancer);
+						var tokenResponse = await client.PostAsync<TokenResponse, ConsulService>("AccountService", "api/account/refresh", null, new { RefreshToken = rk }, _serviceFinder, _loadBalancer);
 						if (tokenResponse.IsValidate)
 						{
 							tokenResponse.LastUpdateDate = DateTime.UtcNow;
-							_cache.Add(userId, tokenResponse, _options.TokenRefreshIterval);
-
 							RefreshTokenInHeaders(context,tokenResponse);
 						}
 					}
+
+					_cache.Unlock(userId);
 				}
 			}
-			else
-			{
-				RefreshTokenInHeaders(context, tokenResponse);
-			}
+			//else
+			//{
+			//	RefreshTokenInHeaders(context, tokenResponse);
+			//}
 
 			return context;
 		}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MicroAngels.Core;
 using System.Linq;
 
+
 namespace MicroAngels.Cache.Redis
 {
 
@@ -69,6 +70,35 @@ namespace MicroAngels.Cache.Redis
 		public IEnumerable<string> GetAllKey()
 		{
 			return RedisHelper.Keys("*");
+		}
+
+		public bool Lock(string lockKey, TimeSpan lockTimeout)
+		{
+			var currentTime = DateTime.UtcNow;
+			var expireMillisecond = (currentTime + lockTimeout).Millisecond;
+			if (RedisHelper.SetNx(lockKey, expireMillisecond))
+			{
+				return RedisHelper.Expire(lockKey, lockTimeout);
+			}
+			else
+			{
+				var lockValue = RedisHelper.Get(lockKey);
+				if(!lockValue.IsNullOrEmpty() && expireMillisecond > lockValue.ToLong())
+				{
+					expireMillisecond = DateTime.UtcNow.Millisecond;
+					var oldKey = RedisHelper.GetSet(lockKey, expireMillisecond);
+					return !oldKey.IsNullOrEmpty();
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+
+		public bool Unlock(string lockKey)
+		{
+			return ExistKey(lockKey) ? Remove(lockKey) : true;
 		}
 
 		private readonly CSRedisClient _client;
