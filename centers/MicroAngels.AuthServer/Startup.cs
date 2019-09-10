@@ -34,6 +34,20 @@ namespace MicroAngels.AuthServer
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			// for business service
+			services.AddTransient<ISystemService, SystemService>();
+			services.AddTransient<IAssetsService, AssetsService>();
+			services.AddTransient<IRoleService, RoleService>();
+			services.AddTransient<IUserService, UserService>();
+
+			// add cap service
+			services.AddCAPService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
+
+
 			// add swagger service
 			services.AddSwaggerService(new SwaggerService
 			{
@@ -61,13 +75,6 @@ namespace MicroAngels.AuthServer
 			// add exceptionless logger
 			services.AddLessLog();
 
-
-			// add cap service
-			services.AddCAPService(new CAPService
-			{
-				Host = Configuration["Queues:Kafka:Host"],
-				ConnectString = Configuration["Queues:Kafka:DbConn"]
-			});
 
 			// add redis cache
 			services.AddRedisCache(new RedisCacheOption
@@ -116,12 +123,6 @@ namespace MicroAngels.AuthServer
 
 			// balancer
 			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
-
-			// for business service
-			services.AddTransient<ISystemService, SystemService>();
-			services.AddTransient<IAssetsService, AssetsService>();
-			services.AddTransient<IRoleService, RoleService>();
-			services.AddTransient<IUserService, UserService>();
 
 			var serviceProvider = services.AddCacheInterceptorContainer()
 				.AddInterceptor<UserInfo>(typeof(IUserCaching))

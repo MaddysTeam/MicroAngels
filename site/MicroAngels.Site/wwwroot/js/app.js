@@ -128,6 +128,7 @@ var menuComponents = {
 	submenuItemStr: '<li class=""><a href="{1}"><i class="menu-icon fa fa-caret-right"></i>{0}</a><b class="arrow"></b></li>',
 };
 
+
 function showMenu() {
 	var code = checkCode(urls.login);
 	var ajax = ajaxRequset(urls.getHierarchyMenus, code, urls.login, null, function (data) {

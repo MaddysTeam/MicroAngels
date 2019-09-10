@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Business
 {
 
-	public class UserService : MySqlDbContext, IUserService
+	public class UserService : MySqlDbContext, IUserService, ICapSubscribe
 	{
 
 		public UserService(ICAPPublisher publisher, IServiceFinder<ConsulService> serviceFinder, ILoadBalancer loadBalancer, IConfiguration configuration)
@@ -130,7 +130,8 @@ namespace Business
 		{
 			await _publisher.PublishAsync(new AddAccountMessage
 			{
-				 Body=info.ToJson(),
+				Topic= "AccountService.AddAccount",
+				Body =info.ToJson(),
 				 Email=info.Email,
 				 Name=info.UserName,
 				 HasTrans=false,
@@ -138,14 +139,16 @@ namespace Business
 			});
 		}
 
-		[CapSubscribe(AppKeys.AddUser,Group = AppKeys.AddUser)]
-		public async Task ReceiveAddUserMessage(string message)
+		[CapSubscribe(AppKeys.AddUser)]
+		public async Task<bool> ReceiveAddUserMessage(string message)
 		{
 			AddUserMessage msg = JsonConvert.DeserializeObject<AddUserMessage>(message);
 			if (!msg.IsNull())
 			{
 				await Edit(new UserInfo { UserName=msg.UserName, Email=msg.Email, Phone=msg.Phone  } );
 			}
+
+			return true;
 		}
 
 		private ICAPPublisher _publisher;

@@ -20,7 +20,7 @@ namespace Business
 		Task<IEnumerable<UserInfo>> SearchWithFriends(UserSearchOption option, PageOptions page);
 
 		Task SendAddAccountMessage(UserInfo info);
-		Task ReceiveAddUserMessage(string message);
+		Task<bool> ReceiveAddUserMessage(string message);
 	}
 
 }

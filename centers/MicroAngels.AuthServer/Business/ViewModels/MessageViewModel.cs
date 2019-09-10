@@ -1,13 +1,11 @@
-﻿using Business.Helpers;
-using MicroAngels.Bus;
-using System;
+﻿using MicroAngels.Bus;
 
 namespace Business
 {
 
 	public class AddAccountMessage : IMessage
 	{
-		public string Topic => AppKeys.AddAccount;
+		public string Topic { get; set; }
 		public string Body { get; set; }
 		public bool HasTrans { get; set; }
 		public string Name { get; set; }

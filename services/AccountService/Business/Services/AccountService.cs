@@ -163,7 +163,7 @@ namespace Business
 			AddAccountMessage msg = JsonConvert.DeserializeObject<AddAccountMessage>(message);
 			if (!msg.IsNull())
 			{
-				var account = new Account(Guid.NewGuid(), msg.Name, AppKeys.DefaultPassword, msg.Email, msg.Phone);
+				var account = new Account();
 				await SignUp(account);
 			}
 

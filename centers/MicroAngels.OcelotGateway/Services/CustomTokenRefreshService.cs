@@ -8,7 +8,6 @@ using Ocelot.Middleware;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Linq;
 using MicroAngels.Cache.Redis;
 
 namespace MicroAngels.OcelotGateway.Services
@@ -33,7 +32,7 @@ namespace MicroAngels.OcelotGateway.Services
 			// 3 refresh token when token response cache is null
 
 			var userId = context.HttpContext.User.GetUserId();
-			if (userId.IsNull() || context.DownstreamRequest.AbsolutePath.IndexOf("briefInfo") < 0)
+			if (userId.IsNull() || context.DownstreamRequest.AbsolutePath.IndexOf(_conf["refreshKey:Code"]) < 0)
 				return context;
 
 			if(_cache.Lock(userId, _options.TokenRefreshIterval))

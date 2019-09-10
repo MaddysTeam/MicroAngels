@@ -71,12 +71,13 @@ namespace AccountService.Controllers
 		public async Task<IActionResult> SignUp([FromForm] SignupViewModel signupModel)
 		{
 			var account = Mapper.Map<SignupViewModel, Account>(signupModel);
-			var isSuccess = await _accountService.SignUp(account);
+			var isSuccess = true;// await _accountService.SignUp(account);
 
-			if (isSuccess)
-			{
+			//if (isSuccess)
+			//{
 				await _accountService.SendAddUserMessage(account);
-			}
+			//}
+
 
 			return new JsonResult(new
 			{

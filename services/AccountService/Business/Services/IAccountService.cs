@@ -15,7 +15,7 @@ namespace Business
 		Task<bool> ChangePassword(ChangePasswordViewModel model);
 		bool Validate(string name, string password);
 		Task SendAddUserMessage(Account account);
-		Task ReceiveAddAccountMessage(string message);
+		Task<bool> ReceiveAddAccountMessage(string message);
 	}
 
 }

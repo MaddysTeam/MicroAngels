@@ -21,6 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="IdentityServer4" Version="2.3.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
+	<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
+	<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Bus\MicroAngels.Bus.csproj" />

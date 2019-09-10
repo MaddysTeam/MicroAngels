@@ -29,6 +29,16 @@ namespace AccountService
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			//business
+			services.AddTransient<IAccountService, Business.AccountService>();
+
+			// add cap service
+			services.AddCAPService(new CAPService
+			{
+				Host = Configuration["Queues:Kafka:Host"],
+				ConnectString = Configuration["Queues:Kafka:DbConn"]
+			});
+
 			// add redis cache
 			services.AddRedisCache(new RedisCacheOption
 				(
@@ -53,20 +63,12 @@ namespace AccountService
 				RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
 				ApiSecret = "secreta",
 				ApiName = "MessageCenter"
-			});
-
-			// add cap service
-			services.AddCAPService(new CAPService
-			{
-				Host = Configuration["Queues:Kafka:Host"],
-				ConnectString = Configuration["Queues:Kafka:DbConn"]
-			});
+			});	
 
 			//add exceptionless logger
 			services.AddLessLog();
 
-			//business
-			services.AddTransient<IAccountService, Business.AccountService>();
+			
 
 		}
 
@@ -77,6 +79,8 @@ namespace AccountService
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			
 
 			app.UseAuthentication();
 
