@@ -24,7 +24,12 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			var isSuccess = await _userService.Edit(user.Map<UserViewModel, UserInfo>());
+			var isInsert = user.Id.IsEmpty();
+			var userInfo = user.Map<UserViewModel, UserInfo>();
+			var isSuccess = await _userService.Edit(userInfo);
+
+			if (isInsert && isSuccess)
+				await _userService.SendAddAccountMessage(userInfo);
 
 			return new JsonResult(new
 			{

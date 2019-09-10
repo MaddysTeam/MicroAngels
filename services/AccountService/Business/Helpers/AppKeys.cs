@@ -1,8 +1,9 @@
-﻿
-namespace Business.Helpers
+﻿namespace Business.Helpers
 {
     public  class AppKeys
     {
-        public const string CreateAccount = "AccountService.CreateAccount";
+        public const string AddAccount = "AccountService.AddAccount";
+		public const string AddUser = "AuthService.AddUser";
+		public const string DefaultPassword = "#Bugsfor123";
 	}
 }

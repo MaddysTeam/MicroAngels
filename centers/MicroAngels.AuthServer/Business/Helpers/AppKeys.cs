@@ -2,6 +2,7 @@
 {
     public  class AppKeys
     {
-        public const string AddUser = "AuthServer.AddUser";
+		public const string AddAccount = "AccountService.AddAccount";
+		public const string AddUser = "AuthService.AddUser";
 	}
 }

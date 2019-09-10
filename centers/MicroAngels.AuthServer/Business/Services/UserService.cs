@@ -6,6 +6,7 @@ using MicroAngels.Core.Plugins;
 using MicroAngels.Core.Service;
 using MicroAngels.ServiceDiscovery.Consul;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,6 @@ namespace Business
 			_conf = configuration;
 		}
 
-		[CapSubscribe(AppKeys.AddUser)]
 		public async Task<bool> Edit(UserInfo userInfo)
 		{
 			if (UserInfo.Validate(userInfo).All(u => u.IsSuccess))
@@ -124,6 +124,28 @@ namespace Business
 				results = await query.ToListAsync();
 
 			return results;
+		}
+
+		public async Task SendAddAccountMessage(UserInfo info)
+		{
+			await _publisher.PublishAsync(new AddAccountMessage
+			{
+				 Body=info.ToJson(),
+				 Email=info.Email,
+				 Name=info.UserName,
+				 HasTrans=false,
+				 Phone=info.Phone
+			});
+		}
+
+		[CapSubscribe(AppKeys.AddUser,Group = AppKeys.AddUser)]
+		public async Task ReceiveAddUserMessage(string message)
+		{
+			AddUserMessage msg = JsonConvert.DeserializeObject<AddUserMessage>(message);
+			if (!msg.IsNull())
+			{
+				await Edit(new UserInfo { UserName=msg.UserName, Email=msg.Email, Phone=msg.Phone  } );
+			}
 		}
 
 		private ICAPPublisher _publisher;

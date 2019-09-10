@@ -64,3 +64,4 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.Message
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.csproj.CopyComplete
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\test\MicroAngels.MessageCenter.Test\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.Test.pdb
+E:\项目文件(GitLab)\MicroAngels\test\MicroAngels.MessageCenter.Test\bin\Debug\netcoreapp2.1\MessageCenter.xml

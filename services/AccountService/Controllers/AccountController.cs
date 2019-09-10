@@ -1,13 +1,9 @@
 ﻿using Business;
 using Controllers;
-using MicroAngels.Cache.Redis;
 using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
-using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
-using MicroAngels.Logger;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace AccountService.Controllers
@@ -75,28 +71,17 @@ namespace AccountService.Controllers
 		public async Task<IActionResult> SignUp([FromForm] SignupViewModel signupModel)
 		{
 			var account = Mapper.Map<SignupViewModel, Account>(signupModel);
-			var response = await _accountService.SignUp(account);
+			var isSuccess = await _accountService.SignUp(account);
 
-			//var isSuccess = await _subscribeService.SubscribeAsync(subscribe);
-			//if (isSuccess)
-			//	await _publisher.PublishAsync(
-			//		new Message
-			//		{
-			//			Topic = AppKeys.MessageCenterNotfiy,
-			//			ServiceId = viewModel.ServiceId,
-			//			SenderId = User.GetUserId(),
-			//			TopicId = viewModel.TopicId,
-			//			TargetId = viewModel.TargetId,
-			//			Title = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
-			//			Body = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
-			//			HasTrans = false,
-			//			SendTime = DateTime.UtcNow
-			//		});
+			if (isSuccess)
+			{
+				await _accountService.SendAddUserMessage(account);
+			}
 
 			return new JsonResult(new
 			{
-				isSuccess = response,
-				message = response ? "操作成功" : "操作失败"
+				isSuccess,
+				message = isSuccess ? "操作成功" : "操作失败"
 			});
 		}
 

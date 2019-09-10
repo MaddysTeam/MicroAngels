@@ -7,6 +7,8 @@ using MicroAngels.IdentityServer.Clients;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 
 namespace Business
@@ -15,7 +17,7 @@ namespace Business
 	public class AccountService : MySqlDbContext, IAccountService
 	{
 
-		public AccountService(ILogger logger,ICAPPublisher publisher, IConfiguration configuraton, IRedisCache cache)
+		public AccountService(ILogger logger, ICAPPublisher publisher, IConfiguration configuraton, IRedisCache cache)
 		{
 			_logger = logger;
 			_configuation = configuraton;
@@ -48,20 +50,18 @@ namespace Business
 			return await SignOutTokenRequest(model.AccessToken);
 		}
 
-		[CapSubscribe(AppKeys.CreateAccount)]
+
 		public async Task<bool> SignUp(Account model)
 		{
 			// implement sign up logic here
-			//for example:
-			//1 crate account 
-			//2 send message to auth server for creating user data
+
 			var result = false;
 			if (model.IsValidate)
 			{
 				var exitAccount = AccountDb.AsQueryable().FirstAsync(a => a.Name == model.Name);
 				if (!exitAccount.IsNull())
 				{
-					result = false ;
+					result = false;
 				}
 				else
 				{
@@ -72,6 +72,18 @@ namespace Business
 			return result;
 		}
 
+		public async Task SendAddUserMessage(Account account)
+		{
+			await _publisher.PublishAsync(new AddUserMessage
+			{
+				Topic = AppKeys.AddUser,
+				UserName = account.Name,
+				Email = account.Email,
+				Phone = account.Phone,
+				Body = AppKeys.AddUser,
+			});
+		}
+
 
 		public bool Validate(string name, string password)
 		{
@@ -80,7 +92,6 @@ namespace Business
 			return true;
 
 		}
-
 
 		private async Task<AngelTokenResponse> SignInTokenRequest(TokenRequestType requestType, string username, string password)
 		{
@@ -135,14 +146,27 @@ namespace Business
 
 		public async Task<bool> ChangePassword(ChangePasswordViewModel model)
 		{
-			var exitAccount =await AccountDb.AsQueryable().SingleAsync(a => a.Id == model.UserId.ToGuid() && a.Password==model.OldPassword.ToMD5());
+			var exitAccount = await AccountDb.AsQueryable().SingleAsync(a => a.Id == model.UserId.ToGuid() && a.Password == model.OldPassword.ToMD5());
 			if (!exitAccount.IsNull())
 			{
-				exitAccount.ChangePassword( model.NewPassword.ToMD5());
+				exitAccount.ChangePassword(model.NewPassword.ToMD5());
 				return AccountDb.Update(exitAccount);
 			}
 
 			return false;
+		}
+
+
+		[CapSubscribe(AppKeys.AddAccount,Group =AppKeys.AddAccount)]
+		public async Task ReceiveAddAccountMessage(string message)
+		{
+			AddAccountMessage msg = JsonConvert.DeserializeObject<AddAccountMessage>(message);
+			if (!msg.IsNull())
+			{
+				var account = new Account(Guid.NewGuid(), msg.Name, AppKeys.DefaultPassword, msg.Email, msg.Phone);
+				await SignUp(account);
+			}
+
 		}
 
 		private readonly ILogger _logger;

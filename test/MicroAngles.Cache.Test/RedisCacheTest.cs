@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MicroAngles.Cache.Test
@@ -13,7 +14,7 @@ namespace MicroAngles.Cache.Test
 		public RedisCacheTest()
 		{
 			_cache = new RedisCache(
-				new RedisCacheOption("192.168.1.9", 6379, 0, 1000)
+				new RedisCacheOption("127.0.0.1", 6379, 0, 1000)
 				);
 		}
 
@@ -64,6 +65,26 @@ namespace MicroAngles.Cache.Test
 
 			Assert.True(removeResult);
 			Assert.Null(result);
+		}
+
+		[Fact]
+		public void LockTest()
+		{
+			var lockKey = "lockkey";
+			var timeout = TimeSpan.FromMilliseconds(3000);
+			var tasks = new List<Task>();
+			var results = new List<bool>();
+			for (int i = 0; i < 3; i++)
+			{
+				tasks.Add(Task.Factory.StartNew(() =>
+				{
+					results.Add(_cache.Lock(lockKey, timeout));
+				}));
+			}
+
+			Task.WaitAll(tasks.ToArray());
+
+			Assert.True(results.FindAll(x => x == false).Count == 2);
 		}
 
 

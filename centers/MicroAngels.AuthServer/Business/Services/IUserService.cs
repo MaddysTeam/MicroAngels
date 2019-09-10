@@ -18,6 +18,9 @@ namespace Business
 
 		[Caching(AbsoluteExpiration = 10, ActionType = ActionType.search, IsAsync = true, TargetType =typeof(IEnumerable<UserInfo>))]
 		Task<IEnumerable<UserInfo>> SearchWithFriends(UserSearchOption option, PageOptions page);
+
+		Task SendAddAccountMessage(UserInfo info);
+		Task ReceiveAddUserMessage(string message);
 	}
 
 }

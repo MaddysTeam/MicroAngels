@@ -23,6 +23,7 @@ namespace MicroAngels.OcelotGateway.Services
 			_loadBalancer = loadBalancer ?? new WeightRoundBalancer();
 			_options = options;
 			_cache = cache;
+			_conf = configuration;
 		}
 
 		public async Task<DownstreamContext> Refresh(DownstreamContext context)
@@ -43,7 +44,13 @@ namespace MicroAngels.OcelotGateway.Services
 				{
 					using (var client = new HttpClient())
 					{
-						var tokenResponse = await client.PostAsync<TokenResponse, ConsulService>("AccountService", "api/account/refresh", null, new { RefreshToken = rk }, _serviceFinder, _loadBalancer);
+						var tokenResponse = await client.PostAsync<TokenResponse, ConsulService>(
+							_conf["AccountService:Name"],
+							_conf["AccountService:RefreshToken"],
+							null, 
+							new { RefreshToken = rk },
+							_serviceFinder,
+							_loadBalancer);
 						if (tokenResponse.IsValidate)
 						{
 							tokenResponse.LastUpdateDate = DateTime.UtcNow;
@@ -74,6 +81,7 @@ namespace MicroAngels.OcelotGateway.Services
 		private ILoadBalancer _loadBalancer;
 		private IRedisCache _cache;
 		private OcelotConfiguration _options;
+		private IConfiguration _conf;
 
 	}
 
@@ -82,7 +90,6 @@ namespace MicroAngels.OcelotGateway.Services
 		public string Token { get; set; }
 		public string RefreshToken { get; set; }
 		public DateTime LastUpdateDate { get; set; }
-
 		public bool IsValidate => !Token.IsNullOrEmpty() && !RefreshToken.IsNullOrEmpty();
 	}
 

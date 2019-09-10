@@ -54,7 +54,7 @@ namespace MicroAngels.ServiceDiscovery.Consul
 		{
 			var results = new List<ConsulService>();
 			var services = (await _client.Agent.Services()).Response;
-			await _client.Agent.ServiceDeregister("f0e1290f-5905-40b0-80b1-d4458cf28bd4");
+			//await _client.Agent.ServiceDeregister("f0e1290f-5905-40b0-80b1-d4458cf28bd4");
 			foreach (AgentService service in services.Values)
 			{
 				if (string.Equals(service.Service, name, StringComparison.InvariantCultureIgnoreCase))

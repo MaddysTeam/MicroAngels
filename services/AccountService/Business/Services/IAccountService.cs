@@ -14,6 +14,8 @@ namespace Business
 		Task<AngelTokenResponse> Refresh(RefreshTokenModel model);
 		Task<bool> ChangePassword(ChangePasswordViewModel model);
 		bool Validate(string name, string password);
+		Task SendAddUserMessage(Account account);
+		Task ReceiveAddAccountMessage(string message);
 	}
 
 }

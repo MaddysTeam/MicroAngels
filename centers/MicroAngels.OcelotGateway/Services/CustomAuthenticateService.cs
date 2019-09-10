@@ -38,10 +38,10 @@ namespace MicroAngels.OcelotGateway.Services
 			//}
 
 			// find interface service
-			var services = await _serviceFinder.FindByNameAsync(_configuration["RemoteService:Name"]);
+			var services = await _serviceFinder.FindByNameAsync(_configuration["AuthService:Name"]);
 			if (!services.IsNull() && services.Count > 0)
 			{
-				var serivceUrl = $@"{services[0].Address}{_configuration["RemoteService:Url"]}";
+				var serivceUrl = $@"{services[0].Address}{_configuration["RemoteService:ServiceUrls"]}";
 				using (var client = new HttpClient())
 				{
 					var permissionUrls = await client.PostAsync<string[]>(serivceUrl, roles);

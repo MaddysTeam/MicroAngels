@@ -9,11 +9,13 @@ namespace Business
 	{
 		public Account() { }
 
-		public Account(Guid id, string name, string password)
+		public Account(Guid id, string name, string password,string email,string phone)
 		{
 			Id = id;
 			Name = name;
 			Password = password;
+			Email = email;
+			Phone = phone;
 		}
 
 		public void ChangePassword(string password)
