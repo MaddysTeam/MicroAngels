@@ -18,7 +18,7 @@ namespace MicroAngels.Logger.ExceptionLess
 
 		public void Execute<Context>(Context ctx) where Context : FilterContext
 		{
-			_logger.Info($"controller:{ctx.ActionDescriptor.DisplayName}",null);
+			_logger.Info($"userId:{ctx.HttpContext.User.GetUserId()} controller:{ctx.ActionDescriptor.DisplayName}",null);
 		}
 
 		public Task ExecuteAsync<Context>(Context ctx) where Context : FilterContext

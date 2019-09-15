@@ -27,13 +27,9 @@ namespace Business
 	}
 
 
-	public class SubscribeSearchOptions
+	public class SubscribeSearchOptions:SubscribeViewModel
 	{
-		public string topicId { get; set; }
-		public string serviceId { get; set; }
-		public string subscriberId { get; set; }
-		public string targetId { get; set; }
-		public string code { get; set; }
+		public string Code { get; set; }
 		public bool IsJoinUser { get; set; }
 	}
 

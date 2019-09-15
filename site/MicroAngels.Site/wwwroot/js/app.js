@@ -38,6 +38,7 @@ urls = {
 	userEdit: '{0}/api/authserver/user/edit'.format(apiDomain),
 
 	getUsers: '{0}/api/authserver/user/users'.format(apiDomain),
+	getFriends: '{0}/api/authserver/user/friends'.format(apiDomain),
 	getRoles: '{0}/api/authserver/role/roles'.format(apiDomain),
 	getRolesByUserId: '{0}/api/authserver/role/userRoles'.format(apiDomain),
 	getAssets: '{0}/api/authserver/assets/roleAssets'.format(apiDomain),
@@ -47,7 +48,7 @@ urls = {
 	getTopics: '{0}/api/messagecenter/topic/topics'.format(apiDomain),
 	getAnnounces: '{0}/api/messagecenter/message/announces'.format(apiDomain),
 	getUnReadAnnounces: '{0}/api/messagecenter/message/unreadAnnounces'.format(apiDomain),
-	getFriends: '{0}/api/messagecenter/subscribe/targets'.format(apiDomain),
+	getTargetMessages: '{0}/api/messagecenter/message/targetMessages'.format(apiDomain),
 
 	menuInfo: '{0}/api/authserver/assets/menuInfo'.format(apiDomain),
 	interfaceInfo: '{0}/api/authserver/assets/interfaceInfo'.format(apiDomain),
@@ -59,6 +60,7 @@ urls = {
 
 	sendAnnounce: '{0}/api/messagecenter/message/sendAnnounce'.format(apiDomain),
 	receiveAnnounce: '{0}/api/messagecenter/message/receiveAnnounce'.format(apiDomain),
+	receiveTargetMessage: '{0}/api/messagecenter/message/receiveTargetMessages'.format(apiDomain),
 	subscribe: '{0}/api/messagecenter/subscribe/subscribe'.format(apiDomain),
 	unSubscribe: '{0}/api/messagecenter/subscribe/unSubscribe'.format(apiDomain),
 
@@ -267,27 +269,32 @@ function showMenuHierarchy($container,data) {
 /* ------------------------------------------------- messages------------------------------------------------------- */
 
 function announceNotification() {
-	//var code = checkCode(urls.login);
-	//setInterval(function () {
-	//	var ajax = ajaxRequset(urls.getUnReadAnnounces, code, urls.login, {}, function (data) {
-	//		var messageCount = data.data.length;
-	//		if (messageCount > 0) {
-	//			$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-animated-bell"></i><span class="badge badge-important">{0}</span>'.format(messageCount));
-	//			$('.messageCount').html(messageCount);
-	//		}
-	//		else {
-	//			$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
-	//		}
-	//	});
+		var ajax = ajaxRequset(urls.getUnReadAnnounces, code, urls.login, {}, function (data) {
+			var messageCount = data.data.length;
+			if (messageCount > 0) {
+				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-animated-bell"></i><span class="badge badge-important">{0}</span>'.format(messageCount));
+				$('.messageCount').html(messageCount);
+			}
+			else {
+				$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
+			}
+		});
 
-	//	$.ajax(ajax);
-	//}, 20000);
+		$.ajax(ajax);
 }
 
 function reveiveAnnounce() {
 	var ajax = ajaxRequset(urls.receiveAnnounce, code, urls.login, {}, function (data) {
 
 		$('.notification').html('').append('<i class="ace-icon fa fa-bell icon-bell"></i>');
+
+	});
+
+	$.ajax(ajax);
+}
+
+function receiveTargetMessage() {
+	var ajax = ajaxRequset(urls.receiveTargetMessage, code, urls.login, {}, function (data) {
 
 	});
 

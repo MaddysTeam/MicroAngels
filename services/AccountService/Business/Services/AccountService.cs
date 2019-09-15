@@ -8,7 +8,6 @@ using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Threading.Tasks;
 
 namespace Business
@@ -158,15 +157,16 @@ namespace Business
 
 
 		[CapSubscribe(AppKeys.AddAccount,Group =AppKeys.AddAccount)]
-		public async Task ReceiveAddAccountMessage(string message)
+		public async Task<bool> ReceiveAddAccountMessage(string message)
 		{
 			AddAccountMessage msg = JsonConvert.DeserializeObject<AddAccountMessage>(message);
 			if (!msg.IsNull())
 			{
 				var account = new Account();
-				await SignUp(account);
+				return await SignUp(account);
 			}
 
+			return false;
 		}
 
 		private readonly ILogger _logger;

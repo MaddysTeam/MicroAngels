@@ -109,7 +109,7 @@ namespace Controllers
 			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
 			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
 			// get all subscribe target id 
-			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { subscriberId = userId }, null);
+			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { SubscriberId = userId }, null);
 			var searchOptions = new MessageSearchOptions
 			{
 				reveiverId = userId,
@@ -131,7 +131,7 @@ namespace Controllers
 		{
 			var userId = User.GetClaimsValue(CoreKeys.USER_ID);
 			var serviceId = User.GetClaimsValue(CoreKeys.SYSTEM_ID);
-			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { subscriberId = userId }, null);
+			var targetIds = await _subscribeService.Search(new SubscribeSearchOptions { SubscriberId = userId }, null);
 			var searchOptions = new MessageSearchOptions
 			{
 				reveiverId = userId,

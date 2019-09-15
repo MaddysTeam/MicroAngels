@@ -24,12 +24,12 @@ namespace Controllers
 
 
 		[HttpPost("targets")]
-		public async Task<List<SubscribeViewModel>> GetSubscribeTarget([FromBody]SubscribeViewModel viewModel)
+		public async Task<List<SubscribeViewModel>> GetSubscribeTarget([FromBody]SubscribeSearchOptions viewModel)
 		{
-			var userId = viewModel?.SubscriberId ?? User.GetUserId();
-			var serivceId = viewModel?.ServiceId ?? User.GetServiceId();
+			viewModel.SubscriberId = viewModel?.SubscriberId ?? User.GetUserId();
+			viewModel.ServiceId = viewModel?.ServiceId ?? User.GetServiceId();
 			var subscribes = await _subscribeService.Search(
-				new SubscribeSearchOptions { serviceId = serivceId, subscriberId = userId },
+				viewModel,
 				null
 				);
 
@@ -66,9 +66,9 @@ namespace Controllers
 						ServiceId = viewModel.ServiceId,
 						SenderId = User.GetUserId(),
 						TopicId = viewModel.TopicId,
-						TargetId= viewModel.TargetId,
-						Title= string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
-						Body = string.Format(AppKeys.Subscribe,viewModel.Subsriber, viewModel.Target),
+						TargetId = viewModel.TargetId,
+						Title = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
+						Body = string.Format(AppKeys.Subscribe, viewModel.Subsriber, viewModel.Target),
 						HasTrans = false,
 						SendTime = DateTime.UtcNow
 					});

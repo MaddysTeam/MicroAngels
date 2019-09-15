@@ -2,6 +2,7 @@
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
+using MicroAngels.Logger;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Controllers
 {
-
+	[ServiceFilter(typeof(LoggerAttribute))]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class UserController : BaseController

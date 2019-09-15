@@ -36,7 +36,7 @@ namespace Business.Services
 
 			//再判断下是否已经订阅过
 
-			var searchOptions = new SubscribeSearchOptions { serviceId = sub.ServiceId, subscriberId = sub.SubscriberId, topicId = sub.TopicId, targetId = sub.TargetId };
+			var searchOptions = new SubscribeSearchOptions { ServiceId = sub.ServiceId, SubscriberId = sub.SubscriberId, TopicId = sub.TopicId, TargetId = sub.TargetId };
 			var existSubscribes = await Search(searchOptions, null);
 			if (!existSubscribes.IsNull() && existSubscribes.Count > 0)
 			{
@@ -52,7 +52,7 @@ namespace Business.Services
 			var topic = await _topicServce.GetTopicAsync(sub.TopicId);
 			if (topic.IsNull()) return false;
 
-			var searchOptions = new SubscribeSearchOptions { serviceId = sub.ServiceId, subscriberId = sub.SubscriberId, topicId = sub.TopicId, targetId = sub.TargetId };
+			var searchOptions = new SubscribeSearchOptions { ServiceId = sub.ServiceId, SubscriberId = sub.SubscriberId, TopicId = sub.TopicId, TargetId = sub.TargetId };
 			var existSubscribes = await Search(searchOptions, null);
 			if (existSubscribes.IsNull() || existSubscribes.Count() <= 0) return false;
 
@@ -60,7 +60,7 @@ namespace Business.Services
 			{
 				return SubscribeDb.DeleteById(existSubscribes.First().Id.ToGuid());
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				return false;
 			}
@@ -68,64 +68,61 @@ namespace Business.Services
 
 		public async Task<List<Subscribe>> Search(SubscribeSearchOptions options, PageOptions page)
 		{
-
-			var subscriberId = options?.subscriberId;
-			var targetId = options?.targetId;
-			var serviceId = options?.serviceId;
-			var topicId = options?.topicId;
-			var code = options?.code;
-
 			var query = DB.Queryable<Subscribe>();
-			if (!subscriberId.IsNullOrEmpty())
-				query.Where(s => s.SubscriberId == subscriberId);
-			if (!targetId.IsNullOrEmpty())
-				query.Where(s => s.TargetId == targetId);
-			if (!serviceId.IsNullOrEmpty())
-				query.Where(s => s.ServiceId == serviceId);
-			if (!topicId.IsNullOrEmpty())
-				query.Where(s => s.TopicId == topicId);
+
+			if (!options.IsNull())
+			{
+
+				var SubscriberId = options?.SubscriberId;
+				var TargetId = options?.TargetId;
+				var ServiceId = options?.ServiceId;
+				var TopicId = options?.TopicId;
+				var code = options?.Code;
+
+
+				if (!SubscriberId.IsNullOrEmpty())
+					query.Where(s => s.SubscriberId == SubscriberId);
+				if (!TargetId.IsNullOrEmpty())
+					query.Where(s => s.TargetId == TargetId);
+				if (!ServiceId.IsNullOrEmpty())
+					query.Where(s => s.ServiceId == ServiceId);
+				if (!TopicId.IsNullOrEmpty())
+					query.Where(s => s.TopicId == TopicId);
+			}
 
 			var targets = new List<Subscribe>();
 			if (!page.IsNull() && page.IsValidate)
 				targets = await query.ToPageListAsync(page.PageIndex, page.PageSize);
 			else
 			{
-				try
-				{
-					targets = await query.ToListAsync();
-				}
-				catch (Exception e)
-				{
-
-				}
-
+				targets = await query.ToListAsync();
 			}
 
-			if (options.IsJoinUser)
-			{
-				if (targets.Count < 0)
-					return new List<Subscribe>();
+			//if (options.IsJoinUser)
+			//{
+			//	if (targets.Count < 0)
+			//		return new List<Subscribe>();
 
-				var users = new List<UserViewModel>();
-				using (var client = new HttpClient())
-				{
-					var fromService = _conf["UserServcie:From"];
-					var virtualPath = _conf["VirtualPath"];
-					users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, code, null, _serviceFinder, _loadBalancer);
-				}
+			//	var users = new List<UserViewModel>();
+			//	using (var client = new HttpClient())
+			//	{
+			//		var fromService = _conf["UserServcie:From"];
+			//		var virtualPath = _conf["UserServcie:VirtualPath"];
+			//		users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, options?.Code, null, _serviceFinder, _loadBalancer);
+			//	}
 
-				return targets.Select(t =>
-				{
-					var user = users.Find(u => u.Id.ToString() == t.TargetId);
-					if (!user.IsNull())
-					{
-						t.Target = user.UserName;
-						t.Subscriber = user.RealName;
-					}
+			//	return targets.Select(t =>
+			//	{
+			//		var user = users.Find(u => u.Id.ToString() == t.TargetId);
+			//		if (!user.IsNull())
+			//		{
+			//			t.Target = user.UserName;
+			//			t.Subscriber = user.RealName;
+			//		}
 
-					return t;
-				}).ToList();
-			}
+			//		return t;
+			//	}).ToList();
+			//}
 
 
 			return targets;
