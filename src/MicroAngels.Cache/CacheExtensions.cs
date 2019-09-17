@@ -3,8 +3,6 @@ using AspectCore.Extensions.DependencyInjection;
 using AspectCore.Injector;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.Cache
 {
