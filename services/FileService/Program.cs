@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Business.Helpers;
+using MicroAngels.Configuration.Apollo;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace FileService
@@ -17,6 +19,11 @@ namespace FileService
 				//{
 				//	options.Limits.MaxRequestBodySize = null;
 				//})
+				.ConfigureAppConfiguration((ctx, builder) =>
+				{
+					// add apollo configuration
+					builder.AddApolloConfiguration(AppKeys.ApolloSection, AppKeys.ApolloNamespaces);
+				})
 				.UseUrls("http://*:6000")
 				.UseStartup<Startup>();
 

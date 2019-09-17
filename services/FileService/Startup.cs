@@ -1,7 +1,6 @@
 ﻿using FileService.Business;
 using MicroAngels.Bus.CAP;
 using MicroAngels.GRPC.Server;
-using MicroAngels.Hystrix.Polly;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger.ExceptionLess;
@@ -30,7 +29,6 @@ namespace FileService
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-
 			//add cap
 			services.AddCAPService(new CAPService
 			{

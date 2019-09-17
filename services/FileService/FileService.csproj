@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business\Exceptions\" />
+    <Compile Remove="Business\Exceptions\**" />
+    <Content Remove="Business\Exceptions\**" />
+    <EmbeddedResource Remove="Business\Exceptions\**" />
+    <None Remove="Business\Exceptions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\uploader\" />
   </ItemGroup>
 
@@ -18,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MicroAngels.Bus\MicroAngels.Bus.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Cache\MicroAngels.Cache.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Configuration\MicroAngels.Configuration.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Core\MicroAngels.Core.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.GRPC\MicroAngels.GRPC.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.Hystrix\MicroAngels.Hystrix.csproj" />
