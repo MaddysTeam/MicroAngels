@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\src\MicroAngels.Hystrix\MicroAngels.Hystrix.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.IdentityServer\MicroAngels.IdentityServer.csproj" />
     <ProjectReference Include="..\..\src\MicroAngels.ServiceDiscovery\MicroAngels.ServiceDiscovery.csproj" />
+    <ProjectReference Include="..\..\src\MicroAngels.Trace\MicroAngels.Trace.csproj" />
     <ProjectReference Include="..\..\src\MicroAngles.ORM\MicroAngels.ORM.csproj" />
   </ItemGroup>
 

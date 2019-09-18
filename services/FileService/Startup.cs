@@ -6,6 +6,7 @@ using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
+using MicroAngels.Trace.Jaeger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,10 @@ namespace FileService
 				RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
 				ApiSecret = Configuration["IdentityService:Client:Secret"],
 				ApiName = Configuration["IdentityService:Client:Scopes"]
+			});
+
+			services.AddJaegerTrace(options=> {
+				options.ServiceName = Configuration["Service:Name"];
 			});
 
 			//add exceptionless logger
