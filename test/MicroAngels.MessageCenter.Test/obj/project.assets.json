@@ -313,6 +313,43 @@
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
         }
       },
+      "Jaeger/0.3.5": {
+        "type": "package",
+        "dependencies": {
+          "Jaeger.Thrift": "0.3.5",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "2.1.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
+          "Newtonsoft.Json": "9.0.1",
+          "OpenTracing": "0.12.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Jaeger.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Jaeger.dll": {}
+        }
+      },
+      "Jaeger.Thrift/0.3.5": {
+        "type": "package",
+        "dependencies": {
+          "Jaeger.Thrift.VendoredThrift": "0.3.5"
+        },
+        "compile": {
+          "lib/netstandard2.0/Jaeger.Thrift.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Jaeger.Thrift.dll": {}
+        }
+      },
+      "Jaeger.Thrift.VendoredThrift/0.3.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Jaeger.Thrift.VendoredThrift.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Jaeger.Thrift.VendoredThrift.dll": {}
+        }
+      },
       "librdkafka.redist/0.11.6": {
         "type": "package",
         "build": {
@@ -3478,6 +3515,32 @@
           "lib/netstandard2.0/Npgsql.dll": {}
         }
       },
+      "OpenTracing/0.12.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/OpenTracing.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OpenTracing.dll": {}
+        }
+      },
+      "OpenTracing.Contrib.NetCore/0.6.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging": "2.0.0",
+          "Microsoft.Extensions.Options": "2.0.0",
+          "OpenTracing": "0.12.0",
+          "System.Data.SqlClient": "4.6.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.0/OpenTracing.Contrib.NetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/OpenTracing.Contrib.NetCore.dll": {}
+        }
+      },
       "Oracle.ManagedDataAccess.Core/2.18.3": {
         "type": "package",
         "compile": {
@@ -3590,7 +3653,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "runtime.native.System.Data.SqlClient.sni/4.5.0": {
         "type": "package",
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -4180,13 +4243,13 @@
           "lib/netstandard1.2/System.Data.Common.dll": {}
         }
       },
-      "System.Data.SqlClient/4.5.1": {
+      "System.Data.SqlClient/4.6.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Win32.Registry": "4.5.0",
           "System.Security.Principal.Windows": "4.5.0",
           "System.Text.Encoding.CodePages": "4.5.0",
-          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
+          "runtime.native.System.Data.SqlClient.sni": "4.5.0"
         },
         "compile": {
           "ref/netcoreapp2.1/System.Data.SqlClient.dll": {}
@@ -6129,6 +6192,7 @@
           "MicroAngels.ORM": "1.0.0",
           "MicroAngels.ServiceDiscovery": "1.0.0",
           "MicroAngels.Swagger": "1.0.0",
+          "MicroAngels.Trace": "1.0.0",
           "Microsoft.Extensions.Logging": "2.1.1",
           "Microsoft.Extensions.Logging.Configuration": "2.1.1",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
@@ -6190,6 +6254,21 @@
         },
         "runtime": {
           "bin/placeholder/MicroAngels.Swagger.dll": {}
+        }
+      },
+      "MicroAngels.Trace/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Jaeger": "0.3.5",
+          "MicroAngels.Core": "1.0.0",
+          "OpenTracing.Contrib.NetCore": "0.6.1"
+        },
+        "compile": {
+          "bin/placeholder/MicroAngels.Trace.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MicroAngels.Trace.dll": {}
         }
       }
     }
@@ -6489,6 +6568,43 @@
         "lib/netstandard2.0/IdentityServer4.Storage.dll",
         "lib/netstandard2.0/IdentityServer4.Storage.pdb",
         "lib/netstandard2.0/IdentityServer4.Storage.xml"
+      ]
+    },
+    "Jaeger/0.3.5": {
+      "sha512": "3kqfCkikoPyHfKGoMbI7PovcanZQ0VTsVWLfmtPzotNoUe+XOu+YzyTjJm4SBWGUfIbgfMEgUe/Gw0PfiyOssA==",
+      "type": "package",
+      "path": "jaeger/0.3.5",
+      "files": [
+        ".signature.p7s",
+        "jaeger.0.3.5.nupkg.sha512",
+        "jaeger.nuspec",
+        "lib/netstandard2.0/Jaeger.dll",
+        "lib/netstandard2.0/Jaeger.pdb",
+        "lib/netstandard2.0/Jaeger.xml"
+      ]
+    },
+    "Jaeger.Thrift/0.3.5": {
+      "sha512": "oqXSpEVVdhTLzpy4iQsBtx/jNnbHQqMctK+mJk4vnDzCvNn6QobTF3gUTbKs4EKADxtT2brSNgGs5lOMcFtkLQ==",
+      "type": "package",
+      "path": "jaeger.thrift/0.3.5",
+      "files": [
+        ".signature.p7s",
+        "jaeger.thrift.0.3.5.nupkg.sha512",
+        "jaeger.thrift.nuspec",
+        "lib/netstandard2.0/Jaeger.Thrift.dll",
+        "lib/netstandard2.0/Jaeger.Thrift.pdb"
+      ]
+    },
+    "Jaeger.Thrift.VendoredThrift/0.3.5": {
+      "sha512": "1SfnXMdFpjHHP+/E6hNacBbDbl6/47ERV1icUxAedYbZJyQGmV5EszZEN6Sxfk6am4EsT3wKG/CaMOqbGtB2iA==",
+      "type": "package",
+      "path": "jaeger.thrift.vendoredthrift/0.3.5",
+      "files": [
+        ".signature.p7s",
+        "jaeger.thrift.vendoredthrift.0.3.5.nupkg.sha512",
+        "jaeger.thrift.vendoredthrift.nuspec",
+        "lib/netstandard2.0/Jaeger.Thrift.VendoredThrift.dll",
+        "lib/netstandard2.0/Jaeger.Thrift.VendoredThrift.pdb"
       ]
     },
     "librdkafka.redist/0.11.6": {
@@ -9696,6 +9812,38 @@
         "npgsql.nuspec"
       ]
     },
+    "OpenTracing/0.12.0": {
+      "sha512": "PqB3QtnNXuJ7s+SfQkcfjMWYgsvRZdT3olHoYGraa37a2AFva6dqBWxFvlaI921wUfn65kFMQWTyUm3YeUD+Wg==",
+      "type": "package",
+      "path": "opentracing/0.12.0",
+      "files": [
+        ".signature.p7s",
+        "lib/net45/OpenTracing.dll",
+        "lib/net45/OpenTracing.pdb",
+        "lib/net45/OpenTracing.xml",
+        "lib/netstandard1.3/OpenTracing.dll",
+        "lib/netstandard1.3/OpenTracing.pdb",
+        "lib/netstandard1.3/OpenTracing.xml",
+        "lib/netstandard2.0/OpenTracing.dll",
+        "lib/netstandard2.0/OpenTracing.pdb",
+        "lib/netstandard2.0/OpenTracing.xml",
+        "opentracing.0.12.0.nupkg.sha512",
+        "opentracing.nuspec"
+      ]
+    },
+    "OpenTracing.Contrib.NetCore/0.6.1": {
+      "sha512": "pDBMhMajcAzs6rPXVeeNy1RugcPBs4UpQBzEl+wewz1pef65oswQXwojRp5fVx+0LOL9zrPDijJj12DESrUlgQ==",
+      "type": "package",
+      "path": "opentracing.contrib.netcore/0.6.1",
+      "files": [
+        ".signature.p7s",
+        "lib/netcoreapp2.0/OpenTracing.Contrib.NetCore.dll",
+        "lib/netcoreapp2.0/OpenTracing.Contrib.NetCore.pdb",
+        "lib/netcoreapp2.0/OpenTracing.Contrib.NetCore.xml",
+        "opentracing.contrib.netcore.0.6.1.nupkg.sha512",
+        "opentracing.contrib.netcore.nuspec"
+      ]
+    },
     "Oracle.ManagedDataAccess.Core/2.18.3": {
       "sha512": "YWpsNnGbLt5CjpfHzt9RUZbp8CPC5AOkeATSY10WICit9TYtkt3cLBP1i7o1b1jHJen6JWwYrxGRG0BTeN9D/Q==",
       "type": "package",
@@ -9821,14 +9969,15 @@
         "runtime.native.System.nuspec"
       ]
     },
-    "runtime.native.System.Data.SqlClient.sni/4.4.0": {
-      "sha512": "A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+    "runtime.native.System.Data.SqlClient.sni/4.5.0": {
+      "sha512": "X4hp5h5M2plTWZnUd79d0x4actSMj9L3Hv6e1Lu+oGi35XSaXg21ha4Rqmt2KrIesfUwMfpET8QhMkS1eiWqRQ==",
       "type": "package",
-      "path": "runtime.native.system.data.sqlclient.sni/4.4.0",
+      "path": "runtime.native.system.data.sqlclient.sni/4.5.0",
       "files": [
+        ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+        "runtime.native.system.data.sqlclient.sni.4.5.0.nupkg.sha512",
         "runtime.native.system.data.sqlclient.sni.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -10946,10 +11095,10 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "System.Data.SqlClient/4.5.1": {
-      "sha512": "qXTvTFkBds7bnN+ntBMHGvmH3pCAkfT4TE1z2Xvfqo4wKMQC77O4aXsYCc7dzCESC+/Gom6l0GLuebpFx7MDvg==",
+    "System.Data.SqlClient/4.6.0": {
+      "sha512": "DLhg881ETdy/OmlbBCjfXGVU2Xlm9x5yHwhcl33SAfCIG05hAbgMcvHUZruIG1sBJolGzDhes7R7hAKPS1SOqw==",
       "type": "package",
-      "path": "system.data.sqlclient/4.5.1",
+      "path": "system.data.sqlclient/4.6.0",
       "files": [
         ".signature.p7s",
         "LICENSE.TXT",
@@ -11013,7 +11162,7 @@
         "runtimes/win/lib/netstandard1.3/System.Data.SqlClient.dll",
         "runtimes/win/lib/netstandard2.0/System.Data.SqlClient.dll",
         "runtimes/win/lib/uap10.0.16299/System.Data.SqlClient.dll",
-        "system.data.sqlclient.4.5.1.nupkg.sha512",
+        "system.data.sqlclient.4.6.0.nupkg.sha512",
         "system.data.sqlclient.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -15694,6 +15843,11 @@
       "type": "project",
       "path": "../../src/MicroAngels.Swagger/MicroAngels.Swagger.csproj",
       "msbuildProject": "../../src/MicroAngels.Swagger/MicroAngels.Swagger.csproj"
+    },
+    "MicroAngels.Trace/1.0.0": {
+      "type": "project",
+      "path": "../../src/MicroAngels.Trace/MicroAngels.Trace.csproj",
+      "msbuildProject": "../../src/MicroAngels.Trace/MicroAngels.Trace.csproj"
     }
   },
   "projectFileDependencyGroups": {

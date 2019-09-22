@@ -15,6 +15,7 @@ using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.Core.Plugins;
 using MicroAngels.Swagger;
 using System.IO;
+using MicroAngels.Trace.Jaeger;
 
 namespace MessageCenter
 {
@@ -73,7 +74,7 @@ namespace MessageCenter
 					 .AddJsonFormatters()
 					 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-
+			//add ids authentication
 			services.AddIdsAuthentication(new IdentityAuthenticationOptions
 			{
 				Scheme = Configuration["IdentityService:DefaultScheme"],
@@ -83,6 +84,14 @@ namespace MessageCenter
 				ApiName = "MessageCenter"
 			});
 
+			// add jaeger trace
+			services.AddJaegerTrace(options => {
+				options.ServiceName = Configuration["Jaeger:Service"];
+				options.ReporterOptions.RemoteHost = Configuration["Jaeger:Reporter:Host"];
+				options.ReporterOptions.RemotePort = Convert.ToInt32(Configuration["Jaeger:Reporter:Port"]);
+			});
+
+			// add less log
 			services.AddLessLog();
 
 			services.AddServiceFinder(

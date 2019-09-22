@@ -41,7 +41,7 @@ namespace MicroAngels.OcelotGateway.Services
 			var services = await _serviceFinder.FindByNameAsync(_configuration["AuthService:Name"]);
 			if (!services.IsNull() && services.Count > 0)
 			{
-				var serivceUrl = $@"{services[0].Address}{_configuration["RemoteService:ServiceUrls"]}";
+				var serivceUrl = $@"{services[0].Address}{_configuration["AuthService:ServiceUrls"]}";
 				using (var client = new HttpClient())
 				{
 					var permissionUrls = await client.PostAsync<string[]>(serivceUrl, roles);

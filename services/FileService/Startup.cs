@@ -65,7 +65,9 @@ namespace FileService
 			});
 
 			services.AddJaegerTrace(options=> {
-				options.ServiceName = Configuration["Service:Name"];
+				options.ServiceName = Configuration["Jaeger:Service"];
+				options.ReporterOptions.RemoteHost = Configuration["Jaeger:Reporter:Host"];
+				options.ReporterOptions.RemotePort = Convert.ToInt32(Configuration["Jaeger:Reporter:Port"]);
 			});
 
 			//add exceptionless logger

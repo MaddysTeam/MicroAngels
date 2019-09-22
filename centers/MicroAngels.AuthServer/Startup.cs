@@ -13,6 +13,7 @@ using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using MicroAngels.Swagger;
+using MicroAngels.Trace.Jaeger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -71,6 +72,13 @@ namespace MicroAngels.AuthServer
 			.AddApiExplorer()
 			.AddAuthorization()
 			.AddJsonFormatters();
+
+			// add jaeger trace
+			services.AddJaegerTrace(options => {
+				options.ServiceName = Configuration["Jaeger:Service"];
+				options.ReporterOptions.RemoteHost = Configuration["Jaeger:Reporter:Host"];
+				options.ReporterOptions.RemotePort = Convert.ToInt32(Configuration["Jaeger:Reporter:Port"]);
+			});
 
 			// add exceptionless logger
 			services.AddLessLog();

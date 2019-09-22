@@ -1,12 +1,7 @@
 ﻿using FileService.Business;
 using MicroAngels.Core;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using System.Linq;
 
 namespace FileService.Controllers
