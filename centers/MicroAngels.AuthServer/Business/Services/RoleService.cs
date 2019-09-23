@@ -38,7 +38,7 @@ namespace Business
 			{
 				if (role.RoleId.IsEmpty())
 				{
-					var current = RoleDb.GetSingle(r => r.RoleName == role.RoleName);
+					var current = RoleDb.GetSingle(r => r.RoleName == role.RoleName && r.SystemId==role.SystemId);
 					return current.IsNull() ? await RoleDb.AsInsertable(role).ExecuteCommandAsync() > 0 : false;
 				}
 				else

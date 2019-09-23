@@ -12,6 +12,7 @@ namespace MicroAngels.AuthServer.Test
 		public static Guid InterfaceId = Guid.Parse("915e5911-6f71-47cb-b0ff-1e0d355e2115");
 		public static Guid RoleId = Guid.Parse("c2c1c796-2c94-4c19-9bfd-51df88839c9b");
 		public static Guid UserId = Guid.Parse("8e69f758-94ff-4199-b1f9-44410766877f");
+		public static Guid UserId2 = Guid.Parse("8e69f758-94ff-4199-b1f9-44410766877f");
 		public static Guid UserRoleId = Guid.Parse("3c5daa71-621a-48c6-9adf-1df7b8c09917");
 		public static Guid RoleAssetId = Guid.Parse("65267c9f-bce4-40a9-ba31-ec17210243a9");
 
@@ -42,6 +43,7 @@ namespace MicroAngels.AuthServer.Test
 		public static SystemRole RoleWithNameEmpty = new SystemRole { RoleName="" };
 		public static SystemRole RoleWithSystemIdEmpty = new SystemRole { RoleName = RoleName, SystemId = Guid.Empty };
 		public static SystemRole CorrectRole = new SystemRole { RoleName = RoleName, SystemId = SystemId };
+		public static SystemRole DuplicatedRole = new SystemRole { RoleName = RoleName, SystemId = SystemId };
 
 		public static RoleAssets RoleAssetWithEmptyRoleId = new RoleAssets { AssetId=AssetId, RoleId=Guid.Empty };
 		public static RoleAssets RoleAssetWithEmptyAssetId = new RoleAssets { AssetId = Guid.Empty, RoleId = RoleId };

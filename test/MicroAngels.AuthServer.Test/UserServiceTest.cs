@@ -1,9 +1,6 @@
 using Business;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xunit;
-using System.Linq;
-using MicroAngels.Core;
 
 namespace MicroAngels.AuthServer.Test
 {
@@ -39,10 +36,14 @@ namespace MicroAngels.AuthServer.Test
 			//Assert.False(currentUser.UserId.IsEmpty());
 		}
 
-
-
 		[Fact]
 		public  void ModifyTest()
+		{
+
+		}
+
+		[Fact]
+		public void GetUserTest()
 		{
 
 		}

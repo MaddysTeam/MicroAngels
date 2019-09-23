@@ -1,6 +1,6 @@
 using Business;
+using MicroAngels.Core;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using Xunit;
 
@@ -28,6 +28,12 @@ namespace MicroAngels.AuthServer.Test
 			role = AuthServerTestKeys.CorrectRole;
 			result = await _roleService.Edit(role);
 			Assert.True(result);
+			Assert.False(role.RoleId.IsNull());
+
+			// duplicated role is not allowed
+			role = AuthServerTestKeys.DuplicatedRole;
+			result = await _roleService.Edit(role);
+			Assert.False(result);
 		}
 
 		[Fact]
@@ -45,13 +51,13 @@ namespace MicroAngels.AuthServer.Test
 			result = await _roleService.BindResource(AuthServerTestKeys.CorrectRoleAsset);
 			Assert.True(result);
 
-			// duplicate 
+			// duplicate resource is not allowed
 			result = await _roleService.BindResource(AuthServerTestKeys.CorrectRoleAsset);
 			Assert.False(result);
 		}
 
 		[Fact]
-		public async void GetRoleByUserNameTset()
+		public async void GetRoleTest()
 		{
 			var result = await _roleService.GetByUserName(null);
 			Assert.NotNull(result);
@@ -60,15 +66,27 @@ namespace MicroAngels.AuthServer.Test
 			result = await _roleService.GetByUserName(AuthServerTestKeys.UserName);
 			Assert.NotNull(result);
 			Assert.True(result.Count > 0);
+
+			result = await _roleService.GetByUserId(AuthServerTestKeys.UserId);
+			Assert.NotNull(result);
+
+			result = await _roleService.GetByUserIds(new System.Guid[] { AuthServerTestKeys.UserId, AuthServerTestKeys.UserId2 });
+			Assert.NotNull(result);
+			Assert.True(result.Count > 0);
 		}
 
 		[Fact]
-		public async void SearchRoleTest()
+		public  void SearchRoleTest()
 		{
-			//int outTotal = 100;
-			//var result = await _roleService.Search(AuthServerTestKeys.roleCondition,null,null, out outTotal);
-			//Assert.NotNull(result);
-			//Assert.True(result.Count() > 0);
+			var result = _roleService.Search(null, null);
+			Assert.NotNull(result);
+			Assert.True(result.Count() > 0);
+
+			int pageSize = 10;
+			int startIndex = 0;
+			result = _roleService.Search(null, new PageOptions(startIndex, pageSize));
+			Assert.NotNull(result);
+			Assert.True(result.Count() == 10);
 		}
 
 
