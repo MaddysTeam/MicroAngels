@@ -1,6 +1,4 @@
-﻿using MicroAngels.Core.Test.Models;
-using System.Net.Http;
-using Xunit;
+﻿using Xunit;
 
 namespace MicroAngels.Core.Test.Extensions
 {
@@ -10,6 +8,12 @@ namespace MicroAngels.Core.Test.Extensions
 
 		public IdentityExtensionsTest()
 		{
+		}
+
+		[Fact]
+		public void GetClaimsValueTest()
+		{
+
 		}
 
 	}

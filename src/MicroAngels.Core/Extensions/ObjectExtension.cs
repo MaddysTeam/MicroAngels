@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.Core
 {
@@ -14,7 +12,7 @@ namespace MicroAngels.Core
             return o == null || o.Equals(null);
         }
 
-        public static void EnsureNotNull<Error>(this object o, Func<Error> errorFunc) where Error : Exception
+        public static void EnsureNotNull<Error>(this object o, Func<Error> errorFunc) where Error : AngleExceptions
         {
             if (o == null && !IsNull(errorFunc))
                 throw errorFunc();

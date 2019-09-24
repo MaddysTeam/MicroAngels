@@ -1,6 +1,4 @@
-﻿using MicroAngels.Core.Test.Models;
-using System.Net.Http;
-using Xunit;
+﻿using Xunit;
 
 namespace MicroAngels.Core.Test.Extensions
 {
@@ -10,6 +8,48 @@ namespace MicroAngels.Core.Test.Extensions
 
 		public StringExtensionTest()
 		{
+		}
+
+		[Fact]
+		public void CheckNullOrEmptyeTest()
+		{
+
+		}
+
+		[Fact]
+		public void EnsureNotNullTest()
+		{
+
+		}
+
+		[Fact]
+		public void ToObjectTest()
+		{
+
+		}
+
+		[Fact]
+		public void ToListTest()
+		{
+
+		}
+
+		[Fact]
+		public void ToGuidTest()
+		{
+
+		}
+
+		[Fact]
+		public void ToLongTset()
+		{
+
+		}
+
+		[Fact]
+		public void ToMD5Test()
+		{
+
 		}
 
 	}

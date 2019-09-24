@@ -2,7 +2,7 @@
 using System.Net.Http;
 using Xunit;
 
-namespace MicroAngels.Core.Test.Extensions
+namespace MicroAngels.Core.Test
 {
 
 	public class HttpClientExtensionTest
