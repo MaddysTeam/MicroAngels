@@ -27,14 +27,23 @@ namespace MicroAngels.OcelotGateway
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// global accesstoken for all service
-			var serviceAuthenticationOptions = new ServiceAuthenticationOptions(Configuration);
-			services.AddAuthentication()
-				.AddIdentityServerAuthentication(serviceAuthenticationOptions.GlobalApiAuthenticationKey, serviceAuthenticationOptions.GlobalApiClient);
-
-			// if you need use different token for each service , you comment following code below:
+			// if you need use different token for each service , you can replace by following code below:
 			//.AddIdentityServerAuthentication(ServiceAuthenticationOptions.OtherKey, ServiceAuthenticationOptions.OtherClient);
 
+			services.AddAuthentication()
+				.AddIdentityServerAuthentication(
+					Configuration["GlobalApiAuthentication:Key"],// global authentication scheme for system
+					option =>
+					{
+						option.Authority = Configuration["IdentityServices:Uri"];
+						option.ApiName = Configuration["IdentityServices:Audience"];
+						option.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityServices:UseHttps"]);
+						option.SupportedTokens = IdentityServer4.AccessTokenValidation.SupportedTokens.Both;
+						option.ApiSecret = Configuration["IdentityServices:ApiSecret"];
+					}
+				);
+
+			// add ocelot
 			services.AddOcelot(Configuration).AddAngelsOcelot(c =>
 			{
 				c.ConnectString = Configuration["Database:Mysql:OcelotConn"];
@@ -64,6 +73,7 @@ namespace MicroAngels.OcelotGateway
 				.AllowCredentials());
 			});
 
+			// add service finder
 			services.AddServiceFinder(
 				new ConsulHostConfiguration
 				{
@@ -73,6 +83,7 @@ namespace MicroAngels.OcelotGateway
 
 			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
 
+			// add log
 			services.AddLessLog();
 
 			//inject CustomAuthenticateService for gateway
@@ -88,10 +99,13 @@ namespace MicroAngels.OcelotGateway
 				app.UseDeveloperExceptionPage();
 			}
 
+			// use log
 			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 
+			// use cors
 			app.UseCors("CorsPolicy");
 
+			// use ocelot
 			app.UseAngleOcelot().Wait();
 		}
 	}

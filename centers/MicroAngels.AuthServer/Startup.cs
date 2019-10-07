@@ -107,8 +107,8 @@ namespace MicroAngels.AuthServer
 				.UseValidateService<UserValidateService>()
 				.UseClaimsGrantService<UserClaimGrantService>()
 				.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-				.AddProfileService<UserClaimsProfileService>();// add claims into user profile （such as context）
-				//.UseRedisGrantStore(new RedisOperationalStoreOptions("192.168.1.9:6379") );
+				.AddProfileService<UserClaimsProfileService>()// add claims into user profile （such as context）
+				.UseRedisGrantStore(new RedisOperationalStoreOptions($"{Configuration["Redis:Host"]}:{Configuration["Redis:Port"]}") ); // use redis grant strore instead
 
 			//token authentication
 			services.AddIdsAuthentication(new IdentityAuthenticationOptions

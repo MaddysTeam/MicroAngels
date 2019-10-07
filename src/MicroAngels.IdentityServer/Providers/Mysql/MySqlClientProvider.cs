@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 namespace MicroAngels.IdentityServer.Providers.MySql
 {
 
-    class MySqlClientProvider : IClientProvider
+    public class MySqlClientProvider : IClientProvider
     {
 
         public MySqlClientProvider(MySqlStoreOptions storeOptions)
@@ -22,7 +22,7 @@ namespace MicroAngels.IdentityServer.Providers.MySql
             var _client = new Client();
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                var query = await connection.QueryMultipleAsync(_clientSql, new { client = clientId });
+				var query = await connection.QueryMultipleAsync(Sqls.Client, new { client = clientId });
                 var clients = query.Read<IdentityClient>();
                 var clientSecrets = query.Read<IdentityClientSecret>();
                 var clientGrantTypes = query.Read<IdentityClientGrantType>();
@@ -43,15 +43,7 @@ namespace MicroAngels.IdentityServer.Providers.MySql
                
         }
 
-
         private MySqlStoreOptions _storeOptions;
-        private string _clientSql = @"select * from Clients where ClientId=@client and Enabled=1;
-               select t3.* from Clients t1 inner join ClientSecrets t3 on t1.Id=t3.ClientId where t1.ClientId=@client and Enabled=1;
-               select t2.* from Clients t1 inner join ClientGrantTypes t2 on t1.Id=t2.ClientId where t1.ClientId=@client and Enabled=1;
-               select t2.* from Clients t1 inner join ClientScopes t2 on t1.Id=t2.ClientId where t1.ClientId=@client and Enabled=1;
-               select t2.* from Clients t1 inner join ClientRedirectUris t2 on t1.Id=t2.ClientId where t1.ClientId=@client and Enabled=1;
-               ";
-
     }
 
 }

@@ -61,8 +61,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.ORM", "src\Micr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Configuration", "src\MicroAngels.Configuration\MicroAngels.Configuration.csproj", "{D6F2DA23-1858-4A1F-9587-A5822B3A169D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Polly.Test", "test\MicroAngels.Polly.Test\MicroAngels.Polly.Test.csproj", "{59623AAE-4D81-4772-9F12-6D21C8150D3F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.ServiceDiscovery.Test", "test\MicroAngels.ServiceDiscovery.Test\MicroAngels.ServiceDiscovery.Test.csproj", "{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Core.Test", "test\MicroAngels.Core.Test\MicroAngels.Core.Test.csproj", "{CE1FC9B1-B31B-4B91-BE6F-751432038094}"
@@ -77,7 +75,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Hystrix", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.Trace", "src\MicroAngels.Trace\MicroAngels.Trace.csproj", "{7BE601CF-48AE-401F-ABFB-E557DE29340D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroAngels.IdentityServer.Test", "test\MicroAngels.IdentityServer.Test\MicroAngels.IdentityServer.Test.csproj", "{5596BBA1-9598-4B32-873F-76872F9F5C77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.IdentityServer.Test", "test\MicroAngels.IdentityServer.Test\MicroAngels.IdentityServer.Test.csproj", "{5596BBA1-9598-4B32-873F-76872F9F5C77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAngels.GRPC.Test", "test\MicroAngels.GRPC.Test\MicroAngels.GRPC.Test.csproj", "{6AC5F8D2-9003-46B0-9562-8E699311D9BE}"
 EndProject
@@ -175,10 +173,6 @@ Global
 		{D6F2DA23-1858-4A1F-9587-A5822B3A169D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6F2DA23-1858-4A1F-9587-A5822B3A169D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6F2DA23-1858-4A1F-9587-A5822B3A169D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59623AAE-4D81-4772-9F12-6D21C8150D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59623AAE-4D81-4772-9F12-6D21C8150D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59623AAE-4D81-4772-9F12-6D21C8150D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59623AAE-4D81-4772-9F12-6D21C8150D3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -252,7 +246,6 @@ Global
 		{801237BD-3122-4BEB-B235-A361F9548165} = {A798801D-2D8F-4557-8499-269AC0AF7353}
 		{244EFF40-CD5A-47E0-A9E0-6C063F952E2A} = {76FD3796-8DEE-4F3B-BC38-4AF61214E10C}
 		{D6F2DA23-1858-4A1F-9587-A5822B3A169D} = {76FD3796-8DEE-4F3B-BC38-4AF61214E10C}
-		{59623AAE-4D81-4772-9F12-6D21C8150D3F} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{EEE7F35B-6A2B-4696-A9B1-AF189BD20FC0} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{CE1FC9B1-B31B-4B91-BE6F-751432038094} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}
 		{69EEC5A4-33D2-4A17-A758-287A80062B3B} = {CC490CF6-A794-43FC-8F2B-B8048B0642A9}

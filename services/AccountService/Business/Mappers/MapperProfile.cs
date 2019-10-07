@@ -15,7 +15,6 @@ namespace Business
 			.ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone))
 			.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
 			.ReverseMap();
-
 		}
 
 	}

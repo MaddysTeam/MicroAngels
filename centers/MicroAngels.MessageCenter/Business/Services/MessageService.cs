@@ -2,7 +2,7 @@
 using DotNetCore.CAP;
 using Infrastructure.Orms.Sugar;
 using MicroAngels.Core;
-using Microsoft.Extensions.Logging;
+using MicroAngels.Logger;
 using Newtonsoft.Json;
 using SqlSugar;
 using System;
@@ -15,7 +15,7 @@ namespace Business.Services
 	public class MessageService : MySqlDbContext, IMessageService, ICapSubscribe
 	{
 
-		public MessageService(ITopicService topicService, ISubscribeService subscribeService, ILogger<MessageService> logger)
+		public MessageService(ITopicService topicService, ISubscribeService subscribeService, ILogger logger)
 		{
 			_topicService = topicService;
 			_subscribeService = subscribeService;
@@ -111,7 +111,7 @@ namespace Business.Services
 			Message msg = JsonConvert.DeserializeObject<Message>(message);
 			if (!msg.IsValidate || msg.SubscriberId.IsNullOrEmpty() || msg.TargetId.IsNullOrEmpty())
 			{
-				_logger.LogError(AlterKeys.Error.MESSAGE_INVALID, msg.Id);
+				_logger.Error(AlterKeys.Error.MESSAGE_INVALID, new string[] { msg.Id });
 				return false;
 			}
 
@@ -234,7 +234,7 @@ namespace Business.Services
 
 		private readonly ITopicService _topicService;
 		private readonly ISubscribeService _subscribeService;
-		private readonly ILogger<MessageService> _logger;
+		private readonly ILogger _logger;
 
 	}
 

@@ -47,6 +47,8 @@ E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.dll
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.pdb
 E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.xml
+E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.dll
+E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MessageCenter.xml
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.MessageCenter.deps.json
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.MessageCenter.runtimeconfig.json
@@ -61,12 +63,14 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Mess
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ORM.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.dll
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Bus.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Core.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.IdentityServer.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Logger.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ServiceDiscovery.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Swagger.pdb
+C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.ORM.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Cache.pdb
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.csprojAssemblyReference.cache
@@ -79,7 +83,3 @@ C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.Mess
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.csproj.CopyComplete
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.dll
 C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\obj\Debug\netcoreapp2.1\MicroAngels.MessageCenter.pdb
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.dll
-C:\project\micro_service\Surgin\MicroAngels\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.pdb
-E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.dll
-E:\项目文件(GitLab)\MicroAngels\centers\MicroAngels.MessageCenter\bin\Debug\netcoreapp2.1\MicroAngels.Trace.pdb

@@ -18,8 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Plugins\Validatros\" />
-    <Folder Include="Plugins\Crypto\" />
-    <Folder Include="Plugins\LoadBalance\" />
   </ItemGroup>
 
 </Project>

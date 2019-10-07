@@ -49,7 +49,6 @@ namespace Business
 			return await SignOutTokenRequest(model.AccessToken);
 		}
 
-
 		public async Task<bool> SignUp(Account model)
 		{
 			// implement sign up logic here
@@ -82,7 +81,6 @@ namespace Business
 				Body = AppKeys.AddUser,
 			});
 		}
-
 
 		public bool Validate(string name, string password)
 		{
@@ -133,8 +131,7 @@ namespace Business
 				ClientSecret = _configuation["IdentityService:Client:Secret"],
 				Scopes = _configuation["IdentityService:Client:Scopes"],
 				Address = _configuation["IdentityService:Client:Address"],
-				GrantType = _configuation["IdentityService:Client:GrantType"],
-				//RefreshToken = "9aa22e7229cfc841b89965cef6331d4205f861afd9dcd8cbbc32f29a172a6a6e",
+				GrantType = _configuation["IdentityService:Client:GrantType"]
 			};
 		}
 

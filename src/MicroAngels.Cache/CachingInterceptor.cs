@@ -38,7 +38,7 @@
 
 		private async Task ExecuteCaching(AspectContext context, AspectDelegate next, CachingAttribute attribute)
 		{
-			// generate key secnario is  （class + method + para） values pattern
+			// generate key secnario is （class + method + para） values pattern
 			var cacheKey = GenerateCacheKey(context);
 
 			// search from cache first
@@ -66,10 +66,10 @@
 				}
 			}
 
-			// 执行方法体
+			// execute method body
 			await next(context);
 
-			// 执行方法体之后加入缓存
+			// add cache after executing method body
 			if (!string.IsNullOrWhiteSpace(cacheKey))
 			{
 				var o = attribute.IsAsync ? (context.ReturnValue as Task<T>).Result : context.ReturnValue;

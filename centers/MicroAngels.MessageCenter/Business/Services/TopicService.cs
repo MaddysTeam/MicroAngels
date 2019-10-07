@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Orms.Sugar;
 using MicroAngels.Core;
-using Microsoft.Extensions.Logging;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -13,15 +12,14 @@ namespace Business.Services
 	public class TopicService : MySqlDbContext, ITopicService
 	{
 
-		public TopicService(ILogger<TopicService> logger)
+		public TopicService()
 		{
-			_logger = logger;
 		}
 
 		public async Task<bool> EditTopicAsync(Topic topic)
 		{
 			var result = true;
-			topic.EnsureNotNull(() => new ArgumentException());
+			topic.EnsureNotNull(() => new AngleExceptions());
 			var isExists = !topic.Id.IsNullOrEmpty() && !TopicsDb.GetById(topic.Id).IsNull();
 			if (isExists)
 			{
@@ -74,8 +72,6 @@ namespace Business.Services
 			else
 				return query.ToList();
 		}
-
-		private readonly ILogger<TopicService> _logger;
 
 	}
 

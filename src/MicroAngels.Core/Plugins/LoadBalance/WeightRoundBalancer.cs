@@ -11,6 +11,8 @@ namespace MicroAngels.Core.Plugins
 	{
 		public string Name => "WeightRound";
 
+		private static Random _rand = new Random();
+
 		public T Balance<T>(IDictionary<T, int> source)
 		{
 			if (source == null || source.Count == 0)
@@ -26,8 +28,7 @@ namespace MicroAngels.Core.Plugins
 				}
 			}
 
-			var rand = new Random(tmp.Count);
-			var next = rand.Next(tmp.Count-1);
+			var next = _rand.Next(tmp.Count - 1);
 			//if (next > tmp.Count)
 			//	next = tmp.Count - 1;
 

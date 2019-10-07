@@ -21,7 +21,7 @@ namespace MicroAngels.Logger.ExceptionLess
 
 		public static IApplicationBuilder UseLessLog(this IApplicationBuilder builder, ExcepitonLessOptions options)
 		{
-			options.EnsureNotNull(() => new ArgumentNullException());
+			options.EnsureNotNull(() => new AngleExceptions("options cannot be null"));
 
 			ExceptionlessClient.Default.SubmittingEvent += Default_SubmittingEvent;
 

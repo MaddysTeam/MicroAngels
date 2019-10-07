@@ -105,7 +105,7 @@ namespace AccountService.Controllers
 		}
 
 
-		//[HttpPost("refresh")]
+		//[HttpPost("forget")]
 		//public async Task<bool> FogetPassword([FromBody] ChangePasswordViewModel model)
 		//{
 		//	return await _accountService.ChangePassword(model);

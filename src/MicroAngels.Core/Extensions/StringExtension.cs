@@ -67,6 +67,21 @@ namespace MicroAngels.Core
 			return result.Replace("-", "");
 		}
 
+		public static bool IsBase64(this string str)
+		{
+			if (string.IsNullOrEmpty(str)) return false;
+
+			try
+			{
+				Convert.FromBase64String(str);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
 	}
 
 }

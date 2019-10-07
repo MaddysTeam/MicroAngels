@@ -7,6 +7,7 @@ using MicroAngels.Logger.ExceptionLess;
 using MicroAngels.ORM.Suger;
 using MicroAngels.ServiceDiscovery.Consul;
 using MicroAngels.Trace.Jaeger;
+using MicroAngels.Trace.Prometheus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +88,8 @@ namespace FileService
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UsePrometheus();
 
 			app.UseAuthentication();
 

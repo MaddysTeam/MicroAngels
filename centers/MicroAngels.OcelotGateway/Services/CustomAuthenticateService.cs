@@ -29,7 +29,7 @@ namespace MicroAngels.OcelotGateway.Services
 		public async Task<bool> ValidateAuthenticate(DownstreamContext context)
 		{
 			var requestPath = context.DownstreamRequest.AbsolutePath;
-			var roleClaims = context.HttpContext.User.Claims.Where(c => c.Value == "role");
+			var roleClaims = context.HttpContext.User.Claims.Where(c => c.Value ==CoreKeys.ROLE);
 			var roles = roleClaims.Count() <= 0 ? new string[] { } : roleClaims.Select(x => x.Type).ToArray();
 
 			//if (context.HttpContext.User.IsNull())

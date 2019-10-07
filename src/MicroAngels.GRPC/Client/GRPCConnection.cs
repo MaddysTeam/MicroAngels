@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using MagicOnion;
 using MagicOnion.Client;
+using MicroAngels.Core;
 using MicroAngels.Core.Plugins;
 using System.Threading.Tasks;
 
@@ -20,12 +21,13 @@ namespace MicroAngels.GRPC.Client
 		{
 			_balancer = balancer ?? new WeightRoundBalancer();
 
-			if (serviceFinder != null)
-				_serviceFinder = serviceFinder;
+			serviceFinder.EnsureNotNull(() => new AngleExceptions());
 		}
 
 		public async Task<TService> GetGRPCService<TService>(string serviceName) where TService : IService<TService>
 		{
+			if (serviceName.IsNullOrEmpty()) return default(TService);
+
 			var services = await _serviceFinder.GetServicesAsync(serviceName);
 			var service = _balancer.Balance(services);
 

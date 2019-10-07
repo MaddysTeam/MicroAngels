@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Ocelot.Cache;
-using Ocelot.Configuration.File;
 using Ocelot.Configuration.Repository;
 using Ocelot.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.Gateway.Ocelot
 {
@@ -22,21 +19,26 @@ namespace MicroAngels.Gateway.Ocelot
 
 			// di for file configuration repository
 			builder.Services.AddSingleton<IFileConfigurationRepository, MysqlFileConfigurationRepository>();
-
-			// di for redis cache
-			//builder.Services.AddSingleton<IOcelotCache<FileConfiguration>,OcelotRedisCache<FileConfiguration>>();
-			//builder.Services.AddSingleton<IOcelotCache<CachedResponse>,OcelotRedisCache<CachedResponse>>();
-
-			//builder.Services.AddSingleton<IOcelotCache<RefreshToken>, OcelotRedisCache<RefreshToken>>();
-
-			// di for authentication service
-			//builder.Services.AddSingleton<ICustomAuthenticateService, DefaultCustomAuthenticateService>();
-
+			// di for cache response
 			builder.Services.AddSingleton<IOcelotCache<CachedResponse>, OcelotRedisCache<CachedResponse>>();
 
 			return builder;
 		}
 
 	}
+
+
+	#region temp
+
+	// di for redis cache
+	//builder.Services.AddSingleton<IOcelotCache<FileConfiguration>,OcelotRedisCache<FileConfiguration>>();
+	//builder.Services.AddSingleton<IOcelotCache<CachedResponse>,OcelotRedisCache<CachedResponse>>();
+
+	//builder.Services.AddSingleton<IOcelotCache<RefreshToken>, OcelotRedisCache<RefreshToken>>();
+
+	// di for authentication service
+	//builder.Services.AddSingleton<ICustomAuthenticateService, DefaultCustomAuthenticateService>();
+
+	#endregion
 
 }

@@ -10,7 +10,7 @@ namespace MicroAngels.Logger
 
 		public LoggerAttribute(IFilterLogExecutor executor)
 		{
-			executor.EnsureNotNull(() => new ArgumentNullException());
+			executor.EnsureNotNull(() => new AngleExceptions());
 			_executor = executor;
 		}
 

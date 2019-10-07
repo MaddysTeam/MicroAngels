@@ -1,21 +1,19 @@
-﻿using IdentityServer4.Models;
-using System;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using Dapper;
-using System.Linq;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+﻿using Dapper;
+using IdentityServer4.Models;
 using MicroAngels.IdentityServer.Models;
+using MicroAngels.Logger;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MicroAngels.IdentityServer.Providers.MySql
 {
 
-    public class MySqlGrantStoreProvider : IGrantStoreProvider
+	public class MySqlGrantStoreProvider : IGrantStoreProvider
     {
 
-        public MySqlGrantStoreProvider(ILogger<MySqlGrantStoreProvider> logger, MySqlStoreOptions storeOptions)
+        public MySqlGrantStoreProvider(ILogger logger, MySqlStoreOptions storeOptions)
         {
             _logger = logger;
             _storeOptions = storeOptions;
@@ -30,11 +28,11 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "select * from PersistedGrants where SubjectId=@subjectId";
+				string sql = Sqls.PersistedGrantsBySubjectId;// "select * from PersistedGrants where SubjectId=@subjectId";
                 var data = (await connection.QueryAsync<IdentityPersistedGrant>(sql, new { subjectId }))?.AsList();
                 var model = data.Select(x => x.Map());
 
-                _logger.LogDebug("{persistedGrantCount} persisted grants found for {subjectId}", data.Count, subjectId);
+                _logger.Info($"{data.Count} persisted grants found for {subjectId}");
                 return model;
             }
         }
@@ -48,11 +46,11 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "select * from PersistedGrants where `Key`=@key";
+				string sql = Sqls.PersistedGrantsByKey;// "select * from PersistedGrants where `Key`=@key";
                 var result = await connection.QueryFirstOrDefaultAsync<IdentityPersistedGrant>(sql, new { key });
                 var model = result.Map();
 
-                _logger.LogDebug("{persistedGrantKey} found in database: {persistedGrantKeyFound}", key, model != null);
+                _logger.Info($"{key} found in database: {model != null}");
                 return model;
             }
         }
@@ -67,9 +65,9 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "delete from PersistedGrants where ClientId=@clientId and SubjectId=@subjectId";
+				string sql = Sqls.DeletePersistedGrants;// "delete from PersistedGrants where ClientId=@clientId and SubjectId=@subjectId";
                 await connection.ExecuteAsync(sql, new { subjectId, clientId });
-                _logger.LogDebug("remove {subjectId} {clientId} from database success", subjectId, clientId);
+                _logger.Info($"remove {subjectId} {clientId} from database success");
             }
         }
 
@@ -84,9 +82,9 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "delete from PersistedGrants where ClientId=@clientId and SubjectId=@subjectId and Type=@type";
+				string sql = Sqls.DeletePersistedGrants2;// "delete from PersistedGrants where ClientId=@clientId and SubjectId=@subjectId and Type=@type";
                 await connection.ExecuteAsync(sql, new { subjectId, clientId });
-                _logger.LogDebug("remove {subjectId} {clientId} {type} from database success", subjectId, clientId, type);
+                _logger.Info($"remove {subjectId} {clientId} {type} from database success");
             }
         }
 
@@ -99,9 +97,9 @@ namespace MicroAngels.IdentityServer.Providers.MySql
         {
             using (var connection = new MySqlConnection(_storeOptions.ConnectionStrings))
             {
-                string sql = "delete from PersistedGrants where `Key`=@key";
+				string sql = Sqls.DeletePersistedGrantsBykey;// "delete from PersistedGrants where `Key`=@key";
                 await connection.ExecuteAsync(sql, new { key });
-                _logger.LogDebug("remove {key} from database success", key);
+                _logger.Info($"remove {key} from database success");
             }
         }
 
@@ -116,12 +114,12 @@ namespace MicroAngels.IdentityServer.Providers.MySql
 			{
 				//移除防止重复
 				await RemoveAsync(grant.Key);
-				string sql = "insert into PersistedGrants(`Key`,ClientId,CreationTime,Data,Expiration,SubjectId,Type) values(@Key,@ClientId,@CreationTime,@Data,@Expiration,@SubjectId,@Type)";
+				string sql = Sqls.InsertPersisedGrants;// "insert into PersistedGrants(`Key`,ClientId,CreationTime,Data,Expiration,SubjectId,Type) values(@Key,@ClientId,@CreationTime,@Data,@Expiration,@SubjectId,@Type)";
 				await connection.ExecuteAsync(sql, grant);
 			}
 		}
 
-        private readonly ILogger<MySqlGrantStoreProvider> _logger;
+        private readonly ILogger _logger;
 
         private readonly MySqlStoreOptions _storeOptions;
 

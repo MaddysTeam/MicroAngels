@@ -13,7 +13,6 @@ namespace MicroAngels.GRPC.Client
 
 	public class GRPCConsulServiceFinder : IGRPCServiceFinder
 	{
-
 		public GRPCConsulServiceFinder(IServiceFinder<ConsulService> serviceFinder)
 		{
 			_serviceFinder = serviceFinder;

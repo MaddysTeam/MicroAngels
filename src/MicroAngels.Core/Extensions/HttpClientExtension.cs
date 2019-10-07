@@ -3,7 +3,6 @@ using MicroAngels.Core.Service;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace MicroAngels.Core
 {
@@ -69,10 +68,6 @@ namespace MicroAngels.Core
 				
 				if (!code.IsNullOrEmpty())
 					client.DefaultRequestHeaders.Add("Authorization", code);
-
-				//var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(body);
-				//HttpContent httpContent = new StringContent(jsonStr);
-				//httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
 				return await client.PostAsync<T>(url,body);
 			}

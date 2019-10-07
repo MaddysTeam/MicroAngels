@@ -11,7 +11,7 @@ namespace MicroAngels.Logger.ExceptionLess
 
 		public ExcepitonLessExecutor(ILogger logger)
 		{
-			logger.EnsureNotNull(() => new ArgumentNullException());
+			logger.EnsureNotNull(() => new AngleExceptions());
 
 			_logger = logger;
 		}

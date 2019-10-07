@@ -1,19 +1,16 @@
-﻿using System;
+﻿using MicroAngels.Bus.CAP;
+using MicroAngels.Core.Plugins;
+using MicroAngels.Hystrix.Polly;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using MicroAngels.Bus.CAP;
-using MicroAngels.Core;
-using MicroAngels.Core.Plugins;
-using MicroAngels.Hystrix;
-using MicroAngels.Hystrix.Polly;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 
 namespace FileService.Business
 {
-
 	public class FileService : MySqlDbContext, IFileService
 	{
 
@@ -80,7 +77,28 @@ namespace FileService.Business
 		}
 
 
-		private string StaticFilePath()=> @"\" + "StaticFiles" + @"\" + DateTime.Now.ToString("yyMMdd") + @"\";
+		/// <summary>
+		/// search files
+		/// </summary>
+		/// <param name="whereExpressions"></param>
+		/// <param name="pageSize"></param>
+		/// <param name="pageIndex"></param>
+		/// <returns></returns>
+		[Polly(nameof(GetFilesFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
+		public List<Files> Search(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// call back service. TODO: comment for temp
+		/// </summary>
+		/// <returns></returns>
+		public Task<List<Files>> GetFilesFallback(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
+		{
+			return Task.FromResult(new List<Files>());
+		}
+
 
 		private string GetFilePath()
 		{
@@ -92,41 +110,9 @@ namespace FileService.Business
 			return DateTime.Now.ToString("yyMMddHHmmss") + Path.GetExtension(fileName);
 		}
 
-		/// <summary>
-		/// upload files by asynchronous method
-		/// </summary>
-		/// <param name="formFiles"></param>
-		/// <param name="savePath"></param>
-		/// <returns></returns>
-		public Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// search files
-		/// </summary>
-		/// <param name="whereExpressions"></param>
-		/// <param name="pageSize"></param>
-		/// <param name="pageIndex"></param>
-		/// <returns></returns>
-		//[Polly(nameof(GetFilesFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
-		public List<Files> Search(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// call back service. TODO: comment for temp
-		/// </summary>
-		/// <returns></returns>
-		//public Task<List<Files>> GetFilesFallback(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
-		//{
-		//	return Task.FromResult(new List<Files>());
-		//}
-
 		private readonly ICAPPublisher _bus;
 		private readonly IHostingEnvironment _env;
+		private string StaticFilePath() => @"\" + "StaticFiles" + @"\" + DateTime.Now.ToString("yyMMdd") + @"\";
 
 	}
 

@@ -35,7 +35,7 @@ namespace MicroAngels.OcelotGateway.Services
 			if (userId.IsNull() || context.DownstreamRequest.AbsolutePath.IndexOf(_conf["refreshKey:Code"]) < 0)
 				return context;
 
-			if(_cache.Lock(userId, _options.TokenRefreshIterval))
+			if (_cache.Lock(userId, _options.TokenRefreshIterval))
 			{
 				var rk = context.HttpContext.Request.Headers[CoreKeys.RefreshToken].ToString();
 				// refresh token
@@ -46,14 +46,14 @@ namespace MicroAngels.OcelotGateway.Services
 						var tokenResponse = await client.PostAsync<TokenResponse, ConsulService>(
 							_conf["AccountService:Name"],
 							_conf["AccountService:RefreshToken"],
-							null, 
+							null,
 							new { RefreshToken = rk },
 							_serviceFinder,
 							_loadBalancer);
 						if (tokenResponse.IsValidate)
 						{
 							tokenResponse.LastUpdateDate = DateTime.UtcNow;
-							RefreshTokenInHeaders(context,tokenResponse);
+							RefreshTokenInHeaders(context, tokenResponse);
 						}
 					}
 				}

@@ -98,33 +98,6 @@ namespace Business.Services
 				targets = await query.ToListAsync();
 			}
 
-			//if (options.IsJoinUser)
-			//{
-			//	if (targets.Count < 0)
-			//		return new List<Subscribe>();
-
-			//	var users = new List<UserViewModel>();
-			//	using (var client = new HttpClient())
-			//	{
-			//		var fromService = _conf["UserServcie:From"];
-			//		var virtualPath = _conf["UserServcie:VirtualPath"];
-			//		users = await client.PostAsync<List<UserViewModel>, ConsulService>(fromService, virtualPath, options?.Code, null, _serviceFinder, _loadBalancer);
-			//	}
-
-			//	return targets.Select(t =>
-			//	{
-			//		var user = users.Find(u => u.Id.ToString() == t.TargetId);
-			//		if (!user.IsNull())
-			//		{
-			//			t.Target = user.UserName;
-			//			t.Subscriber = user.RealName;
-			//		}
-
-			//		return t;
-			//	}).ToList();
-			//}
-
-
 			return targets;
 		}
 

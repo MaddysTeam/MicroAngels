@@ -13,7 +13,7 @@ namespace MicroAngels.Cache.Redis
 
 		public RedisCache(RedisCacheOption option)
 		{
-			option.EnsureNotNull(() => new ArgumentNullException());
+			option.EnsureNotNull(() => new AngleExceptions());
 
 			_option = option;
 			_client = new CSRedisClient(option.Conn);

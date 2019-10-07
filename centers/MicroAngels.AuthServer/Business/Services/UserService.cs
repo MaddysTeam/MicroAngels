@@ -90,15 +90,15 @@ namespace Business
 
 		public async Task<IEnumerable<UserInfo>> SearchWithFriends(UserSearchOption option, PageOptions page)
 		{
-			var users = await Search(null, page);
-			var friends = new List<FriendViewModel>();
+			var users = await Search(null, page); // get user info from cache or db
+			var fromService = _conf["FriendService:From"];
+			var virtualPath = _conf["FriendService:VirtualPath"];
 			using (var client = new HttpClient())
 			{
-				var fromService = _conf["FriendService:From"];
-				var virtualPath = _conf["FriendService:VirtualPath"];
-				friends = await client.PostAsync<List<FriendViewModel>, ConsulService>(fromService, virtualPath, null, new { SubscriberId = option.UserId, ServiceId = option.ServiceId }, _serviceFinder, _loadBalancer);
+				var friends = await client.PostAsync<List<FriendViewModel>, ConsulService>(fromService, virtualPath, null, new { SubscriberId = option.UserId, ServiceId = option.ServiceId }, _serviceFinder, _loadBalancer);  // get friend info from cache or db
 				foreach (var friend in friends)
 				{
+					// aggregate friend and user data
 					var user = users.FirstOrDefault(x => x.UserId == friend.TargetId.ToGuid());
 					if (!user.IsNull())
 						user.IsFriend = true;
@@ -130,12 +130,12 @@ namespace Business
 		{
 			await _publisher.PublishAsync(new AddAccountMessage
 			{
-				Topic= "AccountService.AddAccount",
-				Body =info.ToJson(),
-				 Email=info.Email,
-				 Name=info.UserName,
-				 HasTrans=false,
-				 Phone=info.Phone
+				Topic = "AccountService.AddAccount",
+				Body = info.ToJson(),
+				Email = info.Email,
+				Name = info.UserName,
+				HasTrans = false,
+				Phone = info.Phone
 			});
 		}
 
@@ -145,7 +145,7 @@ namespace Business
 			AddUserMessage msg = JsonConvert.DeserializeObject<AddUserMessage>(message);
 			if (!msg.IsNull())
 			{
-				await Edit(new UserInfo { UserName=msg.UserName, Email=msg.Email, Phone=msg.Phone  } );
+				await Edit(new UserInfo { UserName = msg.UserName, Email = msg.Email, Phone = msg.Phone });
 			}
 
 			return true;

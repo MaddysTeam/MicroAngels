@@ -317,9 +317,9 @@ namespace MicroAngels.Core.Plugins
 			List<string> keys = new List<string>();
 			switch (keyFormat)
 			{
-				case KeyFormat.XML: XC.RSAUtil.RsaKeyGenerator.XmlKey(keySize); break;
-				case KeyFormat.Pkcs1: XC.RSAUtil.RsaKeyGenerator.Pkcs1Key(keySize,false); break;
-				case KeyFormat.Pkcs8: XC.RSAUtil.RsaKeyGenerator.Pkcs8Key(keySize, false); break;
+				case KeyFormat.XML: keys = XC.RSAUtil.RsaKeyGenerator.XmlKey(keySize); break;
+				case KeyFormat.Pkcs1: keys = XC.RSAUtil.RsaKeyGenerator.Pkcs1Key(keySize, false); break;
+				case KeyFormat.Pkcs8: keys = XC.RSAUtil.RsaKeyGenerator.Pkcs8Key(keySize, false); break;
 			}
 
 			return keys;

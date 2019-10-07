@@ -8,6 +8,8 @@ namespace MicroAngels.Core
 	public class AngleExceptions : Exception, IError
 	{
 
+		public AngleExceptions() { }
+
 		public AngleExceptions(string message) : base(message) { }
 
 		public AngleExceptions(string message, Exception inner) : base(message, inner) { }

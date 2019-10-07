@@ -1,8 +1,5 @@
-﻿using MicroAngels.Core.Service;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroAngels.GRPC.Server
 {
@@ -12,7 +9,7 @@ namespace MicroAngels.GRPC.Server
 
 		public static GRPCServerBuilder AddGRPCServer(this IServiceCollection collection,GRPCServerOptions options)
 		{
-			return new GRPCServerBuilder().BuildServer(options);
+			return new GRPCServerBuilder().Build(options);
 		}
 
 		public static GRPCServerBuilder AddGRPCServer(this IServiceCollection collection, Action<GRPCServerOptions> options)

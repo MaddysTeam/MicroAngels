@@ -1,7 +1,6 @@
 ﻿using Business;
 using MicroAngels.Bus.CAP;
 using MicroAngels.Core;
-using MicroAngels.Core.Plugins;
 using MicroAngels.Logger;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,9 +24,8 @@ namespace Controllers
 		[HttpPost("edit")]
 		public async Task<IActionResult> Edit([FromForm]UserViewModel user)
 		{
-			//var isInsert = user.Id.IsEmpty();
 			var userInfo = user.Map<UserViewModel, UserInfo>();
-			var isSuccess = true; //await _userService.Edit(userInfo);
+			var isSuccess = await _userService.Edit(userInfo);
 
 			if (true)
 				await _userService.SendAddAccountMessage(userInfo);
@@ -138,9 +136,6 @@ namespace Controllers
 					msg = "操作失败",
 				});
 			}
-
-			//var result = _userService.BindRole(new UserRole { Id = Guid.NewGuid(), RoleId = userId, UserId = userId });
-
 		}
 
 		private IUserService _userService;

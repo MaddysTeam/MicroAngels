@@ -19,9 +19,6 @@ namespace MicroAngels.AuthServer.Test
 		{
 			var result = await _service.Edit(AuthServerTestKeys.AssetsWithNameEmpty);
 			Assert.False(result);
-
-			//result = await _service.Edit(AuthServerTestKeys.co);
-			//Assert.True(result);
 		}
 
 		[Fact]
@@ -55,9 +52,6 @@ namespace MicroAngels.AuthServer.Test
 
 			service = await _service.EditInterface(AuthServerTestKeys.InterfaceWithUrlEmpty);
 			Assert.False(service);
-
-			//service = await _service.EditInterface(AuthServerTestKeys.InterfaceWihtIllegalUrl);
-			//Assert.False(service);
 
 			service = await _service.EditInterface(AuthServerTestKeys.CorrectInterface);
 			Assert.True(service);

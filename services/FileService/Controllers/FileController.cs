@@ -68,7 +68,6 @@ namespace FileService.Controllers
 			});
 		}
 
-		private string _folder;
 		private IFileService _fileService;
 
 	}

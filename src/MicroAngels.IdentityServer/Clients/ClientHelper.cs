@@ -81,7 +81,7 @@ namespace MicroAngels.IdentityServer.Clients
 			if (request != null)
 				response = await new HttpClient().RequestRefreshTokenAsync(request);
 
-			return response;
+		return response;
 		}
 
 	}

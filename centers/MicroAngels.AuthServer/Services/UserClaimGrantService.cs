@@ -1,16 +1,17 @@
 ﻿using Business;
 using IdentityServer4.Validation;
-using MicroAngels.Cache.Redis;
+using MicroAngels.Core;
 using MicroAngels.IdentityServer.Services;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
-using MicroAngels.Core;
 
 namespace MicroAngels.AuthServer.Services
 {
-
+	/// <summary>
+	/// Grant serivce been invoke before generating access tokens in identity server
+	/// </summary>
 	public class UserClaimGrantService : IClaimsGrantService
 	{
 
@@ -18,7 +19,6 @@ namespace MicroAngels.AuthServer.Services
 		{
 			_roleService = roleService;
 			_userService = userService;
-			//_cache = cache;
 		}
 
 		public async Task<Claim[]> GetClaims(ResourceOwnerPasswordValidationContext context)
@@ -49,9 +49,9 @@ namespace MicroAngels.AuthServer.Services
 			return claims.ToArray();
 		}
 
-		//TODO:		private readonly IRedisCache _cache;
 		private readonly IRoleService _roleService;
 		private readonly IUserService _userService;
+
 	}
 
 }

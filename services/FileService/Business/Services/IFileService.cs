@@ -11,7 +11,7 @@ namespace FileService.Business
 	{
 		List<Files> UploadFiles(IFormFileCollection formFiles);
 
-		Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles);
+		//Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles);
 
 		List<Files> Search(List<System.Linq.Expressions.Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
 	}

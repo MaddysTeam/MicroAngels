@@ -20,7 +20,7 @@ namespace MicroAngels.IdentityServer.Extensions
 			builder.Services.AddSingleton<MySqlStoreOptions>(storeOption);
 			builder.Services.AddTransient<IClientProvider, MySqlClientProvider>();
 			builder.Services.AddTransient<IResourceProvider, MySqlResourceProvider>();
-			builder.Services.AddTransient<IGrantStoreProvider, MySqlGrantStoreProvider>();
+			builder.Services.AddTransient<IGrantStoreProvider, RedisGrantStoreProvider>();
 			builder.Services.AddTransient<IClientStore, ClientStore>();
 			builder.Services.AddTransient<IResourceStore, ResourceStore>();
 			builder.Services.AddTransient<IPersistedGrantStore, GrantStore>();

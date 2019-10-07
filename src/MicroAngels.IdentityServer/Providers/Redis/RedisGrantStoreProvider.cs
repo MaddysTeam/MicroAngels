@@ -1,6 +1,6 @@
 ﻿using IdentityServer4.Models;
+using MicroAngels.Core;
 using MicroAngels.Logger;
-using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
@@ -117,7 +117,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 
 		private readonly ILogger logger;
 
-		private ISystemClock clock;
+		//private ISystemClock clock;
 
 		public RedisGrantStoreProvider(RedisOperationalStoreOptions optons, ILogger logger)
 		{
@@ -144,7 +144,8 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 			{
 				var data = ConvertToJson(grant);
 				var grantKey = GetKey(grant.Key);
-				var expiresIn = new TimeSpan(0,0,50);
+				var expireSpan = grant.Expiration.Value - grant.CreationTime;
+				var expiresIn = new TimeSpan(expireSpan.Ticks); //new TimeSpan(0,0,50);
 				if (!string.IsNullOrEmpty(grant.SubjectId))
 				{
 					var setKey = GetSetKey(grant.SubjectId, grant.ClientId, grant.Type);
@@ -159,13 +160,12 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 					await database.StringSetAsync(setKeyforSubject, grantKey);
 					await database.StringSetAsync(setKeyforClient, grantKey);
 					await database.StringSetAsync(setKey, grantKey);
-					//if ((ttlOfSubjectSet.Result ?? TimeSpan.Zero) <= expiresIn)
-					//	await database.KeyExpireAsync(setKeyforSubject, expiresIn);
-					//if ((ttlOfClientSet.Result ?? TimeSpan.Zero) <= expiresIn)
-					//	await database.KeyExpireAsync(setKeyforClient, expiresIn);
+					if ((ttlOfSubjectSet.Result ?? TimeSpan.Zero) <= expiresIn)
+						await database.KeyExpireAsync(setKeyforSubject, expiresIn);
+					if ((ttlOfClientSet.Result ?? TimeSpan.Zero) <= expiresIn)
+						await database.KeyExpireAsync(setKeyforClient, expiresIn);
 
-					//await database.KeyExpireAsync(setKey, expiresIn);
-					
+					await database.KeyExpireAsync(setKey, expiresIn);
 					//var transaction = this.database.CreateTransaction();
 					//await transaction.StringSetAsync(grantKey, data, expiresIn);
 					//await transaction.SetAddAsync(setKeyforSubject, grantKey);
@@ -177,6 +177,7 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 					//	await transaction.KeyExpireAsync(setKeyforClient, expiresIn);
 					//await transaction.KeyExpireAsync(setKey, expiresIn);
 					//await transaction.ExecuteAsync().ConfigureAwait(false);
+
 				}
 				else
 				{
@@ -231,17 +232,23 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 				}
 				var grantKey = GetKey(key);
 				logger.Info($"removing {key} persisted grant from database");
-				var transaction = this.database.CreateTransaction();
-				await transaction.KeyDeleteAsync(grantKey);
-				await transaction.SetRemoveAsync(GetSetKey(grant.SubjectId), grantKey);
-				await transaction.SetRemoveAsync(GetSetKey(grant.SubjectId, grant.ClientId), grantKey);
-				await transaction.SetRemoveAsync(GetSetKey(grant.SubjectId, grant.ClientId, grant.Type), grantKey);
-				await transaction.ExecuteAsync().ConfigureAwait(false);
+				//var transaction = this.database.CreateTransaction();
+				if (database.KeyExists(grantKey))
+				{
+					await database.KeyDeleteAsync(grantKey);
+					await database.KeyDeleteAsync(GetSetKey(grant.SubjectId));
+					await database.KeyDeleteAsync(GetSetKey(grant.SubjectId, grant.ClientId));
+					await database.KeyDeleteAsync(GetSetKey(grant.SubjectId,grant.ClientId,grant.Type));
+					//await database.SetRemoveAsync(GetSetKey(grant.SubjectId), grantKey);
+					//await database.SetRemoveAsync(GetSetKey(grant.SubjectId, grant.ClientId), grantKey);
+					//await database.SetRemoveAsync(GetSetKey(grant.SubjectId, grant.ClientId, grant.Type), grantKey);
+				}
+				//await database.ExecuteAsync().ConfigureAwait(false);
 			}
 			catch (Exception ex)
 			{
 				logger.Error($"exception removing {key} persisted grant from database: {ex.Message}");
-				throw ex;
+				//throw ex;
 			}
 
 		}
@@ -288,14 +295,15 @@ namespace MicroAngels.IdentityServer.Providers.Redis
 		}
 
 		#region Json
+
 		private static string ConvertToJson(PersistedGrant grant)
 		{
-			return JsonConvert.SerializeObject(grant);
+			return grant.ToJson();
 		}
 
 		private static PersistedGrant ConvertFromJson(string data)
 		{
-			return JsonConvert.DeserializeObject<PersistedGrant>(data);
+			return data.ToObject<PersistedGrant>();
 		}
 
 		#endregion

@@ -16,7 +16,7 @@ namespace MicroAngels.Logger.ExceptionLess
 
 		public void Error(string msg, string[] args, Exception e = null)
 		{
-			ExceptionlessClient.Default.CreateLog(msg, LogLevel.Error).AddTags(args).Submit() ;
+			ExceptionlessClient.Default.CreateLog(msg, LogLevel.Error).AddTags(args).Submit();
 		}
 
 		public void Info(string msg, string[] args)

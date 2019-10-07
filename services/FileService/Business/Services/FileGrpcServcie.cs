@@ -12,7 +12,7 @@ namespace FileService.Business.Services
 
 		public FileGrpcServcie(MySqlDbContext context)
 		{
-			//context.EnsureNotNull(() => new Aruge { });
+			context.EnsureNotNull(() => new AngleExceptions { });
 
 			_dBcontext = context;
 		}
