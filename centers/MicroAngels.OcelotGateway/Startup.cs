@@ -54,6 +54,17 @@ namespace MicroAngels.OcelotGateway
 			.AddConsul()
 			.AddPolly();
 
+
+			//add mvc core
+			services.AddMvcCore(options =>
+			{
+				//options.Filters.Add<ExcepitonFilter>();
+			})
+			.AddApiExplorer() // for swagger
+							  //.AddAuthorization()
+			.AddJsonFormatters();
+			//.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 			// add redis cache
 			services.AddRedisCache(new RedisCacheOption
 				(
@@ -92,18 +103,41 @@ namespace MicroAngels.OcelotGateway
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env,IApplicationLifetime lifeTime)
 		{
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
 
+			// use mvc
+			app.UseMvc();
+
 			// use log
 			app.UseLessLog(new ExcepitonLessOptions("ocBoXO0x8jdMAuqoKAQSG91nfwNGzgjT2IZ64RmM"));
 
 			// use cors
 			app.UseCors("CorsPolicy");
+
+			// use consul
+			app.UseConsul(lifeTime, new ConsulService
+			{
+				Id = Configuration["Service:Id"],
+				Host = Configuration["Service:Host"],
+				Port = Convert.ToInt32(Configuration["Service:Port"]),
+				Name = Configuration["Service:Name"],
+				HostConfiguration = new ConsulHostConfiguration
+				{
+					Host = Configuration["Consul:Host"],
+					Port = Convert.ToInt32(Configuration["Consul:Port"]),
+				},
+				HealthCheckOptoins = new ConsuleHealthCheckOptoins
+				{
+					HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+					IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+				}
+			});
+
 
 			// use ocelot
 			app.UseAngleOcelot().Wait();

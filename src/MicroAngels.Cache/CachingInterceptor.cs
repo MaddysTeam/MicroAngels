@@ -2,7 +2,6 @@
 {
 	using AspectCore.DynamicProxy;
 	using AspectCore.Injector;
-	using MicroAngels.Cache.Redis;
 	using MicroAngels.Core;
 	using System;
 	using System.Linq;
@@ -10,11 +9,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public class CachingInterceptor<T> : AbstractInterceptor
+	public class CachingInterceptor<T> : AbstractInterceptor 
 	{
 
 		[FromContainer]
-		public IRedisCache CacheProvider { get; set; }
+		public ICache CacheProvider { get; set; }
 
 		private char _linkChar = ':';
 
@@ -41,7 +40,7 @@
 			// generate key secnario is （class + method + para） values pattern
 			var cacheKey = GenerateCacheKey(context);
 
-			// search from cache first
+			// search from cache
 			if (attribute.ActionType == ActionType.search)
 			{
 				var cacheValue = CacheProvider.Get<T>(cacheKey);

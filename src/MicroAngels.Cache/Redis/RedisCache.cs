@@ -8,7 +8,7 @@ using System.Linq;
 namespace MicroAngels.Cache.Redis
 {
 
-	public class RedisCache : IRedisCache
+	public class RedisCache : IRedisCache,ICache
 	{
 
 		public RedisCache(RedisCacheOption option)

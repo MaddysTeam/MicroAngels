@@ -26,26 +26,23 @@ namespace MicroAngels.ORM.Suger
 		public void Initial(IConfiguration configuration)
 		{
 			_configuration = configuration;
+
+			DB = new SqlSugarClient(new ConnectionConfig
+			{
+				ConnectionString = _configuration["Database:Mysql:Conn"],
+				DbType = DbType.MySql,
+				IsAutoCloseConnection = true,
+				InitKeyType = InitKeyType.Attribute,
+				//TODO: slave connection only for readeable SlaveConnectionConfigs=new List<SlaveConnectionConfig> { }
+				ConfigureExternalServices = new ConfigureExternalServices()
+				{
+					//TODO:redis cache if possible
+					//DataInfoCacheService = new SugarRedisCache();
+				}
+			});
 		}
 
-		public SqlSugarClient DB
-		{
-			get
-			{
-				return new SqlSugarClient(new ConnectionConfig
-				{
-					ConnectionString = _configuration["Database:Mysql:Conn"],
-					DbType = DbType.MySql,
-					IsAutoCloseConnection = true,
-					InitKeyType = InitKeyType.Attribute,
-					ConfigureExternalServices = new ConfigureExternalServices()
-					{
-						//TODO:redis cache if possible
-						//DataInfoCacheService = new SugarRedisCache();
-					}
-				});
-			}
-		}
+		public SqlSugarClient DB { get; protected set; }
 
 
 		public void InitTable(Type type)

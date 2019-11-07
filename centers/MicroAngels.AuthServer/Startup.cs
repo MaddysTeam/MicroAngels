@@ -121,7 +121,7 @@ namespace MicroAngels.AuthServer
 			});
 
 			
-
+			//service finder
 			services.AddServiceFinder(
 			new ConsulHostConfiguration
 			{

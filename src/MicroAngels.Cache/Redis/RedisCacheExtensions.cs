@@ -10,7 +10,8 @@ namespace MicroAngels.Cache.Redis
 		public static IServiceCollection AddRedisCache(this IServiceCollection builder, RedisCacheOption redisOptions)
 		{
 			builder.AddSingleton(redisOptions);
-			builder.AddTransient<IRedisCache, RedisCache>();
+			builder.AddTransient<IRedisCache, RedisCache>()
+				   .AddTransient<ICache, RedisCache>();
 
 			return builder;
 		}
@@ -18,7 +19,8 @@ namespace MicroAngels.Cache.Redis
 		public static IServiceCollection AddRedisCache(this IServiceCollection builder, IEnumerable<RedisCacheOption> redisOptions)
 		{
 			builder.AddSingleton(redisOptions);
-			builder.AddTransient<IRedisCache, RedisCache>();
+			builder.AddTransient<IRedisCache, RedisCache>()
+				   .AddTransient<ICache, RedisCache>();
 
 			return builder;
 		}
