@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MicroAngels.Cache\MicroAngels.Cache.csproj" />
     <ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
   </ItemGroup>
 

@@ -20,7 +20,7 @@ namespace MicroAngels.Gateway.Ocelot
 			// di for file configuration repository
 			builder.Services.AddSingleton<IFileConfigurationRepository, MysqlFileConfigurationRepository>();
 			// di for cache response
-			builder.Services.AddSingleton<IOcelotCache<CachedResponse>, OcelotRedisCache<CachedResponse>>();
+			builder.Services.AddSingleton<IOcelotCache<CachedResponse>, OcelotCache<CachedResponse>>();
 
 			return builder;
 		}

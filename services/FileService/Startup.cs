@@ -1,6 +1,7 @@
 ﻿using FileService.Business;
 using MicroAngels.Bus.CAP;
 using MicroAngels.GRPC.Server;
+using MicroAngels.Hystrix.Polly;
 using MicroAngels.IdentityServer.Extensions;
 using MicroAngels.IdentityServer.Models;
 using MicroAngels.Logger.ExceptionLess;
@@ -29,21 +30,21 @@ namespace FileService
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			//add cap
-			services.AddCAPService(new CAPService
-			{
-				Host = Configuration["Queues:Kafka:Host"],
-				ConnectString = Configuration["Queues:Kafka:DbConn"]
-			});
+			//services.AddCAPService(new CAPService
+			//{
+			//	Host = Configuration["Queues:Kafka:Host"],
+			//	ConnectString = Configuration["Queues:Kafka:DbConn"]
+			//});
 
-			//add grpc server
-			services.AddGRPCServer(new GRPCServerOptions
-			{
-				Host = Configuration["GrpcServer:Host"],
-				Port = Convert.ToInt32(Configuration["GrpcServer:Port"])
-			});
+			////add grpc server
+			//services.AddGRPCServer(new GRPCServerOptions
+			//{
+			//	Host = Configuration["GrpcServer:Host"],
+			//	Port = Convert.ToInt32(Configuration["GrpcServer:Port"])
+			//});
 
 			//add mvc core
 			services.AddMvcCore(options =>
@@ -56,20 +57,20 @@ namespace FileService
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 			//add ids authentication
-			services.AddIdsAuthentication(new IdentityAuthenticationOptions
-			{
-				Scheme = Configuration["IdentityService:DefaultScheme"],
-				Authority = Configuration["IdentityService:Uri"],
-				RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
-				ApiSecret = Configuration["IdentityService:Client:Secret"],
-				ApiName = Configuration["IdentityService:Client:Scopes"]
-			});
+			//services.AddIdsAuthentication(new IdentityAuthenticationOptions
+			//{
+			//	Scheme = Configuration["IdentityService:DefaultScheme"],
+			//	Authority = Configuration["IdentityService:Uri"],
+			//	RequireHttps = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]),
+			//	ApiSecret = Configuration["IdentityService:Client:Secret"],
+			//	ApiName = Configuration["IdentityService:Client:Scopes"]
+			//});
 
-			services.AddJaegerTrace(options=> {
-				options.ServiceName = Configuration["Jaeger:Service"];
-				options.ReporterOptions.RemoteHost = Configuration["Jaeger:Reporter:Host"];
-				options.ReporterOptions.RemotePort = Convert.ToInt32(Configuration["Jaeger:Reporter:Port"]);
-			});
+			//services.AddJaegerTrace(options=> {
+			//	options.ServiceName = Configuration["Jaeger:Service"];
+			//	options.ReporterOptions.RemoteHost = Configuration["Jaeger:Reporter:Host"];
+			//	options.ReporterOptions.RemotePort = Convert.ToInt32(Configuration["Jaeger:Reporter:Port"]);
+			//});
 
 			//add exceptionless logger
 			services.AddLessLog();
@@ -78,7 +79,7 @@ namespace FileService
 			//services.AddTransient<IPrivilegeSupplier, FileService.Business.PrivilegeSupplier>();
 
 			// regist hystrix polly aop serive
-			//return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services);
+			return PollyRegister.RegisterPollyServiceInAssembly(this.GetType().Assembly, services,Configuration);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,9 +90,9 @@ namespace FileService
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UsePrometheus();
+			//app.UsePrometheus();
 
-			app.UseAuthentication();
+			//app.UseAuthentication();
 
 			app.UseMvc();
 
@@ -105,27 +106,27 @@ namespace FileService
 				RequestPath = "/StaticFiles",
 			});
 
-			app.UseConsul(lifeTime, new ConsulService
-			{
-				Id = Configuration["Service:Id"],
-				Host = Configuration["Service:Host"],
-				Port = Convert.ToInt32(Configuration["Service:Port"]),
-				Name = Configuration["Service:Name"],
-				HostConfiguration = new ConsulHostConfiguration
-				{
-					Host = Configuration["Consul:Host"],
-					Port = Convert.ToInt32(Configuration["Consul:Port"]),
-				},
-				HealthCheckOptoins = new ConsuleHealthCheckOptoins
-				{
-					HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
-					IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
-				}
-			});
+			//app.UseConsul(lifeTime, new ConsulService
+			//{
+			//	Id = Configuration["Service:Id"],
+			//	Host = Configuration["Service:Host"],
+			//	Port = Convert.ToInt32(Configuration["Service:Port"]),
+			//	Name = Configuration["Service:Name"],
+			//	HostConfiguration = new ConsulHostConfiguration
+			//	{
+			//		Host = Configuration["Consul:Host"],
+			//		Port = Convert.ToInt32(Configuration["Consul:Port"]),
+			//	},
+			//	HealthCheckOptoins = new ConsuleHealthCheckOptoins
+			//	{
+			//		HealthCheckHTTP = Configuration["Service:HealthCheck:Address"],
+			//		IntervalTimeSpan = TimeSpan.Parse(Configuration["Service:HealthCheck:Interval"])
+			//	}
+			//});
 
-			//register orm sugar and init tables
-			app.UseSugarORM(lifeTime, Configuration)
-				.InitTabels(MySqlDbContext.TableTypes);
+			////register orm sugar and init tables
+			//app.UseSugarORM(lifeTime, Configuration)
+			//	.InitTabels(MySqlDbContext.TableTypes);
 
 		}
 	}

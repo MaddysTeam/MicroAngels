@@ -3,6 +3,7 @@ using MicroAngels.Core;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FileService.Controllers
 {
@@ -43,18 +44,15 @@ namespace FileService.Controllers
 		}
 
 		[HttpPost("files")]
-		public IActionResult GetFiles([FromForm]int start, [FromForm]int length)
+		public async Task<IActionResult> GetFiles([FromForm]int start, [FromForm]int length)
 		{
-			//var results = await _fileService.GetFiles(null, null, null);
 			var totalCount = 0;
-			var searchResults = _fileService.Search(null, length, start, out totalCount);
+			var searchResults = await _fileService.Search(null, null);
 			if (!searchResults.IsNull() && searchResults.Count() > 0)
 			{
 				return new JsonResult(new
 				{
-					data = searchResults.Select(x => new
-					{
-					}),
+					data = searchResults.Select(x => new { }),
 					recordsTotal = totalCount,
 					recordsFiltered = totalCount,
 				});

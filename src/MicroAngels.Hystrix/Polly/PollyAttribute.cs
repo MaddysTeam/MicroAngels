@@ -1,5 +1,7 @@
 ﻿using AspectCore.DynamicProxy;
+using AspectCore.Injector;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Polly;
 using Polly.Timeout;
 using System;
@@ -46,8 +48,10 @@ namespace MicroAngels.Hystrix.Polly
 		/// <summary>
 		/// 缓存多少毫秒（0表示不缓存），用“类名+方法名+所有参数ToString拼接”做缓存Key
 		/// </summary>
-
 		public int CacheTTLMilliseconds { get; set; } = 0;
+
+		[FromContainer]
+		protected IConfiguration Configuration { get; set; }
 
 		private static ConcurrentDictionary<MethodInfo, AsyncPolicy> policies
 			= new ConcurrentDictionary<MethodInfo, AsyncPolicy>();
@@ -61,7 +65,7 @@ namespace MicroAngels.Hystrix.Polly
 		/// <param name="fallBackMethod">降级的方法名</param>
 		public PollyAttribute(string fallBackMethod)
 		{
-			this.FallBackMethod = fallBackMethod;
+			FallBackMethod = fallBackMethod;
 		}
 
 		public string FallBackMethod { get; set; }
@@ -102,8 +106,9 @@ namespace MicroAngels.Hystrix.Polly
 						//还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
 						//context.ReturnValue = fallBackResult;
 						aspectContext.ReturnValue = fallBackResult;
-					}, async (ex, t) => {
-						//t.Add("error", ex.Message);
+					}, async (ex, t) =>
+					{
+						t.Add("error", ex.Message);
 					});
 
 					policy = policyFallBack.WrapAsync(policy);

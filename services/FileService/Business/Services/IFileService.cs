@@ -1,7 +1,9 @@
-﻿using MicroAngels.Hystrix;
+﻿using Business;
+using MicroAngels.Hystrix;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FileService.Business
@@ -11,9 +13,9 @@ namespace FileService.Business
 	{
 		List<Files> UploadFiles(IFormFileCollection formFiles);
 
-		//Task<List<Files>> UploadFilesAsync(IFormFileCollection formFiles);
+		Task<List<Files>> Search(List<Expression<Func<Files, bool>>> whereExpressions, PageOptions page);
 
-		List<Files> Search(List<System.Linq.Expressions.Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount);
+		Task<List<Files>> SearchFallback(List<Expression<Func<Files, bool>>> whereExpressions, PageOptions page);
 	}
 
 }

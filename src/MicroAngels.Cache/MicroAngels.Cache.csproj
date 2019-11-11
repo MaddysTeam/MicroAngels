@@ -14,4 +14,8 @@
 		<ProjectReference Include="..\MicroAngels.Core\MicroAngels.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Complex\" />
+	</ItemGroup>
+
 </Project>

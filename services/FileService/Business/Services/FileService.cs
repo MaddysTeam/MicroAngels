@@ -1,4 +1,5 @@
-﻿using MicroAngels.Bus.CAP;
+﻿using Business;
+using MicroAngels.Bus.CAP;
 using MicroAngels.Core.Plugins;
 using MicroAngels.Hystrix.Polly;
 using Microsoft.AspNetCore.Hosting;
@@ -84,8 +85,8 @@ namespace FileService.Business
 		/// <param name="pageSize"></param>
 		/// <param name="pageIndex"></param>
 		/// <returns></returns>
-		[Polly(nameof(GetFilesFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
-		public List<Files> Search(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex, out int totalCount)
+		[Polly(nameof(SearchFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
+		public async Task<List<Files>> Search(List<Expression<Func<Files, bool>>> whereExpressions, PageOptions page)
 		{
 			throw new NotImplementedException();
 		}
@@ -94,9 +95,9 @@ namespace FileService.Business
 		/// call back service. TODO: comment for temp
 		/// </summary>
 		/// <returns></returns>
-		public Task<List<Files>> GetFilesFallback(List<Expression<Func<Files, bool>>> whereExpressions, int? pageSize, int? pageIndex)
+		public async Task<List<Files>> SearchFallback(List<Expression<Func<Files, bool>>> whereExpressions, PageOptions page)
 		{
-			return Task.FromResult(new List<Files>());
+			return new List<Files>();
 		}
 
 
