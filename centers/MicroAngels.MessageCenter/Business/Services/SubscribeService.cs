@@ -60,7 +60,7 @@ namespace Business.Services
 			{
 				return SubscribeDb.DeleteById(existSubscribes.First().Id.ToGuid());
 			}
-			catch (Exception e)
+			catch
 			{
 				return false;
 			}

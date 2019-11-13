@@ -9,23 +9,10 @@ namespace MicroAngels.Gateway.Ocelot
 	public class OcelotCache<T> : IOcelotCache<T>
 	{
 
-		public OcelotCache(OcelotConfiguration options,ICache redisCache)
+		public OcelotCache(OcelotConfiguration options,ICache cache)
 		{
 			_options = options;
-			_cache = redisCache;
-			//CSRedisClient redisClient = null;
-
-			//if (options.RedisConnectStrings.Length == 1)
-			//{
-			//	redisClient = new CSRedisClient(options.RedisConnectStrings[0]);
-			//}
-			//else
-			//{
-			//	Func<string, string> keyFunc = null;
-			//	redisClient = new CSRedisClient(keyFunc, options.RedisConnectStrings);
-			//}
-
-			//RedisHelper.Initialization(redisClient);
+			_cache = cache;
 		}
 
 		public void Add(string key, T value, TimeSpan ttl, string region)
@@ -50,21 +37,14 @@ namespace MicroAngels.Gateway.Ocelot
 		{
 			var cacheKey = CacheKeyByRegion(region);
 			_cache.Remove(cacheKey);
-			//RedisHelper.Del(cacheKey);
 		}
 
 		public T Get(string key, string region)
 		{
-			T t = default(T);
 			var cacheKey = GetCacheKey(region, key);
 			var result = _cache.Get<T>(cacheKey);
-			//var result = RedisHelper.Get(cacheKey);
-			//if (!string.IsNullOrEmpty(result))
-			//{
-			//	t = result.ToObject<T>();
-			//}
 
-			return t;
+			return result;
 		}
 
 		public string GetCacheKey(string region, string key) => $"_options.CacheKeyPrefix-{region}-{key}";

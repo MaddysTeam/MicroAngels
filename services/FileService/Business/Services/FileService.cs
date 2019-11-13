@@ -85,7 +85,7 @@ namespace FileService.Business
 		/// <param name="pageSize"></param>
 		/// <param name="pageIndex"></param>
 		/// <returns></returns>
-		[Polly(nameof(SearchFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2)]
+		[Polly(nameof(SearchFallback), IsEnableCircuitBreaker = true, ExceptionsAllowedBeforeBreaking = 2,IsForceDowngrade =true)]
 		public async Task<List<Files>> Search(List<Expression<Func<Files, bool>>> whereExpressions, PageOptions page)
 		{
 			throw new NotImplementedException();

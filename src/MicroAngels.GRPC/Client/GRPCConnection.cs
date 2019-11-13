@@ -19,9 +19,10 @@ namespace MicroAngels.GRPC.Client
 
 		public GRPCConnection(ILoadBalancer balancer, IGRPCServiceFinder serviceFinder)
 		{
-			_balancer = balancer ?? new WeightRoundBalancer();
-
 			serviceFinder.EnsureNotNull(() => new AngleExceptions());
+
+			_balancer = balancer ?? new WeightRoundBalancer();
+			_serviceFinder = serviceFinder;
 		}
 
 		public async Task<TService> GetGRPCService<TService>(string serviceName) where TService : IService<TService>

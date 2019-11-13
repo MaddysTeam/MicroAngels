@@ -60,7 +60,6 @@ namespace MicroAngels.Polly.Test
 							_retryCount--;
 							Console.WriteLine("Job Start");
 							throw new AngleExceptions("Special error occured");
-							Console.WriteLine("Job End");
 						});
 					}
 					catch (AngleExceptions ex)

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroAngels.Cache.Memory
+namespace MicroAngels.Cache.Complex
 {
 
-	public class MemoryCache
+	public interface IComplexCache
 	{
-
 	}
 
 }

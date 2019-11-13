@@ -10,8 +10,6 @@ namespace MicroAngels.IdentityServer.Test.Providers
 		MySqlStoreOptions _options;
 		string connectionString = "";
 		MySqlResourceProvider provider;
-		string clientId = "";
-		string resource = "";
 
 		public MySqlResourceProviderTest()
 		{
@@ -26,7 +24,7 @@ namespace MicroAngels.IdentityServer.Test.Providers
 			var resources = await provider.FindResource(string.Empty);
 			Assert.Null(resources);
 
-			resources = await provider.FindResource(resource);
+			resources = await provider.FindResource("");
 			Assert.Null(resources);
 			Assert.NotNull(resources.Scopes);
 		}

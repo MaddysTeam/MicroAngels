@@ -16,39 +16,44 @@ namespace MicroAngels.Hystrix.Polly
 	public class PollyAttribute : AbstractInterceptorAttribute
 	{
 		/// <summary>
-		/// 最多重试几次，如果为0则不重试
+		/// retry count
 		/// </summary>
 		public int MaxRetryTimes { get; set; } = 0;
 
 		/// <summary>
-		/// 重试间隔的毫秒数
+		/// retry interval seconds
 		/// </summary>
 		public int RetryIntervalMilliseconds { get; set; } = 100;
 
 		/// <summary>
-		/// 是否启用熔断
+		/// is enable circuit breaker
 		/// </summary>
 		public bool IsEnableCircuitBreaker { get; set; } = false;
 
 		/// <summary>
-		/// 熔断前出现允许错误几次
+		/// allowed times before throw exception
 		/// </summary>
 		public int ExceptionsAllowedBeforeBreaking { get; set; } = 3;
 
 		/// <summary>
-		/// 熔断多长时间（毫秒）
+		/// circuit break duration
 		/// </summary>
 		public int MillisecondsOfBreak { get; set; } = 1000;
 
 		/// <summary>
-		/// 执行超过多少毫秒则认为超时（0表示不检测超时）
+		/// time out allowed seconds
 		/// </summary>
 		public int TimeOutMilliseconds { get; set; } = 0;
 
 		/// <summary>
-		/// 缓存多少毫秒（0表示不缓存），用“类名+方法名+所有参数ToString拼接”做缓存Key
+		/// cache ttl seconds
 		/// </summary>
 		public int CacheTTLMilliseconds { get; set; } = 0;
+
+		/// <summary>
+		/// is force downgrade
+		/// </summary>
+		public bool IsForceDowngrade { get; set; } = false;
 
 		[FromContainer]
 		protected IConfiguration Configuration { get; set; }
@@ -62,7 +67,7 @@ namespace MicroAngels.Hystrix.Polly
 		/// <summary>
 		/// HystrixCommandAttribute
 		/// </summary>
-		/// <param name="fallBackMethod">降级的方法名</param>
+		/// <param name="fallBackMethod">downgrade method</param>
 		public PollyAttribute(string fallBackMethod)
 		{
 			FallBackMethod = fallBackMethod;
@@ -84,7 +89,7 @@ namespace MicroAngels.Hystrix.Polly
 					policy = Policy.NoOpAsync();//创建一个空的Policy
 					if (IsEnableCircuitBreaker)
 					{
-						policy = policy.WrapAsync(Policy.Handle<Exception>().CircuitBreakerAsync(ExceptionsAllowedBeforeBreaking, TimeSpan.FromMilliseconds(MillisecondsOfBreak)));
+						policy = policy.WrapAsync(Policy.Handle<Exception>().CircuitBreakerAsync(IsForceDowngrade ? 1 : ExceptionsAllowedBeforeBreaking, TimeSpan.FromMilliseconds(MillisecondsOfBreak)));
 					}
 					if (TimeOutMilliseconds > 0)
 					{
@@ -99,12 +104,12 @@ namespace MicroAngels.Hystrix.Polly
 					.Handle<Exception>()
 					.FallbackAsync(async (ctx, t) =>
 					{
-						AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
 						var fallBackMethod = context.ServiceMethod.DeclaringType.GetMethod(this.FallBackMethod);
 						Object fallBackResult = fallBackMethod.Invoke(context.Implementation, context.Parameters);
 						//不能如下这样，因为这是闭包相关，如果这样写第二次调用Invoke的时候context指向的
 						//还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
 						//context.ReturnValue = fallBackResult;
+						AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
 						aspectContext.ReturnValue = fallBackResult;
 					}, async (ex, t) =>
 					{
@@ -120,6 +125,14 @@ namespace MicroAngels.Hystrix.Polly
 			//把本地调用的AspectContext传递给Polly，主要给FallbackAsync中使用，避免闭包的坑
 			Context pollyCtx = new Context();
 			pollyCtx["aspectContext"] = context;
+
+			// 强制降级
+			if (IsForceDowngrade)
+			{
+				await policy.ExecuteAsync((i) => throw new Core.AngleExceptions("force downgrade"), pollyCtx);
+
+				return;
+			}
 
 			//Install-Package Microsoft.Extensions.Caching.Memory
 			if (CacheTTLMilliseconds > 0)
