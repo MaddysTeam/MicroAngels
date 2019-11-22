@@ -10,7 +10,7 @@ namespace MicroAngels.Cache
 	public static class CacheExtensions
 	{
 
-		public static IServiceContainer AddCacheInterceptorContainer(this IServiceCollection services)
+		public static IServiceContainer ToServiceContainer(this IServiceCollection services)
 		{
 			return services.ToServiceContainer();
 		}
@@ -26,7 +26,7 @@ namespace MicroAngels.Cache
 			return container;
 		}
 
-		public static IServiceProvider BuildProvider(this IServiceContainer container)
+		public static IServiceProvider Build(this IServiceContainer container)
 		{
 			return container.Build();
 		}

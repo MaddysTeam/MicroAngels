@@ -132,10 +132,10 @@ namespace MicroAngels.AuthServer
 			// balancer
 			services.AddTransient<ILoadBalancer, WeightRoundBalancer>();
 
-			var serviceProvider = services.AddCacheInterceptorContainer()
+			var serviceProvider = services.ToServiceContainer()
 				.AddInterceptor<UserInfo>(typeof(IUserCaching))
 				.AddInterceptor<System.Collections.Generic.IEnumerable<UserInfo>>(typeof(IUserCaching))
-				.BuildProvider();
+				.Build();
 
 			return serviceProvider;
 		}
